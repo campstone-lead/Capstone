@@ -6,10 +6,8 @@ interface IMyComponentState {
   email: string,
   password:string
 }
-interface IMyComponentProps{
-  user:object
-}
- class Login extends React.Component<IMyComponentProps,IMyComponentState> {
+
+ class Login extends React.Component<{},IMyComponentState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,12 +18,13 @@ interface IMyComponentProps{
   }
 
 
+
   handleSubmit(event) {
     event.preventDefault();
 
   }
   render() {
-console.log('here=>',this.props.user)
+console.log('here=>',this.props)
   return (
 
     <IonPage>

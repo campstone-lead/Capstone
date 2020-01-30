@@ -20,12 +20,13 @@ interface IMyComponentProps{
   }
 
 
+
   handleSubmit(event) {
     event.preventDefault();
 
   }
   render() {
-console.log('here=>',this.props.user)
+console.log('here=>',this.props)
   return (
 
     <IonPage>

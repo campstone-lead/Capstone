@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "Capstone",
+  "appName": "IonicTesting",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
