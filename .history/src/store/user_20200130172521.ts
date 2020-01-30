@@ -5,13 +5,12 @@ import axios from 'axios'
  */
 const GET_USER = 'GET_USER'
 
+
 /**
  * INITIAL STATE
  */
 const defaultUser = {
-
 }
-
 /**
  * ACTION CREATORS
  */
