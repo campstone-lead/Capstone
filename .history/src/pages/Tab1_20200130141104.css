@@ -2,7 +2,7 @@
   max-height: 35vh;
   overflow: hidden;
 }
-#bar{
+.bar{
   display: flex;
   justify-content: center;
   align-items: center;

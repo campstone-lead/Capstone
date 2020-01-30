@@ -5,14 +5,15 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
-
+  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
   IonPage,
-
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
 import { book, build, colorFill, grid } from 'ionicons/icons';
 import React from 'react';
@@ -21,6 +22,11 @@ import './Tab1.css';
 const Tab1: React.FC = () => {
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Tab One</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         <IonCard className="welcome-card">
           <img src="/assets/shapes.svg" alt="" />
@@ -36,7 +42,7 @@ const Tab1: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
-        <IonList lines="inset">
+        <IonList lines="full">
           <IonListHeader>
             <IonLabel>Resources</IonLabel>
           </IonListHeader>

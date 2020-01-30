@@ -7,13 +7,16 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs
+  IonTabs,
+  IonHeader,
+  IonToolbar,
+  IonTitle
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { apps,home,contact } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
-import Login from './pages/LoginTemplate';
+import Tab3 from './pages/Tab3';
 import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
@@ -43,7 +46,7 @@ const App: React.FC = () => (
           <Route path="/home" component={Tab1} exact={true} />
           <Route path="/tab2" component={Tab2} exact={true} />
           <Route path="/tab2/details" component={Details} />
-          <Route path="/profile" component={Login} />
+          <Route path="/profile" component={Tab3} />
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
