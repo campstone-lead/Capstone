@@ -1,13 +1,15 @@
 const User = require('./user')
-const Artist = require('./artist')
-
-
 const Booker =require('./booker')
-const Venue =require('./venue')
+
 ///ASSOCIATIONS HERE:
 
-Venue.belongsTo(Booker, {allowNull: true})
-Booker.hasMany(Venue)
+/**
+ * If we had any associations to make, this would be a great place to put them!
+ * ex. if we had another model called BlogPost, we might say:
+ *
+ *    BlogPost.belongsTo(User)
+ */
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -16,8 +18,5 @@ Booker.hasMany(Venue)
  */
 
 module.exports = {
-  User,
-  Artist,
-  Booker,
-  Venue
+  User,Booker
 }

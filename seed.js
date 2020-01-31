@@ -1,20 +1,21 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db')
 const {
-User, Artist
+Artist,
+Booker,Venue
 } = require('./server/db/models')
 
-const users = [
+
+
+const bookers = [
   {
     firstName: 'Liana',
-    status: 'admin',
     lastName: 'Chan',
-    address: '123 Magnolia Ave.,NY 11206',
     email: 'liana.andreea97@yahoo.com',
     password: '123',
-    imageURL:
-      'https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/107/profiles/2394/profileImage/avatar-new400.jpg'
-  },
+    genres:['pop','hip-hop'],
+    phone:'(929)-308-8477',
+  }
 ]
 
 const artists = [
@@ -35,9 +36,23 @@ const artists = [
   }
 ]
 
+const venues = [
+  {
+    name: 'Grace Hopper',
+    genres:['pop','hip-hop','rock','R&B'],
+    latitude: '40.705086',
+    longitude: '-74.009151',
+    address: 'Hanover Square floor 25, New York, NY 10004',
+    description:"Party time!",
+    capacity:100,
+    bookerId:1
+  }
+]
+
 
 const seed = () =>
-  Promise.all(users.map(user => User.create(user))).then(() => 
+  Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
+  Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
   Promise.all(artists.map(artist => {return Artist.create({
     firstName: artist.firstName,
     lastName: artist.lastName,
@@ -51,7 +66,9 @@ const seed = () =>
     type: artist.type,
     phone: artist.phone,
     email: artist.email,
-    password: artist.password})})));
+    password: artist.password})}))))
+
+
 
 const main = () => {
   console.log('Syncing db...')
@@ -69,6 +86,5 @@ const main = () => {
       db.close()
       return null
     })
-
 }
 main()
