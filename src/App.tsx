@@ -17,6 +17,7 @@ import Login from './pages/LoginTemplate';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
+import Genres from './pages/Artist/Signup/Genres';
 import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
@@ -50,6 +51,7 @@ const App: React.FC = () => (
           <Route path="/infoform" component={PersonalInfo} />
           <Route path="/artistnameform" component={ArtistNameForm} />
           <Route path="/zipcodeform" component={ZipCodeForm}/>
+          <Route path="/genres" component={Genres}/>
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
