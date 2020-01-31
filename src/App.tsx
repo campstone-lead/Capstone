@@ -15,7 +15,9 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Login from './pages/LoginTemplate';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
+import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
+import Genres from './pages/Artist/Signup/Genres';
 import Details from './pages/Details';
 import BookerSignup3 from './pages/BookerSignup3';
 
@@ -50,6 +52,8 @@ const App: React.FC = () => (
           <Route path="/signup/booker/3" component={BookerSignup3} />
           <Route path="/infoform" component={PersonalInfo} />
           <Route path="/artistnameform" component={ArtistNameForm} />
+          <Route path="/zipcodeform" component={ZipCodeForm}/>
+          <Route path="/genres" component={Genres}/>
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">

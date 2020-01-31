@@ -7,6 +7,8 @@ import history from '../pages/history'
 const GET_ARTISTS = 'GET_ARTISTS'
 const PUT_PERSONAL_INFO = 'PUT_PERSONAL_INFO'
 const PUT_ARTIST_NAME = 'PUT_ARTIST_NAME'
+const PUT_ZIP_CODE = 'PUT_ZIP_CODE'
+const PUT_GENRE = 'PUT_GENRE'
 
 /**
  * INITIAL STATE
@@ -33,6 +35,8 @@ const defaultArtist = {
 const getArtists = artists => ({type: GET_ARTISTS, artists})
 export const putPersonalInfo = (info) =>({type: PUT_PERSONAL_INFO, info})
 export const putArtistName = (name) =>({type: PUT_ARTIST_NAME, name})
+export const putZipCode = (zipcode) =>({type: PUT_ZIP_CODE, zipcode})
+export const putGenre = (genre) =>({type: PUT_GENRE, genre})
 
 /**
  * THUNK CREATORS
@@ -45,6 +49,7 @@ export const fetchArtists = () => async dispatch => {
     console.error(err)
   }
 }
+
 
 /**
  * REDUCER
@@ -66,6 +71,10 @@ export default function(state = defaultArtist, action) {
       case PUT_ARTIST_NAME:
         history.push('/artistnameform')
         return {...state, artistName: action.name}
+      case PUT_ZIP_CODE:
+        return {...state, zipCode: action.zipcode}
+      case PUT_GENRE:
+        return {...state, genres: action.genre}
     default:
       return state
   }
