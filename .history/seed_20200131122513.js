@@ -32,8 +32,8 @@ const venues = [
 ]
 
 const seed = () =>
-  Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-  Promise.all(venues.map(venue => Venue.create(venue))));
+  Promise.all(bookers.map(booker => Booker.create(booker)));
+
 const main = () => {
   console.log('Syncing db...')
   db

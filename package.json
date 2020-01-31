@@ -21,6 +21,7 @@
     "chai": "^4.2.0",
     "compression": "^1.7.4",
     "connect-session-sequelize": "^6.0.0",
+    "crypto": "^1.0.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "express": "^4.17.1",
