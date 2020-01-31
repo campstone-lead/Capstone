@@ -12,6 +12,11 @@ const Tab2: React.FC = () => {
               <h2>Go to detail</h2>
             </IonLabel>
           </IonItem>
+          <IonItem routerLink="/signup/booker/3">
+            <IonLabel>
+              <h2>Go to camera page</h2>
+            </IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
