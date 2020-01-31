@@ -1,4 +1,7 @@
 const User = require('./user')
+const Artist = require('./artist')
+
+
 const Booker =require('./booker')
 const Venue =require('./venue')
 ///ASSOCIATIONS HERE:
@@ -14,6 +17,7 @@ Booker.hasMany(Venue)
 
 module.exports = {
   User,
+  Artist,
   Booker,
   Venue
 }
