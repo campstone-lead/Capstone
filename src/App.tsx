@@ -14,6 +14,8 @@ import { apps,home,contact } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Login from './pages/LoginTemplate';
+import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
+import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
 import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
@@ -44,6 +46,8 @@ const App: React.FC = () => (
           <Route path="/tab2" component={Tab2} exact={true} />
           <Route path="/tab2/details" component={Details} />
           <Route path="/profile" component={Login} />
+          <Route path="/infoform" component={PersonalInfo} />
+          <Route path="/artistnameform" component={ArtistNameForm} />
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
