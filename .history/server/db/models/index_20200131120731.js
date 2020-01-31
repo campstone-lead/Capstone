@@ -3,8 +3,8 @@ const Booker =require('./booker')
 const Venue =require('./venue')
 ///ASSOCIATIONS HERE:
 
-Venue.belongsTo(Booker, {allowNull: true})
-Booker.hasMany(Venue)
+Booker.hasMany(Venue);
+Venue.belongsTo(Booker);
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'

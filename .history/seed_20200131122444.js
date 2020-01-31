@@ -25,15 +25,13 @@ const venues = [
     latitude: '40.705086',
     longitude: '-74.009151',
     address: 'Hanover Square floor 25, New York, NY 10004',
-    description:"Party time!",
-    capacity:100,
-    bookerId:1
+    description:"Party time!"
   }
 ]
 
 const seed = () =>
-  Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-  Promise.all(venues.map(venue => Venue.create(venue))));
+  Promise.all(bookers.map(booker => Booker.create(booker)));
+
 const main = () => {
   console.log('Syncing db...')
   db
