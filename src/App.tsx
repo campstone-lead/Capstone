@@ -15,6 +15,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Login from './pages/LoginTemplate';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
+import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
 import Details from './pages/Details';
 
@@ -48,6 +49,7 @@ const App: React.FC = () => (
           <Route path="/profile" component={Login} />
           <Route path="/infoform" component={PersonalInfo} />
           <Route path="/artistnameform" component={ArtistNameForm} />
+          <Route path="/zipcodeform" component={ZipCodeForm}/>
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
