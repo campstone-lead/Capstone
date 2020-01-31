@@ -8,9 +8,22 @@ import {
   
   interface IMyComponentState {
     genres: [string],
+    genreTypes: {
+        rock: boolean,
+        jazz: boolean,
+        electronic: boolean,
+        pop: boolean,
+        hipHop: boolean,
+        indie: boolean,
+        country: boolean,
+        metal: boolean,
+        house: boolean,
+        techno: boolean,
+    }
   }
   interface IMyComponentProps{
-    putGenre: (genre: [string]) => void
+    putGenre: (genre: [string]) => void,
+    
   }
   
   class Genres extends React.Component<IMyComponentProps,IMyComponentState>  {
@@ -18,8 +31,21 @@ import {
       super(props);
       this.state = {
         genres: [''],
+        genreTypes: {
+            rock: false,
+            jazz: false,
+            electronic: false,
+            pop: false,
+            hipHop: false,
+            indie: false,
+            country: false,
+            metal: false,
+            house: false,
+            techno: false,
+        }
       }
       this.handleSubmit = this.handleSubmit.bind(this);
+    //   this.handleClick = this.handleClick.bind(this);
     }
   
   
@@ -29,6 +55,9 @@ import {
       this.setState({
         genres: [''],
       })
+    // handleClick(event){
+
+    // }
   
     }
     render(){
@@ -45,7 +74,7 @@ import {
   
     <IonContent>
         <form onSubmit={this.handleSubmit}>
-        <IonButton color='danger' type="button">ROCK</IonButton>
+        <IonButton color='danger' type="button" onClick={()=>{this.setState({genreTypes: {...this.state.genreTypes, rock: !this.state.genreTypes.rock}})}}>ROCK</IonButton>
         <IonButton color='danger'type="button">JAZZ</IonButton>
         <IonButton color='danger'type="button">ELECTRONIC</IonButton>
         <IonButton color='danger'type="button">POP</IonButton>
