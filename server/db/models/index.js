@@ -1,4 +1,5 @@
 const User = require('./user')
+const Artist = require('./artist')
 
 
 ///ASSOCIATIONS HERE:
@@ -18,5 +19,6 @@ const User = require('./user')
  */
 
 module.exports = {
-  User
+  User,
+  Artist
 }
