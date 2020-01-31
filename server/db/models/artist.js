@@ -25,15 +25,14 @@ const Artist = db.define('artist', {
         }
     },
     genres: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
+        type: Sequelize.ARRAY(Sequelize.ENUM('rock', 'jazz', 'electronic', 'pop', 'hip-hop', 'indie', 'country', 'metal', 'house', 'techno')),
         allowNull: false,
         validate: {
           notEmpty: true,
-          isIn: [['rock', 'jazz', 'electronic', 'pop', 'hip-hop', 'indie', 'country', 'metal', 'house', 'techno']]
         }
     },
-    imgUrl: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
+    imageUrl: {
+        type: Sequelize.STRING,
         allowNull: false,
         validate: {
           notEmpty: true
@@ -46,12 +45,14 @@ const Artist = db.define('artist', {
           notEmpty: true
         }
     },
-    socialUrl: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
+    instagramUrl: {
+        type: Sequelize.STRING,
+    },
+    spotifyUrl: {
+        type: Sequelize.STRING,
+    },
+    facebookUrl: {
+        type: Sequelize.STRING,
     },
     type: {
         type: Sequelize.ENUM('solo', 'dj', 'band'),
