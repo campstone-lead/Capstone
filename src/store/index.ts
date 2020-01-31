@@ -4,9 +4,12 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import artist from './artist'
+import booker from './booker'
 
 const reducer = combineReducers({
-  user, artist
+  user,
+  booker,
+  artist
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
