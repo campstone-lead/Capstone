@@ -23,7 +23,7 @@ const artists = [
     firstName: 'Ariana',
     lastName: 'Grande',
     artistName: 'Ariana Grande',
-    genres: ['hip-hop', 'pop'],
+    genres: ['hipHop', 'pop'],
     imageUrl: 'https://media1.s-nbcnews.com/j/newscms/2020_02/3182036/200111-ariana-grande-al-1627_18cb8bafa6f2b2c44d492e0c3eb428aa.fit-760w.jpg',
     zipCode: '11040',
     instagramUrl: 'https://www.instagram.com/arianagrande/?hl=en',
