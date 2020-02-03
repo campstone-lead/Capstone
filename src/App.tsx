@@ -18,6 +18,7 @@ import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
 import Genres from './pages/Artist/Signup/Genres';
+import ArtistType from './pages/Artist/Signup/ArtistType'
 import Details from './pages/Details';
 import SignUpSignIn from './pages/SignUpSignIn';
 import SignUpZero from './pages/SignUp0';
@@ -66,6 +67,7 @@ const App: React.FC = () => (
           <Route path="/artistnameform" component={ArtistNameForm} />
           <Route path="/zipcodeform" component={ZipCodeForm}/>
           <Route path="/genres" component={Genres}/>
+          <Route path="/artisttype" component={ArtistType}/>
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
