@@ -62,29 +62,25 @@ export const updatedArtist = (artistInfo) => async dispatch => {
     if(artist){
       artist=JSON.parse(artist||'');
     }else{
-      window.localStorage.setItem('artist',JSON.stringify(''))
-    }
-
-    // artist=JSON.parse(artist||'');
-    let newArtist=artist||{};
-    newArtist['artistInfo']={...newArtist['artistInfo'],...artistInfo};
-    window.localStorage.setItem('artist',JSON.stringify(newArtist))
-    let sendArtist={
-      firstName:newArtist["firstName"],
-      lastName:newArtist["lastName"],
-      artistName:newArtist["artistName"],
-      genres:newArtist['genres'],
-      imageUrl: newArtist["imageUrl"],
-      zipCode:newArtist["zipCode"],
-      instagramUrl:newArtist["instagramUrl"],
-      spotifyUrl:newArtist["spotifyUrl"],
-      facebookUrl:newArtist["facebookUrl"],
-      type:newArtist["type"],
-      phone:newArtist['phone'],
-      email: newArtist["email"],
-      password:newArtist["password"],
-    }
-      console.log(artist)
+      // window.localStorage.setItem('artist',JSON.stringify(''))
+      let newArtist=artist||{};
+      newArtist['artistInfo']={...newArtist['artistInfo'],...artistInfo};
+      window.localStorage.setItem('artist',JSON.stringify(newArtist))
+      let sendArtist={
+        firstName:newArtist["firstName"],
+        lastName:newArtist["lastName"],
+        artistName:newArtist["artistName"],
+        genres:newArtist['genres'],
+        imageUrl: newArtist["imageUrl"],
+        zipCode:newArtist["zipCode"],
+        instagramUrl:newArtist["instagramUrl"],
+        spotifyUrl:newArtist["spotifyUrl"],
+        facebookUrl:newArtist["facebookUrl"],
+        type:newArtist["type"],
+        phone:newArtist['phone'],
+        email: newArtist["email"],
+        password:newArtist["password"],
+      }
       const res=await axios({
         method:"post",
         baseURL:"http://localhost:8080/api/",
@@ -92,6 +88,10 @@ export const updatedArtist = (artistInfo) => async dispatch => {
         data:sendArtist
       })
     dispatch(updateArtist(newArtist))
+    }
+
+    // artist=JSON.parse(artist||'');
+
   } catch (err) {
     console.error(err)
   }
