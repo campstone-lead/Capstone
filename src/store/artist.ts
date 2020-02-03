@@ -39,7 +39,7 @@ export const putPersonalInfo = (info) =>({type: PUT_PERSONAL_INFO, info})
 export const putArtistName = (name) =>({type: PUT_ARTIST_NAME, name})
 export const putZipCode = (zipcode) =>({type: PUT_ZIP_CODE, zipcode})
 export const putGenre = (genre) =>({type: PUT_GENRE, genre})
-export const updateArtist = artist => ({type: UPDATE_ARTIST, artist})
+export const updateArtist = newArtistData => ({type: UPDATE_ARTIST, newArtistData})
 export const putType = (artistType) => ({type: PUT_TYPE, artistType})
 
 /**
@@ -57,7 +57,15 @@ export const updatedArtist = (artistInfo) => async dispatch => {
   try {
     console.log("ARTISTINFO", artistInfo)
     let artist=window.localStorage.getItem('artist')
-    artist=JSON.parse(artist||'');
+    console.log('ARTIST', artist)
+
+    if(artist){
+      artist=JSON.parse(artist||'');
+    }else{
+      window.localStorage.setItem('artist',JSON.stringify(''))
+    }
+
+    // artist=JSON.parse(artist||'');
     let newArtist=artist||{};
     newArtist['artistInfo']={...newArtist['artistInfo'],...artistInfo};
     window.localStorage.setItem('artist',JSON.stringify(newArtist))
@@ -116,7 +124,8 @@ export default function(state = defaultArtist, action) {
       case PUT_GENRE:
         return {...state, genres: action.genre}
       case UPDATE_ARTIST:
-        return action.artist
+        window.localStorage.setItem('artist',JSON.stringify(action.newArtistData))
+        return {...state, ...action.newArtistData}
       case PUT_TYPE:
         return {...state, type: action.artistType}
     default:
