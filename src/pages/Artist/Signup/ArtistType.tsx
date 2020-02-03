@@ -4,7 +4,7 @@ import {
   import React from 'react';
   import '../../Tab1.css';
   import {connect} from 'react-redux'
-  import {putType} from '../../../store/artist'
+  import {updatedArtist} from '../../../store/artist'
   
   interface IMyComponentState {
     type: any,
@@ -16,6 +16,7 @@ import {
   }
   interface IMyComponentProps{
     putType: (artistType: any) => void,
+    updateArtist: any
     
   }
   
@@ -35,6 +36,16 @@ import {
       this.handleClick = this.handleClick.bind(this);
     }
 
+    componentDidMount(){
+      let artist=window.localStorage.getItem('artist')
+      if(artist!==null){
+      artist=JSON.parse(artist||'');
+      let newArtist=artist||{};
+        this.setState({
+          type:newArtist["type"]
+        })
+      }
+    }
     
   
   
@@ -47,7 +58,8 @@ import {
           this.state.type.push(key)
         }
       })
-      this.props.putType(this.state.type)
+      this.props.updateArtist(this.state)
+      // this.props.putType(this.state.type)
       this.setState({
           type: []
       })
@@ -91,7 +103,7 @@ import {
 
   const mapDispatchToProps=dispatch=>{
     return {
-        putType: (artistType) => dispatch(putType(artistType))
+        updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
     }
   }
   export default connect(null, mapDispatchToProps)(ArtistType);

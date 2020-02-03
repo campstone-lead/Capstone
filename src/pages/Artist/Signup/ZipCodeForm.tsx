@@ -4,14 +4,15 @@ import {
   import React from 'react';
   import '../../Tab1.css';
   import {connect} from 'react-redux'
-  import {putZipCode} from '../../../store/artist'
+  import {updatedArtist, putZipCode} from '../../../store/artist'
   
   
   interface IMyComponentState {
     zipCode: string,
   }
   interface IMyComponentProps{
-    putZipCode: (zipCode: string) => void
+    putZipCode: (zipCode: string) => void,
+    updateArtist: any
   }
   
   class ZipCodeForm extends React.Component<IMyComponentProps,IMyComponentState>  {
@@ -22,14 +23,26 @@ import {
       }
       this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount(){
+      let artist=window.localStorage.getItem('artist')
+      if(artist!==null){
+      artist=JSON.parse(artist||'');
+      let newArtist=artist||{};
+        this.setState({
+          zipCode: newArtist["zipCode"],
+        })
+      }
+    }
   
   
     handleSubmit(event) {
       event.preventDefault();
-      this.props.putZipCode(this.state.zipCode)
-      this.setState({
-        zipCode: '',
-      })
+      this.props.updateArtist(this.state)
+      // this.props.putZipCode(this.state.zipCode)
+      // this.setState({
+      //   zipCode: '',
+      // })
   
     }
     render(){
@@ -65,7 +78,8 @@ import {
   }
   const mapDispatchToProps=dispatch=>{
     return {
-      putZipCode: (zipcode) => dispatch(putZipCode(zipcode))
+      // putZipCode: (zipcode) => dispatch(putZipCode(zipcode)),
+      updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
     }
   }
   export default connect(null, mapDispatchToProps)(ZipCodeForm);
