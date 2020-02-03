@@ -1,13 +1,15 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonSearchbar,IonItem,IonInput,IonLabel,IonButton, IonCard } from '@ionic/react';
 import './Tab1.css';
+import {auth} from '../store/booker'
 import {connect} from 'react-redux'
 interface IMyComponentState {
   email: string,
   password:string
 }
 interface IMyComponentProps{
-  user:object
+  user:object,
+  auth:any
 }
  class SignUpSignIn extends React.Component<IMyComponentProps,IMyComponentState> {
   constructor(props) {
@@ -22,7 +24,7 @@ interface IMyComponentProps{
 
   handleSubmit(event) {
     event.preventDefault();
-
+    this.props.auth(this.state.email,this.state.password);
   }
   render() {
 console.log('here=>',this.props.user)
@@ -74,4 +76,7 @@ console.log('here=>',this.props.user)
 const mapStateToProps=(state)=>({
   user:state.user
 })
-export default connect(mapStateToProps)(SignUpSignIn);
+const mapDispatchToProps=(dispatch)=>({
+  auth:(email,password) => dispatch(auth(email,password))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(SignUpSignIn);
