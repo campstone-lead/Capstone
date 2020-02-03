@@ -19,6 +19,8 @@ import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
 import Genres from './pages/Artist/Signup/Genres';
 import Details from './pages/Details';
+import SignUpSignIn from './pages/SignUpSignIn';
+import SignUpZero from './pages/SignUp0';
 import BookerSignup2 from './pages/BookerSignup2'
 import BookerSignup1 from './pages/BookerSignup1'
 import BookerSignup4 from './pages/BookerSignup4'
@@ -52,7 +54,9 @@ const App: React.FC = () => (
           <Route path="/home" component={Tab1} exact={true} />
           <Route path="/tab2" component={Tab2} exact={true} />
           <Route path="/tab2/details" component={Details} />
-          <Route path="/profile" component={Login} />
+          {/* <Route path="/profile" component={Login} /> */}
+          <Route path="/login" component={SignUpSignIn} />
+          <Route path="/signup0" component={SignUpZero} />
           <Route path="/signup/booker/2" component={BookerSignup2} />
           <Route path="/signup/booker/1" component={BookerSignup1} />
           <Route path="/signup/booker/4" component={BookerSignup4} />
@@ -73,9 +77,9 @@ const App: React.FC = () => (
             <IonIcon icon={apps} />
             <IonLabel>Tab Two</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/profile">
+          <IonTabButton tab="tab3" href="/login">
             <IonIcon icon={contact} />
-            <IonLabel>Profile</IonLabel>
+            <IonLabel>Log In</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
