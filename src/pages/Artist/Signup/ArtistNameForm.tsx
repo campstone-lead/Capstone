@@ -4,13 +4,13 @@ import {
 import React from 'react';
 import '../../Tab1.css';
 import {connect} from 'react-redux'
-import {putArtistName} from '../../../store/artist'
+import {updatedArtist} from '../../../store/artist'
 
 interface IMyComponentState {
   artistName: string,
 }
 interface IMyComponentProps{
-  putArtistName: (name: string) => void
+  putArtistName: (name: any) => void
 }
 
 class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentState>  {
@@ -22,6 +22,16 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+    let artist=window.localStorage.getItem('artist')
+    if(artist!==null){
+    artist=JSON.parse(artist||'');
+    let newArtist=artist||{};
+      this.setState({
+        artistName:newArtist["artistName"],
+      })
+    }
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -54,15 +64,16 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       />
 
     </IonItem>
-
-      <IonButton type="submit">next</IonButton>
+    <IonItem routerLink = {'/zipcodeform'}>
+      <IonButton type="submit" disabled = {this.state.artistName.length===0 ? true: false}>next</IonButton>
+    </IonItem>
       </form>
     </IonContent>
   </IonPage>)}
 }
 const mapDispatchToProps=dispatch=>{
   return {
-    putArtistName: (name) => dispatch(putArtistName(name))
+    putArtistName: (name) => dispatch(updatedArtist(name))
   }
 }
 export default connect(null, mapDispatchToProps)(PersonalInfoForm);
