@@ -78,7 +78,8 @@ import {
         <IonButton color='tertiary'type="button" target="solo" onClick={this.handleClick}>SOLO</IonButton>
         <IonButton color='tertiary'type="button" target="band" onClick={this.handleClick}>IN A BAND</IonButton>
         <IonItem>
-        <IonButton type="submit">next</IonButton>
+        <br></br>
+        <IonButton type = "submit">Next</IonButton>
         </IonItem>
 
         </form>

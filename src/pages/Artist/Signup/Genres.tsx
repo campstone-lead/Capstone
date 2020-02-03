@@ -5,6 +5,7 @@ import {
   import '../../Tab1.css';
   import {connect} from 'react-redux'
   import {putGenre} from '../../../store/artist'
+  import {withRouter} from 'react-router-dom'
 
   interface IMyComponentState {
     genres: Array<string>,
@@ -51,6 +52,7 @@ import {
 
     handleSubmit(event) {
       event.preventDefault();
+    //   this.props.history.push('/artisttype')
       Object.keys(this.state.genreTypes).forEach(key=>{
         if(this.state.genreTypes[key])
           this.state.genres.push(key)
@@ -81,7 +83,7 @@ import {
         <IonToolbar id="bar" >
           <IonTitle>Choose Genres</IonTitle>
           <IonItem>
-            <IonLabel> <h3>Pick at least two</h3></IonLabel>
+            <IonLabel> <h3>Pick at least one</h3></IonLabel>
           </IonItem>
         </IonToolbar>
       </IonHeader>
@@ -99,12 +101,9 @@ import {
         <IonButton color='danger'type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
         <IonButton color='danger'type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
         <IonButton color='danger'type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
-        <IonItem>
-        <IonButton type="submit">Submit</IonButton>
-        </IonItem>
-        <IonItem>
+        <IonItem routerLink="/artisttype">
         <br></br>
-        <IonButton href ={'/artisttype'}>Next</IonButton>
+        <IonButton type = "submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true ))?false:true}>Next</IonButton>
         </IonItem>
         </form>
       </IonContent>
@@ -118,4 +117,4 @@ import {
       putGenre: (genre) => dispatch(putGenre(genre))
     }
   }
-  export default connect(null, mapDispatchToProps)(Genres);
+  export default withRouter(connect(null, mapDispatchToProps)(Genres));
