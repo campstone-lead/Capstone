@@ -10,6 +10,8 @@ const PUT_ARTIST_NAME = 'PUT_ARTIST_NAME'
 const PUT_ZIP_CODE = 'PUT_ZIP_CODE'
 const PUT_GENRE = 'PUT_GENRE'
 const UPDATE_ARTIST = 'UPDATE_ARTIST'
+const PUT_TYPE = 'PUT_TYPE'
+
 /**
  * INITIAL STATE
  */
@@ -38,6 +40,8 @@ export const putArtistName = (name) =>({type: PUT_ARTIST_NAME, name})
 export const putZipCode = (zipcode) =>({type: PUT_ZIP_CODE, zipcode})
 export const putGenre = (genre) =>({type: PUT_GENRE, genre})
 export const updateArtist = artist => ({type: UPDATE_ARTIST, artist})
+export const putType = (artistType) => ({type: PUT_TYPE, artistType})
+
 /**
  * THUNK CREATORS
  */
@@ -112,6 +116,8 @@ export default function(state = defaultArtist, action) {
         return {...state, genres: action.genre}
       case UPDATE_ARTIST:
         return action.artist
+      case PUT_TYPE:
+        return {...state, type: action.artistType}
     default:
       return state
   }

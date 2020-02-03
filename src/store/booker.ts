@@ -10,17 +10,17 @@ const UPDATE_VENUE = 'UPDATE_VENUE'
  * INITIAL STATE
  */
 const defaultBooker = {
-email: '',
-password:'',
-firstName:'',
-lastName:'',
-phone:'',
-venue:{
-  location:{},
-  address:"",
-  photo:"",
-  description:""
-}
+// email: '',
+// password:'',
+// firstName:'',
+// lastName:'',
+// phone:'',
+// venue:{
+//   location:{},
+//   address:"",
+//   photo:"",
+//   description:""
+// }
 }
 
 /**
@@ -37,12 +37,34 @@ export const updateVenue = venue => ({type: UPDATE_VENUE, venue})
  */
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
+    // const res = await axios.get('/auth/me')
+
+    const res=await axios({
+      method:"get",
+      baseURL:"http://localhost:8080/auth/",
+      url:"/me/"
+    })
+
     dispatch(getBooker(res.data || defaultBooker))
   } catch (err) {
     console.error(err)
   }
 }
+
+export const auth = (email,password) => async dispatch => {
+  try {
+    const res = await axios({
+      method:"post",
+      baseURL:"http://localhost:8080/auth/",
+      url:"/login/",
+      data:{email, password}
+    })
+    dispatch(getBooker(res.data || defaultBooker))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const updatedVenue = (venue) => async dispatch => {
   try {
     let booker=window.localStorage.getItem('booker')
