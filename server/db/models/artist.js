@@ -25,7 +25,7 @@ const Artist = db.define('artist', {
         }
     },
     genres: {
-        type: Sequelize.ARRAY(Sequelize.ENUM('rock', 'jazz', 'electronic', 'pop', 'hip-hop', 'indie', 'country', 'metal', 'house', 'techno')),
+        type: Sequelize.ARRAY(Sequelize.ENUM('rock', 'jazz', 'electronic', 'pop', 'hipHop', 'indie', 'country', 'metal', 'house', 'techno')),
         allowNull: false,
         validate: {
           notEmpty: true,
@@ -103,15 +103,15 @@ module.exports = Artist
 Artist.prototype.correctPassword = function(candidatePwd) {
     return Artist.encryptPassword(candidatePwd, this.salt()) === this.password()
   }
-  
+
   /**
    * classMethods
    */
-  
+
   Artist.generateSalt = function() {
     return crypto.randomBytes(16).toString('base64')
   }
-  
+
   Artist.encryptPassword = function(plainText, salt) {
     return crypto
       .createHash('RSA-SHA256')
@@ -119,7 +119,7 @@ Artist.prototype.correctPassword = function(candidatePwd) {
       .update(salt)
       .digest('hex')
   }
-  
+
   /**
    * hooks
    */
@@ -129,7 +129,7 @@ Artist.prototype.correctPassword = function(candidatePwd) {
       artist.password =Artist.encryptPassword(artist.password(), artist.salt())
     }
   }
-  
+
   Artist.beforeCreate(setSaltAndPassword)
   Artist.beforeUpdate(setSaltAndPassword)
   Artist.beforeBulkCreate(artists => {
