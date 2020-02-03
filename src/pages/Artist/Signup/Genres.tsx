@@ -100,7 +100,11 @@ import {
         <IonButton color='danger'type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
         <IonButton color='danger'type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
         <IonItem>
-        <IonButton type="submit">next</IonButton>
+        <IonButton type="submit">Submit</IonButton>
+        </IonItem>
+        <IonItem>
+        <br></br>
+        <IonButton href ={'/artisttype'}>Next</IonButton>
         </IonItem>
         </form>
       </IonContent>
