@@ -65,7 +65,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
 
     </IonItem>
     <IonItem routerLink = {'/zipcodeform'}>
-      <IonButton type="submit" disabled = {this.state.artistName.length===0 ? true: false}>next</IonButton>
+      <IonButton type="submit" /*disabled = {this.state.artistName===""? true: false}*/>next</IonButton>
     </IonItem>
       </form>
     </IonContent>

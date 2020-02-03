@@ -16,19 +16,19 @@ const PUT_TYPE = 'PUT_TYPE'
  * INITIAL STATE
  */
 const defaultArtist = {
-  firstName: '',
-  lastName: '',
-  artistName: '',
-  genres: [],
-  imageUrl: '',
-  zipCode: '',
-  instagramUrl: '',
-  spotifyUrl: '',
-  facebookUrl: '',
-  type: '',
-  phone: '',
-  email: '',
-  password: '',
+  // firstName: '',
+  // lastName: '',
+  // artistName: '',
+  // genres: [],
+  // imageUrl: '',
+  // zipCode: '',
+  // instagramUrl: '',
+  // spotifyUrl: '',
+  // facebookUrl: '',
+  // type: '',
+  // phone: '',
+  // email: '',
+  // password: '',
 }
 
 /**
@@ -55,6 +55,7 @@ export const fetchArtists = () => async dispatch => {
 }
 export const updatedArtist = (artistInfo) => async dispatch => {
   try {
+    console.log("ARTISTINFO", artistInfo)
     let artist=window.localStorage.getItem('artist')
     artist=JSON.parse(artist||'');
     let newArtist=artist||{};
@@ -79,7 +80,7 @@ export const updatedArtist = (artistInfo) => async dispatch => {
       const res=await axios({
         method:"post",
         baseURL:"http://localhost:8080/api/",
-        url:"/artists/",
+        url:"/artists",
         data:sendArtist
       })
     dispatch(updateArtist(newArtist))
