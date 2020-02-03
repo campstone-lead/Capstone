@@ -1,21 +1,21 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const Booker = require('../db/models/booker')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
   try {
-    const user = await User.findOne({where: {email: req.body.email}})
-    if (!user) {
-      console.log('No such user found:', req.body.email)
+    const booker = await Booker.findOne({where: {email: req.body.email}})
+    if (!booker) {
+      console.log('No such booker found:', req.body.email)
       res.status(401).send('Wrong username and/or password')
-    } else if (!user.correctPassword(req.body.password)) {
-      console.log('Incorrect password for user:', req.body.email)
+    } else if (!booker.correctPassword(req.body.password)) {
+      console.log('Incorrect password for booker:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      req.login(user, err => {
+      req.login(booker, err => {
         if (err) return next(err)
         else {
-          return res.json(user)
+          return res.json(booker)
         }
       })
     }
@@ -26,11 +26,11 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const user = await User.create(req.body)
-    req.login(user, err => (err ? next(err) : res.json(user)))
+    const booker = await Booker.create(req.body)
+    req.login(booker, err => (err ? next(err) : res.json(booker)))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('User already exists')
+      res.status(401).send('Booker already exists')
     } else {
       next(err)
     }
@@ -44,6 +44,7 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res, next) => {
+  console.log(req.session.id)
   res.json(req.user)
 })
 
