@@ -4,16 +4,17 @@ import {
 import React from 'react';
 import '../../Tab1.css';
 import {connect} from 'react-redux'
-import {putPersonalInfo} from '../../../store/artist'
+import {updatedArtist} from '../../../store/artist'
 
 interface IMyComponentState {
   email: string,
   phone:string,
   firstName:string,
   lastName: string,
+  password: string
 }
 interface IMyComponentProps{
-  putInfo: (info: object) => void
+  putInfo: (info: any) => void
 }
 
 class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentState>  {
@@ -24,10 +25,25 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       phone:'',
       firstName:'',
       lastName: '',
+      password: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+    let artist=window.localStorage.getItem('artist')
+    if(artist!==null){
+    artist=JSON.parse(artist||'');
+    let newArtist=artist||{};
+      this.setState({
+        email: newArtist["email"],
+        password:newArtist["password"],
+        firstName:newArtist["firstName"],
+        lastName:newArtist["lastName"],
+        phone:newArtist["phone"]
+      })
+    }
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -37,6 +53,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       phone:'',
       firstName:'',
       lastName: '',
+      password: ''
     })
 
   }
@@ -88,14 +105,25 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       />
       </IonItem>
 
-      <IonButton href={'/artistnameform'} type="submit">next</IonButton>
+    <IonItem>
+      <IonLabel>Password</IonLabel>
+      <IonInput type="password" placeholder="Password" required
+        value={this.state.password}
+        onIonChange={(e) => this.setState({password:(e.target as HTMLInputElement).value})}
+      />
+      </IonItem>
+      <IonItem routerLink ={'/artistnameform'} >
+
+      <IonButton  type="submit"disabled={(this.state.email.length===0||this.state.firstName.length===0||this.state.password.length===0||this.state.lastName.length===0||this.state.phone.length===0)?true:false} >next</IonButton>
+
+      </IonItem>
       </form>
     </IonContent>
   </IonPage>)}
 }
 const mapDispatchToProps=dispatch=>{
   return {
-    putInfo: (info) => dispatch(putPersonalInfo(info))
+    putInfo: (info) => dispatch(updatedArtist(info))
   }
 }
 export default connect(null, mapDispatchToProps)(PersonalInfoForm);

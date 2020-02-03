@@ -99,7 +99,8 @@ export default function(state = defaultArtist, action) {
           firstName: action.info.firstName,
           lastName: action.info.lastName,
           phone: action.info.phone,
-          email: action.info.email
+          email: action.info.email,
+
         }
 
       case PUT_ARTIST_NAME:
