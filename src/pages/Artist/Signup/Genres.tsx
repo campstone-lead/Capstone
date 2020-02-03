@@ -89,16 +89,16 @@ import {
 
     <IonContent>
         <form onSubmit={this.handleSubmit}>
-        <IonButton color='danger' type="button" target="rock" onClick={this.handleClick}>ROCK</IonButton>
-        <IonButton color='danger'type="button" target="jazz" onClick={this.handleClick}>JAZZ</IonButton>
-        <IonButton color='danger'type="button" target="electronic" onClick={this.handleClick}>ELECTRONIC</IonButton>
-        <IonButton color='danger'type="button" target="pop" onClick={this.handleClick}>POP</IonButton>
-        <IonButton color='danger'type="button" target="hipHop" onClick={this.handleClick}>HIP-HOP</IonButton>
-        <IonButton color='danger'type="button" target="indie" onClick={this.handleClick}>INDIE</IonButton>
-        <IonButton color='danger'type="button" target="country" onClick={this.handleClick}>COUNTRY</IonButton>
-        <IonButton color='danger'type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
-        <IonButton color='danger'type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
-        <IonButton color='danger'type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
+        <IonButton color={this.state.genreTypes.rock ? 'primary' : 'secondary'} type="button" target="rock" onClick={this.handleClick}>ROCK</IonButton>
+        <IonButton color={this.state.genreTypes.jazz ? 'primary' : 'secondary'} type="button" target="jazz" onClick={this.handleClick}>JAZZ</IonButton>
+        <IonButton color={this.state.genreTypes.electronic ? 'primary' : 'secondary'}type="button" target="electronic" onClick={this.handleClick}>ELECTRONIC</IonButton>
+        <IonButton color={this.state.genreTypes.pop ? 'primary' : 'secondary'}type="button" target="pop" onClick={this.handleClick}>POP</IonButton>
+        <IonButton color={this.state.genreTypes.hipHop ? 'primary' : 'secondary'}type="button" target="hipHop" onClick={this.handleClick}>HIP-HOP</IonButton>
+        <IonButton color={this.state.genreTypes.indie ? 'primary' : 'secondary'}type="button" target="indie" onClick={this.handleClick}>INDIE</IonButton>
+        <IonButton color={this.state.genreTypes.country ? 'primary' : 'secondary'}type="button" target="country" onClick={this.handleClick}>COUNTRY</IonButton>
+        <IonButton color={this.state.genreTypes.metal ? 'primary' : 'secondary'}type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
+        <IonButton color={this.state.genreTypes.house ? 'primary' : 'secondary'}type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
+        <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'}type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
         <IonItem>
         <IonButton type="submit">next</IonButton>
         </IonItem>

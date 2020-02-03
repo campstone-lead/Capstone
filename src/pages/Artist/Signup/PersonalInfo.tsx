@@ -88,7 +88,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       />
       </IonItem>
 
-      <IonButton type="submit">next</IonButton>
+      <IonButton href={'/artistnameform'} type="submit">next</IonButton>
       </form>
     </IonContent>
   </IonPage>)}
