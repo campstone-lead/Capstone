@@ -5,8 +5,8 @@ import {
   import '../../Tab1.css';
   import {connect} from 'react-redux'
   import {updatedArtist, putZipCode} from '../../../store/artist'
-  
-  
+
+
   interface IMyComponentState {
     zipCode: string,
   }
@@ -14,7 +14,7 @@ import {
     putZipCode: (zipCode: string) => void,
     updateArtist: any
   }
-  
+
   class ZipCodeForm extends React.Component<IMyComponentProps,IMyComponentState>  {
     constructor(props) {
       super(props);
@@ -34,8 +34,8 @@ import {
         })
       }
     }
-  
-  
+
+
     handleSubmit(event) {
       event.preventDefault();
       this.props.updateArtist(this.state)
@@ -43,7 +43,7 @@ import {
       // this.setState({
       //   zipCode: '',
       // })
-  
+
     }
     render(){
     return(<IonPage>
@@ -55,22 +55,22 @@ import {
           </IonItem>
         </IonToolbar>
       </IonHeader>
-  
-  
+
+
     <IonContent>
     <form onSubmit={this.handleSubmit}>
-  
+
       <IonItem>
         <IonInput type="text" placeholder="ZipCode" required
         value={this.state.zipCode}
         onIonChange={(e) => this.setState({zipCode:(e.target as HTMLInputElement).value})}
         />
-  
+
       </IonItem>
-  
+
       <IonItem routerLink="/genres">
         <br></br>
-        <IonButton type = "submit" disabled={(this.state.zipCode.length ===0)?true:false}>Next</IonButton>
+        <IonButton type = "submit" /*disabled={(this.state.zipCode.length ===0)?true:false}*/>Next</IonButton>
         </IonItem>
         </form>
       </IonContent>
@@ -83,4 +83,3 @@ import {
     }
   }
   export default connect(null, mapDispatchToProps)(ZipCodeForm);
-  

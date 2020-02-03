@@ -35,7 +35,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.putArtistName(this.state.artistName)
+    this.props.putArtistName(this.state)
     this.setState({
       artistName: '',
     })

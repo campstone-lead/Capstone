@@ -16,19 +16,19 @@ const PUT_TYPE = 'PUT_TYPE'
  * INITIAL STATE
  */
 const defaultArtist = {
-  // firstName: '',
-  // lastName: '',
-  // artistName: '',
-  // genres: [],
-  // imageUrl: '',
-  // zipCode: '',
-  // instagramUrl: '',
-  // spotifyUrl: '',
-  // facebookUrl: '',
-  // type: '',
-  // phone: '',
-  // email: '',
-  // password: '',
+  firstName: '',
+  lastName: '',
+  artistName: '',
+  genres: [],
+  imageUrl: '',
+  zipCode: '',
+  instagramUrl: '',
+  spotifyUrl: '',
+  facebookUrl: '',
+  type: '',
+  phone: '',
+  email: '',
+  password: '',
 }
 
 /**

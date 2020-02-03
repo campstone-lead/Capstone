@@ -59,7 +59,7 @@ import {
         })
       }
     }
-  
+
 
 
     handleSubmit(event) {
@@ -69,14 +69,8 @@ import {
         if(this.state.genreTypes[key])
           this.state.genres.push(key)
       })
-      // this.props.putGenre(this.state.genres)
       this.props.updateArtist(this.state)
 
-      // const router = document.querySelector('ion-router');
-      // const routeRedirect = document.createElement('ion-route-redirect');
-      // routeRedirect.setAttribute('from', '*');
-      // routeRedirect.setAttribute('to', '/zipcodeform');
-      //   router.appendChild(routeRedirect);
       this.setState({
         genres: [],
       })
