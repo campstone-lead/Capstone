@@ -73,7 +73,7 @@ export const updatedVenue = (venue) => async dispatch => {
         address:newBooker["venue"].address,
         latitude:newBooker["venue"].latitude,
         longitude:newBooker["venue"].longitude,
-        capacity:newBooker["venue"].capacity,
+        capacity:100,
         bookerId:res.data.id||1,
         imageURL:URL
       }

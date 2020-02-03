@@ -67,15 +67,16 @@ export const updatedVenue = (venue) => async dispatch => {
         data:booker
       })
      let URL= newBooker["venue"].photo.slice(5)
+     console.log(URL)
       let venue={
         description:newBooker["venue"].description,
         name:newBooker["venue"].address,
         address:newBooker["venue"].address,
         latitude:newBooker["venue"].latitude,
         longitude:newBooker["venue"].longitude,
-        capacity:newBooker["venue"].capacity,
+        capacity:100,
         bookerId:res.data.id||1,
-        imageURL:URL
+
       }
       await  axios({
         method:"post",
