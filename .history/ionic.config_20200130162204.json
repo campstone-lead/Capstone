@@ -1,7 +1,0 @@
-{
-  "name": "Capstone",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
