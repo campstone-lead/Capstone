@@ -1,0 +1,35 @@
+.welcome-card  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20;
+  height: 600px;
+flex-direction: column;
+
+}
+#bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.next{
+
+ width:100px;
+ border-radius: 25%;
+height: 40px;
+
+ }
+.searchInput{
+  width:300px;
+ padding: 10px;
+text-decoration: none;
+}
+
+.description{
+  width: 420px;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid  white;
+  margin: 0;
+}

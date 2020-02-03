@@ -1,0 +1,19 @@
+.welcome-card  {
+  display: flex;
+  justify-content: center;
+  margin: 20;
+  height: 600px;
+flex-direction: column;
+}
+#bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+ .search{
+ width:800px;
+ border-radius: 25%;
+
+ }
+

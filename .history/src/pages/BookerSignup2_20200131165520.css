@@ -1,0 +1,29 @@
+.welcome-card  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20;
+  height: 600px;
+flex-direction: column;
+
+}
+#bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.next{
+  position: relative;
+ width:100px;
+ border-radius: 25%;
+height: 40px;
+
+right:-200px;
+
+ }
+.searchInput{
+  width:300px;
+ padding: 10px;
+ position: fixed;
+}
