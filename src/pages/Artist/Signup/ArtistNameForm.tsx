@@ -57,7 +57,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
   <form onSubmit={this.handleSubmit}>
 
     <IonItem>
-      <IonLabel>First Name</IonLabel>
+      <IonLabel>Artist Name</IonLabel>
       <IonInput type="text" placeholder="FirstName" required
       value={this.state.artistName}
       onIonChange={(e) => this.setState({artistName:(e.target as HTMLInputElement).value})}

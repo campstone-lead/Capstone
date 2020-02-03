@@ -4,8 +4,7 @@ import {
   import React from 'react';
   import '../../Tab1.css';
   import {connect} from 'react-redux'
-  import {putGenre} from '../../../store/artist'
-  import {withRouter} from 'react-router-dom'
+  import {updatedArtist, putGenre} from '../../../store/artist'
 
   interface IMyComponentState {
     genres: Array<string>,
@@ -24,6 +23,7 @@ import {
   }
   interface IMyComponentProps{
     putGenre: (genre: Array<string>) => void,
+    updateArtist: any
 
   }
 
@@ -49,6 +49,18 @@ import {
       this.handleClick = this.handleClick.bind(this);
     }
 
+    componentDidMount(){
+      let artist=window.localStorage.getItem('artist')
+      if(artist!==null){
+      artist=JSON.parse(artist||'');
+      let newArtist=artist||{};
+        this.setState({
+          genres:newArtist['genres']
+        })
+      }
+    }
+  
+
 
     handleSubmit(event) {
       event.preventDefault();
@@ -57,7 +69,8 @@ import {
         if(this.state.genreTypes[key])
           this.state.genres.push(key)
       })
-      this.props.putGenre(this.state.genres)
+      // this.props.putGenre(this.state.genres)
+      this.props.updateArtist(this.state)
 
       // const router = document.querySelector('ion-router');
       // const routeRedirect = document.createElement('ion-route-redirect');
@@ -101,18 +114,7 @@ import {
         <IonButton color={this.state.genreTypes.metal ? 'primary' : 'secondary'}type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
         <IonButton color={this.state.genreTypes.house ? 'primary' : 'secondary'}type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
         <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'}type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
-        {/* <IonItem>
-        <IonButton type="submit">next</IonButton>
-        <IonButton color='danger' type="button" target="rock" onClick={this.handleClick}>ROCK</IonButton>
-        <IonButton color='danger'type="button" target="jazz" onClick={this.handleClick}>JAZZ</IonButton>
-        <IonButton color='danger'type="button" target="electronic" onClick={this.handleClick}>ELECTRONIC</IonButton>
-        <IonButton color='danger'type="button" target="pop" onClick={this.handleClick}>POP</IonButton>
-        <IonButton color='danger'type="button" target="hipHop" onClick={this.handleClick}>HIP-HOP</IonButton>
-        <IonButton color='danger'type="button" target="indie" onClick={this.handleClick}>INDIE</IonButton>
-        <IonButton color='danger'type="button" target="country" onClick={this.handleClick}>COUNTRY</IonButton>
-        <IonButton color='danger'type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
-        <IonButton color='danger'type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
-        <IonButton color='danger'type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton> */}
+
         <IonItem routerLink="/artisttype">
         <br></br>
         <IonButton type = "submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true ))?false:true}>Next</IonButton>
@@ -126,7 +128,8 @@ import {
 
   const mapDispatchToProps=dispatch=>{
     return {
-      putGenre: (genre) => dispatch(putGenre(genre))
+      // putGenre: (genre) => dispatch(putGenre(genre)),
+      updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
     }
   }
-  export default withRouter(connect(null, mapDispatchToProps)(Genres));
+  export default connect(null, mapDispatchToProps)(Genres);
