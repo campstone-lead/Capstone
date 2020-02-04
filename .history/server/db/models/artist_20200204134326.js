@@ -77,8 +77,7 @@ const Artist = db.define('artist', {
         }
       },
       status:{
-        type:Sequelize.STRING,
-        defaultValue:'artist'
+        type:Sequelize.STRING
       },
     password: {
         type: Sequelize.STRING,

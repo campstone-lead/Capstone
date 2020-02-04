@@ -12,11 +12,9 @@ router.post('/login', async (req, res, next) => {
       if(!artist){
         user=null
       }else{
-        console.log('artist')
         user=artist;
       }
     }else {
-      console.log('booker')
       user=booker;
     }
     if (!user) {

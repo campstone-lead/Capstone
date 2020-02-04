@@ -22,9 +22,9 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
-passport.serializeUser((user, done) => done(null,user.email))
+passport.serializeUser((user, done) => done(null, user.id,user.email))
 
-passport.deserializeUser(async (email,done) => {
+passport.deserializeUser(async (id, email,done) => {
   try {
     let user = await db.models.booker.findOne({where: {email: email}})
     if(user==null)

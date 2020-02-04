@@ -94,6 +94,19 @@ export const updatedVenue = (venue) => async dispatch => {
     console.error(err)
   }
 }
+export const logout = () => async dispatch => {
+  try {
+    await axios({
+      method:"post",
+      baseURL:"http://localhost:8080/",
+      url:"/auth/logout/"
+    })
+    dispatch(removeUser())
+    history.push('/login')
+  } catch (err) {
+    console.error(err)
+  }
+}
 /**
  * REDUCER
  */
