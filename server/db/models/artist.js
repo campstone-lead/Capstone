@@ -31,6 +31,9 @@ const Artist = db.define('artist', {
           notEmpty: true,
         }
     },
+    bio: {
+        type: Sequelize.TEXT
+    },
     imageUrl: {
         type: Sequelize.STRING,
         allowNull: false,
