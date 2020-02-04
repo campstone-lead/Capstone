@@ -41,7 +41,7 @@ const Booker = db.define('booker', {
   },
   status:{
     type:Sequelize.STRING,
-    defaultValue:'booker'
+    allowNull:false
   },
   password: {
     type: Sequelize.STRING,

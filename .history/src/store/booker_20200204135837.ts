@@ -38,6 +38,23 @@ export const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
+export const me = () => async dispatch => {
+  try {
+    // const res = await axios.get('/auth/me')
+
+    const res=await axios({
+      method:"get",
+      baseURL:"http://localhost:8080/auth/",
+      url:"/me/"
+    })
+
+    dispatch(getBooker(res.data || defaultBooker))
+
+  } catch (err) {
+    console.error(err)
+  }
+
+}
 
 
 
@@ -90,6 +107,19 @@ export const updatedVenue = (venue) => async dispatch => {
       })
     }
     dispatch(updateVenue(newBooker))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const logout = () => async dispatch => {
+  try {
+    await axios({
+      method:"post",
+      baseURL:"http://localhost:8080/",
+      url:"/auth/logout/"
+    })
+    dispatch(removeUser())
+    history.push('/login')
   } catch (err) {
     console.error(err)
   }

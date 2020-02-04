@@ -53,7 +53,7 @@ import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3'
 interface IMyComponentProps{
-  user:object,
+  booker:object,
   userId:Number,
   me:any,
   history:any,
@@ -155,8 +155,8 @@ console.log(this.props,this.props.userId!==undefined,)
   </IonApp>)}
         }
 const mapStateToProps=(state)=>({
-          user:state.user,
-          userId:state.user.id
+          booker:state.booker,
+          userId:state.booker.id
         })
 const mapDispatchToProps=(dispatch)=>({
          me:()=>dispatch(me()),

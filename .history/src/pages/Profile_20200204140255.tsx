@@ -7,15 +7,27 @@ interface IMyComponentProps{
   user:object
 }
  class Profile extends React.Component<IMyComponentProps,{}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password:''
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
 
+  handleSubmit(event) {
+    event.preventDefault();
+
+  }
   render() {
   return (
 
     <IonPage>
       <IonHeader >
         <IonToolbar id="bar" >
-          <IonTitle>Profile</IonTitle>
+          <IonTitle>LEAD</IonTitle>
           {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
         </IonToolbar>
       </IonHeader>

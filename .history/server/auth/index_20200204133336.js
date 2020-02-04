@@ -12,11 +12,9 @@ router.post('/login', async (req, res, next) => {
       if(!artist){
         user=null
       }else{
-        console.log('artist')
         user=artist;
       }
     }else {
-      console.log('booker')
       user=booker;
     }
     if (!user) {
@@ -38,7 +36,7 @@ router.post('/login', async (req, res, next) => {
     next(err)
   }
 })
-//has to be modified for artist too!
+
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await Booker.create(req.body)
@@ -59,7 +57,33 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res, next) => {
+  // const resp=await db.models.Session.findAll();
+  // let user=null;
+  // let sessionId=''
+
+  // resp.forEach((el)=>{
+  //   try{
+  //      user=JSON.parse(el.dataValues.data).passport
+  //      sessionId=el.dataValues.sid
+  //     console.log(user,sessionId,req.session.id)
+  //   }catch(err){
+  //     console.log(err,'here')
+  //   }
+
+  // })
 console.log(req.session,req.sessionID)
+  // if(!req.session.userId)
+  //   res.sendStatus(404)
+  // else {
+  //   try {
+  //     const user = await User.findById(req.session.userId);
+  //     if(user)
+  //       res.json(user)
+  //     else res.sendStatus(404)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
   res.json(req.user)
 })
 
