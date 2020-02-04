@@ -79,14 +79,11 @@ export const updatedVenue = (venue) => async dispatch => {
     let password=venue.password;
     booker=JSON.parse(booker||'');
     let newBooker=booker||{};
-    console.log('pass',password)
     if(password===undefined)
-  { console.log('here')
-    newBooker['venue']={...newBooker['venue'],...venue};
+  { newBooker['venue']={...newBooker['venue'],...venue};
     window.localStorage.setItem('booker',JSON.stringify(newBooker))
   }
     if(password!==undefined){
-      console.log('inside')
       let booker={
       email: newBooker["email"],
       password: password,
@@ -95,12 +92,12 @@ export const updatedVenue = (venue) => async dispatch => {
       phone:newBooker["phone"],
       genres:['pop'],
       }
-      const res=await axios({
-        method:"post",
-        baseURL:"http://localhost:8080/api/",
-        url:"/bookers/",
-        data:booker
-      })
+      // const res=await axios({
+      //   method:"post",
+      //   baseURL:"http://localhost:8080/api/",
+      //   url:"/bookers/",
+      //   data:booker
+      // })
 
      let URL= newBooker["venue"].photo.slice(5)
       let v={
@@ -110,15 +107,16 @@ export const updatedVenue = (venue) => async dispatch => {
         latitude:newBooker["venue"].latitude,
         longitude:newBooker["venue"].longitude,
         capacity:newBooker["venue"].capacity,
-        bookerId:res.data.id||1,
+        // bookerId:res.data.id||1,
         imageURL:URL
       }
-      await  axios({
-        method:"post",
-        baseURL:"http://localhost:8080/api/",
-        url:"/venues/",
-        data:v
-      })
+      console.log(booker,v)
+      // await  axios({
+      //   method:"post",
+      //   baseURL:"http://localhost:8080/api/",
+      //   url:"/venues/",
+      //   data:venue
+      // })
     }
     dispatch(updateVenue(newBooker))
   } catch (err) {

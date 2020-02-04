@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {updatedBooker} from '../store/booker'
 interface IMyComponentState {
   email: string,
+  password:string,
   firstName:string,
   lastName:string,
   phone:string,
@@ -19,6 +20,7 @@ interface IMyComponentProps{
     super(props);
     this.state = {
       email: '',
+      password:'',
       firstName:'',
       lastName:'',
       phone:''
@@ -33,6 +35,7 @@ componentDidMount(){
   let newBooker=booker||{};
     this.setState({
       email: newBooker["email"],
+      password:newBooker["password"],
       firstName:newBooker["firstName"],
       lastName:newBooker["lastName"],
       phone:newBooker["phone"]
@@ -46,7 +49,7 @@ this.props.updateBooker(this.state);
 
   }
   render() {
-
+console.log('hereeee',this.props)
   return (
 
     <IonPage>
@@ -98,11 +101,19 @@ this.props.updateBooker(this.state);
       </IonItem>
 
 
+      <IonItem>
+
+        <IonInput type="password" placeholder="Password" required
+          value={this.state.password}
+          onIonChange={(e) => this.setState({password:(e.target as HTMLInputElement).value})}
+        />
+        </IonItem>
+
 
 <IonItem routerLink="/signup/booker/2">
 <br></br>
 
-      <IonButton type="submit"  disabled={(this.state.email.length===0||this.state.firstName.length===0||this.state.lastName.length===0||this.state.phone.length===0)?true:false}>Submit</IonButton>
+      <IonButton type="submit"  disabled={(this.state.email.length===0||this.state.firstName.length===0||this.state.password.length===0||this.state.lastName.length===0||this.state.phone.length===0)?true:false}>Next</IonButton>
 </IonItem>
 
 

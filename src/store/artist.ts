@@ -56,43 +56,48 @@ export const fetchArtists = () => async dispatch => {
 export const updatedArtist = (artistInfo) => async dispatch => {
   try {
     console.log("ARTISTINFO", artistInfo)
-    let artist = window.localStorage.getItem('artist')
-    console.log('ARTIST', artist)
+    let artist = window.localStorage.getItem('artistInfo')
 
-    if (artist) {
-      artist = JSON.parse(artist || '');
-    } else {
-      // window.localStorage.setItem('artist',JSON.stringify(''))
+    if (artist === null) {
+      window.localStorage.setItem('artistInfo', JSON.stringify(artistInfo))
+    }
+    // window.localStorage.setItem('artist',JSON.stringify(''))
+    else {
+      artist = JSON.parse(artist || '')
       let newArtist = artist || {};
-      newArtist['artistInfo'] = { ...newArtist['artistInfo'], ...artistInfo };
-      window.localStorage.setItem('artist', JSON.stringify(newArtist))
-      let sendArtist = {
-        firstName: newArtist["firstName"],
-        lastName: newArtist["lastName"],
-        artistName: newArtist["artistName"],
-        genres: newArtist['genres'],
-        imageUrl: newArtist["imageUrl"],
-        zipCode: newArtist["zipCode"],
-        instagramUrl: newArtist["instagramUrl"],
-        spotifyUrl: newArtist["spotifyUrl"],
-        facebookUrl: newArtist["facebookUrl"],
-        type: newArtist["type"],
-        phone: newArtist['phone'],
-        email: newArtist["email"],
-        password: newArtist["password"],
+      console.log(artistInfo, newArtist)
+      newArtist = { ...newArtist, ...artistInfo };
+      console.log(newArtist)
+      window.localStorage.setItem('artistInfo', JSON.stringify(newArtist))
+      if (artistInfo.type !== undefined) {
+        console.log('HERE')
+        let sendArtist = {
+          firstName: newArtist["firstName"],
+          lastName: newArtist["lastName"],
+          artistName: newArtist["artistName"],
+          genres: newArtist['genres'],
+          imageUrl: 'https://cdn.britannica.com/01/136501-050-D9110414/John-Lennon.jpg',
+          zipCode: newArtist["zipCode"],
+          instagramUrl: newArtist["instagramUrl"],
+          spotifyUrl: newArtist["spotifyUrl"],
+          facebookUrl: newArtist["facebookUrl"],
+          type: newArtist["type"][0],
+          phone: newArtist['phone'],
+          email: newArtist["email"],
+          password: newArtist["password"],
+        }
+        console.log(sendArtist, 'sendArtist')
+        const res = await axios({
+          method: "post",
+          baseURL: "http://localhost:8080/api/",
+          url: "/artists",
+          data: sendArtist
+        })
+        window.localStorage.clear()
+        dispatch(updateArtist(res.data))
       }
 
-      const res = await axios({
-        method: "post",
-        baseURL: "http://localhost:8080/api/",
-        url: "/artists",
-        data: sendArtist
-      })
-      console.log('res', res)
-      dispatch(updateArtist(newArtist))
     }
-
-    // artist=JSON.parse(artist||'');
 
   } catch (err) {
     console.error(err)

@@ -10,7 +10,6 @@ import PlacesAutocomplete, {
 import { connect } from 'react-redux'
 import { updatedArtist, putZipCode } from '../../../store/artist'
 
-
 interface IMyComponentState {
   zipCode: string,
   longitude: Number,
@@ -32,18 +31,6 @@ class ZipCodeForm extends React.Component<IMyComponentProps, IMyComponentState> 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    let artist = window.localStorage.getItem('artist')
-    if (artist !== null) {
-      artist = JSON.parse(artist || '');
-      let newArtist = artist || {};
-      this.setState({
-        zipCode: newArtist["zipCode"],
-      })
-    }
-  }
-
-
   async handleSubmit(event) {
     event.preventDefault();
 
@@ -55,10 +42,6 @@ class ZipCodeForm extends React.Component<IMyComponentProps, IMyComponentState> 
     })
     this.props.updateArtist(this.state)
     console.log('this.state:', this.state)
-    // this.props.putZipCode(this.state.zipCode)
-    // this.setState({
-    //   zipCode: '',
-    // })
 
   }
   render() {
