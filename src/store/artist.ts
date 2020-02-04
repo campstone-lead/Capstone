@@ -34,13 +34,13 @@ const defaultArtist = {
 /**
  * ACTION CREATORS
  */
-const getArtists = artists => ({type: GET_ARTISTS, artists})
-export const putPersonalInfo = (info) =>({type: PUT_PERSONAL_INFO, info})
-export const putArtistName = (name) =>({type: PUT_ARTIST_NAME, name})
-export const putZipCode = (zipcode) =>({type: PUT_ZIP_CODE, zipcode})
-export const putGenre = (genre) =>({type: PUT_GENRE, genre})
-export const updateArtist = newArtistData => ({type: UPDATE_ARTIST, newArtistData})
-export const putType = (artistType) => ({type: PUT_TYPE, artistType})
+const getArtists = artists => ({ type: GET_ARTISTS, artists })
+export const putPersonalInfo = (info) => ({ type: PUT_PERSONAL_INFO, info })
+export const putArtistName = (name) => ({ type: PUT_ARTIST_NAME, name })
+export const putZipCode = (zipcode) => ({ type: PUT_ZIP_CODE, zipcode })
+export const putGenre = (genre) => ({ type: PUT_GENRE, genre })
+export const updateArtist = newArtistData => ({ type: UPDATE_ARTIST, newArtistData })
+export const putType = (artistType) => ({ type: PUT_TYPE, artistType })
 
 /**
  * THUNK CREATORS
@@ -56,40 +56,40 @@ export const fetchArtists = () => async dispatch => {
 export const updatedArtist = (artistInfo) => async dispatch => {
   try {
     console.log("ARTISTINFO", artistInfo)
-    let artist=window.localStorage.getItem('artist')
+    let artist = window.localStorage.getItem('artist')
     console.log('ARTIST', artist)
 
-    if(artist){
-      artist=JSON.parse(artist||'');
-    }else{
+    if (artist) {
+      artist = JSON.parse(artist || '');
+    } else {
       // window.localStorage.setItem('artist',JSON.stringify(''))
-      let newArtist=artist||{};
-      newArtist['artistInfo']={...newArtist['artistInfo'],...artistInfo};
-      window.localStorage.setItem('artist',JSON.stringify(newArtist))
-      let sendArtist={
-        firstName:newArtist["firstName"],
-        lastName:newArtist["lastName"],
-        artistName:newArtist["artistName"],
-        genres:newArtist['genres'],
+      let newArtist = artist || {};
+      newArtist['artistInfo'] = { ...newArtist['artistInfo'], ...artistInfo };
+      window.localStorage.setItem('artist', JSON.stringify(newArtist))
+      let sendArtist = {
+        firstName: newArtist["firstName"],
+        lastName: newArtist["lastName"],
+        artistName: newArtist["artistName"],
+        genres: newArtist['genres'],
         imageUrl: newArtist["imageUrl"],
-        zipCode:newArtist["zipCode"],
-        instagramUrl:newArtist["instagramUrl"],
-        spotifyUrl:newArtist["spotifyUrl"],
-        facebookUrl:newArtist["facebookUrl"],
-        type:newArtist["type"],
-        phone:newArtist['phone'],
+        zipCode: newArtist["zipCode"],
+        instagramUrl: newArtist["instagramUrl"],
+        spotifyUrl: newArtist["spotifyUrl"],
+        facebookUrl: newArtist["facebookUrl"],
+        type: newArtist["type"],
+        phone: newArtist['phone'],
         email: newArtist["email"],
-        password:newArtist["password"],
+        password: newArtist["password"],
       }
 
       const res = await axios({
-        method:"post",
-        baseURL:"http://localhost:8080/api/",
-        url:"/artists",
-        data:sendArtist
+        method: "post",
+        baseURL: "http://localhost:8080/api/",
+        url: "/artists",
+        data: sendArtist
       })
       console.log('res', res)
-    dispatch(updateArtist(newArtist))
+      dispatch(updateArtist(newArtist))
     }
 
     // artist=JSON.parse(artist||'');
@@ -99,37 +99,50 @@ export const updatedArtist = (artistInfo) => async dispatch => {
   }
 }
 
+export const getVenuesByDistance = () => {
+  return (
+    async (dispatch) => {
+
+      const res = await axios({
+        method: "get",
+        baseURL: "http://localhost:8080/api/",
+        url: "/venues/distance/1", //later, the "1" should be the id of the current artist on state (or in local storage?) could also potentially grab this from req.session on the backend instead, not sure what's more restful -- Emma
+      })
+    }
+  )
+}
 
 /**
  * REDUCER
  */
-export default function(state = defaultArtist, action) {
+export default function (state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
       return action.artist
 
     case PUT_PERSONAL_INFO:
-        // history.push('/artistnameform')
-        return {...state,
-          firstName: action.info.firstName,
-          lastName: action.info.lastName,
-          phone: action.info.phone,
-          email: action.info.email,
+      // history.push('/artistnameform')
+      return {
+        ...state,
+        firstName: action.info.firstName,
+        lastName: action.info.lastName,
+        phone: action.info.phone,
+        email: action.info.email,
 
-        }
+      }
 
-      case PUT_ARTIST_NAME:
-        // history.push('/artistnameform')
-        return {...state, artistName: action.name}
-      case PUT_ZIP_CODE:
-        return {...state, zipCode: action.zipcode}
-      case PUT_GENRE:
-        return {...state, genres: action.genre}
-      case UPDATE_ARTIST:
-        window.localStorage.setItem('artist',JSON.stringify(action.newArtistData))
-        return {...state, ...action.newArtistData}
-      case PUT_TYPE:
-        return {...state, type: action.artistType}
+    case PUT_ARTIST_NAME:
+      // history.push('/artistnameform')
+      return { ...state, artistName: action.name }
+    case PUT_ZIP_CODE:
+      return { ...state, zipCode: action.zipcode }
+    case PUT_GENRE:
+      return { ...state, genres: action.genre }
+    case UPDATE_ARTIST:
+      window.localStorage.setItem('artist', JSON.stringify(action.newArtistData))
+      return { ...state, ...action.newArtistData }
+    case PUT_TYPE:
+      return { ...state, type: action.artistType }
     default:
       return state
   }
