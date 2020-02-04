@@ -13,8 +13,28 @@ const bookers = [
     lastName: 'Chan',
     email: 'liana.andreea97@yahoo.com',
     password: '123',
-    genres:['pop','hip-hop'],
     phone:'(929)-308-8477',
+  },
+  {
+    firstName: 'Ariana',
+    lastName: 'Hwang',
+    email: 'ariana@email.com',
+    password: '123',
+    phone:'(111)-323-9021',
+  },
+  {
+    firstName: 'Emma',
+    lastName: 'Hartman',
+    email: 'emma@email.com',
+    password: '123',
+    phone:'(123)-456-7777',
+  },
+  {
+    firstName: 'Alina',
+    lastName: 'Davletshina',
+    email: 'alina@email.com',
+    password: '123',
+    phone:'(123)-456-7777',
   }
 ]
 
@@ -33,20 +53,214 @@ const artists = [
     phone: '111-222-2344',
     email: 'agrande@email.com',
     password: '123'
+  },
+  {
+    firstName: 'Justin',
+    lastName: 'Vernon',
+    artistName: 'Bon Iver',
+    genres: ['indie', 'electronic'],
+    imageUrl: 'https://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201906/729221164.jpg',
+    zipCode: '11232',
+    instagramUrl: 'https://www.instagram.com/boniver/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/4LEiUm1SRbFMgfqnQTwUbQ',
+    facebookUrl: 'https://www.facebook.com/boniverwi/',
+    type: 'solo',
+    phone: '122-232-2354',
+    email: 'boniver@email.com',
+    password: '123'
+  },
+
+  {
+    firstName: 'Claire',
+    lastName: 'Boucher',
+    artistName: 'Grimes',
+    genres: ['electronic'],
+    imageUrl: 'https://www.billboard.com/files/styles/article_main_image/public/media/02-grimes-2018-press-cr-eli-russell-linnetz-billboard-1548.jpg',
+    zipCode: '11333',
+    instagramUrl: 'https://www.instagram.com/grimes/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/053q0ukIDRgzwTr4vNSwab',
+    facebookUrl: 'https://www.facebook.com/actuallygrimes/',
+    type: 'solo',
+    phone: '222-222-2222',
+    email: 'grimes@email.com',
+    password: '123'
+  },
+
+  {
+    firstName: 'Mick',
+    lastName: 'Jagger',
+    artistName: 'The Rolling Stones',
+    genres: ['rock'],
+    imageUrl: 'https://i.scdn.co/image/4226d2bbee2c44866eb0db3c88da0f26d7d12d5d',
+    zipCode: '22222',
+    instagramUrl: 'https://www.instagram.com/therollingstones/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/22bE4uQ6baNwSHPVcDxLCe',
+    facebookUrl: 'https://www.facebook.com/therollingstones/',
+    type: 'band',
+    phone: '111-111-1111',
+    email: 'therollingstones@email.com',
+    password: '123'
+  },
+  {
+    firstName: 'James',
+    lastName: 'Murphy',
+    artistName: 'LCD Soundsystem',
+    genres: ['indie', 'rock', 'electronic'],
+    imageUrl: 'https://s3.amazonaws.com/quietus_production/images/articles/19494/LCD_1451995213_crop_550x407.jpg',
+    zipCode: '11111',
+    instagramUrl: 'https://www.instagram.com/lcdsoundsystem/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/066X20Nz7iquqkkCW6Jxy6',
+    facebookUrl: 'https://www.facebook.com/lcdsoundsystem/',
+    type: 'band',
+    phone: '333-333-3333',
+    email: 'lcdsoundsystem@email.com',
+    password: '123'
+  },
+  {
+    firstName: 'Armand',
+    lastName: 'Jakobsson',
+    artistName: 'DJ Seinfeld',
+    genres: ['house', 'electronic'],
+    imageUrl: 'https://www.electronicbeats.net/app/uploads/2019/05/dj-seinfeld.png',
+    zipCode: '33333',
+    instagramUrl: 'https://www.instagram.com/dj_seinfeld/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/37YzpfBeFju8QRZ3g0Ha1Q',
+    facebookUrl: 'https://www.facebook.com/djseinfeld/',
+    type: 'dj',
+    phone: '444-444-3333',
+    email: 'djseinfeld@email.com',
+    password: '123'
+  },
+  
+  {
+    firstName: 'Amelie',
+    lastName: 'Lens',
+    artistName: 'Amelie Lens',
+    genres: ['techno', 'electronic'],
+    imageUrl: 'https://vibemylife.com/wp-content/uploads/2019/04/Amelie-Lens-festival-hero-2018.jpg',
+    zipCode: '44444',
+    instagramUrl: 'https://www.instagram.com/amelie_lens/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/5Ho1vKl1Uz8bJlk4vbmvmf',
+    facebookUrl: 'https://www.facebook.com/amelielensmusic/',
+    type: 'dj',
+    phone: '555-333-3333',
+    email: 'amelielens@email.com',
+    password: '123'
+  },
+  {
+    firstName: 'Aubrey',
+    lastName: 'Graham',
+    artistName: 'Drake',
+    genres: ['hipHop'],
+    imageUrl: 'https://cdn.vox-cdn.com/thumbor/dAx11qWXIswLgC24XcRHSPDRaMU=/0x0:1080x1350/1200x800/filters:focal(314x139:486x311)/cdn.vox-cdn.com/uploads/chorus_image/image/65075970/z25ftqghbyb5zd10wmvd.0.jpg',
+    zipCode: '5555',
+    instagramUrl: 'https://www.instagram.com/champagnepapi/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/3TVXtAsR1Inumwj472S9r4',
+    facebookUrl: 'https://www.facebook.com/Drake/',
+    type: 'solo',
+    phone: '555-344-3433',
+    email: 'drake@email.com',
+    password: '123'
+  },
+  {
+    firstName: 'Robyn',
+    lastName: 'Fenty',
+    artistName: 'Rihanna',
+    genres: ['hipHop', 'pop'],
+    imageUrl: 'https://pbs.twimg.com/media/D_y_cTGU8AEHJAI.jpg',
+    zipCode: '66666',
+    instagramUrl: 'https://www.instagram.com/badgalriri/?hl=en',
+    spotifyUrl: 'https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H',
+    facebookUrl: 'https://www.facebook.com/rihanna/',
+    type: 'solo',
+    phone: '666-364-6633',
+    email: 'rihanna@email.com',
+    password: '123'
   }
+
 ]
 
 const venues = [
   {
     name: 'Grace Hopper',
-    genres:['pop','hip-hop','rock','R&B'],
+    genres:['pop','hipHop'],
     latitude: '40.705086',
     longitude: '-74.009151',
     address: 'Hanover Square floor 25, New York, NY 10004',
     description:"Party time!",
     capacity:100,
     bookerId:1
-  }
+  },
+  {
+    name: 'The Bowery Ballroom',
+    genres:['pop','electronic','rock', 'metal', 'country', 'hipHop'],
+    latitude: '40.7204065',
+    longitude: '-73.995547',
+    address: '6 Delancey St, New York, NY 10002',
+    description:"hip concert venue for hip people",
+    capacity:500,
+    bookerId:1
+  },
+  {
+    name: 'Elsewhere',
+    genres:['indie','house','electronic','rock', 'hipHop'],
+    latitude: '40.709566',
+    longitude: '-73.9231158',
+    address: '599 Johnson Ave #1, New York, NY 11237',
+    description:"Best venue in all of Brooklyn. We love to feature diverse, underground acts",
+    capacity:1500,
+    bookerId:2
+  },
+  {
+    name: 'Basement NY',
+    genres:['techno'],
+    latitude: '40.716140',
+    longitude: '-73.914207',
+    address: '52-19 Flushing Ave, Queens, NY, 11378',
+    description:"Showcasing top techno talents from all around the world",
+    capacity:2000,
+    bookerId:2
+  },
+  {
+    name: 'Mood Ring',
+    genres:['house','electronic','techno'],
+    latitude: '40.6977778',
+    longitude: '-73.9291331',
+    address: '1260 Myrtle Ave, Brooklyn, NY 11221',
+    description:"dimly lit bar featuring Djs and astrology-inspired cocktails",
+    capacity:100,
+    bookerId:3
+  },
+  {
+    name: 'The Mercury Lounge',
+    genres:['indie','rock', 'pop', 'hipHop'],
+    latitude: '40.722184',
+    longitude: '-73.986767',
+    address: '217 E Houston St, New York, NY 10002',
+    description:"cozy, intimate space for up and coming artists!",
+    capacity:300,
+    bookerId:3
+  },
+  {
+    name: 'Blue Note Jazz Club',
+    genres:['jazz'],
+    latitude: '40.7309083',
+    longitude: '-74.0028444',
+    address: '131 W 3rd St, New York, NY, 10012',
+    description:"legendary jazz musicians play here!",
+    capacity:300,
+    bookerId:4
+  },
+  {
+    name: 'Petes Candy Store',
+    genres:['rock', 'indie', 'country', 'metal'],
+    latitude: '40.718099',
+    longitude: '-73.9523817',
+    address: '709 Lorimer St, Brooklyn, NY, 11211',
+    description:"An offbeat watering hole featuring lots of live bands",
+    capacity:50,
+    bookerId:4
+  },
 ]
 
 const user=[
