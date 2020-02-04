@@ -120,7 +120,7 @@ componentDidMount(){
       return this.props.updateVenue(this.state)
     }}
     disabled={(this.state.address.length===0||this.state.latitude===0) }
-    >Next</IonButton>
+    >Submit</IonButton>
 
 </IonItem>
 
