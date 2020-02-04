@@ -111,7 +111,7 @@ export const getVenuesByDistance = () => {
       const res = await axios({
         method: "get",
         baseURL: "http://localhost:8080/api/",
-        url: "/venues/distance/1", //later, the "1" should be the id of the current artist on state (or in local storage?) could also potentially grab this from req.session on the backend instead, not sure what's more restful -- Emma
+        url: "/venues/distance/2", //later, the "1" should be the id of the current artist on state (or in local storage?) could also potentially grab this from req.session on the backend instead, not sure what's more restful -- Emma
       })
     }
   )

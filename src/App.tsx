@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react';
-import { Redirect, Route,Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -11,7 +11,7 @@ import {
   IonTitle
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { apps,home,contact,logOut,logIn } from 'ionicons/icons';
+import { apps, home, contact, logOut, logIn } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Login from './pages/LoginTemplate';
@@ -30,10 +30,10 @@ import BookerSignup3 from './pages/BookerSignup3';
 import BookerSignup5 from './pages/BookerSignup5';
 import BookerSignup7 from './pages/BookerSignup7';
 import Profile from './pages/Profile';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-import {me,logout} from './store/booker'
+import { me, logout } from './store/booker'
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -51,113 +51,114 @@ import history from './history'
 import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3'
-interface IMyComponentProps{
-  booker:object,
-  userId:Number,
-  me:any,
-  history:any,
-  logout:any
+interface IMyComponentProps {
+  booker: object,
+  userId: Number,
+  me: any,
+  history: any,
+  logout: any
 }
 interface IMyComponentState {
-loaded:boolean
+  loaded: boolean
 }
-class App extends React.Component <IMyComponentProps,IMyComponentState>{
+class App extends React.Component<IMyComponentProps, IMyComponentState>{
 
-constructor(props){
-  super(props)
-  this.state={
-    loaded:false
+  constructor(props) {
+    super(props)
+    this.state = {
+      loaded: false
+    }
   }
-}
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.props.me();
 
-    this.setState({loaded:true})
+    this.setState({ loaded: true })
 
   }
 
-render(){
-console.log(this.props,this.props.userId!==undefined,)
+  render() {
+    console.log(this.props, this.props.userId !== undefined)
 
 
-  return(
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
+    return (
+      <IonApp>
+        <IonReactRouter>
+          <IonTabs>
+            <IonRouterOutlet>
 
-          <Route path="/home" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2}  />
-          <Route path="/tab3" component={Tab3}  />
-          <Route path='/profile' component={Profile} />
-          <Route path="/login" component={SignUpSignIn} />
-          <Route path="/signup0" component={SignUpZero} />
-          <Route path="/signup/booker/2" component={BookerSignup2} />
-          <Route path="/signup/booker/1" component={BookerSignup1} />
-          <Route path="/signup/booker/4" component={BookerSignup4} />
-          <Route path="/signup/booker/3" component={BookerSignup3} />
-          <Route path="/signup/booker/5" component={BookerSignup5} />
-          <Route path="/signup/booker/7" component={BookerSignup7} />
-          <Route path="/infoform" component={PersonalInfo} />
-          <Route path="/artistnameform" component={ArtistNameForm} />
-          <Route path="/zipcodeform" component={ZipCodeForm}/>
-          <Route path="/genres" component={Genres}/>
-          <Route path="/artisttype" component={ArtistType}/>
-
-
-
+              <Route path="/home" component={Tab1} exact={true} />
+              <Route path="/tab2" component={Tab2} />
+              <Route path="/tab3" component={Tab3} />
+              <Route path='/profile' component={Profile} />
+              <Route path="/login" component={SignUpSignIn} />
+              <Route path="/signup0" component={SignUpZero} />
+              <Route path="/signup/booker/2" component={BookerSignup2} />
+              <Route path="/signup/booker/1" component={BookerSignup1} />
+              <Route path="/signup/booker/4" component={BookerSignup4} />
+              <Route path="/signup/booker/3" component={BookerSignup3} />
+              <Route path="/signup/booker/5" component={BookerSignup5} />
+              <Route path="/signup/booker/7" component={BookerSignup7} />
+              <Route path="/infoform" component={PersonalInfo} />
+              <Route path="/artistnameform" component={ArtistNameForm} />
+              <Route path="/zipcodeform" component={ZipCodeForm} />
+              <Route path="/genres" component={Genres} />
+              <Route path="/artisttype" component={ArtistType} />
 
 
 
 
-          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/home">
-            <IonIcon icon={home} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
+
+
+
+              <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="tab1" href="/home">
+                <IonIcon icon={home} />
+                <IonLabel>Home</IonLabel>
+              </IonTabButton>
 
 
 
 
-    <IonTabButton tab="tab3" href='/profile'
-    disabled={(this.props.userId!==undefined)?false:true}
-    >
- { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
-  <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
-</IonTabButton>
+              <IonTabButton tab="tab3" href='/profile'
+                disabled={(this.props.userId !== undefined) ? false : true}
+              >
+                {(this.props.userId !== undefined) ? <IonIcon icon={contact} /> : null}
+                <IonLabel>{(this.props.userId !== undefined) ? 'Profile' : ''}</IonLabel>
+              </IonTabButton>
 
 
 
-{(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>
-            <IonIcon icon={logOut} />
-            <IonLabel>Logout</IonLabel>
-          </IonTabButton>:null}
+              {(this.props.userId !== undefined) ? <IonTabButton tab="tab2" onClick={this.props.logout}>
+                <IonIcon icon={logOut} />
+                <IonLabel>Logout</IonLabel>
+              </IonTabButton> : null}
 
 
-  {(this.props.userId===undefined)?  <IonTabButton tab="tab2" href='/login'>
-  { (this.props.userId===undefined)? <IonIcon icon={logIn} />:null}
-  <IonLabel>{(this.props.userId===undefined)?'Log In':''}</IonLabel>
-</IonTabButton>:null
+              {(this.props.userId === undefined) ? <IonTabButton tab="tab2" href='/login'>
+                {(this.props.userId === undefined) ? <IonIcon icon={logIn} /> : null}
+                <IonLabel>{(this.props.userId === undefined) ? 'Log In' : ''}</IonLabel>
+              </IonTabButton> : null
+              }
+
+
+
+
+
+            </IonTabBar>
+          </IonTabs>
+        </IonReactRouter>
+      </IonApp>)
+  }
 }
-
-
-
-
-
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>)}
-        }
-const mapStateToProps=(state)=>({
-          booker:state.booker,
-          userId:state.booker.id
-        })
-const mapDispatchToProps=(dispatch)=>({
-         me:()=>dispatch(me()),
-         logout:()=>dispatch(logout())
-        })
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+const mapStateToProps = (state) => ({
+  booker: state.booker,
+  userId: state.booker.id
+})
+const mapDispatchToProps = (dispatch) => ({
+  me: () => dispatch(me()),
+  logout: () => dispatch(logout())
+})
+export default connect(mapStateToProps, mapDispatchToProps)(App);
