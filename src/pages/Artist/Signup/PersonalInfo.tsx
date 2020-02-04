@@ -47,6 +47,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
 
   handleSubmit(event) {
     event.preventDefault();
+
     this.props.putInfo(this.state)
     this.setState({
       email: '',

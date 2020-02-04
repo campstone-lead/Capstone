@@ -81,12 +81,14 @@ export const updatedArtist = (artistInfo) => async dispatch => {
         email: newArtist["email"],
         password:newArtist["password"],
       }
-      const res=await axios({
+
+      const res = await axios({
         method:"post",
         baseURL:"http://localhost:8080/api/",
         url:"/artists",
         data:sendArtist
       })
+      console.log('res', res)
     dispatch(updateArtist(newArtist))
     }
 

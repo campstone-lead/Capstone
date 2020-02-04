@@ -7,7 +7,7 @@ import {
   import {updatedArtist, putGenre} from '../../../store/artist'
 
   interface IMyComponentState {
-    genres: Array<string>,
+    genres: string,
     genreTypes: {
         rock: boolean,
         jazz: boolean,
@@ -31,7 +31,7 @@ import {
     constructor(props) {
       super(props);
       this.state = {
-        genres: [],
+        genres: '',
         genreTypes: {
             rock: false,
             jazz: false,
@@ -54,33 +54,14 @@ import {
       if(artist!==null){
       artist=JSON.parse(artist||'');
       let newArtist=artist||{};
+      if(newArtist["genres"] !== undefined){
         this.setState({
           genres:newArtist['genres']
         })
+        }
       }
     }
   
-
-
-    async handleSubmit(event) {
-      event.preventDefault();
-      Object.keys(this.state.genreTypes).forEach(key=>{
-        if(this.state.genreTypes[key]){
-          this.state.genres.push(key)
-        }
-
-      })
-      this.props.updateArtist(this.state)
-
-      // const router = document.querySelector('ion-router');
-      // const routeRedirect = document.createElement('ion-route-redirect');
-      // routeRedirect.setAttribute('from', '*');
-      // routeRedirect.setAttribute('to', '/zipcodeform');
-      //   router.appendChild(routeRedirect);
-      await this.setState({
-        genres: [],
-      })
-    }
     handleClick(event) {
       event.preventDefault();
       this.setState({
@@ -90,6 +71,30 @@ import {
         }
       })
     }
+
+     handleSubmit(event) {
+      event.preventDefault();
+      // console.log('THIS.STATE genres', this.state)
+      // console.log('Object.keys(this.state.genreTypes)', Object.keys(this.state.genreTypes))
+
+      // Object.keys(this.state.genreTypes).forEach(key=>{
+      //   if(this.state.genreTypes[key]){
+      //     this.state.genres.push(key)
+      //   }
+      // })
+
+      const obj = this.state.genreTypes
+      const keys = Object.keys(obj)
+      const filtered = keys.filter((key) => obj[key])
+      console.log('filtered', filtered)
+    
+
+      this.props.updateArtist({
+        genres: filtered
+      })
+
+    }
+
     render(){
     return(<IonPage>
       <IonHeader >
@@ -126,6 +131,12 @@ import {
     </IonPage>)}
   }
 
+  const mapStateToProps = state => {
+    return {
+      artist: state.artist
+    }
+  }
+
 
   const mapDispatchToProps=dispatch=>{
     return {
@@ -133,4 +144,4 @@ import {
       updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
     }
   }
-  export default connect(null, mapDispatchToProps)(Genres);
+  export default connect(mapStateToProps, mapDispatchToProps)(Genres);
