@@ -41,9 +41,12 @@ import {
       if(artist!==null){
       artist=JSON.parse(artist||'');
       let newArtist=artist||{};
-        this.setState({
-          type:newArtist["type"]
-        })
+
+      if(newArtist["type"] !== undefined){
+          this.setState({
+            type:newArtist["type"]
+          })
+        }
       }
     }
     
@@ -51,17 +54,21 @@ import {
   
     handleSubmit(event) {
       event.preventDefault();
-      Object.keys(this.state.artistTypes).forEach(key => {
-        if(this.state.artistTypes[key])
-        {
-          console.log(this.state.artistTypes[key], 'key')
-          this.state.type.push(key)
-        }
-      })
-      this.props.updateArtist(this.state)
-      // this.props.putType(this.state.type)
-      this.setState({
-          type: []
+      // Object.keys(this.state.artistTypes).forEach(key => {
+      //   if(this.state.artistTypes[key])
+      //   {
+      //     console.log(this.state.artistTypes[key], 'key')
+      //     this.state.type.push(key)
+      //   }
+      // })
+
+      const obj = this.state.artistTypes
+      const keys = Object.keys(obj)
+      const filtered = keys.filter((key) => obj[key])
+      console.log('filtered', filtered)
+
+      this.props.updateArtist({
+        type: filtered
       })
 
     }
