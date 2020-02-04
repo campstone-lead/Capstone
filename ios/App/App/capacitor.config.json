@@ -3,6 +3,9 @@
   "appName": "Capstone",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "build",
-  "cordova": {}
+  "webDir": "public",
+  "cordova": {},
+  "server": {
+    "url": "http://172.16.27.36:8101"
+  }
 }
