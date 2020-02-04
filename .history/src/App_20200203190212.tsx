@@ -49,7 +49,6 @@ import history from './history'
 /* Theme variables */
 import './theme/variables.css';
 import { render } from '@testing-library/react';
-import Tab3 from './pages/Tab3'
 interface IMyComponentProps{
   booker:object,
   userId:Number,
@@ -87,8 +86,7 @@ console.log(this.props,this.props.userId!==undefined,)
         <IonRouterOutlet>
 
           <Route path="/home" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2}  />
-          <Route path="/tab3" component={Tab3}  />
+
           <Route path='/profile' component={Profile} />
           <Route path="/login" component={SignUpSignIn} />
           <Route path="/signup0" component={SignUpZero} />
@@ -119,30 +117,23 @@ console.log(this.props,this.props.userId!==undefined,)
 
 
 
-
-    <IonTabButton tab="tab3" href='/profile'>
- { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
-  <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
-</IonTabButton>
-
-
-
-{(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>
-            <IonIcon icon={logOut} />
-            <IonLabel>Logout</IonLabel>
-          </IonTabButton>:null}
-
-
-  {(this.props.userId===undefined)?  <IonTabButton tab="tab2" href='/login'>
-  { (this.props.userId===undefined)? <IonIcon icon={logIn} />:null}
-  <IonLabel>{(this.props.userId===undefined)?'Log In':''}</IonLabel>
-</IonTabButton>:null
+          {(this.props.userId)?
+          <IonTabButton tab="profile" href='/profile'>
+            <IonIcon icon={contact} />
+            <IonLabel>Profile</IonLabel>
+          </IonTabButton>
+          :
+          <IonTabButton tab="login" href='/login'>
+          <IonIcon icon={logIn} />
+          <IonLabel>Log in</IonLabel>
+        </IonTabButton>
 }
 
 
-
-
-
+          {(this.props.userId!==undefined)? <IonTabButton tab="home" onClick={this.props.logout}>
+            <IonIcon icon={logOut} />
+            <IonLabel>Logout</IonLabel>
+          </IonTabButton>:null}
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

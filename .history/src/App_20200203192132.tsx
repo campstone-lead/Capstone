@@ -119,12 +119,12 @@ console.log(this.props,this.props.userId!==undefined,)
 
 
 
-
+          {(this.props.userId===undefined||true)?
     <IonTabButton tab="tab3" href='/profile'>
  { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
   <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
 </IonTabButton>
-
+:null}
 
 
 {(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>

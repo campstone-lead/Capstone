@@ -119,30 +119,25 @@ console.log(this.props,this.props.userId!==undefined,)
 
 
 
-
-    <IonTabButton tab="tab3" href='/profile'>
+  <IonTabButton tab="tab3" href='/profile'>
  { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
   <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
-</IonTabButton>
+</IonTabButton>:null
 
 
 
-{(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>
+
+          <IonTabButton tab="tab2" href='/login'>
+          { (this.props.userId===undefined)? <IonIcon icon={logIn} />:null}
+          <IonLabel>{(this.props.userId!==undefined)?'Log In':''}</IonLabel>
+        </IonTabButton>
+
+
+
+          {(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>
             <IonIcon icon={logOut} />
             <IonLabel>Logout</IonLabel>
           </IonTabButton>:null}
-
-
-  {(this.props.userId===undefined)?  <IonTabButton tab="tab2" href='/login'>
-  { (this.props.userId===undefined)? <IonIcon icon={logIn} />:null}
-  <IonLabel>{(this.props.userId===undefined)?'Log In':''}</IonLabel>
-</IonTabButton>:null
-}
-
-
-
-
-
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

@@ -120,13 +120,6 @@ console.log(this.props,this.props.userId!==undefined,)
 
 
 
-    <IonTabButton tab="tab3" href='/profile'>
- { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
-  <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
-</IonTabButton>
-
-
-
 {(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>
             <IonIcon icon={logOut} />
             <IonLabel>Logout</IonLabel>
@@ -139,6 +132,13 @@ console.log(this.props,this.props.userId!==undefined,)
 </IonTabButton>:null
 }
 
+
+{(this.props.userId===undefined)?
+    <IonTabButton tab="tab3" href='/profile'>
+ { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
+  <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
+</IonTabButton>
+:null}
 
 
 
