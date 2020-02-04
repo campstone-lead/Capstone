@@ -62,14 +62,14 @@ import {
   
 
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
       event.preventDefault();
-    //   this.props.history.push('/artisttype')
       Object.keys(this.state.genreTypes).forEach(key=>{
-        if(this.state.genreTypes[key])
+        if(this.state.genreTypes[key]){
           this.state.genres.push(key)
+        }
+
       })
-      // this.props.putGenre(this.state.genres)
       this.props.updateArtist(this.state)
 
       // const router = document.querySelector('ion-router');
@@ -77,7 +77,7 @@ import {
       // routeRedirect.setAttribute('from', '*');
       // routeRedirect.setAttribute('to', '/zipcodeform');
       //   router.appendChild(routeRedirect);
-      this.setState({
+      await this.setState({
         genres: [],
       })
     }
@@ -117,7 +117,8 @@ import {
 
         <IonItem routerLink="/artisttype">
         <br></br>
-        <IonButton type = "submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true ))?false:true}>Next</IonButton>
+        <IonButton type = "submit" >Next</IonButton>
+        {/* <IonButton type = "submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true ))?false:true}>Next</IonButton> */}
         </IonItem>
         </form>
       </IonContent>

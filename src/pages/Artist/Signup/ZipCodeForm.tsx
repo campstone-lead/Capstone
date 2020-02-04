@@ -70,7 +70,8 @@ import {
   
       <IonItem routerLink="/genres">
         <br></br>
-        <IonButton type = "submit" disabled={(this.state.zipCode.length ===0)?true:false}>Next</IonButton>
+        {/* <IonButton type = "submit" disabled={(this.state.zipCode.length ===0)?true:false}>Next</IonButton> */}
+        <IonButton type = "submit" >Next</IonButton>
         </IonItem>
         </form>
       </IonContent>
