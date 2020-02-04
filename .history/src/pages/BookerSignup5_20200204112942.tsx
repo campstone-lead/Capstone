@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import './BookerSignup2.css';
 import{updatedVenue} from '../store/booker'
 interface IMyComponentState {
- description:string
+ capacity:string
 }
 interface IMyComponentProps{
   booker:object,
@@ -15,7 +15,7 @@ interface IMyComponentProps{
   constructor(props) {
     super(props);
     this.state = {
-     description:''
+     capacity:''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,54 +23,54 @@ interface IMyComponentProps{
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.updateVenue(this.state)
+    this.props.updateVenue({capacity:Number(this.state.capacity)})
 
   }
   componentDidMount(){
     let booker=window.localStorage.getItem('booker')
     booker=JSON.parse(booker||'');
     let newBooker=booker||{};
-    if(newBooker["venue"]["description"]!==undefined){
+    if(newBooker["venue"]["capacity"]!==undefined){
       this.setState({
-        description:newBooker["venue"].description
+        capacity:String(newBooker["venue"].capacity)
       })
     }
   }
   render() {
-console.log(this.props)
   return (
 
     <IonPage>
       <IonHeader >
         <IonToolbar id="bar" >
-          <IonTitle>Venue description</IonTitle>
+          <IonTitle>Venue capacity</IonTitle>
           {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
         </IonToolbar>
       </IonHeader>
 
     <IonContent>
-
     <IonCard className="welcome-card">
       <form onSubmit={this.handleSubmit} >
-      <IonTitle>Add venue description here...</IonTitle>
+    <IonTitle>How many people can fit in your venue?</IonTitle>
       <IonItem >
 
         <IonInput type="text" required
-          value={this.state.description}
-          onIonChange={(e) => this.setState({description:(e.target as HTMLInputElement).value})}
-          placeholder="Description"
+          value={this.state.capacity}
+          onIonChange={(e) => this.setState({capacity:(e.target as HTMLInputElement).value})}
+          placeholder="Capacity"
           className={"description"}
         />
         </IonItem>
 
-<IonItem routerLink="/signup/booker/5">
+        <IonItem routerLink="/login">
 <br></br>
 
-<IonButton size="small" className="next" type="submit"
-    disabled={(this.state.description.length===0)}
+<IonButton size="small" className="next"
+ type="submit"
+    disabled={(this.state.capacity.length===0)}
     >Next</IonButton>
 
 </IonItem>
+
 
         </form>
 

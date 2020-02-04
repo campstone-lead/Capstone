@@ -82,7 +82,6 @@ class BookerSignup3 extends React.Component<IMyComponentProps,IMyComponentState>
 
 <IonButton size="small" className="next"
 onClick={this.handleClick}
-    disabled={(this.state.photo.length===0)}
     >Next</IonButton>
 
 </IonItem>

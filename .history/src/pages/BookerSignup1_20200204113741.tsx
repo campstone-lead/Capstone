@@ -33,6 +33,7 @@ componentDidMount(){
   let newBooker=booker||{};
     this.setState({
       email: newBooker["email"],
+      password:newBooker["password"],
       firstName:newBooker["firstName"],
       lastName:newBooker["lastName"],
       phone:newBooker["phone"]
