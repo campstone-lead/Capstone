@@ -10,7 +10,8 @@ interface IMyComponentState {
   artistName: string,
 }
 interface IMyComponentProps{
-  putArtistName: (name: any) => void
+  putArtistName: (name: any) => void,
+  updateArtist: any
 }
 
 class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentState>  {
@@ -23,7 +24,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
   }
 
   componentDidMount(){
-    let artist=window.localStorage.getItem('artist')
+    let artist=window.localStorage.getItem('artistInfo')
     if(artist!==null){
     artist=JSON.parse(artist||'');
     let newArtist=artist||{};
@@ -35,7 +36,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.putArtistName(this.state.artistName)
+    this.props.putArtistName(this.state)
     this.setState({
       artistName: '',
     })
@@ -73,7 +74,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
 }
 const mapDispatchToProps=dispatch=>{
   return {
-    putArtistName: (name) => dispatch(updatedArtist(name))
+    putArtistName: (artistInfo) => dispatch(updatedArtist(artistInfo))
   }
 }
 export default connect(null, mapDispatchToProps)(PersonalInfoForm);

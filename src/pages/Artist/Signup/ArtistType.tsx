@@ -36,19 +36,19 @@ import {
       this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount(){
-      let artist=window.localStorage.getItem('artist')
-      if(artist!==null){
-      artist=JSON.parse(artist||'');
-      let newArtist=artist||{};
+    // componentDidMount(){
+    //   let artist=window.localStorage.getItem('artistInfo')
+    //   if(artist!==null){
+    //   artist=JSON.parse(artist||'');
+    //   let newArtist=artist||{};
 
-      if(newArtist["type"] !== undefined){
-          this.setState({
-            type:newArtist["type"]
-          })
-        }
-      }
-    }
+    //   if(newArtist["type"] !== undefined){
+    //       this.setState({
+    //         type:newArtist["type"]
+    //       })
+    //     }
+    //   }
+    // }
     
   
   

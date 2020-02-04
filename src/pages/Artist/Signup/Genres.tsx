@@ -49,18 +49,18 @@ import {
       this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount(){
-      let artist=window.localStorage.getItem('artist')
-      if(artist!==null){
-      artist=JSON.parse(artist||'');
-      let newArtist=artist||{};
-      if(newArtist["genres"] !== undefined){
-        this.setState({
-          genres:newArtist['genres']
-        })
-        }
-      }
-    }
+    // componentDidMount(){
+    //   let artist=window.localStorage.getItem('artistInfo')
+    //   if(artist!==null){
+    //   artist=JSON.parse(artist||'');
+    //   let newArtist=artist||{};
+    //   if(newArtist["genres"] !== undefined){
+    //     this.setState({
+    //       genres:newArtist['genres']
+    //     })
+    //     }
+    //   }
+    // }
   
     handleClick(event) {
       event.preventDefault();

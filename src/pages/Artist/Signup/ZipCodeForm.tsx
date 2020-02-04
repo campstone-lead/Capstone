@@ -24,16 +24,16 @@ import {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount(){
-      let artist=window.localStorage.getItem('artist')
-      if(artist!==null){
-      artist=JSON.parse(artist||'');
-      let newArtist=artist||{};
-        this.setState({
-          zipCode: newArtist["zipCode"],
-        })
-      }
-    }
+    // componentDidMount(){
+    //   let artist=window.localStorage.getItem('artistInfo')
+    //   if(artist!==null){
+    //   artist=JSON.parse(artist||'');
+    //   let newArtist=artist||{};
+    //     this.setState({
+    //       zipCode: newArtist["zipCode"],
+    //     })
+    //   }
+    // }
   
   
     handleSubmit(event) {
