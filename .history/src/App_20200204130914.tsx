@@ -29,7 +29,7 @@ import BookerSignup4 from './pages/BookerSignup4'
 import BookerSignup3 from './pages/BookerSignup3';
 import BookerSignup5 from './pages/BookerSignup5';
 import BookerSignup7 from './pages/BookerSignup7';
-import BookerSignup6 from './pages/BookerSignup6';
+import BookerSignup6 from './pages/BookerSignup7';
 import Profile from './pages/Profile';
 import {connect} from 'react-redux'
 /* Core CSS required for Ionic components to work properly */

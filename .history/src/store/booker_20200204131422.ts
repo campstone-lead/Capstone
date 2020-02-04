@@ -92,7 +92,8 @@ export const updatedVenue = (venue) => async dispatch => {
       password: password,
       firstName:newBooker["firstName"],
       lastName:newBooker["lastName"],
-      phone:newBooker["phone"]
+      phone:newBooker["phone"],
+      genres:['pop'],
       }
       const res=await axios({
         method:"post",
