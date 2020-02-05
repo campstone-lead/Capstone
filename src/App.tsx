@@ -28,6 +28,7 @@ import BookerSignup3 from './pages/BookerSignup3';
 import BookerSignup5 from './pages/BookerSignup5';
 import BookerSignup7 from './pages/BookerSignup7';
 import BookerSignup6 from './pages/BookerSignup6';
+import VenueForm from './pages/booker/venue/add-venue-form'
 import Profile from './pages/Profile';
 import {connect} from 'react-redux'
 /* Core CSS required for Ionic components to work properly */
@@ -102,13 +103,7 @@ render(){
           <Route path="/zipcodeform" component={ZipCodeForm}/>
           <Route path="/genres" component={Genres}/>
           <Route path="/artisttype" component={ArtistType}/>
-
-
-
-
-
-
-
+          <Route path="/addvenue" component={VenueForm} />
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
