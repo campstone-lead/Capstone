@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const Artist = require('../db/models/artist')
-
+const { Recommendation } = require('../db/models')
 module.exports = router
 
 router.get("/", async (req,res,next)=>{
@@ -12,7 +12,20 @@ router.get("/", async (req,res,next)=>{
         next(error)
     }
 })
-
+router.get("/distance/:venueId", async (req, res, next) => {
+    try {
+      const recList = await Artist.findAll({
+        include: [{
+          model: Recommendation,
+          where: { venueId: req.params.venueId },
+        }],
+        order: [[Recommendation, 'score', 'ASC']]
+      })
+      res.json(recList)
+    } catch (error) {
+      next(error)
+    }
+  })
 router.post('/', async (req,res, next) => {
     try{
         console.log('HERE')
