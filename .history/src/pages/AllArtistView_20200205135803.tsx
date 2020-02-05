@@ -87,8 +87,8 @@ className="backBtn"
       <img  src={artist['imageUrl']} alt="img.jpg"/>
 
     <IonItemGroup  style={{"margin":"20px"}}>
-    <IonCardTitle style={{"text-align":"center"}}>{artist['artistName']}</IonCardTitle>
-    <IonCardSubtitle style={{"text-align":"center"}}>{genres}</IonCardSubtitle>
+    <IonCardTitle mode="ios" style={{"text-align":"center"}}>{artist['artistName']}</IonCardTitle>
+    <IonCardSubtitle mode="ios" style={{"text-align":"center"}}>{genres}</IonCardSubtitle>
     </IonItemGroup>
   </div>
 </IonCard>)}
