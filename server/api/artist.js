@@ -20,6 +20,7 @@ router.post('/', async (req,res, next) => {
             lastName: req.body.lastName,
             artistName: req.body.artistName,
             genres: req.body.genres,
+            bio: req.body.bio,
             imageUrl: req.body.imageUrl,
             zipCode: req.body.zipCode,
             instagramUrl: req.body.instagramUrl,
