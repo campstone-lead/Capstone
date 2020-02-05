@@ -11,6 +11,7 @@ const PUT_ZIP_CODE = 'PUT_ZIP_CODE'
 const PUT_GENRE = 'PUT_GENRE'
 const UPDATE_ARTIST = 'UPDATE_ARTIST'
 const PUT_TYPE = 'PUT_TYPE'
+const PUT_BIO = 'PUT_BIO'
 
 /**
  * INITIAL STATE
@@ -41,6 +42,7 @@ export const putZipCode = (zipcode) =>({type: PUT_ZIP_CODE, zipcode})
 export const putGenre = (genre) =>({type: PUT_GENRE, genre})
 export const updateArtist = newArtistData => ({type: UPDATE_ARTIST, newArtistData})
 export const putType = (artistType) => ({type: PUT_TYPE, artistType})
+export const putBio = (artistBio) => ({type: PUT_BIO, artistBio})
 
 /**
  * THUNK CREATORS
@@ -76,6 +78,7 @@ export const updatedArtist = (artistInfo) => async dispatch => {
             lastName:newArtist["lastName"],
             artistName:newArtist["artistName"],
             genres:newArtist['genres'],
+            bio: newArtist['bio'],
             imageUrl: 'https://cdn.britannica.com/01/136501-050-D9110414/John-Lennon.jpg',
             zipCode:newArtist["zipCode"],
             instagramUrl:newArtist["instagramUrl"],
@@ -86,7 +89,7 @@ export const updatedArtist = (artistInfo) => async dispatch => {
             email: newArtist["email"],
             password:newArtist["password"],
           }
-          console.log(sendArtist, 'sendArtist')
+          console.log(sendArtist, 'SENDARTIST')
           const res = await axios({
             method:"post",
             baseURL:"http://localhost:8080/api/",
@@ -135,6 +138,8 @@ export default function(state = defaultArtist, action) {
         return {...state, ...action.newArtistData}
       case PUT_TYPE:
         return {...state, type: action.artistType}
+      case PUT_BIO:
+        return {...state, bio: action.artistBio}
     default:
       return state
   }

@@ -16,6 +16,7 @@ import Tab2 from './pages/Tab2';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
+import ArtistBioForm from './pages/Artist/Signup/ArtistBioForm';
 import Genres from './pages/Artist/Signup/Genres';
 import ArtistType from './pages/Artist/Signup/ArtistType'
 import SignUpSignIn from './pages/SignUpSignIn';
@@ -97,6 +98,7 @@ render(){
           <Route path="/signup/booker/7" component={BookerSignup7} />
           <Route path="/infoform" component={PersonalInfo} />
           <Route path="/artistnameform" component={ArtistNameForm} />
+          <Route path="/artistbioform" component={ArtistBioForm}/>
           <Route path="/zipcodeform" component={ZipCodeForm}/>
           <Route path="/genres" component={Genres}/>
           <Route path="/artisttype" component={ArtistType}/>
