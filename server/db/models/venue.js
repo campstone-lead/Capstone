@@ -118,7 +118,7 @@ const generateRecs = async venue => {
       const data = await response.json()
 
       for (let index = 0; index < artists.length; index++) {
-        let artist = artists[0]
+        let artist = artists[index]
         try {
           let [result, created] = await db.models.recommendation.findOrCreate({
             where: {
@@ -127,7 +127,8 @@ const generateRecs = async venue => {
             }
           })
           try {
-            await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
+            await result.update({ score: Number(((data.rows[0].elements[index].distance.value) / 1609).toFixed(3)) })
+            // await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
           } catch (error) {
             console.log(error)
           }

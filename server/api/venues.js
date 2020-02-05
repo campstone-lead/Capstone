@@ -1,14 +1,7 @@
 const router = require('express').Router()
-const fetch = require('node-fetch')
 const { Venue } = require('../db/models')
-const { Artist } = require('../db/models')
 const { Recommendation } = require('../db/models')
 
-const googleMapsApiKey = require('../../secrets')
-
-// var googleMapsClient = require('@google/maps').createClient({
-//   key: googleMapsApiKey
-// });
 
 module.exports = router
 

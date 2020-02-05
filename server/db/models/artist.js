@@ -157,7 +157,7 @@ const preHooks = async artist => {
     }
   }
 }
-//TODO: remove long/lat creation from front end zip code page. add afterhooks to artist page. sleep.
+
 Artist.beforeCreate(preHooks)
 Artist.beforeUpdate(preHooks)
 Artist.beforeBulkCreate(artists => {
@@ -177,7 +177,7 @@ const generateRecs = async artist => {
       const data = await response.json()
 
       for (let index = 0; index < venues.length; index++) {
-        let venue = venues[0]
+        let venue = venues[index]
         try {
           let [result, created] = await db.models.recommendation.findOrCreate({
             where: {
@@ -186,7 +186,8 @@ const generateRecs = async artist => {
             }
           })
           try {
-            await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
+            await result.update({ score: Number(((data.rows[0].elements[index].distance.value) / 1609).toFixed(3)) })
+            // await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
           } catch (error) {
             console.log(error)
           }
