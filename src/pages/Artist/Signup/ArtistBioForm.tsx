@@ -51,14 +51,14 @@ class ArtistBioForm extends React.Component<IMyComponentProps,IMyComponentState>
                   <IonTitle>Tell us about yourself!</IonTitle>
                 </IonToolbar>
               </IonHeader>
-        
+
             <IonContent>
-        
+
             <IonCard className="welcome-card">
               <form onSubmit={this.handleSubmit} >
               <IonTitle>Include your short artist bio here...</IonTitle>
               <IonItem >
-        
+
                 <IonInput type="text"
                   value={this.state.bio}
                   onIonChange={(e) => this.setState({bio:(e.target as HTMLInputElement).value})}
@@ -66,17 +66,17 @@ class ArtistBioForm extends React.Component<IMyComponentProps,IMyComponentState>
                   className={"bio"}
                 />
                 </IonItem>
-        
+
         <IonItem routerLink="/zipcodeform">
         <br></br>
-        
-        <IonButton size="small" className="next" type="submit"
+
+        <IonButton disabled = {this.state.bio===""? true: false} size="small" className="next" type="submit"
             >Next</IonButton>
-        
+
         </IonItem>
-        
+
                 </form>
-        
+
               </IonCard>
               </IonContent>
             </IonPage>

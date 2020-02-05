@@ -116,7 +116,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       </IonItem>
       <IonItem routerLink ={'/artistnameform'} >
 
-      <IonButton  type="submit"/*disabled={(this.state.email===''||this.state.firstName===''||this.state.password===''||this.state.lastName===''||this.state.phone==='')?true:false}*/ >next</IonButton>
+      <IonButton  type="submit"disabled={(this.state.email===''||this.state.firstName===''||this.state.password===''||this.state.lastName===''||this.state.phone==='')?true:false} >next</IonButton>
 
       </IonItem>
       </form>
