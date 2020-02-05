@@ -45,7 +45,7 @@ console.log(this.props.artists)
        <IonHeader mode="ios"  >
         <IonToolbar mode="ios" >
         <div className="tabHeader">
-        <img src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png" alt="logo.png" className="logo" />
+        <img src="https://im6.ezgif.com/tmp/ezgif-6-046ac8f056bc.png" alt="logo.png" className="logo" />
         <IonSearchbar
           mode="ios"
           className="searchBar"
@@ -86,9 +86,9 @@ className="backBtn"
 
       <img  src={artist['imageUrl']} alt="img.jpg"/>
 
-    <IonItemGroup  style={{"margin":"20px"}}>
-    <IonCardTitle style={{"text-align":"center"}}>{artist['artistName']}</IonCardTitle>
-    <IonCardSubtitle style={{"text-align":"center"}}>{genres}</IonCardSubtitle>
+    <IonItemGroup>
+<IonCardTitle>{artist['artistName']}</IonCardTitle>
+  <IonCardSubtitle>{genres}</IonCardSubtitle>
     </IonItemGroup>
   </div>
 </IonCard>)}

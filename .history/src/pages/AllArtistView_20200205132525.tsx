@@ -14,35 +14,37 @@ IonButton,
   IonToolbar,
   IonSearchbar,
   IonContent,
+  IonBackButton
 
 } from '@ionic/react';
 
 import React from 'react';
 import {auth,me} from '../store/user'
+import {fetchArtists} from '../store/artist'
 import {connect} from 'react-redux'
 import './Tab1.css';
 
 
 interface IMyComponentProps{
-  auth:any,
-  error:any,
-  user:object,
-  me:any
+  artists:object,
+  me:any,
+  fetchArtists:any
 }
-class Tab1 extends React.Component <IMyComponentProps,{}> {
+class AllArtistView extends React.Component <IMyComponentProps,{}> {
 
   async componentDidMount(){
-    await this.props.me()
+    await this.props.fetchArtists()
   }
 
   render(){
-
+console.log(this.props.artists)
+if(this.props.artists===undefined) return <IonCardTitle>Loading...</IonCardTitle>
   return (
     <IonPage>
        <IonHeader mode="ios"  >
         <IonToolbar mode="ios" >
         <div className="tabHeader">
-        <img src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png" alt="logo.png" className="logo" />
+        <img src="https://im6.ezgif.com/tmp/ezgif-6-046ac8f056bc.png" alt="logo.png" className="logo" />
         <IonSearchbar
           mode="ios"
           className="searchBar"
@@ -55,19 +57,23 @@ class Tab1 extends React.Component <IMyComponentProps,{}> {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-    {(this.props.user['status']==='booker')?
+
 
 <div className="home">
 
 <IonCardHeader className="home" mode="ios">
-<IonButton mode="ios"
-href="/artists"
-className="homeBtn" color="rgb(153, 178, 189);">Artists</IonButton>
-<IonCardTitle className="textBox">We got you some artist you might be interested in...</IonCardTitle>
+
+<IonBackButton defaultHref="/home" mode="ios"
+text=" Back "
+color="dark"
+className="backBtn"
+/>
+<IonCardTitle className="textBox">Here is a list with all artist registered on our platform</IonCardTitle>
 </IonCardHeader>
 
 {/* this is where artists go */}
-<IonCard className='profile' style={{ "width":"250px"}} mode="ios">
+
+      <IonCard className='profile' style={{ "width":"250px"}} mode="ios">
           <div className='artistBox' >
             <IonItemGroup>
               <img  src="https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png" alt="img.jpg"/>
@@ -79,19 +85,8 @@ className="homeBtn" color="rgb(153, 178, 189);">Artists</IonButton>
           </div>
         </IonCard>
 
-
-
 </div>
-  :
 
-  <IonCard className="home">
-      <IonCardHeader mode="ios">
-
-      <IonCardTitle className="textBox">{this.props.user['firstName']} {this.props.user['lastName']}</IonCardTitle>
-
-    </IonCardHeader>
-  </IonCard>
-  }
 
       </IonContent>
     </IonPage>
@@ -99,11 +94,11 @@ className="homeBtn" color="rgb(153, 178, 189);">Artists</IonButton>
   }
 };
 const mapStateToProps=(state)=>({
-  error:state.user.error,
+  artists:state.artist,
   user:state.user
 })
 const mapDispatchToProps=(dispatch)=>({
-  auth:(email,password) => dispatch(auth(email,password)),
   me:()=>dispatch(me()),
+  fetchArtists:()=>dispatch(fetchArtists())
 })
-export default connect(mapStateToProps,mapDispatchToProps)(Tab1);
+export default connect(mapStateToProps,mapDispatchToProps)(AllArtistView);

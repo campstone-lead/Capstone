@@ -133,23 +133,23 @@ border-radius: 3%;
 }
 .textBox{
   position: relative;
-  margin:10px;
+  margin:5px;
  display: flex;
  flex-wrap:wrap;
- bottom: -40px;
+ bottom: 30px;
 }
 .artistBox{
   display:flex;
-   flex-direction:column;
+   flex-direction:row;
    align-items: center;
-   margin: 0px auto 10px auto;
-    text-align: left;
+   justify-content: space-evenly;
 }
 .artistBox img{
   margin:10px;
   display: block;
-  max-width:180px;
-  max-height:180px;
+
+  max-width:80px;
+  max-height:80px;
   width: auto;
   height: auto;
   border-radius: 3%;
@@ -157,7 +157,7 @@ border-radius: 3%;
 .backBtn{
   display: block;
 position: fixed;
- left: 3px;
+ left: 15px;
  margin:10px;
  margin-right: 500px;
 }

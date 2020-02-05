@@ -45,7 +45,7 @@ console.log(this.props.artists)
        <IonHeader mode="ios"  >
         <IonToolbar mode="ios" >
         <div className="tabHeader">
-        <img src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png" alt="logo.png" className="logo" />
+        <img src="https://im6.ezgif.com/tmp/ezgif-6-046ac8f056bc.png" alt="logo.png" className="logo" />
         <IonSearchbar
           mode="ios"
           className="searchBar"
@@ -75,20 +75,15 @@ className="backBtn"
 {/* this is where artists go */}
 {(this.props.artists.map((artist,index)=>
   {
-    let genres=''
-    artist['genres'].forEach((el,index)=>{
-       genres+=el+' '
-    })
-
   console.log(artist,index)
-  return (<IonCard  key={index} className='profile' style={{ "width":"auto"}} mode="ios">
+  return (<IonCard  key={index} className='profile' style={{ "width":"250px"}} mode="ios">
   <div className='artistBox' >
-
-      <img  src={artist['imageUrl']} alt="img.jpg"/>
-
-    <IonItemGroup  style={{"margin":"20px"}}>
-    <IonCardTitle style={{"text-align":"center"}}>{artist['artistName']}</IonCardTitle>
-    <IonCardSubtitle style={{"text-align":"center"}}>{genres}</IonCardSubtitle>
+    <IonItemGroup>
+      <img  src="https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png" alt="img.jpg"/>
+    </IonItemGroup>
+    <IonItemGroup>
+<IonCardTitle>{artist['name']}</IonCardTitle>
+    <IonCardSubtitle>Genres</IonCardSubtitle>
     </IonItemGroup>
   </div>
 </IonCard>)}
