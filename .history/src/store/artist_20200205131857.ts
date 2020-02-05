@@ -54,7 +54,6 @@ export const fetchArtists = () => async dispatch => {
       baseURL:"http://localhost:8080/api/",
       url:"/artists"
   })
-  console.log('got data->>>>',res.data)
     dispatch(getArtists(res.data || defaultArtist))
   } catch (err) {
     console.error(err)
@@ -119,7 +118,7 @@ export const updatedArtist = (artistInfo) => async dispatch => {
 export default function(state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
-      return action.artists
+      return action.artist
 
     case PUT_PERSONAL_INFO:
         // history.push('/artistnameform')

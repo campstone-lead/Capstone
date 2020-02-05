@@ -119,7 +119,7 @@ export const updatedArtist = (artistInfo) => async dispatch => {
 export default function(state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
-      return action.artists
+      return action.artist
 
     case PUT_PERSONAL_INFO:
         // history.push('/artistnameform')

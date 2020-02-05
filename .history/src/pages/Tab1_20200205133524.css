@@ -140,7 +140,7 @@ border-radius: 3%;
 }
 .artistBox{
   display:flex;
-   flex-direction:column;
+   flex-direction:row;
    align-items: center;
    margin: 0px auto 10px auto;
     text-align: left;
@@ -148,10 +148,8 @@ border-radius: 3%;
 .artistBox img{
   margin:10px;
   display: block;
-  max-width:200px;
-  max-height:180px;
-  width: auto;
-  height: auto;
+  width: 110px;
+  height: 80px;
   border-radius: 3%;
 }
 .backBtn{

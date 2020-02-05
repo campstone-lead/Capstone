@@ -75,20 +75,15 @@ className="backBtn"
 {/* this is where artists go */}
 {(this.props.artists.map((artist,index)=>
   {
-    let genres=''
-    artist['genres'].forEach((el,index)=>{
-       genres+=el+' '
-    })
-
   console.log(artist,index)
-  return (<IonCard  key={index} className='profile' style={{ "width":"auto"}} mode="ios">
+  return (<IonCard  key={index} className='profile' style={{ "width":"250px"}} mode="ios">
   <div className='artistBox' >
-
+    <IonItemGroup>
       <img  src={artist['imageUrl']} alt="img.jpg"/>
-
-    <IonItemGroup style={{"margin":"20px"}}>
+    </IonItemGroup>
+    <IonItemGroup>
 <IonCardTitle>{artist['artistName']}</IonCardTitle>
-  <IonCardSubtitle>{genres}</IonCardSubtitle>
+    <IonCardSubtitle>Genres</IonCardSubtitle>
     </IonItemGroup>
   </div>
 </IonCard>)}

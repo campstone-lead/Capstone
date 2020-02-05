@@ -140,7 +140,7 @@ border-radius: 3%;
 }
 .artistBox{
   display:flex;
-   flex-direction:column;
+   flex-direction:row;
    align-items: center;
    margin: 0px auto 10px auto;
     text-align: left;

@@ -38,7 +38,7 @@ class AllArtistView extends React.Component <IMyComponentProps,{}> {
 
   render(){
 
-if(!Array.isArray(this.props.artists)) return <IonCardTitle>Loading...</IonCardTitle>
+if(this.props.artists===undefined) return <IonCardTitle>Loading...</IonCardTitle>
 console.log(this.props.artists)
   return (
     <IonPage>
@@ -73,28 +73,18 @@ className="backBtn"
 </IonCardHeader>
 
 {/* this is where artists go */}
-{(this.props.artists.map((artist,index)=>
-  {
-    let genres=''
-    artist['genres'].forEach((el,index)=>{
-       genres+=el+' '
-    })
 
-  console.log(artist,index)
-  return (<IonCard  key={index} className='profile' style={{ "width":"auto"}} mode="ios">
-  <div className='artistBox' >
-
-      <img  src={artist['imageUrl']} alt="img.jpg"/>
-
-    <IonItemGroup style={{"margin":"20px"}}>
-<IonCardTitle>{artist['artistName']}</IonCardTitle>
-  <IonCardSubtitle>{genres}</IonCardSubtitle>
-    </IonItemGroup>
-  </div>
-</IonCard>)}
-
-  ))}
-
+      <IonCard className='profile' style={{ "width":"250px"}} mode="ios">
+          <div className='artistBox' >
+            <IonItemGroup>
+              <img  src="https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png" alt="img.jpg"/>
+            </IonItemGroup>
+            <IonItemGroup>
+            <IonCardTitle>Artist Name</IonCardTitle>
+            <IonCardSubtitle>Genres</IonCardSubtitle>
+            </IonItemGroup>
+          </div>
+        </IonCard>
 
 </div>
 
