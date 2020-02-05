@@ -11,7 +11,6 @@ interface IMyComponentState {
   phone:string,
   firstName:string,
   lastName: string,
-  password: string
 }
 interface IMyComponentProps{
   putInfo: (info: any) => void
@@ -26,7 +25,6 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       phone:'',
       firstName:'',
       lastName: '',
-      password: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -38,7 +36,6 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
     let newArtist=artist||{};
       this.setState({
         email: newArtist["email"],
-        password:newArtist["password"],
         firstName:newArtist["firstName"],
         lastName:newArtist["lastName"],
         phone:newArtist["phone"]
@@ -55,7 +52,6 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       phone:'',
       firstName:'',
       lastName: '',
-      password: ''
     })
 
   }
@@ -107,16 +103,10 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
       />
       </IonItem>
 
-    <IonItem>
-      <IonLabel>Password</IonLabel>
-      <IonInput type="password" placeholder="Password" required
-        value={this.state.password}
-        onIonChange={(e) => this.setState({password:(e.target as HTMLInputElement).value})}
-      />
-      </IonItem>
+
       <IonItem routerLink ={'/artistnameform'} >
 
-      <IonButton  type="submit"disabled={(this.state.email===''||this.state.firstName===''||this.state.password===''||this.state.lastName===''||this.state.phone==='')?true:false} >next</IonButton>
+      <IonButton  type="submit"disabled={(this.state.email===''||this.state.firstName===''||this.state.lastName===''||this.state.phone==='')?true:false} >next</IonButton>
 
       </IonItem>
       </form>

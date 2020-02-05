@@ -15,6 +15,7 @@ router.get("/", async (req,res,next)=>{
 
 router.post('/', async (req,res, next) => {
     try{
+        console.log('HERE')
         const artist = await Artist.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -31,9 +32,10 @@ router.post('/', async (req,res, next) => {
             email: req.body.email,
             password: req.body.password
         })
-        res.json(artist)
+        res.sendStatus(201)
 
     }catch(error){
+        console.log('HERE AFTER')
         next(error)
     }
 })

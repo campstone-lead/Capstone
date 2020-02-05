@@ -20,6 +20,7 @@ import ArtistBioForm from './pages/Artist/Signup/ArtistBioForm';
 import Genres from './pages/Artist/Signup/Genres';
 import ArtistType from './pages/Artist/Signup/ArtistType';
 import UploadPicture from './pages/Artist/Signup/UploadPicture';
+import ArtistPassword from './pages/Artist/Signup/ArtistPassword';
 import SignUpSignIn from './pages/SignUpSignIn';
 import SignUpZero from './pages/SignUp0';
 import BookerSignup2 from './pages/BookerSignup2'
@@ -108,6 +109,7 @@ render(){
           <Route path="/artisttype" component={ArtistType}/>
           <Route path="/addvenue" component={VenueForm} />
           <Route path="/uploadpicture" component={UploadPicture}/>
+          <Route path="/artistpassword" component={ArtistPassword}/>
           <Route path="/artists" component={AllArtistView}/>
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
