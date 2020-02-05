@@ -8,6 +8,7 @@ const GET_BOOKER = 'GET_BOOKER'
 const UPDATE_BOOKER = 'UPDATE_BOOKER'
 const UPDATE_VENUE = 'UPDATE_VENUE'
 const REMOVE_USER = 'REMOVE_USER'
+const CREATE_VENUE = 'CREATE_VENUE'
 /**
  *
  * INITIAL STATE
@@ -34,6 +35,7 @@ const getBooker = booker => ({type: GET_BOOKER, booker})
 export const updateBooker = newBookerData => ({type: UPDATE_BOOKER, newBookerData})
 export const updatedBooker = newBookerData => ({type: UPDATE_BOOKER, newBookerData})
 export const updateVenue = venue => ({type: UPDATE_VENUE, venue})
+export const createVenue = venue => ({type: CREATE_VENUE, venue})
 export const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
@@ -106,6 +108,36 @@ export const updatedVenue = (venue) => async dispatch => {
     console.error(err)
   }
 }
+
+//add new venue
+//add-venue-form.tsx
+export const createdVenue = (bookerId, sentVenue) => async dispatch => {
+  try {
+    // let venue=window.localStorage.getItem('venue')
+    // venue=JSON.parse(venue||'');
+    // window.localStorage.setItem('venue',JSON.stringify(sentVenue))
+    // let URL= sentVenue["photo"].slice(5)
+    let venueAxios={
+      description:sentVenue["description"],
+      name:sentVenue["address"],
+      address:sentVenue["address"],
+      latitude:sentVenue["latitude"],
+      longitude:sentVenue["longitude"],
+      capacity:sentVenue["capacity"],
+      bookerId:bookerId||1,
+      imageURL:URL
+    }
+    await  axios({
+      method:"post",
+      baseURL:"http://localhost:8080/api/",
+      url:`/venues/`,
+      data:venueAxios
+    })
+    dispatch(createVenue(sentVenue))
+  } catch (err) {
+    console.error(err)
+  }
+}
 /**
  * REDUCER
  */
@@ -118,6 +150,9 @@ export default function(state = defaultBooker, action) {
       return {...state,...action.newBookerData}
     case UPDATE_VENUE:
     return action.venue;
+    case CREATE_VENUE:
+        // window.localStorage.setItem('venue',JSON.stringify(action.venue))
+      return action.venue
     case REMOVE_USER:
       return {};
     default:

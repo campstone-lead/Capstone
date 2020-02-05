@@ -15,6 +15,18 @@
  width:400px;
  }
 
+.updatevenue{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: column;
+}
+.venuelabel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: column;
+}
 
  .profile{
 
