@@ -63,7 +63,7 @@ class AllArtistView extends React.Component <IMyComponentProps,{}> {
 <IonCardHeader className="home" mode="ios">
 
 <IonBackButton defaultHref="/home" mode="ios"
-text=" Back "
+text="Back"
 color="dark"
 className="backBtn"
 />

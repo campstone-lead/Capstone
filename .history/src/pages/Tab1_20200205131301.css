@@ -132,11 +132,9 @@ border-radius: 3%;
   font-size: 20px;
 }
 .textBox{
-  position: relative;
-  margin:10px;
+  margin:5px;
  display: flex;
  flex-wrap:wrap;
- bottom: -40px;
 }
 .artistBox{
   display:flex;
@@ -147,7 +145,6 @@ border-radius: 3%;
 .artistBox img{
   margin:10px;
   display: block;
-
   max-width:80px;
   max-height:80px;
   width: auto;
@@ -156,8 +153,8 @@ border-radius: 3%;
 }
 .backBtn{
   display: block;
-position: fixed;
- left: 3px;
+position: relative;
+ left: 15px;
  margin:10px;
- margin-right: 500px;
+ margin-right: 1000px;
 }
