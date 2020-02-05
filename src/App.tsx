@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -8,19 +8,18 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonTitle
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { apps, home, contact, logOut, logIn } from 'ionicons/icons';
+import { home, contact, logOut, logIn } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
-import Login from './pages/LoginTemplate';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
+import ArtistBioForm from './pages/Artist/Signup/ArtistBioForm';
 import Genres from './pages/Artist/Signup/Genres';
-import ArtistType from './pages/Artist/Signup/ArtistType'
-import Details from './pages/Details';
+import ArtistType from './pages/Artist/Signup/ArtistType';
+import UploadPicture from './pages/Artist/Signup/UploadPicture';
 import SignUpSignIn from './pages/SignUpSignIn';
 import SignUpZero from './pages/SignUp0';
 import BookerSignup2 from './pages/BookerSignup2'
@@ -29,11 +28,13 @@ import BookerSignup4 from './pages/BookerSignup4'
 import BookerSignup3 from './pages/BookerSignup3';
 import BookerSignup5 from './pages/BookerSignup5';
 import BookerSignup7 from './pages/BookerSignup7';
+import BookerSignup6 from './pages/BookerSignup6';
+import VenueForm from './pages/booker/venue/add-venue-form'
 import Profile from './pages/Profile';
 import { connect } from 'react-redux'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-import { me, logout } from './store/booker'
+import { me, logout } from './store/user'
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -52,7 +53,7 @@ import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3'
 interface IMyComponentProps {
-  booker: object,
+  user: object,
   userId: Number,
   me: any,
   history: any,
@@ -78,9 +79,6 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
   }
 
   render() {
-    console.log(this.props, this.props.userId !== undefined)
-
-
     return (
       <IonApp>
         <IonReactRouter>
@@ -98,19 +96,16 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
               <Route path="/signup/booker/4" component={BookerSignup4} />
               <Route path="/signup/booker/3" component={BookerSignup3} />
               <Route path="/signup/booker/5" component={BookerSignup5} />
+              <Route path="/signup/booker/6" component={BookerSignup6} />
               <Route path="/signup/booker/7" component={BookerSignup7} />
               <Route path="/infoform" component={PersonalInfo} />
               <Route path="/artistnameform" component={ArtistNameForm} />
+              <Route path="/artistbioform" component={ArtistBioForm} />
               <Route path="/zipcodeform" component={ZipCodeForm} />
               <Route path="/genres" component={Genres} />
               <Route path="/artisttype" component={ArtistType} />
-
-
-
-
-
-
-
+              <Route path="/addvenue" component={VenueForm} />
+              <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
@@ -154,8 +149,8 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
   }
 }
 const mapStateToProps = (state) => ({
-  booker: state.booker,
-  userId: state.booker.id
+  user: state.user,
+  userId: state.user.id
 })
 const mapDispatchToProps = (dispatch) => ({
   me: () => dispatch(me()),
