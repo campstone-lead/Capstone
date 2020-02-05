@@ -5,7 +5,7 @@ import {
   import React from 'react';
   import '../../Tab1.css';
   import {connect} from 'react-redux'
-  import {updatedArtist} from '../../../store/artist'
+  import {updatedArtist, putZipCode} from '../../../store/artist'
 
 
   interface IMyComponentState {
@@ -24,10 +24,36 @@ import {
       }
       this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    // componentDidMount(){
+    //   let artist=window.localStorage.getItem('artistInfo')
+    //   if(artist!==null){
+    //   artist=JSON.parse(artist||'');
+    //   let newArtist=artist||{};
+    //     this.setState({
+    //       zipCode: newArtist["zipCode"],
+    //     })
+    //   }
+    // }
+
+
     handleSubmit(event) {
       event.preventDefault();
       this.props.updateArtist(this.state)
-      this.handleSubmit = this.handleSubmit.bind(this);
+      // this.props.putZipCode(this.state.zipCode)
+      // this.setState({
+      //   zipCode: '',
+      // })
+
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    this.props.updateArtist(this.state)
+    console.log('this.state:', this.state)
+
   }
   render() {
     return (<IonPage>
@@ -62,10 +88,9 @@ import {
     </IonPage>)
   }
 }
-
-
 const mapDispatchToProps = dispatch => {
   return {
+    // putZipCode: (zipcode) => dispatch(putZipCode(zipcode)),
     updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
   }
 }
