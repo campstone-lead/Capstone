@@ -59,14 +59,14 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
 
     <IonItem>
       <IonLabel>Artist Name</IonLabel>
-      <IonInput type="text" placeholder="FirstName" required
+      <IonInput type="text" placeholder="ArtistName" required
       value={this.state.artistName}
       onIonChange={(e) => this.setState({artistName:(e.target as HTMLInputElement).value})}
       />
 
     </IonItem>
     <IonItem routerLink = {'/artistbioform'}>
-      <IonButton type="submit" /*disabled = {this.state.artistName===""? true: false}*/>next</IonButton>
+      <IonButton type="submit" disabled = {this.state.artistName===""? true: false}>next</IonButton>
     </IonItem>
       </form>
     </IonContent>

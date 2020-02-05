@@ -29,6 +29,7 @@ import BookerSignup3 from './pages/BookerSignup3';
 import BookerSignup5 from './pages/BookerSignup5';
 import BookerSignup7 from './pages/BookerSignup7';
 import BookerSignup6 from './pages/BookerSignup6';
+import AllArtistView from './pages/AllArtistView';
 import VenueForm from './pages/booker/venue/add-venue-form'
 import Profile from './pages/Profile';
 import { connect } from 'react-redux'
@@ -78,75 +79,66 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
 
   }
 
-  render() {
-    return (
-      <IonApp>
-        <IonReactRouter>
-          <IonTabs>
-            <IonRouterOutlet>
 
-              <Route path="/home" component={Tab1} exact={true} />
-              <Route path="/tab2" component={Tab2} />
-              <Route path="/tab3" component={Tab3} />
-              <Route path='/profile' component={Profile} />
-              <Route path="/login" component={SignUpSignIn} />
-              <Route path="/signup0" component={SignUpZero} />
-              <Route path="/signup/booker/2" component={BookerSignup2} />
-              <Route path="/signup/booker/1" component={BookerSignup1} />
-              <Route path="/signup/booker/4" component={BookerSignup4} />
-              <Route path="/signup/booker/3" component={BookerSignup3} />
-              <Route path="/signup/booker/5" component={BookerSignup5} />
-              <Route path="/signup/booker/6" component={BookerSignup6} />
-              <Route path="/signup/booker/7" component={BookerSignup7} />
-              <Route path="/infoform" component={PersonalInfo} />
-              <Route path="/artistnameform" component={ArtistNameForm} />
-              <Route path="/artistbioform" component={ArtistBioForm} />
-              <Route path="/zipcodeform" component={ZipCodeForm} />
-              <Route path="/genres" component={Genres} />
-              <Route path="/artisttype" component={ArtistType} />
-              <Route path="/addvenue" component={VenueForm} />
-              <Route path="/uploadpicture" component={UploadPicture} />
-              <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
-            </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="tab1" href="/home">
-                <IonIcon icon={home} />
-                <IonLabel>Home</IonLabel>
-              </IonTabButton>
+render(){
+  return(
+  <IonApp>
+    <IonReactRouter>
+      <IonTabs>
+        <IonRouterOutlet>
 
-
-
-
-              <IonTabButton tab="tab3" href='/profile'
-                disabled={(this.props.userId !== undefined) ? false : true}
-              >
-                {(this.props.userId !== undefined) ? <IonIcon icon={contact} /> : null}
-                <IonLabel>{(this.props.userId !== undefined) ? 'Profile' : ''}</IonLabel>
-              </IonTabButton>
-
-
-
-              {(this.props.userId !== undefined) ? <IonTabButton tab="tab2" onClick={this.props.logout}>
-                <IonIcon icon={logOut} />
-                <IonLabel>Logout</IonLabel>
-              </IonTabButton> : null}
-
-
-              {(this.props.userId === undefined) ? <IonTabButton tab="tab2" href='/login'>
-                {(this.props.userId === undefined) ? <IonIcon icon={logIn} /> : null}
-                <IonLabel>{(this.props.userId === undefined) ? 'Log In' : ''}</IonLabel>
-              </IonTabButton> : null
-              }
+          <Route path="/home" component={Tab1} exact={true} />
+          <Route path="/tab2" component={Tab2}  />
+          <Route path="/tab3" component={Tab3}  />
+          <Route path='/profile' component={Profile} />
+          <Route path="/login" component={SignUpSignIn} />
+          <Route path="/signup0" component={SignUpZero} />
+          <Route path="/signup/booker/2" component={BookerSignup2} />
+          <Route path="/signup/booker/1" component={BookerSignup1} />
+          <Route path="/signup/booker/4" component={BookerSignup4} />
+          <Route path="/signup/booker/3" component={BookerSignup3} />
+          <Route path="/signup/booker/5" component={BookerSignup5} />
+          <Route path="/signup/booker/6" component={BookerSignup6} />
+          <Route path="/signup/booker/7" component={BookerSignup7} />
+          <Route path="/infoform" component={PersonalInfo} />
+          <Route path="/artistnameform" component={ArtistNameForm} />
+          <Route path="/artistbioform" component={ArtistBioForm}/>
+          <Route path="/zipcodeform" component={ZipCodeForm}/>
+          <Route path="/genres" component={Genres}/>
+          <Route path="/artisttype" component={ArtistType}/>
+          <Route path="/addvenue" component={VenueForm} />
+          <Route path="/uploadpicture" component={UploadPicture}/>
+          <Route path="/artists" component={AllArtistView}/>
+          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
+        </IonRouterOutlet>
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="tab1" href="/home">
+            <IonIcon icon={home} />
+            <IonLabel>Home</IonLabel>
+          </IonTabButton>
 
 
 
 
+    <IonTabButton tab="tab3" href='/profile'
+    disabled={(this.props.userId!==undefined)?false:true}
+    >
+ { (this.props.userId!==undefined)? <IonIcon icon={contact} />:null}
+  <IonLabel>{(this.props.userId!==undefined)?'Profile':''}</IonLabel>
+</IonTabButton>
 
-            </IonTabBar>
-          </IonTabs>
-        </IonReactRouter>
-      </IonApp>)
-  }
+
+
+{(this.props.userId!==undefined)? <IonTabButton tab="tab2" onClick={this.props.logout}>
+            <IonIcon icon={logOut} />
+            <IonLabel>Logout</IonLabel>
+          </IonTabButton>:null}
+
+
+  {(this.props.userId===undefined)?  <IonTabButton tab="tab2" href='/login'>
+  { (this.props.userId===undefined)? <IonIcon icon={logIn} />:null}
+  <IonLabel>{(this.props.userId===undefined)?'Log In':''}</IonLabel>
+</IonTabButton>:null
 }
 const mapStateToProps = (state) => ({
   user: state.user,

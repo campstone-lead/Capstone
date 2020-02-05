@@ -4,7 +4,7 @@ import {
   import React from 'react';
   import '../../Tab1.css';
   import {connect} from 'react-redux'
-  import {updatedArtist, putGenre} from '../../../store/artist'
+  import {updatedArtist} from '../../../store/artist'
 
   interface IMyComponentState {
     genres: string,
@@ -61,7 +61,7 @@ import {
     //     }
     //   }
     // }
-  
+
     handleClick(event) {
       event.preventDefault();
       this.setState({
@@ -87,7 +87,7 @@ import {
       const keys = Object.keys(obj)
       const filtered = keys.filter((key) => obj[key])
       console.log('filtered', filtered)
-    
+
 
       this.props.updateArtist({
         genres: filtered
@@ -122,8 +122,7 @@ import {
 
         <IonItem routerLink="/artisttype">
         <br></br>
-        <IonButton type = "submit" >Next</IonButton>
-        {/* <IonButton type = "submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true ))?false:true}>Next</IonButton> */}
+        <IonButton type = "submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true ))?false:true}>Next</IonButton>
         </IonItem>
         </form>
       </IonContent>
