@@ -2,6 +2,11 @@ const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
 
+const fetch = require('node-fetch')
+const Venue = require('./venue')
+const Recommendation = require('./recommendation')
+const googleMapsApiKey = require('../../../secrets')
+
 const Artist = db.define('artist', {
   firstName: {
     type: Sequelize.STRING,
@@ -129,16 +134,27 @@ Artist.encryptPassword = function (plainText, salt) {
 /**
  * hooks
  */
-const setSaltAndPassword = artist => {
+const preHooks = async artist => {
+  //setSaltAndPassword
   if (artist.changed('password')) {
     artist.salt = Artist.generateSalt()
     artist.password = Artist.encryptPassword(artist.password(), artist.salt())
   }
+  //findLatLng
+  if (artist.changed('zipCode')) {
+    try {
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${artist.zipCode}&key=${googleMapsApiKey}`)
+      const data = await response.json()
+      artist.latitude = data.results[0].geometry.location.lat
+      artist.longitude = data.results[0].geometry.location.lng
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
-Artist.beforeCreate(setSaltAndPassword)
-Artist.beforeUpdate(setSaltAndPassword)
+Artist.beforeCreate(preHooks)
+Artist.beforeUpdate(preHooks)
 Artist.beforeBulkCreate(artists => {
-  artists.forEach(setSaltAndPassword)
+  artists.forEach(preHooks)
 })
-

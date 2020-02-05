@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db')
-const {
-Artist,
-Booker,Venue,User
-} = require('./server/db/models')
+const { Artist, Booker, Venue, User } = require('./server/db/models')
 
 
 
@@ -13,8 +10,8 @@ const bookers = [
     lastName: 'Chan',
     email: 'liana.andreea97@yahoo.com',
     password: '123',
-    genres:['pop','hip-hop'],
-    phone:'(929)-308-8477',
+    genres: ['pop', 'hip-hop'],
+    phone: '(929)-308-8477',
   }
 ]
 
@@ -39,17 +36,17 @@ const artists = [
 const venues = [
   {
     name: 'Grace Hopper',
-    genres:['pop','hip-hop','rock','R&B'],
+    genres: ['pop', 'hip-hop', 'rock', 'R&B'],
     latitude: '40.705086',
     longitude: '-74.009151',
     address: 'Hanover Square floor 25, New York, NY 10004',
-    description:"Party time!",
-    capacity:100,
-    bookerId:1
+    description: "Party time!",
+    capacity: 100,
+    bookerId: 1
   }
 ]
 
-const user=[
+const user = [
   {
     firstName: 'guest',
     status: 'user',
@@ -63,29 +60,39 @@ const user=[
 ]
 const seed = () =>
   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-  Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-  Promise.all(artists.map(artist => {return Artist.create({
-    firstName: artist.firstName,
-    lastName: artist.lastName,
-    artistName: artist.artistName,
-    genres: artist.genres,
-    imageUrl: artist.imageUrl,
-    zipCode: artist.zipCode,
-    instagramUrl: artist.instagramUrl,
-    spotifyUrl: artist.spotifyUrl,
-    facebookUrl: artist.facebookUrl,
-    type: artist.type,
-    phone: artist.phone,
-    email: artist.email,
-    password: artist.password})})).then(() =>
-    Promise.all(user.map(venue => User.create(venue))))))
+    Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
+      Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
+        Promise.all(user.map(venue => User.create(venue)))
+      )))
 
+
+// const seed = () =>
+//   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
+//     Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
+//       Promise.all(artists.map(artist => {
+//         return Artist.create({
+//           firstName: artist.firstName,
+//           lastName: artist.lastName,
+//           artistName: artist.artistName,
+//           genres: artist.genres,
+//           imageUrl: artist.imageUrl,
+//           zipCode: artist.zipCode,
+//           instagramUrl: artist.instagramUrl,
+//           spotifyUrl: artist.spotifyUrl,
+//           facebookUrl: artist.facebookUrl,
+//           type: artist.type,
+//           phone: artist.phone,
+//           email: artist.email,
+//           password: artist.password
+//         })
+//       })).then(() =>
+//         Promise.all(user.map(venue => User.create(venue))))))
 
 
 const main = () => {
   console.log('Syncing db...')
   db
-    .sync({force: true})
+    .sync({ force: true })
     .then(() => {
       console.log('Seeding databse...')
       return seed()

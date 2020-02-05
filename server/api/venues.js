@@ -2,6 +2,7 @@ const router = require('express').Router()
 const fetch = require('node-fetch')
 const { Venue } = require('../db/models')
 const { Artist } = require('../db/models')
+const { Recommendation } = require('../db/models')
 
 const googleMapsApiKey = require('../../secrets')
 
@@ -21,9 +22,7 @@ router.get("/", async (req, res, next) => {
 })
 
 function makeLatLngList(rows) {
-  console.log(rows[0].longitude.toString())
   let locations = rows.map((row) => row.latitude.toString().concat(",", row.longitude.toString()))
-  console.log(locations)
   return locations.join("|")
 }
 
@@ -35,8 +34,17 @@ router.get("/distance/:artistId", async (req, res, next) => {
     const venues = await Venue.findAll()
     const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${artist.latitude},${artist.longitude}&destinations=${makeLatLngList(venues)}&mode=transit&key=${googleMapsApiKey}`);
     const data = await response.json()
-    console.log('response:', data)
-    //TODO: you left off here, Emma!! editting the google api route! making a helper function to get the list of long/lat in the right format!!!
+    // let result = await artist.addVenue(venues[0])
+    venues.forEach(async (venue, index) => {
+      let [result, created] = await Recommendation.findOrCreate({
+        where: {
+          venueId: venue.id,
+          artistId: artist.id,
+        }
+      })
+      await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
+    })
+
     res.json(data)
   } catch (error) {
     next(error)
