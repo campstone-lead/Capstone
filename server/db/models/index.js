@@ -10,8 +10,14 @@ const Recommendation = require('./recommendation')
 Venue.belongsTo(Booker, { allowNull: true })
 Booker.hasMany(Venue)
 
-Venue.belongsToMany(Artist, { through: Recommendation })
-Artist.belongsToMany(Venue, { through: Recommendation })
+Recommendation.belongsTo(Artist)
+Artist.hasMany(Recommendation)
+
+Recommendation.belongsTo(Venue)
+Venue.hasMany(Recommendation)
+// Venue.belongsToMany(Artist, { through: Recommendation })
+// Artist.belongsToMany(Venue, { through: Recommendation })
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'

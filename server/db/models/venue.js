@@ -2,8 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const fetch = require('node-fetch')
-const Artist = require('./artist')
-const Recommendation = require('./recommendation')
 const googleMapsApiKey = require('../../../secrets')
 
 const Venue = db.define('venue', {
@@ -23,18 +21,18 @@ const Venue = db.define('venue', {
     }
   },
   latitude: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.FLOAT,
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
   },
   longitude: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.FLOAT,
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
   },
   description: {
     type: Sequelize.TEXT
@@ -65,6 +63,48 @@ module.exports = Venue;
  * hooks
  */
 
+function encodeLocation(addressString) {
+  const encodings = {
+    " ": "+",
+    "\"": "%22",
+    ",": "%2C",
+    "<": "%3C",
+    ">": "%3E",
+    "#": "%23",
+    "%": "%25",
+    "|": "%7C",
+    "&": "%26",
+    "?": "%3F"
+  }
+  return addressString.split("").map((char) => {
+    if (encodings[char]) {
+      return encodings[char]
+    } else {
+      return char
+    }
+  }).join("")
+}
+
+const preHooks = async venue => {
+  //findLatLng
+  if (venue.changed('address') && !venue.changed('longitude') && !venue.changed('latitude')) {
+    try {
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeLocation(venue.address)}&key=${googleMapsApiKey}`)
+      const data = await response.json()
+      venue.latitude = data.results[0].geometry.location.lat
+      venue.longitude = data.results[0].geometry.location.lng
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+Venue.beforeCreate(preHooks)
+Venue.beforeUpdate(preHooks)
+Venue.beforeBulkCreate(venues => {
+  venues.forEach(preHooks)
+})
+
 function makeLatLngList(rows) {
   let locations = rows.map((row) => row.latitude.toString().concat(",", row.longitude.toString()))
   return locations.join("|")
@@ -74,7 +114,7 @@ const generateRecs = async venue => {
   if (venue.changed('address')) {
     try {
       const artists = await db.models.artist.findAll()
-      const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${venue.latitude},${venue.longitude}&destinations=${makeLatLngList(artists)}&mode=transit&key=${googleMapsApiKey}`);
+      const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${venue.latitude},${venue.longitude}&destinations=${makeLatLngList(artists)}&key=${googleMapsApiKey}`);
       const data = await response.json()
 
       for (let index = 0; index < artists.length; index++) {

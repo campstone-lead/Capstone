@@ -3,17 +3,11 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
-} from 'react-places-autocomplete'
 import { connect } from 'react-redux'
 import { updatedArtist, putZipCode } from '../../../store/artist'
 
 interface IMyComponentState {
   zipCode: string,
-  longitude: Number,
-  latitude: Number
 }
 interface IMyComponentProps {
   putZipCode: (zipCode: string) => void,
@@ -25,21 +19,12 @@ class ZipCodeForm extends React.Component<IMyComponentProps, IMyComponentState> 
     super(props);
     this.state = {
       zipCode: '',
-      longitude: 0,
-      latitude: 0
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async handleSubmit(event) {
     event.preventDefault();
-
-    const geoAddress = await geocodeByAddress(this.state.zipCode)
-    const latLng = await getLatLng(geoAddress[0])
-    this.setState({
-      longitude: latLng.lng,
-      latitude: latLng.lat
-    })
     this.props.updateArtist(this.state)
     console.log('this.state:', this.state)
 

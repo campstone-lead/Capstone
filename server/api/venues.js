@@ -21,31 +21,17 @@ router.get("/", async (req, res, next) => {
   }
 })
 
-function makeLatLngList(rows) {
-  let locations = rows.map((row) => row.latitude.toString().concat(",", row.longitude.toString()))
-  return locations.join("|")
-}
-
 //is it RESTful to put this in here?? --Emma
 router.get("/distance/:artistId", async (req, res, next) => {
   try {
-    const artist = await Artist.findByPk(req.params.artistId)
-    // const artist = await Artist.findByPk(req.user.id) //will it know if this is an artist or a booker? Talk to Liana --Emma
-    const venues = await Venue.findAll()
-    const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${artist.latitude},${artist.longitude}&destinations=${makeLatLngList(venues)}&mode=transit&key=${googleMapsApiKey}`);
-    const data = await response.json()
-    // let result = await artist.addVenue(venues[0])
-    venues.forEach(async (venue, index) => {
-      let [result, created] = await Recommendation.findOrCreate({
-        where: {
-          venueId: venue.id,
-          artistId: artist.id,
-        }
-      })
-      await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
+    const recList = await Venue.findAll({
+      include: [{
+        model: Recommendation,
+        where: { artistId: req.params.artistId },
+      }],
+      order: [[Recommendation, 'score', 'ASC']]
     })
-
-    res.json(data)
+    res.json(recList)
   } catch (error) {
     next(error)
   }

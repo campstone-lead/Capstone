@@ -3,8 +3,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const fetch = require('node-fetch')
-const Venue = require('./venue')
-const Recommendation = require('./recommendation')
 const googleMapsApiKey = require('../../../secrets')
 
 const Artist = db.define('artist', {
@@ -152,9 +150,52 @@ const preHooks = async artist => {
     }
   }
 }
-
+//TODO: remove long/lat creation from front end zip code page. add afterhooks to artist page. sleep.
 Artist.beforeCreate(preHooks)
 Artist.beforeUpdate(preHooks)
 Artist.beforeBulkCreate(artists => {
   artists.forEach(preHooks)
+})
+
+function makeLatLngList(rows) {
+  let locations = rows.map((row) => row.latitude.toString().concat(",", row.longitude.toString()))
+  return locations.join("|")
+}
+
+const generateRecs = async artist => {
+  if (artist.changed('zipCode')) {
+    try {
+      const venues = await db.models.venue.findAll()
+      const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${artist.latitude},${artist.longitude}&destinations=${makeLatLngList(venues)}&key=${googleMapsApiKey}`);
+      const data = await response.json()
+
+      for (let index = 0; index < venues.length; index++) {
+        let venue = venues[0]
+        try {
+          let [result, created] = await db.models.recommendation.findOrCreate({
+            where: {
+              venueId: venue.id,
+              artistId: artist.id,
+            }
+          })
+          try {
+            await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
+          } catch (error) {
+            console.log(error)
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+
+Artist.afterCreate(generateRecs)
+Artist.afterUpdate(generateRecs)
+Artist.afterBulkCreate(artists => {
+  artists.forEach(generateRecs)
 })
