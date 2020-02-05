@@ -10,7 +10,7 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home,contact,logOut,logIn } from 'ionicons/icons';
+import { home, contact, logOut, logIn } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
@@ -32,10 +32,10 @@ import BookerSignup6 from './pages/BookerSignup6';
 import AllArtistView from './pages/AllArtistView';
 import VenueForm from './pages/booker/venue/add-venue-form'
 import Profile from './pages/Profile';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-import {me,logout} from './store/user'
+import { me, logout } from './store/user'
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -53,31 +53,32 @@ import history from './history'
 import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3'
-interface IMyComponentProps{
-  user:object,
-  userId:Number,
-  me:any,
-  history:any,
-  logout:any
+interface IMyComponentProps {
+  user: object,
+  userId: Number,
+  me: any,
+  history: any,
+  logout: any
 }
 interface IMyComponentState {
-loaded:boolean
+  loaded: boolean
 }
-class App extends React.Component <IMyComponentProps,IMyComponentState>{
+class App extends React.Component<IMyComponentProps, IMyComponentState>{
 
-constructor(props){
-  super(props)
-  this.state={
-    loaded:false
+  constructor(props) {
+    super(props)
+    this.state = {
+      loaded: false
+    }
   }
-}
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.props.me();
 
-    this.setState({loaded:true})
+    this.setState({ loaded: true })
 
   }
+
 
 render(){
   return(
@@ -139,22 +140,12 @@ render(){
   <IonLabel>{(this.props.userId===undefined)?'Log In':''}</IonLabel>
 </IonTabButton>:null
 }
-
-
-
-
-
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>)}
-        }
-const mapStateToProps=(state)=>({
-          user:state.user,
-          userId:state.user.id
-        })
-const mapDispatchToProps=(dispatch)=>({
-         me:()=>dispatch(me()),
-         logout:()=>dispatch(logout())
-        })
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+const mapStateToProps = (state) => ({
+  user: state.user,
+  userId: state.user.id
+})
+const mapDispatchToProps = (dispatch) => ({
+  me: () => dispatch(me()),
+  logout: () => dispatch(logout())
+})
+export default connect(mapStateToProps, mapDispatchToProps)(App);

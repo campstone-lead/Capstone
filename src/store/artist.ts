@@ -21,6 +21,7 @@ const defaultArtist = {
 /**
  * ACTION CREATORS
  */
+
 const getArtists = artists => ({type: GET_ARTISTS, artists})
 export const putPersonalInfo = (info) =>({type: PUT_PERSONAL_INFO, info})
 export const putArtistName = (name) =>({type: PUT_ARTIST_NAME, name})
@@ -47,6 +48,7 @@ export const fetchArtists = () => async dispatch => {
 }
 export const updatedArtist = (artistInfo) => async dispatch => {
   try {
+
     let artist=window.localStorage.getItem('artistInfo')
       if(artist === null){
         window.localStorage.setItem('artistInfo', JSON.stringify(artistInfo))
@@ -82,34 +84,46 @@ export const updatedArtist = (artistInfo) => async dispatch => {
         })
         window.localStorage.clear()
         dispatch(updateArtist(res.data))
-        }
-
       }
+
+    }
 
   } catch (err) {
     console.error(err)
   }
 }
 
+export const getVenuesByDistance = () => {
+  return (
+    async (dispatch) => {
+
+      const res = await axios({
+        method: "get",
+        baseURL: "http://localhost:8080/api/",
+        url: "/venues/distance/2", //later, the "1" should be the id of the current artist on state (or in local storage?) could also potentially grab this from req.session on the backend instead, not sure what's more restful -- Emma
+      })
+    }
+  )
+}
 
 /**
  * REDUCER
  */
-export default function(state = defaultArtist, action) {
+export default function (state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
       return action.artists
 
     case PUT_PERSONAL_INFO:
-        // history.push('/artistnameform')
-        return {...state,
-          firstName: action.info.firstName,
-          lastName: action.info.lastName,
-          phone: action.info.phone,
-          email: action.info.email,
+      // history.push('/artistnameform')
+      return {
+        ...state,
+        firstName: action.info.firstName,
+        lastName: action.info.lastName,
+        phone: action.info.phone,
+        email: action.info.email,
 
-        }
-
+      }
       case PUT_ARTIST_NAME:
         // history.push('/artistnameform')
         return {...state, artistName: action.name}

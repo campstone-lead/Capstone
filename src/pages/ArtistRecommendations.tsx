@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard } from '@ionic/react';
 import './BookerSignup2.css';
 import { connect } from 'react-redux'
 import PlacesAutocomplete, {
@@ -19,6 +19,10 @@ interface IMyComponentProps {
   updateVenue: any
 
 }
+
+// function getHaversineDistance(latA,longA,latB,longB) {
+
+// }
 
 class Login extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
@@ -111,18 +115,6 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                 </div>
               )}
             </PlacesAutocomplete>
-
-
-            <IonItem routerLink="/signup/booker/3">
-              <br></br>
-
-              <IonButton size="small" className="next" onClick={() => {
-                return this.props.updateVenue(this.state)
-              }}
-                disabled={(this.state.address.length === 0 || this.state.latitude === 0)}
-              >Next</IonButton>
-
-            </IonItem>
 
           </IonCard>
         </IonContent>

@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db')
-const {
-Artist,
-Booker,Venue,User
-} = require('./server/db/models')
+const { Artist, Booker, Venue, User } = require('./server/db/models')
 
 
 
@@ -13,28 +10,28 @@ const bookers = [
     lastName: 'Chan',
     email: 'liana.andreea97@yahoo.com',
     password: '123',
-    phone:'(929)-308-8477',
+    phone: '(929)-308-8477',
   },
   {
     firstName: 'Ariana',
     lastName: 'Hwang',
     email: 'ariana@email.com',
     password: '123',
-    phone:'(111)-323-9021',
+    phone: '(111)-323-9021',
   },
   {
     firstName: 'Emma',
     lastName: 'Hartman',
     email: 'emma@email.com',
     password: '123',
-    phone:'(123)-456-7777',
+    phone: '(123)-456-7777',
   },
   {
     firstName: 'Alina',
     lastName: 'Davletshina',
     email: 'alina@email.com',
     password: '123',
-    phone:'(123)-456-7777',
+    phone: '(123)-456-7777',
   }
 ]
 
@@ -96,7 +93,7 @@ const artists = [
     genres: ['rock'],
     bio: 'Singer, songwriter, actor and producer Michael Phillip Jagger was born on July 26, 1943, in Dartford, England. As the lead singer of the Rolling Stones, Mick Jagger has become a rock legend known for his gritty, blues-influenced songs and charismatic stage presence.',
     imageUrl: 'https://i.scdn.co/image/4226d2bbee2c44866eb0db3c88da0f26d7d12d5d',
-    zipCode: '22222',
+    zipCode: '02766',
     instagramUrl: 'https://www.instagram.com/therollingstones/?hl=en',
     spotifyUrl: 'https://open.spotify.com/artist/22bE4uQ6baNwSHPVcDxLCe',
     facebookUrl: 'https://www.facebook.com/therollingstones/',
@@ -112,7 +109,7 @@ const artists = [
     genres: ['indie', 'rock', 'electronic'],
     bio: 'James Jeremiah Murphy (born February 4, 1970) is an American musician, DJ, singer, songwriter, and record producer. His most well-known musical project is LCD Soundsystem, which first gained attention with its single "Losing My Edge" in 2002 before releasing its eponymous debut album in February 2005',
     imageUrl: 'https://s3.amazonaws.com/quietus_production/images/articles/19494/LCD_1451995213_crop_550x407.jpg',
-    zipCode: '11111',
+    zipCode: '10128',
     instagramUrl: 'https://www.instagram.com/lcdsoundsystem/?hl=en',
     spotifyUrl: 'https://open.spotify.com/artist/066X20Nz7iquqkkCW6Jxy6',
     facebookUrl: 'https://www.facebook.com/lcdsoundsystem/',
@@ -137,7 +134,7 @@ const artists = [
     email: 'djseinfeld@email.com',
     password: '123'
   },
-  
+
   {
     firstName: 'Amelie',
     lastName: 'Lens',
@@ -177,7 +174,7 @@ const artists = [
     genres: ['hipHop', 'pop'],
     bio: 'Robyn Rihanna Fenty is a Barbadian singer, songwriter, and businesswoman, who has been recognized for embracing various musical styles and reinventing her image throughout her career.',
     imageUrl: 'https://pbs.twimg.com/media/D_y_cTGU8AEHJAI.jpg',
-    zipCode: '66666',
+    zipCode: '90210',
     instagramUrl: 'https://www.instagram.com/badgalriri/?hl=en',
     spotifyUrl: 'https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H',
     facebookUrl: 'https://www.facebook.com/rihanna/',
@@ -192,87 +189,71 @@ const artists = [
 const venues = [
   {
     name: 'Grace Hopper',
-    genres:['pop','hipHop'],
-    latitude: '40.705086',
-    longitude: '-74.009151',
+    genres: ['pop', 'hipHop'],
     address: 'Hanover Square floor 25, New York, NY 10004',
-    description:"Party time!",
-    capacity:100,
-    bookerId:1
+    description: "Party time!",
+    capacity: 100,
+    bookerId: 1
   },
   {
     name: 'The Bowery Ballroom',
-    genres:['pop','electronic','rock', 'metal', 'country', 'hipHop'],
-    latitude: '40.7204065',
-    longitude: '-73.995547',
+    genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
     address: '6 Delancey St, New York, NY 10002',
-    description:"hip concert venue for hip people",
-    capacity:500,
-    bookerId:1
+    description: "hip concert venue for hip people",
+    capacity: 500,
+    bookerId: 1
   },
   {
     name: 'Elsewhere',
-    genres:['indie','house','electronic','rock', 'hipHop'],
-    latitude: '40.709566',
-    longitude: '-73.9231158',
+    genres: ['indie', 'house', 'electronic', 'rock', 'hipHop'],
     address: '599 Johnson Ave #1, New York, NY 11237',
-    description:"Best venue in all of Brooklyn. We love to feature diverse, underground acts",
-    capacity:1500,
-    bookerId:2
+    description: "Best venue in all of Brooklyn. We love to feature diverse, underground acts",
+    capacity: 1500,
+    bookerId: 1
   },
   {
     name: 'Basement NY',
-    genres:['techno'],
-    latitude: '40.716140',
-    longitude: '-73.914207',
+    genres: ['techno'],
     address: '52-19 Flushing Ave, Queens, NY, 11378',
-    description:"Showcasing top techno talents from all around the world",
-    capacity:2000,
-    bookerId:2
+    description: "Showcasing top techno talents from all around the world",
+    capacity: 2000,
+    bookerId: 1
   },
   {
     name: 'Mood Ring',
-    genres:['house','electronic','techno'],
-    latitude: '40.6977778',
-    longitude: '-73.9291331',
+    genres: ['house', 'electronic', 'techno'],
     address: '1260 Myrtle Ave, Brooklyn, NY 11221',
-    description:"dimly lit bar featuring Djs and astrology-inspired cocktails",
-    capacity:100,
-    bookerId:3
+    description: "dimly lit bar featuring Djs and astrology-inspired cocktails",
+    capacity: 100,
+    bookerId: 1
   },
   {
     name: 'The Mercury Lounge',
-    genres:['indie','rock', 'pop', 'hipHop'],
-    latitude: '40.722184',
-    longitude: '-73.986767',
+    genres: ['indie', 'rock', 'pop', 'hipHop'],
     address: '217 E Houston St, New York, NY 10002',
-    description:"cozy, intimate space for up and coming artists!",
-    capacity:300,
-    bookerId:3
+    description: "cozy, intimate space for up and coming artists!",
+    capacity: 300,
+    bookerId: 1
   },
   {
     name: 'Blue Note Jazz Club',
-    genres:['jazz'],
-    latitude: '40.7309083',
-    longitude: '-74.0028444',
+    genres: ['jazz'],
     address: '131 W 3rd St, New York, NY, 10012',
-    description:"legendary jazz musicians play here!",
-    capacity:300,
-    bookerId:4
+    description: "legendary jazz musicians play here!",
+    capacity: 300,
+    bookerId: 1
   },
   {
     name: 'Petes Candy Store',
-    genres:['rock', 'indie', 'country', 'metal'],
-    latitude: '40.718099',
-    longitude: '-73.9523817',
+    genres: ['rock', 'indie', 'country', 'metal'],
     address: '709 Lorimer St, Brooklyn, NY, 11211',
-    description:"An offbeat watering hole featuring lots of live bands",
-    capacity:50,
-    bookerId:4
+    description: "An offbeat watering hole featuring lots of live bands",
+    capacity: 50,
+    bookerId: 1
   },
 ]
 
-const user=[
+const user = [
   {
     firstName: 'guest',
     status: 'user',
@@ -286,30 +267,17 @@ const user=[
 ]
 const seed = () =>
   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-  Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-  Promise.all(artists.map(artist => {return Artist.create({
-    firstName: artist.firstName,
-    lastName: artist.lastName,
-    artistName: artist.artistName,
-    genres: artist.genres,
-    bio: artist.bio,
-    imageUrl: artist.imageUrl,
-    zipCode: artist.zipCode,
-    instagramUrl: artist.instagramUrl,
-    spotifyUrl: artist.spotifyUrl,
-    facebookUrl: artist.facebookUrl,
-    type: artist.type,
-    phone: artist.phone,
-    email: artist.email,
-    password: artist.password})})).then(() =>
-    Promise.all(user.map(venue => User.create(venue))))))
+    Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
+      Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
+        Promise.all(user.map(user => User.create(user)))
+      )))
 
 
 
 const main = () => {
   console.log('Syncing db...')
   db
-    .sync({force: true})
+    .sync({ force: true })
     .then(() => {
       console.log('Seeding databse...')
       return seed()

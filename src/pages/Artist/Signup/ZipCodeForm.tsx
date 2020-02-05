@@ -1,4 +1,5 @@
 import {
+
     IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonItem,IonInput,IonLabel,IonButton
   } from '@ionic/react';
   import React from 'react';
@@ -45,8 +46,17 @@ import {
       // })
 
     }
-    render(){
-    return(<IonPage>
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    this.props.updateArtist(this.state)
+    console.log('this.state:', this.state)
+
+  }
+  render() {
+    return (<IonPage>
       <IonHeader >
         <IonToolbar id="bar" >
           <IonTitle>Let us help to find the right venue for you</IonTitle>
@@ -55,6 +65,7 @@ import {
           </IonItem>
         </IonToolbar>
       </IonHeader>
+
 
 
     <IonContent>
@@ -74,12 +85,14 @@ import {
         </IonItem>
         </form>
       </IonContent>
-    </IonPage>)}
+    </IonPage>)
   }
-  const mapDispatchToProps=dispatch=>{
-    return {
-      // putZipCode: (zipcode) => dispatch(putZipCode(zipcode)),
-      updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
-    }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    // putZipCode: (zipcode) => dispatch(putZipCode(zipcode)),
+    updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
   }
+}
   export default connect(null, mapDispatchToProps)(ZipCodeForm);
+

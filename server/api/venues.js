@@ -1,10 +1,11 @@
 const router = require('express').Router()
-const {Venue} = require('../db/models')
+const { Venue } = require('../db/models')
+const { Recommendation } = require('../db/models')
 
 
 module.exports = router
 
-router.get("/", async(req,res,next)=>{
+router.get("/", async (req, res, next) => {
   try {
     const data = await Venue.findAll()
     res.json(data)
@@ -13,7 +14,23 @@ router.get("/", async(req,res,next)=>{
   }
 })
 
-router.get("/:id", async(req,res,next)=>{
+//is it RESTful to put this in here?? --Emma
+router.get("/distance/:artistId", async (req, res, next) => {
+  try {
+    const recList = await Venue.findAll({
+      include: [{
+        model: Recommendation,
+        where: { artistId: req.params.artistId },
+      }],
+      order: [[Recommendation, 'score', 'ASC']]
+    })
+    res.json(recList)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get("/:id", async (req, res, next) => {
   try {
     const data = await Venue.findByPk(req.params.id)
     if (!data) {
@@ -26,7 +43,7 @@ router.get("/:id", async(req,res,next)=>{
   }
 })
 
-router.post("/", async(req,res,next)=>{
+router.post("/", async (req, res, next) => {
   try {
     const data = await Venue.create(req.body)
     res.json(data)
@@ -35,7 +52,7 @@ router.post("/", async(req,res,next)=>{
   }
 })
 
-router.put("/:id", async(req,res,next)=>{
+router.put("/:id", async (req, res, next) => {
   try {
     const venue = await Venue.findByPk(req.params.id)
     if (!venue) {
@@ -49,7 +66,7 @@ router.put("/:id", async(req,res,next)=>{
   }
 })
 
-router.delete("/:id", async(req,res,next)=>{
+router.delete("/:id", async (req, res, next) => {
   try {
     const venue = await Venue.findByPk(req.params.id)
     if (!venue) {
