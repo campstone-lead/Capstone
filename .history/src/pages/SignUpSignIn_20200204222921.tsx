@@ -1,12 +1,10 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonIcon,IonItem,IonInput,IonLabel,IonButton, IonCard,IonCardHeader } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonSearchbar,IonItem,IonInput,IonLabel,IonButton, IonCard,IonCardHeader,IonIcon } from '@ionic/react';
+import {logoInstagram,logoFacebook,logoGoogle}from 'ionicons/icons'
 import './Tab1.css';
-import {auth,me} from '../store/user'
+import {auth} from '../store/user'
 import {connect} from 'react-redux'
-import {logoFacebook,logoGoogleplus}from 'ionicons/icons'
 import history from './history'
-import Profile from './Profile';
-import {Link} from 'react-router-dom'
 interface IMyComponentState {
   email: string,
   password:string
@@ -14,8 +12,8 @@ interface IMyComponentState {
 interface IMyComponentProps{
   auth:any,
   error:any,
-  user:object,
-  me:any
+  user:any,
+  history:any
 }
  class SignUpSignIn extends React.Component<IMyComponentProps,IMyComponentState> {
   constructor(props) {
@@ -27,27 +25,26 @@ interface IMyComponentProps{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-async componentDidMount(){
-  await this.props.me()
-}
-  async handleSubmit(event) {
+
+  handleSubmit(event) {
     event.preventDefault();
-   await  this.props.auth(this.state.email,this.state.password);
-  await this.setState({
+    this.props.auth(this.state.email,this.state.password);
+    this.setState({
       email:'',
       password:''
     })
-
+    const error=this.props.error
+console.log('here',error,this.props.user['id'])
   }
   render() {
-
-const {error}=this.props
+const error=this.props.error
   return (
 
     <IonPage>
       <IonHeader >
         <IonToolbar id="bar" >
           <IonTitle>Log in</IonTitle>
+          {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
         </IonToolbar>
       </IonHeader>
 
@@ -78,14 +75,15 @@ const {error}=this.props
 
 
         <br></br>
-        <IonItem lines="none" routerLink='/home'>
         <IonCardHeader>
         <IonButton type="submit" style={{"width":"270px","height":"38px"}}
+        onClick={() => {
+          if(error&&error.response)
+          this.props.history.push(`/profile`)
+        }}
         color="tertiary"
-        >Login</IonButton>
+        >login</IonButton>
        </IonCardHeader>
-        </IonItem>
-
 
 
 
@@ -100,12 +98,12 @@ const {error}=this.props
 
         <IonButton href="/signup0" style={{"width":"270px","margin":"10px"}} color="tertiary" >Sign up</IonButton>
         <IonButton  style={{"width":"270px","margin":"10px"}} color="danger">
-          <IonIcon icon={logoGoogleplus}/>
+          <IonIcon icon={logoGoogle}/>
           Sign up with Google
           </IonButton>
         <IonButton  style={{"width":"270px","margin":"10px"}} >
         <IonIcon icon={logoFacebook}/>
-         Sign up with Facebook</IonButton>
+         Signup with Facebook</IonButton>
         </div>
       </IonCard>
       </IonContent>
@@ -118,7 +116,6 @@ const mapStateToProps=(state)=>({
   user:state.user
 })
 const mapDispatchToProps=(dispatch)=>({
-  auth:(email,password) => dispatch(auth(email,password)),
-  me:()=>dispatch(me()),
+  auth:(email,password) => dispatch(auth(email,password))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(SignUpSignIn);

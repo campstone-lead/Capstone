@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonCardHeader,IonItem,IonInput,IonLabel,IonButton,IonCard } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonSearchbar,IonItem,IonInput,IonLabel,IonButton,IonCard } from '@ionic/react';
 import './Tab1.css';
 import {connect} from 'react-redux'
 import {updatedBooker} from '../store/booker'
@@ -58,20 +58,19 @@ this.props.updateBooker(this.state);
 
     <IonContent>
     <div className="welcome-card">
-      <form onSubmit={this.handleSubmit} >
+      <form onSubmit={this.handleSubmit}>
       <IonTitle>Tell us about yourself...</IonTitle>
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="text" placeholder="First Name" required
           value={this.state.firstName}
           onIonChange={(e) => this.setState({firstName:(e.target as HTMLInputElement).value})}
-
         />
         </IonItem>
 
 
 
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="text" placeholder="Last Name" required
           value={this.state.lastName}
@@ -80,7 +79,7 @@ this.props.updateBooker(this.state);
         </IonItem>
 
 
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="text" placeholder="Phone number" required
           value={this.state.phone}
@@ -88,7 +87,7 @@ this.props.updateBooker(this.state);
         />
         </IonItem>
 
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="email" placeholder="Email" required
         value={this.state.email}
@@ -100,14 +99,9 @@ this.props.updateBooker(this.state);
 
 
 <IonItem routerLink="/signup/booker/2" lines="none">
+<br></br>
 
-<IonCardHeader>
-<IonButton type="submit"
- style={{"width":"100px","height":"38px"}}
- color="tertiary"
-disabled={(this.state.email.length===0||this.state.firstName.length===0||this.state.lastName.length===0||this.state.phone.length===0)?true:false}>Next</IonButton>
-</IonCardHeader>
-
+      <IonButton type="submit"  disabled={(this.state.email.length===0||this.state.firstName.length===0||this.state.lastName.length===0||this.state.phone.length===0)?true:false}>Submit</IonButton>
 </IonItem>
 
 

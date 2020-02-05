@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonIcon,IonItem,IonInput,IonLabel,IonButton, IonCard,IonCardHeader } from '@ionic/react';
 import './Tab1.css';
-import {auth,me} from '../store/user'
+import {auth} from '../store/user'
 import {connect} from 'react-redux'
 import {logoFacebook,logoGoogleplus}from 'ionicons/icons'
 import history from './history'
@@ -14,8 +14,7 @@ interface IMyComponentState {
 interface IMyComponentProps{
   auth:any,
   error:any,
-  user:object,
-  me:any
+  userId:any
 }
  class SignUpSignIn extends React.Component<IMyComponentProps,IMyComponentState> {
   constructor(props) {
@@ -27,9 +26,7 @@ interface IMyComponentProps{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-async componentDidMount(){
-  await this.props.me()
-}
+
   async handleSubmit(event) {
     event.preventDefault();
    await  this.props.auth(this.state.email,this.state.password);
@@ -37,11 +34,15 @@ async componentDidMount(){
       email:'',
       password:''
     })
-
+    const {error,userId}=this.props
+console.log('here',error,userId)
   }
   render() {
 
-const {error}=this.props
+let authError=window.localStorage.getItem('error');
+if(authError!==null){
+authError=JSON.parse(authError||'')
+}
   return (
 
     <IonPage>
@@ -78,7 +79,7 @@ const {error}=this.props
 
 
         <br></br>
-        <IonItem lines="none" routerLink='/home'>
+        <IonItem lines="none" routerLink={(error && error.response)?'/login':'/profile'}>
         <IonCardHeader>
         <IonButton type="submit" style={{"width":"270px","height":"38px"}}
         color="tertiary"
@@ -115,10 +116,9 @@ const {error}=this.props
 };
 const mapStateToProps=(state)=>({
   error:state.user.error,
-  user:state.user
+  userId:state.user.id
 })
 const mapDispatchToProps=(dispatch)=>({
-  auth:(email,password) => dispatch(auth(email,password)),
-  me:()=>dispatch(me()),
+  auth:(email,password) => dispatch(auth(email,password))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(SignUpSignIn);

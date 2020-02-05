@@ -60,12 +60,8 @@
 }
 .signUpItems{
   width:150px;
-  height: 88px;
+  height: 78px;
   font-size: 20px;
   font-family: 'Raleway', sans-serif;
   margin:10px;
-}
-.signUpTitle{
-  font-size: 30px;
-  font-family: 'Raleway', sans-serif;
 }

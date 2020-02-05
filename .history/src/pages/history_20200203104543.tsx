@@ -5,4 +5,4 @@ const history =
     ? createMemoryHistory()
     : createBrowserHistory()
 
-export default createBrowserHistory();
+export default history

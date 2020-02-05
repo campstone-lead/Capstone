@@ -14,7 +14,7 @@ interface IMyComponentState {
 interface IMyComponentProps{
   auth:any,
   error:any,
-  user:object,
+  userId:any,
   me:any
 }
  class SignUpSignIn extends React.Component<IMyComponentProps,IMyComponentState> {
@@ -37,11 +37,12 @@ async componentDidMount(){
       email:'',
       password:''
     })
-
+    const {error,userId}=this.props
+console.log('here',error,userId)
   }
   render() {
 
-const {error}=this.props
+const {error,userId}=this.props
   return (
 
     <IonPage>
@@ -78,7 +79,11 @@ const {error}=this.props
 
 
         <br></br>
-        <IonItem lines="none" routerLink='/home'>
+        <IonItem lines="none" routerLink={
+          (userId===undefined)?
+          (error!==undefined)
+          ?'/login':'/profile':'/login'
+        }>
         <IonCardHeader>
         <IonButton type="submit" style={{"width":"270px","height":"38px"}}
         color="tertiary"
@@ -115,7 +120,7 @@ const {error}=this.props
 };
 const mapStateToProps=(state)=>({
   error:state.user.error,
-  user:state.user
+  userId:state.user.id
 })
 const mapDispatchToProps=(dispatch)=>({
   auth:(email,password) => dispatch(auth(email,password)),

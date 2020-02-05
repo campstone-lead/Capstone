@@ -21,12 +21,10 @@ import {connect} from 'react-redux'
     <IonContent>
 
       <div className="welcome-card" >
-      <IonCardHeader className="signUpTitle">I am a ...</IonCardHeader>
-        <IonItem lines="none">
-        <IonButton href="/signup/booker/1" className="signUpItems"
-        color="tertiary">Booker</IonButton>
-        <IonButton href="/infoform"className="signUpItems"
-        color="tertiary">Artist</IonButton>
+      <IonCardHeader>I am a ...</IonCardHeader>
+        <IonItem>
+        <IonButton href="/signup/booker/1">Booker</IonButton>
+        <IonButton href="/infoform">Artist</IonButton>
         </IonItem>
 
       </div>

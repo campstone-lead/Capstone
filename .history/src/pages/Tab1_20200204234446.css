@@ -58,14 +58,9 @@
   height: auto;
   border-radius: 3%;
 }
-.signUpItems{
-  width:150px;
-  height: 88px;
-  font-size: 20px;
-  font-family: 'Raleway', sans-serif;
-  margin:10px;
-}
-.signUpTitle{
-  font-size: 30px;
-  font-family: 'Raleway', sans-serif;
+.signUp{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
 }

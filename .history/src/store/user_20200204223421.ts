@@ -32,7 +32,6 @@ export const auth = (email,password) => async dispatch => {
 
     dispatch(getUser(res.data || defaultUser))
   } catch (authError) {
-    window.localStorage.setItem('error',JSON.stringify(authError))
     return dispatch(getUser({error: authError}))
   }
 

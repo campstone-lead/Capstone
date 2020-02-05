@@ -78,7 +78,10 @@ const {error}=this.props
 
 
         <br></br>
-        <IonItem lines="none" routerLink='/home'>
+        <IonItem lines="none" routerLink={
+          (this.props.user['id']!==undefined)?
+          '/profile':'/login'
+        }>
         <IonCardHeader>
         <IonButton type="submit" style={{"width":"270px","height":"38px"}}
         color="tertiary"

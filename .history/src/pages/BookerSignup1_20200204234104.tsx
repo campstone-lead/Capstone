@@ -58,20 +58,19 @@ this.props.updateBooker(this.state);
 
     <IonContent>
     <div className="welcome-card">
-      <form onSubmit={this.handleSubmit} >
+      <form onSubmit={this.handleSubmit}>
       <IonTitle>Tell us about yourself...</IonTitle>
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="text" placeholder="First Name" required
           value={this.state.firstName}
           onIonChange={(e) => this.setState({firstName:(e.target as HTMLInputElement).value})}
-
         />
         </IonItem>
 
 
 
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="text" placeholder="Last Name" required
           value={this.state.lastName}
@@ -80,7 +79,7 @@ this.props.updateBooker(this.state);
         </IonItem>
 
 
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="text" placeholder="Phone number" required
           value={this.state.phone}
@@ -88,7 +87,7 @@ this.props.updateBooker(this.state);
         />
         </IonItem>
 
-      <IonItem lines="inset">
+      <IonItem>
 
         <IonInput type="email" placeholder="Email" required
         value={this.state.email}
