@@ -24,8 +24,7 @@ const defaultArtist = {
   },
   booked: {
 
-  },
-  status: ''
+  }
 }
 
 /**
@@ -174,7 +173,7 @@ export default function (state = defaultArtist, action) {
     case BOOK_ARTIST:
       return { ...state, booked: { venueId: action.info.venueId, artistId: action.info.artistId, status: action.info.status, bookerId: action.info.bookerId } }
     case GET_ONE_ARTIST:
-      return { ...state, artist: action.artist.artist, status: action.artist.status }
+      return { ...state, artist: action.artist.artist }
     case PUT_PERSONAL_INFO:
       return {
         ...state,

@@ -50,24 +50,26 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     const bookerId = this.props.user['id']
     await this.props.getBookerEvents(bookerId)
     this.setState({ currentEvent: this.props.events[0].id })
+    this.setState({ status: this.props.bookingStatus })
+    if (this.props.bookingStatus !== null) {
+      this.props.events.forEach(async (el) => {
+        await this.props.gotOneEvents(el.id)
+        let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
+        if (artist.length === 1) {
+          await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
+        }
 
-    this.props.events.forEach(async (el) => {
-      await this.props.gotOneEvents(el.id)
-      let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
-      if (artist.length === 1) {
-        await this.setState({ status: this.props.bookingStatus })
-        await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
-      }
+      })
+    }
 
-    })
-
-
-
+    if (this.state.bookedArtistInfo['id'] === undefined) {
+      await this.setState({ status: null })
+    }
 
   }
 
   render() {
-
+    console.log(this.state.bookedArtistInfo['id'])
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {

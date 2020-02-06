@@ -23,7 +23,7 @@ interface IMyComponentProps {
 
 }
 interface IMyComponentState {
-  status: any,
+  status: string,
   currentEvent: any,
   bookedArtistInfo: object
 }
@@ -31,7 +31,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   constructor(props) {
     super(props)
     this.state = {
-      status: null,
+      status: 'none',
       currentEvent: '',
       bookedArtistInfo: {}
     }
@@ -50,24 +50,22 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     const bookerId = this.props.user['id']
     await this.props.getBookerEvents(bookerId)
     this.setState({ currentEvent: this.props.events[0].id })
+    this.setState({ status: this.props.bookingStatus })
+    if (this.props.bookingStatus !== null) {
+      this.props.events.forEach(async (el) => {
+        await this.props.gotOneEvents(el.id)
+        let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
+        if (artist.length === 1) {
+          this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
+        }
 
-    this.props.events.forEach(async (el) => {
-      await this.props.gotOneEvents(el.id)
-      let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
-      if (artist.length === 1) {
-        await this.setState({ status: this.props.bookingStatus })
-        await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
-      }
-
-    })
-
-
-
+      })
+    }
 
   }
 
   render() {
-
+    console.log(this.state.bookedArtistInfo)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -163,7 +161,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             {
-              (this.state.status === null) ?
+              (this.props.bookingStatus === null) ?
                 <select onChange={this.handleChange}>
                   {this.props.events.length !== 0 &&
                     this.props.events.map((event, index) => (
@@ -172,13 +170,12 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
                       </option>
                     ))}
                 </select> : <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>This artist is {this.props.bookingStatus['status']}
-                  {' '}
-                  for {this.state.bookedArtistInfo['name']}  at {this.state.bookedArtistInfo['venueName']}.
+                  for {this.state.bookedArtistInfo['name']} at {this.state.bookedArtistInfo['venueName']}.
   </IonCardSubtitle>
             }
 
-            <IonButton onClick={this.handleClick} disabled={(this.state.status === null) ? false : true}>
-              {(this.state.status === null) ? 'Book me' : (this.state.status['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
+            <IonButton onClick={this.handleClick} disabled={(this.props.bookingStatus === null) ? false : true}>
+              {(this.props.bookingStatus === null) ? 'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
             </IonButton>
 
             <br></br>

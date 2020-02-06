@@ -17,10 +17,9 @@ router.get("/:id", async (req, res, next) => {
     const data = await Artist.findByPk(req.params.id)
     if (!data) {
       res.sendStatus(404)
-
+      const status = await ArtistEvent.findOne({ where: { artistId: req.params.id } })
     } else {
-      const artistStatus = await ArtistEvent.findOne({ where: { artistId: req.params.id } })
-      res.json({ artist: data, status: artistStatus })
+      res.json(data)
     }
   } catch (error) {
     next(error)

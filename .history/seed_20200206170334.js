@@ -244,7 +244,7 @@ const venues = [
     description: "dimly lit bar featuring Djs and astrology-inspired cocktails",
     imageURL: 'https://media.timeout.com/images/104089109/630/472/image.jpg',
     capacity: 100,
-    bookerId: 3
+    bookerId: 1
   },
   {
     id: 6,
@@ -288,11 +288,6 @@ const artistEvent = [
     artistId: 4,
     eventId: 1,
     status: 'pending',
-  },
-  {
-    artistId: 6,
-    eventId: 3,
-    status: 'pending',
   }
 ]
 
@@ -313,10 +308,10 @@ const events = [
   },
   {
     id: 3,
-    name: 'Saturday Late Night Party',
-    description: "Looking for at least two dj's.",
+    name: 'Saturday Jazz Vides',
+    description: "Looking for at least two jazz singers or a band.",
     date: new Date("May 03, 2020 22:30:00 UTC"),
-    venueId: 5
+    venueId: 7
   }
 
 ]

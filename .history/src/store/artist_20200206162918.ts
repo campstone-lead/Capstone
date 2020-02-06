@@ -24,8 +24,7 @@ const defaultArtist = {
   },
   booked: {
 
-  },
-  status: ''
+  }
 }
 
 /**
@@ -97,7 +96,7 @@ export const fetchOneArtists = (id) => async dispatch => {
       baseURL: "http://localhost:8080/api/",
       url: `/artists/${id}`
     })
-    console.log('here', res.data.artist)
+    console.log('here'res.data)
     dispatch(getOneArtist(res.data || defaultArtist))
   } catch (err) {
     console.error(err)
@@ -174,7 +173,7 @@ export default function (state = defaultArtist, action) {
     case BOOK_ARTIST:
       return { ...state, booked: { venueId: action.info.venueId, artistId: action.info.artistId, status: action.info.status, bookerId: action.info.bookerId } }
     case GET_ONE_ARTIST:
-      return { ...state, artist: action.artist.artist, status: action.artist.status }
+      return { ...state, artist: action.artist }
     case PUT_PERSONAL_INFO:
       return {
         ...state,

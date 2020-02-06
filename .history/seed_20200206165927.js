@@ -234,7 +234,7 @@ const venues = [
     description: "Showcasing top techno talents from all around the world",
     imageURL: 'https://www.discotech.me/wp-content/uploads/2019/11/basementny2-1030x686.jpg',
     capacity: 2000,
-    bookerId: 1
+    bookerId: 2
   },
   {
     id: 5,
@@ -244,7 +244,7 @@ const venues = [
     description: "dimly lit bar featuring Djs and astrology-inspired cocktails",
     imageURL: 'https://media.timeout.com/images/104089109/630/472/image.jpg',
     capacity: 100,
-    bookerId: 3
+    bookerId: 1
   },
   {
     id: 6,
@@ -264,7 +264,7 @@ const venues = [
     description: "legendary jazz musicians play here!",
     imageURL: 'https://i.pinimg.com/originals/e7/c9/b9/e7c9b935700d409a2999a587b44e28d9.jpg',
     capacity: 300,
-    bookerId: 2
+    bookerId: 1
   },
   {
     id: 8,
@@ -285,14 +285,13 @@ const artistEvent = [
     status: 'booked'
   },
   {
-    artistId: 4,
+    artistId: 8,
     eventId: 1,
     status: 'pending',
   },
   {
-    artistId: 6,
-    eventId: 3,
-    status: 'pending',
+    artistId: 4,
+    eventId: 1
   }
 ]
 
@@ -307,16 +306,16 @@ const events = [
   {
     id: 2,
     name: 'Boss Lady',
-    description: "In need of two techno artists or band to play at!!! ",
-    venueId: 4,
+    description: "In need of two hip-hop and one pop/house artist or band to play at!!! ",
+    venueId: 6,
     date: new Date("April 21, 2020 20:30:00 UTC")
   },
   {
     id: 3,
-    name: 'Saturday Late Night Party',
-    description: "Looking for at least two dj's.",
+    name: 'Saturday Jazz Vides',
+    description: "Looking for at least two jazz singers or a band.",
     date: new Date("May 03, 2020 22:30:00 UTC"),
-    venueId: 5
+    venueId: 7
   }
 
 ]

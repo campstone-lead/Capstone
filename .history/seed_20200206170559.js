@@ -288,11 +288,6 @@ const artistEvent = [
     artistId: 4,
     eventId: 1,
     status: 'pending',
-  },
-  {
-    artistId: 6,
-    eventId: 3,
-    status: 'pending',
   }
 ]
 
@@ -316,7 +311,7 @@ const events = [
     name: 'Saturday Late Night Party',
     description: "Looking for at least two dj's.",
     date: new Date("May 03, 2020 22:30:00 UTC"),
-    venueId: 5
+    venueId: 7
   }
 
 ]

@@ -15,7 +15,7 @@ interface IMyComponentProps {
   artist: object,
   fetchOneArtists: any,
   bookArtist: any,
-  bookingStatus: string,
+  bookingStatus: object,
   events: any,
   getBookerEvents: any,
   gotOneEvents: any,
@@ -23,17 +23,15 @@ interface IMyComponentProps {
 
 }
 interface IMyComponentState {
-  status: any,
-  currentEvent: any,
-  bookedArtistInfo: object
+  status: string,
+  currentEvent: any
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
-      status: null,
-      currentEvent: '',
-      bookedArtistInfo: {}
+      status: 'none',
+      currentEvent: ''
     }
   }
   handleChange = async e => {
@@ -51,23 +49,10 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.getBookerEvents(bookerId)
     this.setState({ currentEvent: this.props.events[0].id })
 
-    this.props.events.forEach(async (el) => {
-      await this.props.gotOneEvents(el.id)
-      let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
-      if (artist.length === 1) {
-        await this.setState({ status: this.props.bookingStatus })
-        await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
-      }
-
-    })
-
-
-
-
   }
 
   render() {
-
+    console.log('event', this.state)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -77,7 +62,6 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
         else genres += el;
       })
     }
-    console.log()
     return (
       < IonPage >
         <IonHeader mode="ios"  >
@@ -102,7 +86,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
             className="backBtn"
           />
           <div className="profile">
-            <img src={this.props.artist['imageUrl']} alt={this.props.artist['firstName']} className="profileImage" />
+            <img src={this.props.artist['artist']['imageUrl']} alt={this.props.artist['firstName']} className="profileImage" />
             <IonCardHeader>
               <IonCardTitle>{this.props.artist['artistName']}</IonCardTitle>
             </IonCardHeader>
@@ -162,23 +146,16 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 
               </IonTabBar>
             </IonCardContent>
-            {
-              (this.state.status === null) ?
-                <select onChange={this.handleChange}>
-                  {this.props.events.length !== 0 &&
-                    this.props.events.map((event, index) => (
-                      <option value={event.id} key={index}>
-                        {event.name} - {event.venueName}
-                      </option>
-                    ))}
-                </select> : <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>This artist is {this.props.bookingStatus['status']}
-                  {' '}
-                  for {this.state.bookedArtistInfo['name']}  at {this.state.bookedArtistInfo['venueName']}.
-  </IonCardSubtitle>
-            }
-
-            <IonButton onClick={this.handleClick} disabled={(this.state.status === null) ? false : true}>
-              {(this.state.status === null) ? 'Book me' : (this.state.status['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
+            <select onChange={this.handleChange}>
+              {this.props.events.length !== 0 &&
+                this.props.events.map((event, index) => (
+                  <option value={event.id} key={index}>
+                    {event.name} - {event.venueName}
+                  </option>
+                ))}
+            </select>
+            <IonButton onClick={this.handleClick} disabled={(this.state.status === 'none') ? false : true}>
+              {(this.state.status === 'none') ? 'Booke me' : (this.state.status === 'pending' ? 'Pending request sent' : 'Booked')}
             </IonButton>
 
             <br></br>
@@ -196,9 +173,9 @@ const mapStateToProps = (state) => ({
   user: state.user,
   artist: state.artist.artist,
   genres: state.artist.artist.genres,
+  bookingStatus: state.artist.booked,
   events: state.booker.bookerEvents,
   selectedEvent: state.event.currentEvent,
-  bookingStatus: state.artist.status
 })
 const mapDispatchToProps = (dispatch) => ({
   me: () => dispatch(me()),

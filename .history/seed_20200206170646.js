@@ -290,7 +290,7 @@ const artistEvent = [
     status: 'pending',
   },
   {
-    artistId: 6,
+    artistId: 5,
     eventId: 3,
     status: 'pending',
   }
