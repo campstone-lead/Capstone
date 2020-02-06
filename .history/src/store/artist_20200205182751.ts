@@ -29,7 +29,7 @@ const defaultArtist = {
  */
 
 export const getArtists = artists => ({ type: GET_ARTISTS, artists })
-export const getOneArtist = artist => ({ type: GET_ONE_ARTIST, artist })
+export const getOneArtist = artist => ({ type: GET_ARTISTS, artist })
 export const putPersonalInfo = (info) => ({ type: PUT_PERSONAL_INFO, info })
 export const putArtistName = (name) => ({ type: PUT_ARTIST_NAME, name })
 export const putZipCode = (zipcode) => ({ type: PUT_ZIP_CODE, zipcode })
@@ -65,7 +65,7 @@ export const fetchArtists = () => async dispatch => {
       url: "/artists"
     })
 
-    dispatch(getArtists(res.data || defaultArtist))
+    dispatch(getOneArtist(res.data || defaultArtist))
   } catch (err) {
     console.error(err)
   }
@@ -80,7 +80,7 @@ export const fetchOneArtists = (id) => async dispatch => {
       url: `/artists/${id}`
     })
 
-    dispatch(getOneArtist(res.data || defaultArtist))
+    dispatch(getArtists(res.data || defaultArtist))
   } catch (err) {
     console.error(err)
   }
@@ -153,8 +153,7 @@ export default function (state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
       return { ...state, allArtists: action.artists }
-    case GET_ONE_ARTIST:
-      return { ...state, artist: action.artist }
+
     case PUT_PERSONAL_INFO:
       return {
         ...state,

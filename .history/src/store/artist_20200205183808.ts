@@ -65,7 +65,7 @@ export const fetchArtists = () => async dispatch => {
       url: "/artists"
     })
 
-    dispatch(getArtists(res.data || defaultArtist))
+    dispatch(getOneArtist(res.data || defaultArtist))
   } catch (err) {
     console.error(err)
   }

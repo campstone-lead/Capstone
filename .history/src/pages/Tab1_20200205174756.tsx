@@ -25,7 +25,7 @@ import React from 'react';
 import { auth, me } from '../store/user'
 import { getRecommendedVenues } from '../store/venue'
 import { getOneBooker } from '../store/booker'
-import { getRocommendedArtists } from '../store/artist'
+import artist, { getRocommendedArtists } from '../store/artist'
 import { connect } from 'react-redux'
 import './Tab1.css';
 
@@ -57,29 +57,31 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   }
   async componentDidMount() {
     await this.props.me()
-    if (this.props.user['id'] !== undefined) {
-      if (this.props.user['status'] === 'booker') {
-        const id = this.props.user['id'];
-        await this.props.fetchVenues(id);
-        await this.setState({ currentVenue: this.props.venues[0].id })
-        await this.props.getRocommendedArtists(this.state.currentVenue);
-        const rec = this.props.artists.filter(artist => artist['recommendations'][0].score <= 9)
-        this.setState({
-          currentBookerRecommandations: rec
-        })
-      }
-    }
+    // if (this.props.user['id'] !== undefined) {
+    //   if (this.props.user['status'] === 'booker') {
+    //     const id = this.props.user['id'];
+    //     await this.props.fetchVenues(id);
+    //     await this.setState({ currentVenue: this.props.venues[0].id })
+    //     await this.props.getRocommendedArtists(this.state.currentVenue);
+    //     const rec = this.props.artists.filter(artist => artist['recommendations'][0].score <= 9)
+    //     this.setState({
+    //       currentBookerRecommandations: rec
+    //     })
+    //   }
   }
-  handleChange = async (e) => {
-    this.setState({ currentVenue: Number(e.target.value) });
-    await this.props.getRocommendedArtists(this.state.currentVenue);
-    const rec = this.props.artists.filter(artist => artist['recommendations'][0].score <= 9)
-    this.setState({
-      currentBookerRecommandations: rec
-    })
-  }
-  render() {
 
+  // }
+  // handleChange = async (e) => {
+  //   this.setState({ currentVenue: Number(e.target.value) });
+  //   await this.props.getRocommendedArtists(this.state.currentVenue);
+  //   const rec = this.props.artists.filter(artist => artist['recommendations'][0].score <= 9)
+  //   console.log(rec)
+  //   this.setState({
+  //     currentBookerRecommandations: rec
+  //   })
+  // }
+  render() {
+    if (this.props.user['id'] === undefined) return <IonTitle>Loading</IonTitle>
     return (
       <IonPage>
         <IonHeader mode="ios"  >
@@ -106,14 +108,14 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                 <IonButton mode="ios"
                   href="/artists"
                   className="homeBtn" color="rgb(153, 178, 189);">Artists</IonButton>
-                <select onChange={this.handleChange}>
+                {/* <select onChange={this.handleChange}>
                   {
 
                     this.props.venues !== undefined &&
                     this.props.venues.map((venue, index) => <option value={venue.id} key={index}>{venue.name}</option>)
 
                   }
-                </select>
+                </select> */}
                 <IonCardTitle className="textBox">We got you some artist you might be interested in...</IonCardTitle>
               </IonCardHeader>
 
@@ -123,7 +125,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                   genres += el + ' '
                 })
 
-                return (<IonCard key={index} href={`/allArtists/${artist['id']}`} className='profile' style={{ "width": "250px" }} mode="ios">
+                console.log(artist, index)
+                return (<IonCard key={index} className='profile' style={{ "width": "250px" }} mode="ios">
                   <div className='artistBox' >
 
                     <img src={artist['imageUrl']} alt="img.jpg" />
@@ -160,7 +163,7 @@ const mapStateToProps = (state) => ({
   error: state.user.error,
   user: state.user,
   venues: state.booker.venues,
-  artists: state.artist.allArtists
+  artists: state.artist
 })
 const mapDispatchToProps = (dispatch) => ({
   auth: (email, password) => dispatch(auth(email, password)),

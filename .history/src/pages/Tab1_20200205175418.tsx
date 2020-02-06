@@ -74,6 +74,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     this.setState({ currentVenue: Number(e.target.value) });
     await this.props.getRocommendedArtists(this.state.currentVenue);
     const rec = this.props.artists.filter(artist => artist['recommendations'][0].score <= 9)
+    console.log(rec)
     this.setState({
       currentBookerRecommandations: rec
     })
@@ -123,7 +124,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                   genres += el + ' '
                 })
 
-                return (<IonCard key={index} href={`/allArtists/${artist['id']}`} className='profile' style={{ "width": "250px" }} mode="ios">
+                console.log(artist, index)
+                return (<IonCard key={index} className='profile' style={{ "width": "250px" }} mode="ios">
                   <div className='artistBox' >
 
                     <img src={artist['imageUrl']} alt="img.jpg" />
@@ -160,7 +162,7 @@ const mapStateToProps = (state) => ({
   error: state.user.error,
   user: state.user,
   venues: state.booker.venues,
-  artists: state.artist.allArtists
+  artists: state.artist
 })
 const mapDispatchToProps = (dispatch) => ({
   auth: (email, password) => dispatch(auth(email, password)),

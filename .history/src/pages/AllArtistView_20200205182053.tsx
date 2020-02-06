@@ -77,7 +77,7 @@ class AllArtistView extends React.Component<IMyComponentProps, {}> {
                 genres += el + ' '
               })
 
-              return (<IonCard href={`/allArtists/${artist.id}`} key={index} className='profile' style={{ "width": "250px" }} mode="ios">
+              return (<IonCard key={index} className='profile' style={{ "width": "250px" }} mode="ios">
                 <div className='artistBox' >
 
                   <img src={artist['imageUrl']} alt="img.jpg" />
