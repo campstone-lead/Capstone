@@ -47,9 +47,12 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     await this.props.me();
 
     let searchbar = window.localStorage.getItem('searchbar');
+    // value = JSON.parse(searchbar || '');
+    // window.localStorage.setItem('searchbar', JSON.stringify(value));
     if (searchbar !== null) {
       let value: boolean;
       value = JSON.parse(searchbar || '');
+      console.log('value in component mount', searchbar);
       this.props.searchBarValue(value);
     }
     this.setState({
@@ -100,7 +103,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                 </div>
               </IonToolbar>
             </IonHeader>
-            {this.props.isSearchBarOpen ? (
+            {this.state.isSearchBarOpen ? (
               <IonContent>
                 <SearchBar />
               </IonContent>
