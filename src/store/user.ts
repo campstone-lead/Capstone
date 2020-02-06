@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../pages/history';
+axios.defaults.withCredentials = true;
 /**
  * ACTION TYPES
  */

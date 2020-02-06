@@ -35,6 +35,7 @@ interface IMyComponentProps {
   artists: any;
   recommendations: Array<object>;
 }
+
 class ArtistRecommendation extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props);
@@ -94,18 +95,31 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
             color="rgb(153, 178, 189);"
           >
             Artists
-                      </IonButton>
-          <select onChange={this.handleChange}>
-            {this.props.venues !== undefined &&
-              this.props.venues.map((venue, index) => (
-                <option value={venue.id} key={index}>
-                  {venue.name}
-                </option>
-              ))}
-          </select>
-          <IonCardTitle className="textBox">
-            We got you some artist you might be interested in...
-                      </IonCardTitle>
+
+          </IonButton>
+          {this.props.venues !== undefined && this.props.venues.length > 0 ? (
+            <IonItem>
+              <select onChange={this.handleChange}>
+                {this.props.venues.map((venue, index) => (
+                  <option value={venue.id} key={index}>
+                    {venue.name}
+                  </option>
+                ))}
+              </select>
+              <IonCardTitle className="textBox">
+                We got you some artist you might be interested in...
+              </IonCardTitle>
+            </IonItem>
+          ) : (
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
+            </IonButton>
+            )}
         </IonCardHeader>
 
         {this.state.currentBookerRecommandations.map(
