@@ -4,7 +4,7 @@ const Booker = require('./booker')
 const Venue = require('./venue')
 const ArtistEvent = db.define('ArtistEvent', {
   status: {
-    type: Sequelize.ENUM('pending', 'declined', 'booked'),
+    type: Sequelize.ENUM('pending', 'booked'),
     validate: {
       notEmpty: true
     },

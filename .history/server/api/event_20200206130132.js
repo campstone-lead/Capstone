@@ -31,23 +31,17 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/connection", async (req, res, next) => {
   try {
-    console.log(req.body)
-    const connection = await ArtistEvent.create(req.body)
-    res.json(connection)
+    const data = await ArtistEvent.create(req.body)
+    res.json(data)
   } catch (error) {
     next(error)
   }
 })
 
-router.put("/connection/:id", async (req, res, next) => {
+router.put("/connection", async (req, res, next) => {
   try {
-    const connection = await ArtistEvent.findByPk(req.params.id)
-    if (!connection) {
-      res.sendStatus(404)
-    } else {
-      await connection.update(req.body)
-      res.json(connection)
-    }
+    const data = await ArtistEvent.create(req.body)
+    res.json(data)
   } catch (error) {
     next(error)
   }
@@ -68,8 +62,8 @@ router.put("/:id", async (req, res, next) => {
     if (!Event) {
       res.sendStatus(404)
     } else {
-      await event.update(req.body)
-      res.json(event)
+      const updatedEvent = await event.update(req.body)
+      res.json(updatedEvent)
     }
   } catch (error) {
     next(error)

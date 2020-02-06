@@ -31,7 +31,6 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/connection", async (req, res, next) => {
   try {
-    console.log(req.body)
     const connection = await ArtistEvent.create(req.body)
     res.json(connection)
   } catch (error) {
@@ -68,8 +67,8 @@ router.put("/:id", async (req, res, next) => {
     if (!Event) {
       res.sendStatus(404)
     } else {
-      await event.update(req.body)
-      res.json(event)
+      const updatedEvent = await event.update(req.body)
+      res.json(updatedEvent)
     }
   } catch (error) {
     next(error)

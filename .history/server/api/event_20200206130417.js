@@ -31,7 +31,6 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/connection", async (req, res, next) => {
   try {
-    console.log(req.body)
     const connection = await ArtistEvent.create(req.body)
     res.json(connection)
   } catch (error) {
