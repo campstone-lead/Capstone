@@ -63,36 +63,36 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
         {this.props.user['status'] === undefined ? (
           <LandingPage />
         ) : (
-          <IonContent>
-            <IonHeader mode="ios">
-              <IonToolbar mode="ios">
-                <div className="tabHeader">
-                  <img
-                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                    alt="logo.png"
-                    className="logo"
-                  />
-                  <IonSearchbar
-                    mode="ios"
-                    className="searchBar"
-                    animated
-                    showCancelButton="focus"
-                    cancelButtonText="x"
-                    onClick={() => {
-                      this.props.searchBarValue(true);
-                      this.setState({ isSearchBarOpen: true });
-                    }}
-                  ></IonSearchbar>
-                  {this.state.isSearchBarOpen ? (
-                    <IonButton
-                      fill="clear"
-                      color="dark"
+            <IonContent>
+              <IonHeader mode="ios">
+                <IonToolbar mode="ios">
+                  <div className="tabHeader">
+                    <img
+                      src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                      alt="logo.png"
+                      className="logo"
+                    />
+                    <IonSearchbar
+                      mode="ios"
+                      className="searchBar"
+                      animated
+                      showCancelButton="focus"
+                      cancelButtonText="x"
                       onClick={() => {
-                        this.props.searchBarValue(false);
-                        this.setState({ isSearchBarOpen: false });
+                        this.props.searchBarValue(true);
+                        this.setState({ isSearchBarOpen: true });
                       }}
-                    >
-                      Cancel
+                    ></IonSearchbar>
+                    {this.state.isSearchBarOpen ? (
+                      <IonButton
+                        fill="clear"
+                        color="dark"
+                        onClick={() => {
+                          this.props.searchBarValue(false);
+                          this.setState({ isSearchBarOpen: false });
+                        }}
+                      >
+                        Cancel
                     </IonButton>
                     ) : (
                         ''
@@ -116,9 +116,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                       )}
                   </IonContent>
                 )}
-              </IonContent>
-            )}
-          </IonContent>
+            </IonContent>
+          )}
         )}
       </IonPage>
     );
