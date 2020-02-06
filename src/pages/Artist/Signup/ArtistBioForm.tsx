@@ -30,7 +30,7 @@ class ArtistBioForm extends React.Component<IMyComponentProps,IMyComponentState>
         artist=JSON.parse(artist||'');
         let newArtist=artist||{};
           this.setState({
-            bio: newArtist["bio"],
+            bio: newArtist["bio"]||'',
           })
         }
     }
