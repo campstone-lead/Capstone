@@ -54,7 +54,20 @@ export const fetchEvents = () => async dispatch => {
     console.error(err)
   }
 }
-
+export const sendRequest = (request) => async dispatch => {
+  try {
+    const res = await axios({
+      method: "post",
+      baseURL: "http://localhost:8080/api/",
+      url: `/events/connection/`,
+      data: request
+    })
+    console.log('got one event->>>>', res.data)
+    dispatch(oneEvent(res.data || defaultState.currentEvent))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 /**
  * REDUCER

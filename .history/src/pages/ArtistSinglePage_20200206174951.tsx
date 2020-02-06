@@ -75,6 +75,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   }
 
   render() {
+    console.log(this.state.localStatus)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -84,7 +85,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
         else genres += el;
       })
     }
-
+    console.log()
     return (
       < IonPage >
         <IonHeader mode="ios"  >
@@ -185,10 +186,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
             }
 
             <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
-              {(this.props.bookingStatus === null) ? (this.state.localStatus.length !== 0) ?
-                'Pending request sent' :
-                'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
-
+              {(this.props.bookingStatus === null) ? 'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
             </IonButton>
 
             <br></br>

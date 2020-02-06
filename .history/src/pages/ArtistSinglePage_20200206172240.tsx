@@ -4,8 +4,8 @@ import { logoInstagram, logoFacebook, call, mailOpen, musicalNote, microphone, m
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
-import { gotOneEvents } from '../store/event'
-import { fetchOneArtists, bookArtist, sendRequest } from '../store/artist'
+import { gotOneEvents, sendRequest } from '../store/event'
+import { fetchOneArtists, bookArtist } from '../store/artist'
 import { getBookerEvents } from '../store/booker'
 import history from './history'
 interface IMyComponentProps {
@@ -20,15 +20,13 @@ interface IMyComponentProps {
   getBookerEvents: any,
   gotOneEvents: any,
   selectedEvent: object,
-  sendRequest: any,
-
+  sendRequest: any
 
 }
 interface IMyComponentState {
   status: any,
   currentEvent: any,
-  bookedArtistInfo: object,
-  localStatus: string
+  bookedArtistInfo: object
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
@@ -36,8 +34,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     this.state = {
       status: null,
       currentEvent: '',
-      bookedArtistInfo: {},
-      localStatus: ''
+      bookedArtistInfo: {}
     }
   }
   handleChange = async e => {
@@ -45,13 +42,6 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 
   };
   handleClick = async () => {
-    this.setState({ localStatus: 'pending' })
-    let request = {
-      eventId: Number(this.state.currentEvent),
-      artistId: this.props.artist['id']
-    }
-    console.log(request)
-    await this.props.sendRequest(request);
 
   }
   async componentDidMount() {
@@ -67,14 +57,18 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
       let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
       if (artist.length === 1) {
         await this.setState({ status: this.props.bookingStatus })
-        if (this.props.bookingStatus !== null)
-          await this.setState({ localStatus: this.props.bookingStatus['status'] })
         await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
       }
+
     })
+
+
+
+
   }
 
   render() {
+
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -84,7 +78,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
         else genres += el;
       })
     }
-
+    console.log()
     return (
       < IonPage >
         <IonHeader mode="ios"  >
@@ -170,7 +164,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             {
-              (this.props.bookingStatus === null) ?
+              (this.state.status === null) ?
                 <select onChange={this.handleChange}>
                   {this.props.events.length !== 0 &&
                     this.props.events.map((event, index) => (
@@ -184,11 +178,8 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   </IonCardSubtitle>
             }
 
-            <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
-              {(this.props.bookingStatus === null) ? (this.state.localStatus.length !== 0) ?
-                'Pending request sent' :
-                'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
-
+            <IonButton onClick={this.handleClick} disabled={(this.state.status === null) ? false : true}>
+              {(this.state.status === null) ? 'Book me' : (this.state.status['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
             </IonButton>
 
             <br></br>

@@ -67,14 +67,14 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
       let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
       if (artist.length === 1) {
         await this.setState({ status: this.props.bookingStatus })
-        if (this.props.bookingStatus !== null)
-          await this.setState({ localStatus: this.props.bookingStatus['status'] })
+        // await this.setState({ localStatus: this.props.bookingStatus['status'] })
         await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
       }
     })
   }
 
   render() {
+
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -84,7 +84,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
         else genres += el;
       })
     }
-
+    console.log()
     return (
       < IonPage >
         <IonHeader mode="ios"  >
@@ -184,11 +184,8 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   </IonCardSubtitle>
             }
 
-            <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
-              {(this.props.bookingStatus === null) ? (this.state.localStatus.length !== 0) ?
-                'Pending request sent' :
-                'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
-
+            <IonButton onClick={async () => await this.handleClick()} disabled={(this.props.bookingStatus === null) ? false : true}>
+              {(this.props.bookingStatus === null) ? 'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
             </IonButton>
 
             <br></br>
