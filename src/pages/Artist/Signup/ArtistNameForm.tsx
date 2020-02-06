@@ -29,7 +29,7 @@ class PersonalInfoForm extends React.Component<IMyComponentProps,IMyComponentSta
     artist=JSON.parse(artist||'');
     let newArtist=artist||{};
       this.setState({
-        artistName:newArtist["artistName"],
+        artistName:newArtist["artistName"]||'',
       })
     }
   }
