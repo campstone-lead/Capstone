@@ -13,6 +13,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { home, contact, logOut, logIn } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
+import LandingPage from './pages/landingPage';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
@@ -20,16 +21,18 @@ import ArtistBioForm from './pages/Artist/Signup/ArtistBioForm';
 import Genres from './pages/Artist/Signup/Genres';
 import ArtistType from './pages/Artist/Signup/ArtistType';
 import UploadPicture from './pages/Artist/Signup/UploadPicture';
+import ArtistPassword from './pages/Artist/Signup/ArtistPassword';
 import SignUpSignIn from './pages/SignUpSignIn';
 import SignUpZero from './pages/SignUp0';
-import BookerSignup2 from './pages/BookerSignup2';
-import BookerSignup1 from './pages/BookerSignup1';
-import BookerSignup4 from './pages/BookerSignup4';
-import BookerSignup3 from './pages/BookerSignup3';
-import BookerSignup5 from './pages/BookerSignup5';
-import BookerSignup7 from './pages/BookerSignup7';
-import BookerSignup6 from './pages/BookerSignup6';
+import BookerSignup1 from './pages/booker/Signup/BookerSignup1';
+import BookerSignup2 from './pages/booker/Signup/BookerSignup2';
+import BookerSignup3 from './pages/booker/Signup/BookerSignup3';
+import BookerSignup4 from './pages/booker/Signup/BookerSignup4';
+import BookerSignup5 from './pages/booker/Signup/BookerSignup5';
+import BookerSignup6 from './pages/booker/Signup/BookerSignup6';
+import BookerSignup7 from './pages/booker/Signup/BookerSignup7';
 import AllArtistView from './pages/AllArtistView';
+import ArtistSinglePage from './pages/ArtistSinglePage';
 import VenueForm from './pages/booker/venue/add-venue-form';
 import Profile from './pages/Profile';
 import Filter from './pages/Artist/Filter';
@@ -88,13 +91,14 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/home" component={Tab1} exact={true} />
               <Route path="/tab2" component={Tab2} />
               <Route path="/tab3" component={Tab3} />
+              {/* <Route path="/landingpage" component={LandingPage} /> */}
               <Route path="/profile" component={Profile} />
               <Route path="/login" component={SignUpSignIn} />
               <Route path="/signup0" component={SignUpZero} />
-              <Route path="/signup/booker/2" component={BookerSignup2} />
               <Route path="/signup/booker/1" component={BookerSignup1} />
-              <Route path="/signup/booker/4" component={BookerSignup4} />
+              <Route path="/signup/booker/2" component={BookerSignup2} />
               <Route path="/signup/booker/3" component={BookerSignup3} />
+              <Route path="/signup/booker/4" component={BookerSignup4} />
               <Route path="/signup/booker/5" component={BookerSignup5} />
               <Route path="/signup/booker/6" component={BookerSignup6} />
               <Route path="/signup/booker/7" component={BookerSignup7} />
@@ -109,6 +113,12 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/filter" component={Filter} />
               <Route path="/searchbar" component={SearchBar} />
               <Route path="/artists" component={AllArtistView} />
+              <Route path="/artistpassword" component={ArtistPassword} />
+              <Route path="/artists" component={AllArtistView} />
+              <Route
+                path="/allArtists/:artistId"
+                component={ArtistSinglePage}
+              />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
