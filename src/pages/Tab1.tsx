@@ -17,7 +17,7 @@ import LandingPage from './landingPage';
 import './Tab1.css';
 import SearchBar from './Artist/SearchBar';
 import ArtistRecommendations from './ArtistRecommendations';
-// import VenueRecommendations from './VenueRecommendations';
+import VenueRecommendations from './VenueRecommendations';
 
 interface IMyComponentState {
   isSearchBarOpen: boolean;
@@ -110,8 +110,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                       />
                     ) : (
                         // then they must be an artists... so show them venues
-                        // <VenueRecommendations />
-                        <div>Venue recs here!</div>
+                        <VenueRecommendations />
+
                       )}
                   </IonContent>
                 )}
