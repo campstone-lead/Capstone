@@ -112,7 +112,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
               <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/artistpassword" component={ArtistPassword} />
               <Route path="/artists" component={AllArtistView} />
-              <Route path="/allArtists/:artistId" component={ArtistSinglePage} />
+              <Route path="/artists/:artistId" component={ArtistSinglePage} />
               <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
