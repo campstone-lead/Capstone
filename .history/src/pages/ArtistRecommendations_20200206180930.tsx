@@ -99,8 +99,8 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
 
           </IonButton>
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
-            <div className="mainBoxSelect">
-              <select onChange={this.handleChange} className="selectBtn">
+            <IonItem>
+              <select onChange={this.handleChange}>
                 {this.props.venues.map((venue, index) => (
                   <option value={venue.id} key={index}>
                     {venue.name}
@@ -110,7 +110,7 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
               <IonCardTitle className="textBox">
                 We got you some artist you might be interested in...
               </IonCardTitle>
-            </div>
+            </IonItem>
           ) : (
               <IonButton
                 mode="ios"
