@@ -51,13 +51,22 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props);
     this.state = {
-      isSearchBarOpen: this.props.isSearchBarOpen,
+      isSearchBarOpen: false,
       currentVenue: 1,
       currentBookerRecommandations: [],
     };
   }
   async componentDidMount() {
     await this.props.me();
+    let searchbar = window.localStorage.getItem('searchbar');
+    if (searchbar !== null) {
+      let value: boolean;
+      value = JSON.parse(searchbar || 'false');
+      this.props.searchBarValue(value);
+    }
+    this.setState({
+      isSearchBarOpen: this.props.isSearchBarOpen,
+    });
     if (this.props.user['id'] !== undefined) {
       if (this.props.user['status'] === 'booker') {
         const id = this.props.user['id'];
@@ -72,15 +81,6 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
         });
       }
     }
-    let searchbar = window.localStorage.getItem('searchbar');
-    if (searchbar !== null) {
-      let value: boolean;
-      value = JSON.parse(searchbar || '');
-      this.props.searchBarValue(value);
-    }
-    this.setState({
-      isSearchBarOpen: this.props.isSearchBarOpen,
-    });
   }
 
   handleChange = async e => {
@@ -119,7 +119,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                       this.setState({ isSearchBarOpen: true });
                     }}
                   ></IonSearchbar>
-                  {this.state.isSearchBarOpen ? (
+                  {this.props.isSearchBarOpen ? (
                     <IonButton
                       fill="clear"
                       color="dark"
