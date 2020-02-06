@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete'
-import { updatedVenue } from '../store/booker'
+import { updatedVenue } from '../../../store/booker'
 
 interface IMyComponentState {
   latitude: Number,
