@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Booker, Venue, Event } = require('../db/models')
+const { Booker, Venue, ArtistEvent } = require('../db/models')
 
 
 module.exports = router
@@ -29,7 +29,7 @@ router.get("/:id", async (req, res, next) => {
 })
 router.get("/:id/events", async (req, res, next) => {
   try {
-    const data = await Event.findAll({ where: { bookerId: req.params.id } })
+    const data = await ArtistEvent.findAll({ where: { bookerId: req.params.id } })
 
     res.json(data)
 

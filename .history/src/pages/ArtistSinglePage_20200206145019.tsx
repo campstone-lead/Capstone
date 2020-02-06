@@ -1,12 +1,11 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonTabBar, IonTabButton, IonIcon, IonSearchbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonList, IonItemGroup, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonTabBar, IonTabButton, IonIcon, IonSearchbar } from '@ionic/react';
 import { logoInstagram, logoFacebook, call, mailOpen, musicalNote, microphone, musicalNotes } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
-import { gotOneEvents } from '../store/event'
+import { gotOneEvents, fetchEvents } from '../store/event'
 import { fetchOneArtists, bookArtist } from '../store/artist'
-import { getBookerEvents } from '../store/booker'
 import history from './history'
 interface IMyComponentProps {
   user: object,
@@ -17,42 +16,43 @@ interface IMyComponentProps {
   bookArtist: any,
   bookingStatus: object,
   events: any,
-  getBookerEvents: any,
-  gotOneEvents: any,
-  selectedEvent: object
+  fetchEvents: any
 
 }
 interface IMyComponentState {
   booked: boolean,
-  currentEvent: any
+  venueId: number
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
       booked: this.props.bookingStatus['status'],
-      currentEvent: ''
+      venueId: 1
     }
   }
   handleChange = async e => {
-    this.setState({ currentEvent: e.target.value });
-
+    this.setState({ venueId: Number(e.target.value) });
   };
   handleClick = async () => {
     await this.setState({ booked: true })
+    const info = {
+      artistId: this.props.artist['id'],
+      bookerId: this.props.user['id'],
+      status: this.state.booked
+    }
+    await this.props.bookArtist(info)
   }
   async componentDidMount() {
     const id = Number(history.location.pathname.slice(12))
-    await this.props.me();
     await this.props.fetchOneArtists(id)
-    const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
-
+    await this.props.me();
+    await this.props.fetchEvents();
+    this.setState({ venueId: this.props.events[0].id });
   }
 
   render() {
-    console.log('event', this.state)
+    console.log(this.state)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -147,10 +147,10 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             <select onChange={this.handleChange}>
-              {this.props.events.length !== 0 &&
+              {this.props.events !== undefined &&
                 this.props.events.map((event, index) => (
                   <option value={event.id} key={index}>
-                    {event.name} - {event.venueName}
+                    {event.name}
                   </option>
                 ))}
             </select>
@@ -172,14 +172,12 @@ const mapStateToProps = (state) => ({
   artist: state.artist.artist,
   genres: state.artist.artist.genres,
   bookingStatus: state.artist.booked,
-  events: state.booker.bookerEvents,
-  selectedEvent: state.event.currentEvent,
+  events: state.event.allEvents
 })
 const mapDispatchToProps = (dispatch) => ({
   me: () => dispatch(me()),
   fetchOneArtists: (id) => dispatch(fetchOneArtists(id)),
   bookArtist: (info) => dispatch(bookArtist(info)),
-  getBookerEvents: (id) => dispatch(getBookerEvents(id)),
-  gotOneEvents: (id) => dispatch(gotOneEvents(id))
+  fetchEvents: () => dispatch(fetchEvents())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistSinglePage);

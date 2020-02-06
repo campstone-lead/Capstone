@@ -5,7 +5,6 @@ import {
   IonCardTitle,
   IonItemGroup,
   IonButton,
-  IonItem,
 } from '@ionic/react';
 
 import React from 'react';
@@ -14,7 +13,7 @@ import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';
 import { getRecommendedVenues } from '../store/venue';
 import { getOneBooker } from '../store/booker';
-import { getRecommendedArtists } from '../store/artist';
+import { getRocommendedArtists } from '../store/artist';
 import './Tab1.css';
 
 interface IMyComponentState {
@@ -31,15 +30,12 @@ interface IMyComponentProps {
   isSearchBarOpen: boolean;
   getRecommendedVenues: any;
   fetchVenues: any;
-  getRecommendedArtists: any;
+  getRocommendedArtists: any;
   venues: any;
   artists: any;
   recommendations: Array<object>;
 }
-class ArtistRecommendation extends React.Component<
-  IMyComponentProps,
-  IMyComponentState
-> {
+class ArtistRecommendation extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,9 +50,9 @@ class ArtistRecommendation extends React.Component<
       if (this.props.user['status'] === 'booker') {
         const id = this.props.user['id'];
         await this.props.fetchVenues(id);
-        if (this.props.venues !== undefined && this.props.venues.length > 0) {
+        if (this.props.venues !== undefined) {
           await this.setState({ currentVenue: this.props.venues[0].id });
-          await this.props.getRecommendedArtists(this.state.currentVenue);
+          await this.props.getRocommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
             artist => artist['recommendations'][0].score <= 9
           );
@@ -78,8 +74,8 @@ class ArtistRecommendation extends React.Component<
   }
 
   handleChange = async e => {
-    await this.setState({ currentVenue: Number(e.target.value) });
-    await this.props.getRecommendedArtists(this.state.currentVenue);
+    this.setState({ currentVenue: Number(e.target.value) });
+    await this.props.getRocommendedArtists(this.state.currentVenue);
     const rec = this.props.artists.filter(
       artist => artist['recommendations'][0].score <= 9
     );
@@ -88,6 +84,7 @@ class ArtistRecommendation extends React.Component<
     });
   };
   render() {
+    console.log(this.props.venues)
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
@@ -98,66 +95,59 @@ class ArtistRecommendation extends React.Component<
             color="rgb(153, 178, 189);"
           >
             Artists
-          </IonButton>
-          {this.props.venues !== undefined && this.props.venues.length > 0 ? (
-            <IonItem>
-              <select onChange={this.handleChange}>
-                {this.props.venues.map((venue, index) => (
-                  <option value={venue.id} key={index}>
-                    {venue.name}
-                  </option>
-                ))}
-              </select>
-              <IonCardTitle className="textBox">
-                We got you some artist you might be interested in...
-              </IonCardTitle>
-            </IonItem>
-          ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
-            </IonButton>
-          )}
+                      </IonButton>
+          <select onChange={this.handleChange}>
+            {this.props.venues !== undefined &&
+              this.props.venues.map((venue, index) => (
+                <option value={venue.id} key={index}>
+                  {venue.name}
+                </option>
+              ))}
+          </select>
+          <IonCardTitle className="textBox">
+            We got you some artist you might be interested in...
+                      </IonCardTitle>
         </IonCardHeader>
 
-        {this.state.currentBookerRecommandations.map((artist, index) => {
-          let genres = '';
-          artist['genres'].forEach((el, index) => {
-            genres += el + ' ';
-          });
+        {this.state.currentBookerRecommandations.map(
+          (artist, index) => {
+            let genres = '';
+            artist['genres'].forEach((el, index) => {
+              genres += el + ' ';
+            });
 
-          return (
-            <IonCard
-              key={index}
-              href={`/allArtists/${artist['id']}`}
-              className="profile"
-              style={{ width: '250px' }}
-              mode="ios"
-            >
-              <div className="artistBox">
-                <img src={artist['imageUrl']} alt="img.jpg" />
+            return (
+              <IonCard
+                key={index}
+                href={`/allArtists/${artist['id']}`}
+                className="profile"
+                style={{ width: '250px' }}
+                mode="ios"
+              >
+                <div className="artistBox">
+                  <img src={artist['imageUrl']} alt="img.jpg" />
 
-                <IonItemGroup style={{ margin: '20px' }}>
-                  <IonCardTitle
-                    style={{ textAlign: 'center' }}
-                    className="artistBoxText"
-                  >
-                    {artist['artistName']}
-                  </IonCardTitle>
-                  <IonCardSubtitle style={{ textAlign: 'center' }}>
-                    {genres}
-                  </IonCardSubtitle>
-                </IonItemGroup>
-              </div>
-            </IonCard>
-          );
-        })}
+                  <IonItemGroup style={{ margin: '20px' }}>
+                    <IonCardTitle
+                      style={{ textAlign: 'center' }}
+                      className="artistBoxText"
+                    >
+                      {artist['artistName']}
+                    </IonCardTitle>
+                    <IonCardSubtitle
+                      style={{ textAlign: 'center' }}
+                    >
+                      {genres}
+                    </IonCardSubtitle>
+                  </IonItemGroup>
+                </div>
+              </IonCard>
+            );
+          }
+        )}
       </div>
-    );
+
+    )
   }
 }
 
@@ -173,11 +163,8 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRecommendedArtists: id => dispatch(getRecommendedArtists(id)),
+  getRocommendedArtists: id => dispatch(getRocommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ArtistRecommendation);
+export default connect(mapStateToProps, mapDispatchToProps)(ArtistRecommendation);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonTabBar, IonTabButton, IonIcon, IonSearchbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonList, IonItemGroup, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonTabBar, IonTabButton, IonIcon, IonSearchbar } from '@ionic/react';
 import { logoInstagram, logoFacebook, call, mailOpen, musicalNote, microphone, musicalNotes } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
@@ -46,8 +46,9 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.me();
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
+    this.props.getBookerEvents(bookerId)
+    if (this.props.events.length !== 0)
+      this.setState({ currentEvent: this.props.events[0].id })
 
   }
 
