@@ -24,19 +24,18 @@ interface IMyComponentProps {
 }
 interface IMyComponentState {
   booked: boolean,
-  currentEvent: any
+  eventId: number
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
       booked: this.props.bookingStatus['status'],
-      currentEvent: ''
+      eventId: 1
     }
   }
   handleChange = async e => {
-    this.setState({ currentEvent: e.target.value });
-
+    this.setState({ eventId: Number(e.target.value) });
   };
   handleClick = async () => {
     await this.setState({ booked: true })
@@ -45,14 +44,21 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     const id = Number(history.location.pathname.slice(12))
     await this.props.me();
     await this.props.fetchOneArtists(id)
-    const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
 
+
+    if (this.props.user !== undefined) {
+      const bookerId = this.props.user['id']
+      console.log()
+      await this.props.getBookerEvents(bookerId);
+    }
+    // if (this.props.events !== undefined) {
+    //   this.setState({ eventId: this.props.events[0].id });
+    //   await this.props.gotOneEvents(this.state.eventId)
+    // }
   }
 
   render() {
-    console.log('event', this.state)
+    console.log(this.state)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -147,10 +153,10 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             <select onChange={this.handleChange}>
-              {this.props.events.length !== 0 &&
+              {this.props.events !== undefined &&
                 this.props.events.map((event, index) => (
                   <option value={event.id} key={index}>
-                    {event.name} - {event.venueName}
+                    {event.name}
                   </option>
                 ))}
             </select>

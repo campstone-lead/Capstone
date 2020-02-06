@@ -4,9 +4,8 @@ import { logoInstagram, logoFacebook, call, mailOpen, musicalNote, microphone, m
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
-import { gotOneEvents } from '../store/event'
+import { gotOneEvents, fetchEvents } from '../store/event'
 import { fetchOneArtists, bookArtist } from '../store/artist'
-import { getBookerEvents } from '../store/booker'
 import history from './history'
 interface IMyComponentProps {
   user: object,
@@ -17,42 +16,47 @@ interface IMyComponentProps {
   bookArtist: any,
   bookingStatus: object,
   events: any,
-  getBookerEvents: any,
+  fetchEvents: any,
   gotOneEvents: any,
   selectedEvent: object
 
 }
 interface IMyComponentState {
   booked: boolean,
-  currentEvent: any
+  eventId: number
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
       booked: this.props.bookingStatus['status'],
-      currentEvent: ''
+      eventId: 1
     }
   }
   handleChange = async e => {
-    this.setState({ currentEvent: e.target.value });
-
+    this.setState({ eventId: Number(e.target.value) });
   };
   handleClick = async () => {
     await this.setState({ booked: true })
+
+    // const info = {
+    //   artistId: this.props.artist['id'],
+    //   bookerId: this.props.user['id'],
+    //   status: this.state.booked
+    // }
+    // await this.props.bookArtist(info)
   }
   async componentDidMount() {
     const id = Number(history.location.pathname.slice(12))
-    await this.props.me();
     await this.props.fetchOneArtists(id)
-    const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
-
+    await this.props.me();
+    await this.props.fetchEvents();
+    this.setState({ eventId: this.props.events[0].id });
+    await this.props.gotOneEvents(this.state.eventId)
   }
 
   render() {
-    console.log('event', this.state)
+    console.log(this.state)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -147,10 +151,10 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             <select onChange={this.handleChange}>
-              {this.props.events.length !== 0 &&
+              {this.props.events !== undefined &&
                 this.props.events.map((event, index) => (
                   <option value={event.id} key={index}>
-                    {event.name} - {event.venueName}
+                    {event.name}
                   </option>
                 ))}
             </select>
@@ -172,14 +176,14 @@ const mapStateToProps = (state) => ({
   artist: state.artist.artist,
   genres: state.artist.artist.genres,
   bookingStatus: state.artist.booked,
-  events: state.booker.bookerEvents,
-  selectedEvent: state.event.currentEvent,
+  events: state.event.allEvents,
+  selectedEvent: state.event.currentEvent
 })
 const mapDispatchToProps = (dispatch) => ({
   me: () => dispatch(me()),
   fetchOneArtists: (id) => dispatch(fetchOneArtists(id)),
   bookArtist: (info) => dispatch(bookArtist(info)),
-  getBookerEvents: (id) => dispatch(getBookerEvents(id)),
+  fetchEvents: () => dispatch(fetchEvents()),
   gotOneEvents: (id) => dispatch(gotOneEvents(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistSinglePage);

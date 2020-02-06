@@ -29,9 +29,6 @@ const Event = db.define('event', {
   },
   venueName: {
     type: Sequelize.STRING
-  },
-  bookerId: {
-    type: Sequelize.INTEGER
   }
 })
 const preHooks = async jointTable => {
@@ -43,7 +40,6 @@ const preHooks = async jointTable => {
       jointTable.imageURL = venue.imageURL
       jointTable.genres = venue.genres
       jointTable.venueName = venue.name
-      jointTable.bookerId = venue.bookerId
     }
   } catch (err) {
     console.log(err)

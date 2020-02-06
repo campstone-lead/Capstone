@@ -47,7 +47,8 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
     await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
+    if (this.props.events.length !== 0)
+      this.setState({ currentEvent: this.props.events[0].id })
 
   }
 

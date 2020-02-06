@@ -36,7 +36,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   }
   handleChange = async e => {
     this.setState({ currentEvent: e.target.value });
-
+    console.log(this.state)
   };
   handleClick = async () => {
     await this.setState({ booked: true })
@@ -46,13 +46,14 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.me();
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
+    this.props.getBookerEvents(bookerId)
+    if (this.props.events.length !== 0)
+      this.setState({ currentEvent: this.props.events[0].id })
 
   }
 
   render() {
-    console.log('event', this.state)
+
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {

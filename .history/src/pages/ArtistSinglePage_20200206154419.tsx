@@ -24,19 +24,18 @@ interface IMyComponentProps {
 }
 interface IMyComponentState {
   booked: boolean,
-  currentEvent: any
+  currentEvent: object
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
       booked: this.props.bookingStatus['status'],
-      currentEvent: ''
+      currentEvent: {}
     }
   }
   handleChange = async e => {
     this.setState({ currentEvent: e.target.value });
-
   };
   handleClick = async () => {
     await this.setState({ booked: true })
@@ -46,13 +45,12 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.me();
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
+    this.props.getBookerEvents(bookerId)
 
   }
 
   render() {
-    console.log('event', this.state)
+
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -149,7 +147,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
             <select onChange={this.handleChange}>
               {this.props.events.length !== 0 &&
                 this.props.events.map((event, index) => (
-                  <option value={event.id} key={index}>
+                  <option value={event} key={index}>
                     {event.name} - {event.venueName}
                   </option>
                 ))}

@@ -49,13 +49,12 @@ export const getOneBooker = (id) => async dispatch => {
 }
 export const getBookerEvents = (id) => async dispatch => {
   try {
-    console.log(id)
     const res = await axios({
       method: "get",
       baseURL: "http://localhost:8080/api/",
       url: `/bookers/${id}/events`
     })
-    dispatch(bookerEvents(res.data))
+    dispatch(getBookerEvents(res.data))
   } catch (err) {
     console.log(err)
   }
