@@ -23,10 +23,7 @@ const Event = db.define('event', {
   },
   location: {
     type: Sequelize.STRING
-  },
-  genres: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
-  },
+  }
 })
 const preHooks = async jointTable => {
   try {
@@ -35,7 +32,6 @@ const preHooks = async jointTable => {
       let venue = await Venue.findByPk(id)
       jointTable.location = venue.address
       jointTable.imageURL = venue.imageURL
-      jointTable.genres = venue.genres
     }
   } catch (err) {
     console.log(err)

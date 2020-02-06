@@ -293,7 +293,7 @@ const events = [
     name: 'Friday Night Rock',
     description: "Friday Night Rock need two rock bands to play at.",
     imageURL: 'https://static.wixstatic.com/media/9d95ec_90a38b76e04e4904ae49f8c677c868d1~mv2.jpg/v1/fill/w_560,h_432,al_c,q_80,usm_0.66_1.00_0.01/Third%20Thursday%20Rock%20The%20Roof%20JANUARY%20202.webp',
-    date: new Date("May 11, 2020 22:30:00 UTC"),
+    date: new Date("May 11, 2020 10:30:00 PM"),
     venueId: 8
   },
   {
@@ -301,7 +301,7 @@ const events = [
     description: "In need of two hip-hop and one pop/house artist or band to play at!!! ",
     imageURL: 'https://static1.squarespace.com/static/5a17cae9f9a61edc99d6e79f/5a17cd9602d7bc3fad635108/5c8f5d3f15fcc04d1f23d313/1552899583491/BOSS+LADY+%281%29.png?format=1000w',
     venueId: 3,
-    date: new Date("April 21, 2020 20:30:00 UTC")
+    date: new Date("April 21, 2020 08:30:00 PM")
   }
 
 ]
