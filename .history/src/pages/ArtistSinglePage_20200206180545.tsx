@@ -184,9 +184,9 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
                   for {this.state.bookedArtistInfo['name']}  at {this.state.bookedArtistInfo['venueName']}.
   </IonCardSubtitle>
             }
-
+            {console.log('status', this.state.localStatus.length === 0, this.state.bookedArtistInfo)}
             <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
-              {(this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) ? (this.state.localStatus.length !== 0) ?
+              {(this.props.bookingStatus === null) ? (this.state.localStatus.length !== 0) ?
                 'Pending request sent' :
                 'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
 

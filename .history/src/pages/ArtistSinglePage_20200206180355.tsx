@@ -75,7 +75,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   }
 
   render() {
-
+    console.log('status', this.state.localStatus.length)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -186,7 +186,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
             }
 
             <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
-              {(this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) ? (this.state.localStatus.length !== 0) ?
+              {(this.props.bookingStatus === null) ? (this.state.localStatus.length !== 0) ?
                 'Pending request sent' :
                 'Book me' : (this.props.bookingStatus['status'] === 'pending' ? 'Pending request sent' : 'Booked')}
 
