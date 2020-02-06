@@ -47,6 +47,7 @@ import {
   render,
   Tab3,
 } from './AppImports';
+import VenueSinglePage from './pages/VenueSinglePage';
 interface IMyComponentProps {
   user: object;
   userId: Number;
@@ -80,7 +81,6 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/home" component={Tab1} exact={true} />
               <Route path="/tab2" component={Tab2} />
               <Route path="/tab3" component={Tab3} />
-              {/* <Route path="/landingpage" component={LandingPage} /> */}
               <Route path="/profile" component={Profile} />
               <Route path="/login" component={SignUpSignIn} />
               <Route path="/signup0" component={SignUpZero} />
@@ -108,6 +108,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 path="/allArtists/:artistId"
                 component={ArtistSinglePage}
               />
+              <Route path="/allVenues/:id" component={VenueSinglePage} />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
