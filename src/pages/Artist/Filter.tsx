@@ -13,23 +13,30 @@ import {
   IonCheckbox,
   IonSelect,
   IonSelectOption,
+  IonTextarea,
 } from '@ionic/react';
 import React from 'react';
 import { connect } from 'react-redux';
 import { close, closeCircle, arrowBack } from 'ionicons/icons';
-import { chooseGenres, deleteFilter } from '../../store/filter';
+import {
+  chooseGenres,
+  deleteFilter,
+  chooseAllSingle,
+} from '../../store/filter';
 
 interface IMyComponentProps {
   chosen: Array<string>;
-  allSingle: Array<string>;
-  genres: any;
+  allSingle: { value: string; isChecked: boolean }[];
+  genres: { value: string; isChecked: boolean }[];
   deleteFilter: (filter: string) => void;
   chooseGenres: (genres: any) => void;
+  chooseAllSingle: (allSingle: any) => void;
 }
 
 interface IMyComponentState {
   genres: any;
   checkedGenres: any;
+  allSingle: Array<string>;
 }
 export class Filter extends React.Component<
   IMyComponentProps,
@@ -40,8 +47,10 @@ export class Filter extends React.Component<
     this.state = {
       genres: [],
       checkedGenres: [],
+      allSingle: [],
     };
     this.genresOnClick = this.genresOnClick.bind(this);
+    this.mainOnClick = this.mainOnClick.bind(this);
   }
   componentDidMount() {
     let checkedGenresCopy: any = [];
@@ -59,6 +68,13 @@ export class Filter extends React.Component<
       checkedGenres: event.target.value,
     });
     this.props.chooseGenres(event.target.value);
+  }
+  mainOnClick(event) {
+    this.setState({
+      ...this.state,
+      allSingle: event.target.value,
+    });
+    this.props.chooseAllSingle(event.target.value);
   }
   render() {
     return (
@@ -91,8 +107,36 @@ export class Filter extends React.Component<
                 <IonIcon icon={closeCircle} />
               </IonChip>
             ))}
+            <div>
+              <IonLabel
+                style={{
+                  marginLeft: '15px',
+                  fontWeight: 'bold',
+                  fontSize: '20px',
+                }}
+              >
+                Main category
+              </IonLabel>
+            </div>
+            {this.props.allSingle.map((filter, indx) => (
+              <IonItem key={indx}>
+                <IonLabel>{filter.value}</IonLabel>
+                <IonCheckbox
+                  value={filter.value}
+                  checked={filter.isChecked}
+                  onIonChange={this.mainOnClick}
+                />
+              </IonItem>
+            ))}
             <IonItem>
-              <IonLabel>Filter by genres</IonLabel>
+              <IonLabel
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '20px',
+                }}
+              >
+                Filter by genres
+              </IonLabel>
 
               <IonSelect
                 multiple={true}
@@ -127,6 +171,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   deleteFilter: filter => dispatch(deleteFilter(filter)),
   chooseGenres: genres => dispatch(chooseGenres(genres)),
+  chooseAllSingle: allSingle => dispatch(chooseAllSingle(allSingle)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
