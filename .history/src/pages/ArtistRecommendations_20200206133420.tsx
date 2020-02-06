@@ -49,8 +49,8 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
     if (this.props.user['id'] !== undefined) {
       if (this.props.user['status'] === 'booker') {
         const id = this.props.user['id'];
-        await this.props.fetchVenues(id);
-        if (this.props.venues !== undefined) {
+        if (id !== undefined) {
+          await this.props.fetchVenues(id);
           await this.setState({ currentVenue: this.props.venues[0].id });
           await this.props.getRocommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
