@@ -13,7 +13,7 @@ import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';
 import { getRecommendedVenues } from '../store/venue';
 import { getOneBooker } from '../store/booker';
-import { getRecommendedArtists } from '../store/artist';
+
 import './Tab1.css';
 
 interface IMyComponentState {
@@ -162,7 +162,7 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRocommendedArtists: id => dispatch(getRecommendedArtists(id)),
+  getRocommendedArtists: id => dispatch(getRocommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
 });
 

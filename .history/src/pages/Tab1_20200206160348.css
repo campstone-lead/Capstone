@@ -176,17 +176,11 @@ position: fixed;
   justify-content: center;
 }
 .selectBtn{
-display: block;
-position: relative;
-
+  display: block;
   max-width:200px;
   max-height:200px;
   width: auto;
   height: auto;
 
-}
-.mainBoxSelect{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+
 }

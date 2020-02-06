@@ -162,7 +162,7 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRocommendedArtists: id => dispatch(getRecommendedArtists(id)),
+  getRocommendedArtists: id => dispatch(getRocommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
 });
 
