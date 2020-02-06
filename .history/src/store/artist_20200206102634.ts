@@ -159,7 +159,7 @@ export default function (state = defaultArtist, action) {
     case GET_ARTISTS:
       return { ...state, allArtists: action.artists }
     case BOOK_ARTIST:
-      return { ...state, booked: { bookerId: action.info.bookerId, artistId: action.info.artistId, status: action.info.status } }
+      return { ...state, booked: { venueId: action.info.venueId, artistId: action.info.artistId, status: action.info.status } }
     case GET_ONE_ARTIST:
       return { ...state, artist: action.artist }
     case PUT_PERSONAL_INFO:

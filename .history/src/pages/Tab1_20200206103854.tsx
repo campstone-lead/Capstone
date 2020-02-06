@@ -51,7 +51,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
-      currentVenue: 1,
+      currentVenue: this.props.venues[0].id,
       currentBookerRecommandations: []
     }
   }

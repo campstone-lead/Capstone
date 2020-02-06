@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db')
-const { Artist, Booker, Venue, User, ArtistEvent, Event } = require('./server/db/models')
+const { Artist, Booker, Venue, User } = require('./server/db/models')
 
 
 
@@ -37,7 +37,6 @@ const bookers = [
 
 const artists = [
   {
-    id: 1,
     firstName: 'Ariana',
     lastName: 'Grande',
     artistName: 'Ariana Grande',
@@ -54,7 +53,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 2,
     firstName: 'Justin',
     lastName: 'Vernon',
     artistName: 'Bon Iver',
@@ -72,7 +70,6 @@ const artists = [
   },
 
   {
-    id: 3,
     firstName: 'Claire',
     lastName: 'Boucher',
     artistName: 'Grimes',
@@ -90,7 +87,6 @@ const artists = [
   },
 
   {
-    id: 4,
     firstName: 'Mick',
     lastName: 'Jagger',
     artistName: 'The Rolling Stones',
@@ -107,7 +103,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 5,
     firstName: 'James',
     lastName: 'Murphy',
     artistName: 'LCD Soundsystem',
@@ -124,7 +119,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 6,
     firstName: 'Armand',
     lastName: 'Jakobsson',
     artistName: 'DJ Seinfeld',
@@ -142,7 +136,6 @@ const artists = [
   },
 
   {
-    id: 7,
     firstName: 'Amelie',
     lastName: 'Lens',
     artistName: 'Amelie Lens',
@@ -159,7 +152,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 8,
     firstName: 'Aubrey',
     lastName: 'Graham',
     artistName: 'Drake',
@@ -176,7 +168,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 9,
     firstName: 'Robyn',
     lastName: 'Fenty',
     artistName: 'Rihanna',
@@ -197,7 +188,6 @@ const artists = [
 
 const venues = [
   {
-    id: 1,
     name: 'Grace Hopper',
     genres: ['pop', 'hipHop'],
     address: 'Hanover Square floor 25, New York, NY 10004',
@@ -206,7 +196,6 @@ const venues = [
     bookerId: 2
   },
   {
-    id: 2,
     name: 'The Bowery Ballroom',
     genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
     address: '6 Delancey St, New York, NY 10002',
@@ -215,7 +204,6 @@ const venues = [
     bookerId: 1
   },
   {
-    id: 3,
     name: 'Elsewhere',
     genres: ['indie', 'house', 'electronic', 'rock', 'hipHop'],
     address: '599 Johnson Ave #1, New York, NY 11237',
@@ -224,7 +212,6 @@ const venues = [
     bookerId: 3
   },
   {
-    id: 4,
     name: 'Basement NY',
     genres: ['techno'],
     address: '52-19 Flushing Ave, Queens, NY, 11378',
@@ -233,7 +220,6 @@ const venues = [
     bookerId: 2
   },
   {
-    id: 5,
     name: 'Mood Ring',
     genres: ['house', 'electronic', 'techno'],
     address: '1260 Myrtle Ave, Brooklyn, NY 11221',
@@ -242,7 +228,6 @@ const venues = [
     bookerId: 1
   },
   {
-    id: 6,
     name: 'The Mercury Lounge',
     genres: ['indie', 'rock', 'pop', 'hipHop'],
     address: '217 E Houston St, New York, NY 10002',
@@ -251,7 +236,6 @@ const venues = [
     bookerId: 1
   },
   {
-    id: 7,
     name: 'Blue Note Jazz Club',
     genres: ['jazz'],
     address: '131 W 3rd St, New York, NY, 10012',
@@ -260,7 +244,6 @@ const venues = [
     bookerId: 2
   },
   {
-    id: 8,
     name: 'Petes Candy Store',
     genres: ['rock', 'indie', 'country', 'metal'],
     address: '709 Lorimer St, Brooklyn, NY, 11211',
@@ -270,48 +253,24 @@ const venues = [
   },
 ]
 
-const artistEvent = [
+const user = [
   {
-    artistId: 1,
-    eventId: 2,
-    status: 'pending'
-  },
-  {
-    artistId: 8,
-    eventId: 1,
-    status: 'booked',
-  },
-  {
-    artistId: 4,
-    eventId: 1,
-    status: 'pending'
+    firstName: 'guest',
+    status: 'user',
+    lastName: 'guest',
+    address: '',
+    email: 'guest@yahoo.com',
+    password: '123',
+    imageURL:
+      'https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/107/profiles/2394/profileImage/avatar-new400.jpg'
   }
-]
-
-const events = [
-  {
-    name: 'Friday Night Rock',
-    description: "Friday Night Rock need two rock bands to play at.",
-    imageURL: 'https://static.wixstatic.com/media/9d95ec_90a38b76e04e4904ae49f8c677c868d1~mv2.jpg/v1/fill/w_560,h_432,al_c,q_80,usm_0.66_1.00_0.01/Third%20Thursday%20Rock%20The%20Roof%20JANUARY%20202.webp',
-    date: new Date("May 11, 2020 22:30:00"),
-    venueId: 8
-  },
-  {
-    name: 'Boss Lady',
-    description: "In need of two hip-hop and one pop/house artist or band to play at!!! ",
-    imageURL: 'https://static1.squarespace.com/static/5a17cae9f9a61edc99d6e79f/5a17cd9602d7bc3fad635108/5c8f5d3f15fcc04d1f23d313/1552899583491/BOSS+LADY+%281%29.png?format=1000w',
-    venueId: 3,
-    date: new Date("April 21, 2020 20:30:00")
-  }
-
 ]
 const seed = () =>
   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
       Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-        Promise.all(events.map(event => Event.create(event))).then(() =>
-          Promise.all(artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1)))
-        ))))
+        Promise.all(user.map(user => User.create(user)))
+      )))
 
 
 

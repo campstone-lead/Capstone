@@ -4,7 +4,7 @@ import { logoInstagram, logoFacebook, call, mailOpen, musicalNote, microphone, m
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
-import { fetchOneArtists, bookArtist } from '../store/artist'
+import { fetchOneArtists } from '../store/artist'
 import history from './history'
 interface IMyComponentProps {
   user: object,
@@ -12,8 +12,6 @@ interface IMyComponentProps {
   me: any,
   artist: object,
   fetchOneArtists: any,
-  bookArtist: any,
-  bookingStatus: object
 
 }
 interface IMyComponentState {
@@ -23,26 +21,18 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   constructor(props) {
     super(props)
     this.state = {
-      booked: this.props.bookingStatus['status']
+      booked: false
     }
   }
-  handleClick = async () => {
-    await this.setState({ booked: true })
-    const info = {
-      artistId: this.props.artist['id'],
-      bookerId: this.props.user['id'],
-      status: this.state.booked
-    }
-    await this.props.bookArtist(info)
+  handleClick = () => {
+    this.setState({ booked: true })
   }
   async componentDidMount() {
     const id = Number(history.location.pathname.slice(12))
     await this.props.fetchOneArtists(id)
-    await this.props.me();
   }
 
   render() {
-    console.log(this.props.bookingStatus)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -137,9 +127,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             <IonButton onClick={this.handleClick} disabled={this.state.booked}>Book me</IonButton>
-            {(this.state.booked === true) && <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>Thank you for booking me!</IonCardSubtitle>}
-            <br></br>
-            <br></br>
+
           </div>
 
 
@@ -152,12 +140,10 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 const mapStateToProps = (state) => ({
   user: state.user,
   artist: state.artist.artist,
-  genres: state.artist.artist.genres,
-  bookingStatus: state.artist.booked
+  genres: state.artist.artist.genres
 })
 const mapDispatchToProps = (dispatch) => ({
   me: () => dispatch(me()),
-  fetchOneArtists: (id) => dispatch(fetchOneArtists(id)),
-  bookArtist: (info) => dispatch(bookArtist(info))
+  fetchOneArtists: (id) => dispatch(fetchOneArtists(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistSinglePage);

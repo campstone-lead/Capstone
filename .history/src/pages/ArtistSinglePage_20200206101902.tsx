@@ -12,8 +12,7 @@ interface IMyComponentProps {
   me: any,
   artist: object,
   fetchOneArtists: any,
-  bookArtist: any,
-  bookingStatus: object
+  bookArtist: any
 
 }
 interface IMyComponentState {
@@ -23,14 +22,14 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   constructor(props) {
     super(props)
     this.state = {
-      booked: this.props.bookingStatus['status']
+      booked: false
     }
   }
   handleClick = async () => {
     await this.setState({ booked: true })
     const info = {
       artistId: this.props.artist['id'],
-      bookerId: this.props.user['id'],
+      venueId: this.props.user['id'],
       status: this.state.booked
     }
     await this.props.bookArtist(info)
@@ -42,7 +41,6 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   }
 
   render() {
-    console.log(this.props.bookingStatus)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -152,8 +150,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 const mapStateToProps = (state) => ({
   user: state.user,
   artist: state.artist.artist,
-  genres: state.artist.artist.genres,
-  bookingStatus: state.artist.booked
+  genres: state.artist.artist.genres
 })
 const mapDispatchToProps = (dispatch) => ({
   me: () => dispatch(me()),
