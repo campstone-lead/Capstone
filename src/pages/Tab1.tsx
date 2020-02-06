@@ -14,10 +14,10 @@ import {
   IonToolbar,
   IonSearchbar,
   IonContent,
-  IonItemOptions,
-  IonItemOption,
-  IonItemSliding,
-  IonTitle
+  // IonItemOptions,
+  // IonItemOption,
+  // IonItemSliding,
+  // IonTitle
 
 } from '@ionic/react';
 
