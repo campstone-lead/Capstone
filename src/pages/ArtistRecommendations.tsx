@@ -14,7 +14,7 @@ import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';
 import { getRecommendedVenues } from '../store/venue';
 import { getOneBooker } from '../store/booker';
-import { getRocommendedArtists } from '../store/artist';
+import { getRecommendedArtists } from '../store/artist';
 import './Tab1.css';
 
 interface IMyComponentState {
@@ -31,7 +31,7 @@ interface IMyComponentProps {
   isSearchBarOpen: boolean;
   getRecommendedVenues: any;
   fetchVenues: any;
-  getRocommendedArtists: any;
+  getRecommendedArtists: any;
   venues: any;
   artists: any;
   recommendations: Array<object>;
@@ -56,7 +56,7 @@ class ArtistRecommendation extends React.Component<
         await this.props.fetchVenues(id);
         if (this.props.venues !== undefined && this.props.venues.length > 0) {
           await this.setState({ currentVenue: this.props.venues[0].id });
-          await this.props.getRocommendedArtists(this.state.currentVenue);
+          await this.props.getRecommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
             artist => artist['recommendations'][0].score <= 9
           );
@@ -78,8 +78,8 @@ class ArtistRecommendation extends React.Component<
   }
 
   handleChange = async e => {
-    this.setState({ currentVenue: Number(e.target.value) });
-    await this.props.getRocommendedArtists(this.state.currentVenue);
+    await this.setState({ currentVenue: Number(e.target.value) });
+    await this.props.getRecommendedArtists(this.state.currentVenue);
     const rec = this.props.artists.filter(
       artist => artist['recommendations'][0].score <= 9
     );
@@ -173,7 +173,7 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRocommendedArtists: id => dispatch(getRocommendedArtists(id)),
+  getRecommendedArtists: id => dispatch(getRecommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
 });
 

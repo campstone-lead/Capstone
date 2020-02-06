@@ -47,7 +47,7 @@ export const putBio = (artistBio) => ({ type: PUT_BIO, artistBio })
  * THUNK CREATORS
  */
 
-export const getRocommendedArtists = (id) => async dispatch => {
+export const getRecommendedArtists = (id) => async dispatch => {
   try {
     const res = await axios({
       method: "get",
