@@ -58,8 +58,7 @@ export const createConnection = (artistId, venueId) => async dispatch => {
     console.log(err)
   }
 }
-
-export const getRecommendedArtists = (id) => async dispatch => {
+export const getRocommendedArtists = (id) => async dispatch => {
   try {
     const res = await axios({
       method: "get",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonTabBar, IonTabButton, IonIcon, IonSearchbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonList, IonItemGroup, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonTabBar, IonTabButton, IonIcon, IonSearchbar } from '@ionic/react';
 import { logoInstagram, logoFacebook, call, mailOpen, musicalNote, microphone, musicalNotes } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
@@ -24,19 +24,18 @@ interface IMyComponentProps {
 }
 interface IMyComponentState {
   booked: boolean,
-  currentEvent: any
+  eventId: number
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props)
     this.state = {
       booked: this.props.bookingStatus['status'],
-      currentEvent: ''
+      eventId: 1
     }
   }
   handleChange = async e => {
-    this.setState({ currentEvent: e.target.value });
-
+    this.setState({ eventId: Number(e.target.value) });
   };
   handleClick = async () => {
     await this.setState({ booked: true })
@@ -46,13 +45,21 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.me();
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
-    await this.props.getBookerEvents(bookerId)
-    this.setState({ currentEvent: this.props.events[0].id })
+    this.props.getBookerEvents(bookerId)
 
+    // if (this.props.user !== undefined) {
+    //   const bookerId = this.props.user['id']
+    //   console.log(this.props)
+    //   await this.props.getBookerEvents(bookerId);
+    // }
+    // if (this.props.events !== undefined) {
+    //   this.setState({ eventId: this.props.events[0].id });
+    //   await this.props.gotOneEvents(this.state.eventId)
+    // }
   }
 
   render() {
-    console.log('event', this.state)
+    console.log(this.props.events)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -146,14 +153,14 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 
               </IonTabBar>
             </IonCardContent>
-            <select onChange={this.handleChange}>
-              {this.props.events.length !== 0 &&
+            {/* <select onChange={this.handleChange}>
+              {this.props.events !== undefined &&
                 this.props.events.map((event, index) => (
                   <option value={event.id} key={index}>
-                    {event.name} - {event.venueName}
+                    {event.name}
                   </option>
                 ))}
-            </select>
+            </select> */}
             <IonButton onClick={this.handleClick} disabled={this.state.booked}>Book me</IonButton>
             {(this.state.booked === true) && <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>Thank you for booking me!</IonCardSubtitle>}
             <br></br>

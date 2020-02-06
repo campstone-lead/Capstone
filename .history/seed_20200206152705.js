@@ -248,7 +248,7 @@ const venues = [
     address: '217 E Houston St, New York, NY 10002',
     description: "cozy, intimate space for up and coming artists!",
     capacity: 300,
-    bookerId: 2
+    bookerId: 1
   },
   {
     id: 7,
@@ -257,7 +257,7 @@ const venues = [
     address: '131 W 3rd St, New York, NY, 10012',
     description: "legendary jazz musicians play here!",
     capacity: 300,
-    bookerId: 1
+    bookerId: 2
   },
   {
     id: 8,
@@ -296,14 +296,8 @@ const events = [
   {
     name: 'Boss Lady',
     description: "In need of two hip-hop and one pop/house artist or band to play at!!! ",
-    venueId: 6,
+    venueId: 3,
     date: new Date("April 21, 2020 20:30:00 UTC")
-  },
-  {
-    name: 'Saturday Jazz Vides',
-    description: "Looking for at least two jazz singers or a band.",
-    date: new Date("May 03, 2020 22:30:00 UTC"),
-    venueId: 7
   }
 
 ]

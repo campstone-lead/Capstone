@@ -8,7 +8,7 @@ import {
 } from '@ionic/react';
 
 import React from 'react';
-import { me } from '../store/user';
+import { auth, me } from '../store/user';
 import { getRecommendedVenues } from '../store/venue'
 import { connect } from 'react-redux'
 import './Tab1.css';

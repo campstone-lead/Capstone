@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Booker, Venue, Event } = require('../db/models')
+const { Booker, Venue, ArtistEvent } = require('../db/models')
 
 
 module.exports = router

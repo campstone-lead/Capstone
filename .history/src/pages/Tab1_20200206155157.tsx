@@ -15,7 +15,7 @@ import LandingPage from './landingPage';
 import './Tab1.css';
 import SearchBar from './Artist/SearchBar';
 import ArtistRecommendations from './ArtistRecommendations';
-import VenueRecommendations from './VenueRecommendations';
+// import VenueRecommendations from './VenueRecommendations';
 
 interface IMyComponentState {
   isSearchBarOpen: boolean;
@@ -105,18 +105,16 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
               ) : (
                   <IonContent>
                     {this.props.user['status'] === 'booker' ? (
-                      <ArtistRecommendations
-                      />
+                      <ArtistRecommendations />
                     ) : (
                         // then they must be an artists... so show them venues
-                        <VenueRecommendations />
-
+                        // <VenueRecommendations />
+                        <div>Venue recs here!</div>
                       )}
                   </IonContent>
                 )}
             </IonContent>
           )}
-        )}
       </IonPage>
     );
   }
