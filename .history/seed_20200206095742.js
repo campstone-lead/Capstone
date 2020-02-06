@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db')
-const { Artist, Booker, Venue, User, ArtistEvent, Event } = require('./server/db/models')
+const { Artist, Booker, Venue, User } = require('./server/db/models')
 
 
 
@@ -37,7 +37,6 @@ const bookers = [
 
 const artists = [
   {
-    id: 1,
     firstName: 'Ariana',
     lastName: 'Grande',
     artistName: 'Ariana Grande',
@@ -54,14 +53,13 @@ const artists = [
     password: '123'
   },
   {
-    id: 2,
     firstName: 'Justin',
     lastName: 'Vernon',
     artistName: 'Bon Iver',
     genres: ['indie', 'electronic'],
     bio: 'Justin DeYarmond Edison Vernon (born April 30, 1981) is an American singer, songwriter, producer and multi-instrumentalist. He is best known as the primary songwriter and frontman of indie folk band Bon Iver. Vernon is also a member of the bands Volcano Choir, Big Red Machine, The Shouting Matches, and Gayngs.',
     imageUrl: 'https://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201906/729221164.jpg',
-    zipCode: '10002',
+    zipCode: '11435',
     instagramUrl: 'https://www.instagram.com/boniver/?hl=en',
     spotifyUrl: 'https://open.spotify.com/artist/4LEiUm1SRbFMgfqnQTwUbQ',
     facebookUrl: 'https://www.facebook.com/boniverwi/',
@@ -72,7 +70,6 @@ const artists = [
   },
 
   {
-    id: 3,
     firstName: 'Claire',
     lastName: 'Boucher',
     artistName: 'Grimes',
@@ -90,7 +87,6 @@ const artists = [
   },
 
   {
-    id: 4,
     firstName: 'Mick',
     lastName: 'Jagger',
     artistName: 'The Rolling Stones',
@@ -107,7 +103,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 5,
     firstName: 'James',
     lastName: 'Murphy',
     artistName: 'LCD Soundsystem',
@@ -124,14 +119,13 @@ const artists = [
     password: '123'
   },
   {
-    id: 6,
     firstName: 'Armand',
     lastName: 'Jakobsson',
     artistName: 'DJ Seinfeld',
     genres: ['house', 'electronic'],
     bio: 'Armand Jakobsson is the artist known as DJ Seinfeld, Rimbaudian and Birds of Sweden. Under these aliases you’ll find sweeping emotive cuts, verdant dancefloor workouts and discerning dips into jungle and breaks.',
     imageUrl: 'https://www.electronicbeats.net/app/uploads/2019/05/dj-seinfeld.png',
-    zipCode: '11378',
+    zipCode: '11224',
     instagramUrl: 'https://www.instagram.com/dj_seinfeld/?hl=en',
     spotifyUrl: 'https://open.spotify.com/artist/37YzpfBeFju8QRZ3g0Ha1Q',
     facebookUrl: 'https://www.facebook.com/djseinfeld/',
@@ -142,7 +136,6 @@ const artists = [
   },
 
   {
-    id: 7,
     firstName: 'Amelie',
     lastName: 'Lens',
     artistName: 'Amelie Lens',
@@ -159,7 +152,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 8,
     firstName: 'Aubrey',
     lastName: 'Graham',
     artistName: 'Drake',
@@ -176,14 +168,13 @@ const artists = [
     password: '123'
   },
   {
-    id: 9,
     firstName: 'Robyn',
     lastName: 'Fenty',
     artistName: 'Rihanna',
     genres: ['hipHop', 'pop'],
     bio: 'Robyn Rihanna Fenty is a Barbadian singer, songwriter, and businesswoman, who has been recognized for embracing various musical styles and reinventing her image throughout her career.',
     imageUrl: 'https://pbs.twimg.com/media/D_y_cTGU8AEHJAI.jpg',
-    zipCode: '11211',
+    zipCode: '07030',
     instagramUrl: 'https://www.instagram.com/badgalriri/?hl=en',
     spotifyUrl: 'https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H',
     facebookUrl: 'https://www.facebook.com/rihanna/',
@@ -197,7 +188,6 @@ const artists = [
 
 const venues = [
   {
-    id: 1,
     name: 'Grace Hopper',
     genres: ['pop', 'hipHop'],
     address: 'Hanover Square floor 25, New York, NY 10004',
@@ -206,7 +196,6 @@ const venues = [
     bookerId: 2
   },
   {
-    id: 2,
     name: 'The Bowery Ballroom',
     genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
     address: '6 Delancey St, New York, NY 10002',
@@ -215,34 +204,30 @@ const venues = [
     bookerId: 1
   },
   {
-    id: 3,
     name: 'Elsewhere',
     genres: ['indie', 'house', 'electronic', 'rock', 'hipHop'],
     address: '599 Johnson Ave #1, New York, NY 11237',
     description: "Best venue in all of Brooklyn. We love to feature diverse, underground acts",
     capacity: 1500,
-    bookerId: 3
+    bookerId: 1
   },
   {
-    id: 4,
     name: 'Basement NY',
     genres: ['techno'],
     address: '52-19 Flushing Ave, Queens, NY, 11378',
     description: "Showcasing top techno talents from all around the world",
     capacity: 2000,
-    bookerId: 2
+    bookerId: 1
   },
   {
-    id: 5,
     name: 'Mood Ring',
     genres: ['house', 'electronic', 'techno'],
     address: '1260 Myrtle Ave, Brooklyn, NY 11221',
     description: "dimly lit bar featuring Djs and astrology-inspired cocktails",
     capacity: 100,
-    bookerId: 1
+    bookerId: 3
   },
   {
-    id: 6,
     name: 'The Mercury Lounge',
     genres: ['indie', 'rock', 'pop', 'hipHop'],
     address: '217 E Houston St, New York, NY 10002',
@@ -251,7 +236,6 @@ const venues = [
     bookerId: 1
   },
   {
-    id: 7,
     name: 'Blue Note Jazz Club',
     genres: ['jazz'],
     address: '131 W 3rd St, New York, NY, 10012',
@@ -260,7 +244,6 @@ const venues = [
     bookerId: 2
   },
   {
-    id: 8,
     name: 'Petes Candy Store',
     genres: ['rock', 'indie', 'country', 'metal'],
     address: '709 Lorimer St, Brooklyn, NY, 11211',
@@ -270,44 +253,24 @@ const venues = [
   },
 ]
 
-const artistEvent = [
+const user = [
   {
-    artistId: 1,
-    eventId: 2
-  },
-  {
-    artistId: 8,
-    eventId: 1,
-    status: 'booked',
-  },
-  {
-    artistId: 4,
-    eventId: 1
+    firstName: 'guest',
+    status: 'user',
+    lastName: 'guest',
+    address: '',
+    email: 'guest@yahoo.com',
+    password: '123',
+    imageURL:
+      'https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/107/profiles/2394/profileImage/avatar-new400.jpg'
   }
-]
-
-const events = [
-  {
-    name: 'Friday Night Rock',
-    description: "Friday Night Rock need two rock bands to play at.",
-    date: new Date("May 11, 2020 22:30:00 UTC"),
-    venueId: 8
-  },
-  {
-    name: 'Boss Lady',
-    description: "In need of two hip-hop and one pop/house artist or band to play at!!! ",
-    venueId: 3,
-    date: new Date("April 21, 2020 20:30:00 UTC")
-  }
-
 ]
 const seed = () =>
   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
       Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-        Promise.all(events.map(event => Event.create(event))).then(() =>
-          Promise.all(artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1)))
-        ))))
+        Promise.all(user.map(user => User.create(user)))
+      )))
 
 
 

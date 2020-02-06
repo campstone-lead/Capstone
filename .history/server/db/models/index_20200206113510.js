@@ -22,7 +22,7 @@ Event.belongsTo(Venue);
 Venue.hasMany(Event);
 
 Event.belongsToMany(Artist, { through: ArtistEvent });
-Artist.belongsToMany(Event, { through: ArtistEvent })
+Artist.belongsToMany(Artist, { through: ArtistEvent })
 // Venue.belongsToMany(Artist, { through: Recommendation })
 // Artist.belongsToMany(Venue, { through: Recommendation })
 
@@ -39,6 +39,5 @@ module.exports = {
   Booker,
   Venue,
   Event,
-  Recommendation,
-  ArtistEvent
+  Recommendation
 }

@@ -50,16 +50,14 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
       if (this.props.user['status'] === 'booker') {
         const id = this.props.user['id'];
         await this.props.fetchVenues(id);
-        if (this.props.venues !== undefined) {
-          await this.setState({ currentVenue: this.props.venues[0].id });
-          await this.props.getRocommendedArtists(this.state.currentVenue);
-          const rec = this.props.artists.filter(
-            artist => artist['recommendations'][0].score <= 9
-          );
-          this.setState({
-            currentBookerRecommandations: rec,
-          });
-        }
+        await this.setState({ currentVenue: this.props.venues[0].id });
+        await this.props.getRocommendedArtists(this.state.currentVenue);
+        const rec = this.props.artists.filter(
+          artist => artist['recommendations'][0].score <= 9
+        );
+        this.setState({
+          currentBookerRecommandations: rec,
+        });
       }
     }
     let searchbar = window.localStorage.getItem('searchbar');

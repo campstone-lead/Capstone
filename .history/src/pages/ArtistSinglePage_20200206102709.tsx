@@ -30,7 +30,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.setState({ booked: true })
     const info = {
       artistId: this.props.artist['id'],
-      bookerId: this.props.user['id'],
+      venueId: this.props.user['id'],
       status: this.state.booked
     }
     await this.props.bookArtist(info)
@@ -42,7 +42,6 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   }
 
   render() {
-    console.log(this.props.bookingStatus)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {

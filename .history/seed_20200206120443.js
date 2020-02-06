@@ -37,7 +37,6 @@ const bookers = [
 
 const artists = [
   {
-    id: 1,
     firstName: 'Ariana',
     lastName: 'Grande',
     artistName: 'Ariana Grande',
@@ -54,7 +53,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 2,
     firstName: 'Justin',
     lastName: 'Vernon',
     artistName: 'Bon Iver',
@@ -72,7 +70,6 @@ const artists = [
   },
 
   {
-    id: 3,
     firstName: 'Claire',
     lastName: 'Boucher',
     artistName: 'Grimes',
@@ -90,7 +87,6 @@ const artists = [
   },
 
   {
-    id: 4,
     firstName: 'Mick',
     lastName: 'Jagger',
     artistName: 'The Rolling Stones',
@@ -107,7 +103,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 5,
     firstName: 'James',
     lastName: 'Murphy',
     artistName: 'LCD Soundsystem',
@@ -124,7 +119,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 6,
     firstName: 'Armand',
     lastName: 'Jakobsson',
     artistName: 'DJ Seinfeld',
@@ -142,7 +136,6 @@ const artists = [
   },
 
   {
-    id: 7,
     firstName: 'Amelie',
     lastName: 'Lens',
     artistName: 'Amelie Lens',
@@ -159,7 +152,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 8,
     firstName: 'Aubrey',
     lastName: 'Graham',
     artistName: 'Drake',
@@ -176,7 +168,6 @@ const artists = [
     password: '123'
   },
   {
-    id: 9,
     firstName: 'Robyn',
     lastName: 'Fenty',
     artistName: 'Rihanna',
@@ -273,12 +264,11 @@ const venues = [
 const artistEvent = [
   {
     artistId: 1,
-    eventId: 2
+    eventId: 1
   },
   {
-    artistId: 8,
-    eventId: 1,
-    status: 'booked',
+    artistId: 3,
+    eventId: 1
   },
   {
     artistId: 4,
@@ -289,15 +279,15 @@ const artistEvent = [
 const events = [
   {
     name: 'Friday Night Rock',
-    description: "Friday Night Rock need two rock bands to play at.",
-    date: new Date("May 11, 2020 22:30:00 UTC"),
+    description: "Friday Night Rock need one rock band to play at.",
+    imageURL: 'https://static.wixstatic.com/media/9d95ec_90a38b76e04e4904ae49f8c677c868d1~mv2.jpg/v1/fill/w_560,h_432,al_c,q_80,usm_0.66_1.00_0.01/Third%20Thursday%20Rock%20The%20Roof%20JANUARY%20202.webp',
     venueId: 8
   },
   {
     name: 'Boss Lady',
     description: "In need of two hip-hop and one pop/house artist or band to play at!!! ",
-    venueId: 3,
-    date: new Date("April 21, 2020 20:30:00 UTC")
+    imageURL: 'https://static1.squarespace.com/static/5a17cae9f9a61edc99d6e79f/5a17cd9602d7bc3fad635108/5c8f5d3f15fcc04d1f23d313/1552899583491/BOSS+LADY+%281%29.png?format=1000w',
+    venueId: 3
   }
 
 ]
@@ -305,9 +295,8 @@ const seed = () =>
   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
       Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-        Promise.all(events.map(event => Event.create(event))).then(() =>
-          Promise.all(artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1)))
-        ))))
+        Promise.all(events.map(event => Event.create(event)))
+      )))
 
 
 

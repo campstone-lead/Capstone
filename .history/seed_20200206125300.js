@@ -273,7 +273,8 @@ const venues = [
 const artistEvent = [
   {
     artistId: 1,
-    eventId: 2
+    eventId: 2,
+    status: 'pending'
   },
   {
     artistId: 8,
@@ -282,7 +283,8 @@ const artistEvent = [
   },
   {
     artistId: 4,
-    eventId: 1
+    eventId: 1,
+    status: 'pending'
   }
 ]
 
