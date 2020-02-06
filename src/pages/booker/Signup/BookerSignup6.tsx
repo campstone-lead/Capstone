@@ -4,10 +4,9 @@ import {
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
-import { updatedArtist } from '../../../store/artist'
+import { updatedVenue } from '../../../store/booker'
 
 interface IMyComponentState {
-  genres: string,
   genreTypes: {
     rock: boolean,
     jazz: boolean,
@@ -22,16 +21,14 @@ interface IMyComponentState {
   }
 }
 interface IMyComponentProps {
-  putGenre: (genre: Array<string>) => void,
-  updateArtist: any
+  updateVenue: any
 
 }
 
-class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
+class VenueGenres extends React.Component<IMyComponentProps, IMyComponentState>  {
   constructor(props) {
     super(props);
     this.state = {
-      genres: '',
       genreTypes: {
         rock: false,
         jazz: false,
@@ -49,19 +46,6 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // componentDidMount(){
-  //   let artist=window.localStorage.getItem('artistInfo')
-  //   if(artist!==null){
-  //   artist=JSON.parse(artist||'');
-  //   let newArtist=artist||{};
-  //   if(newArtist["genres"] !== undefined){
-  //     this.setState({
-  //       genres:newArtist['genres']
-  //     })
-  //     }
-  //   }
-  // }
-
   handleClick(event) {
     event.preventDefault();
     this.setState({
@@ -74,22 +58,11 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
 
   handleSubmit(event) {
     event.preventDefault();
-    // console.log('THIS.STATE genres', this.state)
-    // console.log('Object.keys(this.state.genreTypes)', Object.keys(this.state.genreTypes))
-
-    // Object.keys(this.state.genreTypes).forEach(key=>{
-    //   if(this.state.genreTypes[key]){
-    //     this.state.genres.push(key)
-    //   }
-    // })
-
     const obj = this.state.genreTypes
     const keys = Object.keys(obj)
     const filtered = keys.filter((key) => obj[key])
-    console.log('filtered', filtered)
-
-
-    this.props.updateArtist({
+    console.log(filtered)
+    this.props.updateVenue({
       genres: filtered
     })
 
@@ -120,9 +93,9 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
           <IonButton color={this.state.genreTypes.house ? 'primary' : 'secondary'} type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
           <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'} type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
 
-          <IonItem routerLink="/artisttype">
+          <IonItem routerLink="/signup/booker/7">
             <br></br>
-            <IonButton type="submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true)) ? false : true}>Next</IonButton>
+            <IonButton type="submit" >Next</IonButton>
           </IonItem>
         </form>
       </IonContent>
@@ -131,17 +104,11 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    artist: state.artist
-  }
-}
 
 
 const mapDispatchToProps = dispatch => {
   return {
-    // putGenre: (genre) => dispatch(putGenre(genre)),
-    updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
+    updateVenue: (artistInfo) => dispatch(updatedVenue(artistInfo))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Genres);
+export default connect(null, mapDispatchToProps)(VenueGenres);

@@ -1,95 +1,95 @@
 import {
-    IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonSearchbar,IonItem,IonInput,IonLabel,IonButton, IonCard
-  } from '@ionic/react';
-  import React from 'react';
-  import '../../Tab1.css';
-  import {connect} from 'react-redux'
-  import {updatedArtist} from '../../../store/artist'
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonCard
+} from '@ionic/react';
+import React from 'react';
+import '../../Tab1.css';
+import { connect } from 'react-redux'
+import { updatedArtist } from '../../../store/artist'
 
-  interface IMyComponentState {
-    bio: string,
+interface IMyComponentState {
+  bio: string,
+}
+
+interface IMyComponentProps {
+  putBio: (artistBio: any) => void
+  updateArtist: any
+}
+
+class ArtistBioForm extends React.Component<IMyComponentProps, IMyComponentState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bio: ''
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  interface IMyComponentProps{
-    putBio: (artistBio: any) => void
-    updateArtist: any
+  componentDidMount() {
+    let artist = window.localStorage.getItem('artistInfo')
+    if (artist !== null) {
+      artist = JSON.parse(artist || '');
+      let newArtist = artist || {};
+      this.setState({
+        bio: newArtist["bio"],
+      })
+    }
   }
 
-class ArtistBioForm extends React.Component<IMyComponentProps,IMyComponentState> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            bio: ''
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.updateArtist(this.state)
+    this.setState({
+      bio: ''
+    })
+  }
 
-    componentDidMount(){
-        let artist=window.localStorage.getItem('artistInfo')
-        if(artist!==null){
-        artist=JSON.parse(artist||'');
-        let newArtist=artist||{};
-          this.setState({
-            bio: newArtist["bio"],
-          })
-        }
-    }
+  render() {
+    return (
+      <IonPage>
+        <IonHeader >
+          <IonToolbar id="bar" >
+            <IonTitle>Tell us about yourself!</IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
-    handleSubmit(event) {
-        event.preventDefault();
-        this.props.updateArtist(this.state)
-        this.setState({
-            bio: ''
-        })
-    }
+        <IonContent>
 
-    render() {
-          return (
-            <IonPage>
-              <IonHeader >
-                <IonToolbar id="bar" >
-                  <IonTitle>Tell us about yourself!</IonTitle>
-                </IonToolbar>
-              </IonHeader>
-
-            <IonContent>
-
-            <IonCard className="welcome-card">
-              <form onSubmit={this.handleSubmit} >
+          <IonCard className="welcome-card">
+            <form onSubmit={this.handleSubmit} >
               <IonTitle>Include your short artist bio here...</IonTitle>
               <IonItem >
 
                 <IonInput type="text"
                   value={this.state.bio}
-                  onIonChange={(e) => this.setState({bio:(e.target as HTMLInputElement).value})}
+                  onIonChange={(e) => this.setState({ bio: (e.target as HTMLInputElement).value })}
                   placeholder="bio"
                   className={"bio"}
                 />
-                </IonItem>
+              </IonItem>
 
-        <IonItem routerLink="/zipcodeform">
-        <br></br>
+              <IonItem routerLink="/zipcodeform">
+                <br></br>
 
-        <IonButton disabled = {this.state.bio===""? true: false} size="small" className="next" type="submit"
-            >Next</IonButton>
+                <IonButton disabled={this.state.bio === "" ? true : false} size="small" className="next" type="submit"
+                >Next</IonButton>
 
-        </IonItem>
+              </IonItem>
 
-                </form>
+            </form>
 
-              </IonCard>
-              </IonContent>
-            </IonPage>
-          )
-        }
+          </IonCard>
+        </IonContent>
+      </IonPage>
+    )
+  }
 
 }
 
-const mapDispatchToProps=dispatch=>{
-    return {
+const mapDispatchToProps = dispatch => {
+  return {
     //   putBio: (artistInfo) => dispatch(updatedArtist(artistInfo))
-      updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
-    }
+    updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
   }
+}
 
 export default connect(null, mapDispatchToProps)(ArtistBioForm);

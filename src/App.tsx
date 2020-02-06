@@ -24,13 +24,13 @@ import UploadPicture from './pages/Artist/Signup/UploadPicture';
 import ArtistPassword from './pages/Artist/Signup/ArtistPassword';
 import SignUpSignIn from './pages/SignUpSignIn';
 import SignUpZero from './pages/SignUp0';
-import BookerSignup2 from './pages/BookerSignup2'
-import BookerSignup1 from './pages/BookerSignup1'
-import BookerSignup4 from './pages/BookerSignup4'
-import BookerSignup3 from './pages/BookerSignup3';
-import BookerSignup5 from './pages/BookerSignup5';
-import BookerSignup7 from './pages/BookerSignup7';
-import BookerSignup6 from './pages/BookerSignup6';
+import BookerSignup1 from './pages/booker/Signup/BookerSignup1';
+import BookerSignup2 from './pages/booker/Signup/BookerSignup2';
+import BookerSignup3 from './pages/booker/Signup/BookerSignup3';
+import BookerSignup4 from './pages/booker/Signup/BookerSignup4';
+import BookerSignup5 from './pages/booker/Signup/BookerSignup5';
+import BookerSignup6 from './pages/booker/Signup/BookerSignup6';
+import BookerSignup7 from './pages/booker/Signup/BookerSignup7';
 import AllArtistView from './pages/AllArtistView';
 import ArtistSinglePage from './pages/ArtistSinglePage';
 import VenueForm from './pages/booker/venue/add-venue-form'
@@ -97,10 +97,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
               <Route path='/profile' component={Profile} />
               <Route path="/login" component={SignUpSignIn} />
               <Route path="/signup0" component={SignUpZero} />
-              <Route path="/signup/booker/2" component={BookerSignup2} />
               <Route path="/signup/booker/1" component={BookerSignup1} />
-              <Route path="/signup/booker/4" component={BookerSignup4} />
+              <Route path="/signup/booker/2" component={BookerSignup2} />
               <Route path="/signup/booker/3" component={BookerSignup3} />
+              <Route path="/signup/booker/4" component={BookerSignup4} />
               <Route path="/signup/booker/5" component={BookerSignup5} />
               <Route path="/signup/booker/6" component={BookerSignup6} />
               <Route path="/signup/booker/7" component={BookerSignup7} />
