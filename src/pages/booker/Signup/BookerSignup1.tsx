@@ -14,7 +14,7 @@ interface IMyComponentProps {
   updateBooker: any
 
 }
-class Login extends React.Component<IMyComponentProps, IMyComponentState> {
+class BookerSignup1 extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +28,7 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
 
   componentDidMount() {
     let booker = window.localStorage.getItem('booker')
+    console.log("hello?", booker)
     if (booker !== null) {
       booker = JSON.parse(booker || '');
       let newBooker = booker || {};
@@ -124,4 +125,4 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateBooker: (data) => dispatch(updatedBooker(data))
 })
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(BookerSignup1);

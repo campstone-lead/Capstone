@@ -39,7 +39,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -113,15 +113,15 @@ class ArtistRecommendation extends React.Component<
               </IonCardTitle>
             </IonItem>
           ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
             </IonButton>
-          )}
+            )}
         </IonCardHeader>
 
         {this.state.currentBookerRecommandations.map((artist, index) => {
