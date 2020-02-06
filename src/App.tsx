@@ -93,7 +93,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
               <Route path="/home" component={Tab1} exact={true} />
               <Route path="/tab2" component={Tab2} />
               <Route path="/tab3" component={Tab3} />
-              <Route path="/home" component={LandingPage} />
+              {/* <Route path="/landingpage" component={LandingPage} /> */}
               <Route path='/profile' component={Profile} />
               <Route path="/login" component={SignUpSignIn} />
               <Route path="/signup0" component={SignUpZero} />

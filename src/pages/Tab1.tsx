@@ -14,6 +14,7 @@ import {
   IonToolbar,
   IonSearchbar,
   IonContent,
+  IonItem,
   IonItemOptions,
   IonItemOption,
   IonItemSliding,
@@ -27,6 +28,7 @@ import { getRecommendedVenues } from '../store/venue'
 import { getOneBooker } from '../store/booker'
 import { getRocommendedArtists } from '../store/artist'
 import { connect } from 'react-redux'
+import LandingPage from './landingPage'
 import './Tab1.css';
 
 interface IMyComponentState {
@@ -82,76 +84,84 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
 
     return (
       <IonPage>
-        <IonHeader mode="ios"  >
-          <IonToolbar mode="ios" >
-            <div className="tabHeader">
-              <img src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png" alt="logo.png" className="logo" />
-              <IonSearchbar
-                mode="ios"
-                className="searchBar"
-                animated
-                showCancelButton="focus"
-                cancelButtonText='x'
-              >
-              </IonSearchbar>
-            </div>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          {(this.props.user['status'] === 'booker') ?
+        {(this.props.user['status'] === undefined) ? <LandingPage /> :
+          (<IonContent>
+            <IonHeader mode="ios"  >
+              <IonToolbar mode="ios" >
+                <div className="tabHeader">
+                  <img src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png" alt="logo.png" className="logo" />
+                  <IonSearchbar
+                    mode="ios"
+                    className="searchBar"
+                    animated
+                    showCancelButton="focus"
+                    cancelButtonText='x'
+                  >
+                  </IonSearchbar>
+                </div>
+              </IonToolbar>
+            </IonHeader>
 
-            <div className="home">
 
-              <IonCardHeader className="home" mode="ios">
-                <IonButton mode="ios"
-                  href="/artists"
-                  className="homeBtn" color="rgb(153, 178, 189);">Artists</IonButton>
-                <select onChange={this.handleChange}>
-                  {
+            <IonContent>
+              {(this.props.user['status'] === 'booker') ?
 
-                    this.props.venues !== undefined &&
-                    this.props.venues.map((venue, index) => <option value={venue.id} key={index}>{venue.name}</option>)
+                <div className="home">
 
+                  <IonCardHeader className="home" mode="ios">
+                    <IonButton mode="ios"
+                      href="/artists"
+                      className="homeBtn" color="rgb(153, 178, 189);">Artists</IonButton>
+                    <select onChange={this.handleChange}>
+                      {
+
+                        this.props.venues !== undefined &&
+                        this.props.venues.map((venue, index) => <option value={venue.id} key={index}>{venue.name}</option>)
+
+                      }
+                    </select>
+                    <IonCardTitle className="textBox">We got you some artist you might be interested in...</IonCardTitle>
+                  </IonCardHeader>
+
+                  {(this.state.currentBookerRecommandations.map((artist, index) => {
+                    let genres = ''
+                    artist['genres'].forEach((el, index) => {
+                      genres += el + ' '
+                    })
+
+                    return (<IonCard key={index} href={`/allArtists/${artist['id']}`} className='profile' style={{ "width": "250px" }} mode="ios">
+                      <div className='artistBox' >
+
+                        <img src={artist['imageUrl']} alt="img.jpg" />
+
+                        <IonItemGroup style={{ "margin": "20px" }}>
+                          <IonCardTitle style={{ "textAlign": "center" }} className="artistBoxText">{artist['artistName']}</IonCardTitle>
+                          <IonCardSubtitle style={{ "textAlign": "center" }}>{genres}</IonCardSubtitle>
+                        </IonItemGroup>
+                      </div>
+                    </IonCard>)
                   }
-                </select>
-                <IonCardTitle className="textBox">We got you some artist you might be interested in...</IonCardTitle>
-              </IonCardHeader>
 
-              {(this.state.currentBookerRecommandations.map((artist, index) => {
-                let genres = ''
-                artist['genres'].forEach((el, index) => {
-                  genres += el + ' '
-                })
+                  ))}
 
-                return (<IonCard key={index} href={`/allArtists/${artist['id']}`} className='profile' style={{ "width": "250px" }} mode="ios">
-                  <div className='artistBox' >
 
-                    <img src={artist['imageUrl']} alt="img.jpg" />
+                </div>
+                :
 
-                    <IonItemGroup style={{ "margin": "20px" }}>
-                      <IonCardTitle style={{ "textAlign": "center" }} className="artistBoxText">{artist['artistName']}</IonCardTitle>
-                      <IonCardSubtitle style={{ "textAlign": "center" }}>{genres}</IonCardSubtitle>
-                    </IonItemGroup>
-                  </div>
-                </IonCard>)
+
+                <IonCard className="home">
+                  <IonCardHeader mode="ios">
+
+                    <IonCardTitle className="textBox">{this.props.user['firstName']} {this.props.user['lastName']}</IonCardTitle>
+
+                  </IonCardHeader>
+                </IonCard>
               }
 
-              ))}
+            </IonContent></IonContent>)
+        }
 
 
-            </div>
-            :
-
-            <IonCard className="home">
-              <IonCardHeader mode="ios">
-
-                <IonCardTitle className="textBox">{this.props.user['firstName']} {this.props.user['lastName']}</IonCardTitle>
-
-              </IonCardHeader>
-            </IonCard>
-          }
-
-        </IonContent>
       </IonPage>
     );
   }
