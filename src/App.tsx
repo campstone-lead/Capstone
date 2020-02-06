@@ -13,6 +13,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { home, contact, logOut, logIn } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
+import LandingPage from './pages/landingPage';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
 import ArtistNameForm from './pages/Artist/Signup/ArtistNameForm';
@@ -92,6 +93,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState>{
               <Route path="/home" component={Tab1} exact={true} />
               <Route path="/tab2" component={Tab2} />
               <Route path="/tab3" component={Tab3} />
+              <Route path="/home" component={LandingPage} />
               <Route path='/profile' component={Profile} />
               <Route path="/login" component={SignUpSignIn} />
               <Route path="/signup0" component={SignUpZero} />
