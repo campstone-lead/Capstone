@@ -37,7 +37,7 @@ const bookers = [
 
 const artists = [
   {
-
+    id: 1,
     firstName: 'Ariana',
     lastName: 'Grande',
     artistName: 'Ariana Grande',
@@ -54,7 +54,7 @@ const artists = [
     password: '123'
   },
   {
-
+    id: 2,
     firstName: 'Justin',
     lastName: 'Vernon',
     artistName: 'Bon Iver',
@@ -72,7 +72,7 @@ const artists = [
   },
 
   {
-
+    id: 3,
     firstName: 'Claire',
     lastName: 'Boucher',
     artistName: 'Grimes',
@@ -90,7 +90,7 @@ const artists = [
   },
 
   {
-
+    id: 4,
     firstName: 'Mick',
     lastName: 'Jagger',
     artistName: 'The Rolling Stones',
@@ -107,7 +107,7 @@ const artists = [
     password: '123'
   },
   {
-
+    id: 5,
     firstName: 'James',
     lastName: 'Murphy',
     artistName: 'LCD Soundsystem',
@@ -124,7 +124,7 @@ const artists = [
     password: '123'
   },
   {
-
+    id: 6,
     firstName: 'Armand',
     lastName: 'Jakobsson',
     artistName: 'DJ Seinfeld',
@@ -142,7 +142,7 @@ const artists = [
   },
 
   {
-
+    id: 7,
     firstName: 'Amelie',
     lastName: 'Lens',
     artistName: 'Amelie Lens',
@@ -159,7 +159,7 @@ const artists = [
     password: '123'
   },
   {
-
+    id: 8,
     firstName: 'Aubrey',
     lastName: 'Graham',
     artistName: 'Drake',
@@ -176,7 +176,7 @@ const artists = [
     password: '123'
   },
   {
-
+    id: 9,
     firstName: 'Robyn',
     lastName: 'Fenty',
     artistName: 'Rihanna',
