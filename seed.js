@@ -202,6 +202,7 @@ const venues = [
     genres: ['pop', 'hipHop'],
     address: 'Hanover Square floor 25, New York, NY 10004',
     description: "Party time!",
+    imageURL: 'https://42floors.com/images/H7e12c12a6a7af0b60c0d4d4f0b342c8ab6ee5cecS780x520W0seB505153O/5497bbaa0dc21e8fcb877b00128d3e911d692c20',
     capacity: 100,
     bookerId: 2
   },
@@ -211,6 +212,7 @@ const venues = [
     genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
     address: '6 Delancey St, New York, NY 10002',
     description: "hip concert venue for hip people",
+    imageURL: 'https://mavenprodcontent.blob.core.windows.net/media/BoweryBallroom/Private%20Events/Bowery_Interiors_v.2-1.jpg',
     capacity: 500,
     bookerId: 1
   },
@@ -220,6 +222,7 @@ const venues = [
     genres: ['indie', 'house', 'electronic', 'rock', 'hipHop'],
     address: '599 Johnson Ave #1, New York, NY 11237',
     description: "Best venue in all of Brooklyn. We love to feature diverse, underground acts",
+    imageURL: 'https://media-cdn.tripadvisor.com/media/photo-s/15/0e/f3/c3/elsewhere-courtyard.jpg',
     capacity: 1500,
     bookerId: 3
   },
@@ -229,6 +232,7 @@ const venues = [
     genres: ['techno'],
     address: '52-19 Flushing Ave, Queens, NY, 11378',
     description: "Showcasing top techno talents from all around the world",
+    imageURL: 'https://www.discotech.me/wp-content/uploads/2019/11/basementny2-1030x686.jpg',
     capacity: 2000,
     bookerId: 2
   },
@@ -238,6 +242,7 @@ const venues = [
     genres: ['house', 'electronic', 'techno'],
     address: '1260 Myrtle Ave, Brooklyn, NY 11221',
     description: "dimly lit bar featuring Djs and astrology-inspired cocktails",
+    imageURL: 'https://media.timeout.com/images/104089109/630/472/image.jpg',
     capacity: 100,
     bookerId: 1
   },
@@ -247,6 +252,7 @@ const venues = [
     genres: ['indie', 'rock', 'pop', 'hipHop'],
     address: '217 E Houston St, New York, NY 10002',
     description: "cozy, intimate space for up and coming artists!",
+    imageURL: 'https://upload.wikimedia.org/wikipedia/commons/3/38/WSTM_Team_Dustizeff_0082.jpg',
     capacity: 300,
     bookerId: 2
   },
@@ -256,6 +262,7 @@ const venues = [
     genres: ['jazz'],
     address: '131 W 3rd St, New York, NY, 10012',
     description: "legendary jazz musicians play here!",
+    imageURL: 'https://i.pinimg.com/originals/e7/c9/b9/e7c9b935700d409a2999a587b44e28d9.jpg',
     capacity: 300,
     bookerId: 1
   },
@@ -265,6 +272,7 @@ const venues = [
     genres: ['rock', 'indie', 'country', 'metal'],
     address: '709 Lorimer St, Brooklyn, NY, 11211',
     description: "An offbeat watering hole featuring lots of live bands",
+    imageURL: 'https://lh3.googleusercontent.com/proxy/AVYynxWfDkgCpIG9pIjX54nmgOA30fK2izPAS8hXi7pZmFFQabr8P023Nj3wHlb3fHn7XiMIH--C0SVhhW-4HQeq6vLw',
     capacity: 50,
     bookerId: 3
   },
