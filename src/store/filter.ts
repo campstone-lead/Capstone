@@ -2,6 +2,7 @@
 const DELETE_FILTER = 'DELETE_FILTER';
 const CHOOSE_GENRES = 'CHOOSE_GENRES';
 const SEARCH_BAR_VALUE = 'SEARCH_BAR_VALUE';
+const CHOOSE_ALL_SINGLE = 'CHOOSE_ALL_SINGLE';
 const LIST_OF_GENRES = [
   'rock',
   'jazz',
@@ -16,10 +17,13 @@ const LIST_OF_GENRES = [
 ];
 // Initial state
 const defaultFilter = {
-  allSingle: ['Venues', 'Events'],
+  allSingle: [
+    { value: 'Venues', isChecked: true },
+    { value: 'Events', isChecked: false },
+  ],
   chosen: ['Venues'],
   genres: [
-    { value: 'rock', isChecked: true },
+    { value: 'rock', isChecked: false },
     { value: 'jazz', isChecked: false },
     { value: 'electronic', isChecked: false },
     { value: 'pop', isChecked: false },
@@ -44,6 +48,11 @@ export const chooseGenres = genres => ({
   genres,
 });
 
+export const chooseAllSingle = allSingle => ({
+  type: CHOOSE_ALL_SINGLE,
+  allSingle,
+});
+
 export const searchBarValue = value => ({
   type: SEARCH_BAR_VALUE,
   value,
@@ -56,6 +65,7 @@ export default function(state = defaultFilter, action) {
     case SEARCH_BAR_VALUE:
       window.localStorage.setItem('searchbar', JSON.stringify(action.value));
       return { ...state, isSearchBarOpen: action.value };
+
     case DELETE_FILTER:
       genresCopy = state.genres;
       if (LIST_OF_GENRES.includes(action.filter))
@@ -66,6 +76,7 @@ export default function(state = defaultFilter, action) {
         });
       state.chosen = state.chosen.filter(item => item !== action.filter);
       return { ...state, chosen: state.chosen, genres: genresCopy };
+
     case CHOOSE_GENRES:
       genresCopy = state.genres;
       let chosenCopy: any = [];
@@ -89,6 +100,9 @@ export default function(state = defaultFilter, action) {
         chosen: [...chosenCopy, ...action.genres],
         genres: genresCopy,
       };
+    case CHOOSE_ALL_SINGLE:
+      return state;
+
     default:
       return state;
   }

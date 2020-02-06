@@ -48,6 +48,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     if (searchbar !== null) {
       let value: boolean;
       value = JSON.parse(searchbar || '');
+      console.log('value in component mount', searchbar);
       this.props.searchBarValue(value);
     }
     this.setState({
@@ -61,61 +62,58 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
         {this.props.user['status'] === undefined ? (
           <LandingPage />
         ) : (
-            <IonContent>
-              <IonHeader mode="ios">
-                <IonToolbar mode="ios">
-                  <div className="tabHeader">
-                    <img
-                      src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                      alt="logo.png"
-                      className="logo"
-                    />
-                    <IonSearchbar
-                      mode="ios"
-                      className="searchBar"
-                      animated
-                      showCancelButton="focus"
-                      cancelButtonText="x"
+          <IonContent>
+            <IonHeader mode="ios">
+              <IonToolbar mode="ios">
+                <div className="tabHeader">
+                  <img
+                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                    alt="logo.png"
+                    className="logo"
+                  />
+                  <IonSearchbar
+                    mode="ios"
+                    className="searchBar"
+                    animated
+                    showCancelButton="focus"
+                    cancelButtonText="x"
+                    onClick={() => {
+                      this.props.searchBarValue(true);
+                      this.setState({ isSearchBarOpen: true });
+                    }}
+                  ></IonSearchbar>
+                  {this.state.isSearchBarOpen ? (
+                    <IonButton
+                      fill="clear"
+                      color="dark"
                       onClick={() => {
-                        this.props.searchBarValue(true);
-                        this.setState({ isSearchBarOpen: true });
+                        this.props.searchBarValue(false);
+                        this.setState({ isSearchBarOpen: false });
                       }}
-                    ></IonSearchbar>
-                    {this.state.isSearchBarOpen ? (
-                      <IonButton
-                        fill="clear"
-                        color="dark"
-                        onClick={() => {
-                          this.props.searchBarValue(false);
-                          this.setState({ isSearchBarOpen: false });
-                        }}
-                      >
-                        Cancel
+                    >
+                      Cancel
                     </IonButton>
-                    ) : (
-                        ''
-                      )}
-                  </div>
-                </IonToolbar>
-              </IonHeader>
-              {this.props.isSearchBarOpen ? (
-                <IonContent>
-                  <SearchBar />
-                </IonContent>
-              ) : (
-                  <IonContent>
-                    {this.props.user['status'] === 'booker' ? (
-                      <ArtistRecommendations
-                      />
-                    ) : (
-                        // then they must be an artists... so show them venues
-                        <VenueRecommendations />
-
-                      )}
-                  </IonContent>
+                  ) : (
+                    ''
+                  )}
+                </div>
+              </IonToolbar>
+            </IonHeader>
+            {this.props.isSearchBarOpen ? (
+              <IonContent>
+                <SearchBar />
+              </IonContent>
+            ) : (
+              <IonContent>
+                {this.props.user['status'] === 'booker' ? (
+                  <ArtistRecommendations />
+                ) : (
+                  // then they must be an artists... so show them venues
+                  <VenueRecommendations />
                 )}
-            </IonContent>
-          )}
+              </IonContent>
+            )}
+          </IonContent>
         )}
       </IonPage>
     );
