@@ -78,13 +78,7 @@ export class SearchBar extends React.Component<
             <IonIcon icon={switcher} />
           </IonButton>
         </IonItem>
-        {this.props.filters.length === 0 ? (
-          ''
-        ) : (
-          <div>
-            <AllVenuesView />
-          </div>
-        )}
+        {this.props.filters.length === 0 ? '' : <AllVenuesView />}
       </IonContent>
     );
   }

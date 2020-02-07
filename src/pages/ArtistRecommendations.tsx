@@ -5,7 +5,7 @@ import {
   IonCardTitle,
   IonItemGroup,
   IonButton,
-  IonItem
+  IonItem,
 } from '@ionic/react';
 
 import React from 'react';
@@ -37,7 +37,10 @@ interface IMyComponentProps {
   recommendations: Array<object>;
 }
 
-class ArtistRecommendation extends React.Component<IMyComponentProps, IMyComponentState> {
+class ArtistRecommendation extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,7 +55,7 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
       if (this.props.user['status'] === 'booker') {
         const id = this.props.user['id'];
         await this.props.fetchVenues(id);
-        if (this.props.venues !== undefined) {
+        if (this.props.venues !== undefined && this.props.venues.length > 0) {
           await this.setState({ currentVenue: this.props.venues[0].id });
           await this.props.getRocommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
@@ -96,7 +99,6 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
             color="rgb(153, 178, 189);"
           >
             Artists
-
           </IonButton>
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
@@ -112,56 +114,51 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
               </IonCardTitle>
             </div>
           ) : (
-              <IonButton
-                mode="ios"
-                href="/addvenue"
-                className="homeBtn"
-                color="rgb(153, 178, 189);"
-              >
-                Add venues
+            <IonButton
+              mode="ios"
+              href="/addvenue"
+              className="homeBtn"
+              color="rgb(153, 178, 189);"
+            >
+              Add venues
             </IonButton>
-            )}
+          )}
         </IonCardHeader>
 
-        {this.state.currentBookerRecommandations.map(
-          (artist, index) => {
-            let genres = '';
-            artist['genres'].forEach((el, index) => {
-              genres += el + ' ';
-            });
+        {this.state.currentBookerRecommandations.map((artist, index) => {
+          let genres = '';
+          artist['genres'].forEach((el, index) => {
+            genres += el + ' ';
+          });
 
-            return (
-              <IonCard
-                key={index}
-                href={`/allArtists/${artist['id']}`}
-                className="profile"
-                style={{ width: '250px' }}
-                mode="ios"
-              >
-                <div className="artistBox">
-                  <img src={artist['imageUrl']} alt="img.jpg" />
+          return (
+            <IonCard
+              key={index}
+              href={`/allArtists/${artist['id']}`}
+              className="profile"
+              style={{ width: '250px' }}
+              mode="ios"
+            >
+              <div className="artistBox">
+                <img src={artist['imageUrl']} alt="img.jpg" />
 
-                  <IonItemGroup style={{ margin: '20px' }}>
-                    <IonCardTitle
-                      style={{ textAlign: 'center' }}
-                      className="artistBoxText"
-                    >
-                      {artist['artistName']}
-                    </IonCardTitle>
-                    <IonCardSubtitle
-                      style={{ textAlign: 'center' }}
-                    >
-                      {genres}
-                    </IonCardSubtitle>
-                  </IonItemGroup>
-                </div>
-              </IonCard>
-            );
-          }
-        )}
+                <IonItemGroup style={{ margin: '20px' }}>
+                  <IonCardTitle
+                    style={{ textAlign: 'center' }}
+                    className="artistBoxText"
+                  >
+                    {artist['artistName']}
+                  </IonCardTitle>
+                  <IonCardSubtitle style={{ textAlign: 'center' }}>
+                    {genres}
+                  </IonCardSubtitle>
+                </IonItemGroup>
+              </div>
+            </IonCard>
+          );
+        })}
       </div>
-
-    )
+    );
   }
 }
 
@@ -181,4 +178,7 @@ const mapDispatchToProps = dispatch => ({
   fetchVenues: id => dispatch(getOneBooker(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArtistRecommendation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArtistRecommendation);

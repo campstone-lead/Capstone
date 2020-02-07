@@ -54,7 +54,7 @@ const LandingPage: React.FC = () => {
                         Bookers can quickly discover and connect with artists through our recommendation engine, finding artists by distance and artistic style. Artists can also discover venues and the bookers to connect with instead of needlessly scouring the web. LEAD's job board for musicians is a simple and effective solution towards making everyone's life easier.
                     </p>
                 </IonCard>
-                <IonItem className='btn1' routerLink={' /login'} lines='none' >
+                <IonItem className='btn1' routerLink='/login' lines='none' >
                     <IonButton size="large" class="jolly-btn">Get Started</IonButton>
                 </IonItem>
             </div>
