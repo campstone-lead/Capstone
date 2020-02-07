@@ -1,10 +1,12 @@
-import { act } from '@testing-library/react';
+import axios from 'axios';
+import queryString from 'query-string';
 
 // Action types
 const DELETE_FILTER = 'DELETE_FILTER';
 const CHOOSE_GENRES = 'CHOOSE_GENRES';
 const SEARCH_BAR_VALUE = 'SEARCH_BAR_VALUE';
 const CHOOSE_ALL_SINGLE = 'CHOOSE_ALL_SINGLE';
+const GET_FILTER_SELECTED = 'GET_FILTER_SELECTED';
 const GET_STATE = 'GET_STATE';
 const LIST_OF_GENRES = [
   'rock',
@@ -23,7 +25,9 @@ const defaultFilter = {
   allSingle: [
     { value: 'Venues', isChecked: false },
     { value: 'Events', isChecked: false },
+    { value: 'Artists', isChecked: false },
   ],
+  allSingleChosen: [],
   chosen: [],
   genres: [
     { value: 'rock', isChecked: false },
@@ -37,7 +41,9 @@ const defaultFilter = {
     { value: 'house', isChecked: false },
     { value: 'techno', isChecked: false },
   ],
+  genresChosen: [],
   isSearchBarOpen: false,
+  filterSelected: [],
 };
 
 // Action creator
@@ -66,9 +72,32 @@ export const searchBarValue = value => ({
   value,
 });
 
+const getFilterSelected = filters => ({ type: GET_FILTER_SELECTED, filters });
+
+//thunk creator
+export const customedFilter = (mainFilters, genreFilters) => async dispatch => {
+  try {
+    let myQueryString = queryString.stringify({
+      main: mainFilters,
+      genre: genreFilters,
+    });
+
+    const res = await axios({
+      method: 'get',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/filters/${myQueryString}`,
+    });
+    dispatch(getFilterSelected(res.data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // Reducer
 export default function(state = defaultFilter, action) {
   let genresCopy, chosenCopy, allSingleCopy;
+  let allSingle: Array<string> = [],
+    genres: Array<string> = [];
   switch (action.type) {
     case SEARCH_BAR_VALUE:
       window.localStorage.setItem('searchbar', JSON.stringify(action.value));
@@ -82,11 +111,14 @@ export default function(state = defaultFilter, action) {
           if (genre.value === action.filter) {
             genre.isChecked = false;
           }
+          if (genre.isChecked) genres.push(genre.value);
         });
       for (const category in state.allSingle) {
         if (state.allSingle[category].value === action.filter) {
           allSingleCopy[category].isChecked = false;
-          break;
+        }
+        if (state.allSingle[category].isChecked) {
+          allSingle.push(state.allSingle[category].value);
         }
       }
       chosenCopy = state.chosen.filter(item => item !== action.filter);
@@ -97,6 +129,8 @@ export default function(state = defaultFilter, action) {
           chosen: chosenCopy,
           genres: genresCopy,
           allSingle: allSingleCopy,
+          allSingleChosen: allSingle,
+          genresChosen: genres,
         })
       );
       return {
@@ -104,6 +138,8 @@ export default function(state = defaultFilter, action) {
         chosen: chosenCopy,
         genres: genresCopy,
         allSingle: allSingleCopy,
+        allSingleChosen: allSingle,
+        genresChosen: genres,
       };
 
     case CHOOSE_GENRES:
@@ -164,7 +200,25 @@ export default function(state = defaultFilter, action) {
       return { ...state, chosen: chosenCopy, allSingle: allSingleCopy };
 
     case GET_STATE:
-      return action.filter;
+      action.filter.allSingle.map(filter => {
+        if (filter.isChecked) {
+          allSingle.push(filter.value);
+        }
+      });
+      action.filter.genres.map(filter => {
+        if (filter.isChecked) genres.push(filter.value);
+      });
+      action.filter['allSingleChosen'] = allSingle;
+      action.filter['genresChosen'] = genres;
+      window.localStorage.setItem('filter', JSON.stringify(action.filter));
+      return {
+        ...action.filter,
+        allSingleChosen: allSingle,
+        genresChosen: genres,
+      };
+
+    case GET_FILTER_SELECTED:
+      return { ...state, filterSelected: action.filters };
 
     default:
       return state;

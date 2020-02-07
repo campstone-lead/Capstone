@@ -56,6 +56,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   }
 
   render() {
+    console.log('in tab1');
     return (
       <IonPage>
         {this.props.user['status'] === undefined ? (

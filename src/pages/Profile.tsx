@@ -90,6 +90,8 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                   </IonTabButton>
 
 
+
+
                   <IonTabButton tab="tab2">
                     <IonItem href={this.props.user['facebookUrl']}>
                       <IonIcon icon={logoFacebook} />
@@ -104,7 +106,6 @@ class Profile extends React.Component<IMyComponentProps, {}> {
 
             </div>)
             :
-            //begin booker section
             (<div className="profile">
               <img src={this.props.user['imageURL']} alt={this.props.user['firstName']} className="bookerImage" />
               <IonCardHeader>
