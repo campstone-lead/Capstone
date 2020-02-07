@@ -1,4 +1,5 @@
 import { act } from '@testing-library/react';
+import { filter } from 'minimatch';
 
 // Action types
 const DELETE_FILTER = 'DELETE_FILTER';
@@ -24,6 +25,7 @@ const defaultFilter = {
     { value: 'Venues', isChecked: false },
     { value: 'Events', isChecked: false },
   ],
+  allSingleChosen: [],
   chosen: [],
   genres: [
     { value: 'rock', isChecked: false },
@@ -37,6 +39,7 @@ const defaultFilter = {
     { value: 'house', isChecked: false },
     { value: 'techno', isChecked: false },
   ],
+  genresChosen: [],
   isSearchBarOpen: false,
 };
 
@@ -69,6 +72,8 @@ export const searchBarValue = value => ({
 // Reducer
 export default function(state = defaultFilter, action) {
   let genresCopy, chosenCopy, allSingleCopy;
+  let allSingle: Array<string> = [],
+    genres: Array<string> = [];
   switch (action.type) {
     case SEARCH_BAR_VALUE:
       window.localStorage.setItem('searchbar', JSON.stringify(action.value));
@@ -82,11 +87,14 @@ export default function(state = defaultFilter, action) {
           if (genre.value === action.filter) {
             genre.isChecked = false;
           }
+          if (genre.isChecked) genres.push(genre.value);
         });
       for (const category in state.allSingle) {
         if (state.allSingle[category].value === action.filter) {
           allSingleCopy[category].isChecked = false;
-          break;
+        }
+        if (state.allSingle[category].isChecked) {
+          allSingle.push(state.allSingle[category].value);
         }
       }
       chosenCopy = state.chosen.filter(item => item !== action.filter);
@@ -97,6 +105,8 @@ export default function(state = defaultFilter, action) {
           chosen: chosenCopy,
           genres: genresCopy,
           allSingle: allSingleCopy,
+          allSingleChosen: allSingle,
+          genresChosen: genres,
         })
       );
       return {
@@ -104,6 +114,8 @@ export default function(state = defaultFilter, action) {
         chosen: chosenCopy,
         genres: genresCopy,
         allSingle: allSingleCopy,
+        allSingleChosen: allSingle,
+        genresChosen: genres,
       };
 
     case CHOOSE_GENRES:
@@ -164,7 +176,22 @@ export default function(state = defaultFilter, action) {
       return { ...state, chosen: chosenCopy, allSingle: allSingleCopy };
 
     case GET_STATE:
-      return action.filter;
+      action.filter.allSingle.map(filter => {
+        if (filter.isChecked) {
+          allSingle.push(filter.value);
+        }
+      });
+      action.filter.genres.map(filter => {
+        if (filter.isChecked) genres.push(filter.value);
+      });
+      action.filter['allSingleChosen'] = allSingle;
+      action.filter['genresChosen'] = genres;
+      window.localStorage.setItem('filter', JSON.stringify(action.filter));
+      return {
+        ...action.filter,
+        allSingleChosen: allSingle,
+        genresChosen: genres,
+      };
 
     default:
       return state;

@@ -21,6 +21,8 @@ interface IMyComponentState {
 interface IMyComponentProps {
   filters: Array<string>;
   filterSelected: any;
+  allSingleChosen: any;
+  genresChosen: any;
   deleteFilter: (filter: string) => void;
   getState: (filter: any) => void;
   filterVenues: (
@@ -50,11 +52,18 @@ export class SearchBar extends React.Component<
   }
   deleteOnClick(event) {
     this.props.deleteFilter(event.target.title);
+
+    this.props.filterVenues(
+      this.props.allSingleChosen,
+      this.props.genresChosen
+    );
     this.setState({
       filters: this.props.filters,
     });
   }
   render() {
+    console.log('in searchbar');
+
     return (
       <IonContent>
         <IonItem>
@@ -78,7 +87,11 @@ export class SearchBar extends React.Component<
             <IonIcon icon={switcher} />
           </IonButton>
         </IonItem>
-        {this.props.filters.length === 0 ? '' : <AllVenuesView />}
+        {this.props.filters.length === 0 ? (
+          ''
+        ) : (
+          <AllVenuesView filter={this.state.filters} />
+        )}
       </IonContent>
     );
   }
@@ -87,6 +100,8 @@ export class SearchBar extends React.Component<
 const mapStateToProps = state => ({
   filters: state.filter.chosen,
   filterSelected: state.venue.filterSelected,
+  allSingleChosen: state.filter.allSingleChosen,
+  genresChosen: state.filter.genresChosen,
 });
 
 const mapDispatchToProps = dispatch => ({

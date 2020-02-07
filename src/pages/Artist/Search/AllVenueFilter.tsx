@@ -12,9 +12,12 @@ import { me } from '../../../store/user';
 import { getAllVenues, filterVenues } from '../../../store/venue';
 import { connect } from 'react-redux';
 import '../../Tab1.css';
+import { any } from 'prop-types';
 
 interface IMyComponentState {
   filterSelected: any;
+  sChosen: any;
+  gChosen: any;
 }
 
 interface IMyComponentProps {
@@ -23,6 +26,8 @@ interface IMyComponentProps {
   filterSelected: any;
   allSingle: { value: any; isChecked: boolean }[];
   genres: { value: any; isChecked: boolean }[];
+  allSingleChosen: any;
+  genresChosen: any;
   getAllVenues: () => void;
   filterVenues: (
     mainFilters: Array<string>,
@@ -36,37 +41,74 @@ export class AllVenuesView extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      filterSelected: this.props.filterSelected,
+      sChosen: [],
+      gChosen: [],
+      filterSelected: [],
     };
   }
   async componentDidMount() {
-    let filter = window.localStorage.getItem('filter');
-    let value: any;
-    if (filter !== null) {
-      let allSingle: Array<string> = [],
-        genres: Array<string> = [];
-      value = JSON.parse(filter || '');
-      value.allSingle.map(filter => {
-        if (filter.isChecked) {
-          allSingle.push(filter.value);
-        }
-      });
-      value.genres.map(filter => {
-        if (filter.isChecked) genres.push(filter.value);
-      });
-      this.props.filterVenues(allSingle, genres);
-    }
+    console.log('in componendidmount');
+    // let filter = window.localStorage.getItem('filter');
+    // let value: any;
+    // if (filter !== null) {
+    //   let allSingle: Array<string> = [],
+    //     genres: Array<string> = [];
+    //   value = JSON.parse(filter || '');
+    //   value.allSingle.map(filter => {
+    //     if (filter.isChecked) {
+    //       allSingle.push(filter.value);
+    //     }
+    //   });
+    //   value.genres.map(filter => {
+    //     if (filter.isChecked) genres.push(filter.value);
+    //   });
+    //   this.props.filterVenues(allSingle, genres);
+    // }
     // await this.props.getAllVenues();
+    this.props.filterVenues(
+      this.props.allSingleChosen,
+      this.props.genresChosen
+    );
+    this.setState({
+      sChosen: this.props.allSingleChosen,
+      gChosen: this.props.genresChosen,
+      filterSelected: this.props.filterSelected,
+    });
   }
-  // componentWillReceiveProps(refresh) {
-  //   this.state = {
-  //     filterSelected: refresh.refresh,
-  //   };
+  // getSnapshotBeforeUpdate() {
+  //   let filter = window.localStorage.getItem('filter');
+  //   if (filter !== null) {
+  //     let value = JSON.parse(filter || '');
+  //     this.setState({
+  //       sChosen: value.allSingleChosen,
+  //       gChosen: value.genresChosen,
+  //     });
+  //     // return (
+  //     //   this.state.sChosen !== value.allSingleChosen ||
+  //     //   this.state.gChosen !== value.genresChosen
+  //     // );
+  //   }
+  //   // return false;
+  // }
+  // shouldComponentUpdate() {
+  //   let filter = window.localStorage.getItem('filter');
+  //   if (filter !== null) {
+  //     let value = JSON.parse(filter || '');
+  //     return (
+  //       this.state.sChosen !== value.allSingleChosen ||
+  //       this.state.gChosen !== value.genresChosen
+  //     );
+  //   }
+  //   return false;
   // }
   render() {
     if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
-    console.log('renders in venue filter component');
+    console.log(
+      'in all venues',
+      this.props.filterSelected,
+      this.state.filterSelected
+    );
     return (
       <IonContent>
         <div className="home">
@@ -113,6 +155,8 @@ const mapStateToProps = state => ({
   allSingle: state.filter.allSingle,
   genres: state.filter.genres,
   filterSelected: state.venue.filterSelected,
+  allSingleChosen: state.filter.allSingleChosen,
+  genresChosen: state.filter.genresChosen,
 });
 const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
