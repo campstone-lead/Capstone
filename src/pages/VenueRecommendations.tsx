@@ -72,7 +72,7 @@ class VenueRecommendations extends React.Component<IMyComponentProps, IMyCompone
                         <IonButton mode="ios"
                             href="/venues"
                             className="homeBtn" color="rgb(153, 178, 189);">Venues</IonButton>
-                        <IonCardTitle className="textBox">We got you some venues you might be interested in...</IonCardTitle>
+                        <IonCardTitle className="textBox">Here are some venues you might be interested in...</IonCardTitle>
                     </IonCardHeader>
                     {this.state.currentArtistRecommandations.map(
                         (venue, index) => {

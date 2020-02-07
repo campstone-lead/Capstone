@@ -31,7 +31,7 @@ interface IMyComponentProps {
   isSearchBarOpen: boolean;
   getRecommendedVenues: any;
   fetchVenues: any;
-  getRocommendedArtists: any;
+  getRecommendedArtists: any;
   venues: any;
   artists: any;
   recommendations: Array<object>;
@@ -40,7 +40,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +57,7 @@ class ArtistRecommendation extends React.Component<
         await this.props.fetchVenues(id);
         if (this.props.venues !== undefined && this.props.venues.length > 0) {
           await this.setState({ currentVenue: this.props.venues[0].id });
-          await this.props.getRocommendedArtists(this.state.currentVenue);
+          await this.props.getRecommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
             artist => artist['recommendations'][0].score <= 9
           );
@@ -80,7 +80,7 @@ class ArtistRecommendation extends React.Component<
 
   handleChange = async e => {
     this.setState({ currentVenue: Number(e.target.value) });
-    await this.props.getRocommendedArtists(this.state.currentVenue);
+    await this.props.getRecommendedArtists(this.state.currentVenue);
     const rec = this.props.artists.filter(
       artist => artist['recommendations'][0].score <= 9
     );
@@ -110,19 +110,19 @@ class ArtistRecommendation extends React.Component<
                 ))}
               </select>
               <IonCardTitle className="textBox">
-                We got you some artist you might be interested in...
+                Here are some artists you might be interested in...
               </IonCardTitle>
             </div>
           ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
             </IonButton>
-          )}
+            )}
         </IonCardHeader>
 
         {this.state.currentBookerRecommandations.map((artist, index) => {
@@ -174,7 +174,7 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRocommendedArtists: id => dispatch(getRecommendedArtists(id)),
+  getRecommendedArtists: id => dispatch(getRecommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
 });
 
