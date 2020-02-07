@@ -35,8 +35,8 @@ import AllArtistView from './pages/AllArtistView';
 import ArtistSinglePage from './pages/ArtistSinglePage';
 import VenueForm from './pages/booker/venue/add-venue-form';
 import Profile from './pages/Profile';
-import Filter from './pages/Artist/Filter';
-import SearchBar from './pages/Artist/SearchBar';
+import Filter from './pages/Artist/Search/Filter';
+import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -58,7 +58,7 @@ import history from './history';
 import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3';
-
+import AllVenuesView from './pages/Artist/Search/AllVenueFilter';
 export {
   IonApp,
   IonIcon,
@@ -107,4 +107,5 @@ export {
   history,
   render,
   Tab3,
+  AllVenuesView,
 };
