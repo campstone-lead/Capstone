@@ -14,6 +14,7 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
+  IonAlert,
 } from '@ionic/react';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -144,8 +145,23 @@ export class Filter extends React.Component<
                   <IonLabel>{filter.value}</IonLabel>
                   <IonCheckbox
                     value={filter.value}
+                    onClick={
+                      this.props.allSingle.some(i => i.isChecked)
+                        ? this.mainOnClick
+                        : () => (
+                            <IonAlert
+                              isOpen={true}
+                              // onDidDismiss={() => setShowAlert1(false)}
+                              header={"Cant't add a filter"}
+                              subHeader={'Subtitle'}
+                              message={
+                                'You can only add one main category filter.'
+                              }
+                              buttons={['OK']}
+                            />
+                          )
+                    }
                     checked={filter.isChecked}
-                    onClick={this.mainOnClick}
                   />
                 </IonItem>
               ))}

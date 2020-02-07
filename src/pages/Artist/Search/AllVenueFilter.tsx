@@ -9,7 +9,7 @@ import {
 
 import React from 'react';
 import { me } from '../../../store/user';
-import { getAllVenues, filterVenues } from '../../../store/venue';
+import { customedFilter } from '../../../store/filter';
 import { connect } from 'react-redux';
 import '../../Tab1.css';
 
@@ -17,14 +17,14 @@ interface IMyComponentProps {
   filterSelected: any;
   allSingleChosen: any;
   genresChosen: any;
-  filterVenues: (
+  customedFilter: (
     mainFilters: Array<string>,
     genreFilters: Array<string>
   ) => void;
 }
 export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   async componentDidMount() {
-    this.props.filterVenues(
+    await this.props.customedFilter(
       this.props.allSingleChosen,
       this.props.genresChosen
     );
@@ -73,12 +73,12 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   }
 }
 const mapStateToProps = state => ({
-  filterSelected: state.venue.filterSelected,
+  filterSelected: state.filter.filterSelected,
   allSingleChosen: state.filter.allSingleChosen,
   genresChosen: state.filter.genresChosen,
 });
 const mapDispatchToProps = dispatch => ({
-  filterVenues: (mainFilters, genreFilters) =>
-    dispatch(filterVenues(mainFilters, genreFilters)),
+  customedFilter: (mainFilters, genreFilters) =>
+    dispatch(customedFilter(mainFilters, genreFilters)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AllVenuesView);

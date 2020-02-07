@@ -1,11 +1,12 @@
-import { act } from '@testing-library/react';
-import { filter } from 'minimatch';
+import axios from 'axios';
+import queryString from 'query-string';
 
 // Action types
 const DELETE_FILTER = 'DELETE_FILTER';
 const CHOOSE_GENRES = 'CHOOSE_GENRES';
 const SEARCH_BAR_VALUE = 'SEARCH_BAR_VALUE';
 const CHOOSE_ALL_SINGLE = 'CHOOSE_ALL_SINGLE';
+const GET_FILTER_SELECTED = 'GET_FILTER_SELECTED';
 const GET_STATE = 'GET_STATE';
 const LIST_OF_GENRES = [
   'rock',
@@ -24,6 +25,7 @@ const defaultFilter = {
   allSingle: [
     { value: 'Venues', isChecked: false },
     { value: 'Events', isChecked: false },
+    { value: 'Artists', isChecked: false },
   ],
   allSingleChosen: [],
   chosen: [],
@@ -41,6 +43,7 @@ const defaultFilter = {
   ],
   genresChosen: [],
   isSearchBarOpen: false,
+  filterSelected: [],
 };
 
 // Action creator
@@ -68,6 +71,27 @@ export const searchBarValue = value => ({
   type: SEARCH_BAR_VALUE,
   value,
 });
+
+const getFilterSelected = filters => ({ type: GET_FILTER_SELECTED, filters });
+
+//thunk creator
+export const customedFilter = (mainFilters, genreFilters) => async dispatch => {
+  try {
+    let myQueryString = queryString.stringify({
+      main: mainFilters,
+      genre: genreFilters,
+    });
+
+    const res = await axios({
+      method: 'get',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/filters/${myQueryString}`,
+    });
+    dispatch(getFilterSelected(res.data));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // Reducer
 export default function(state = defaultFilter, action) {
@@ -192,6 +216,9 @@ export default function(state = defaultFilter, action) {
         allSingleChosen: allSingle,
         genresChosen: genres,
       };
+
+    case GET_FILTER_SELECTED:
+      return { ...state, filterSelected: action.filters };
 
     default:
       return state;
