@@ -67,46 +67,50 @@ class VenueRecommendations extends React.Component<IMyComponentProps, IMyCompone
         } else {
             return (
                 <div className="home">
-
                     <IonCardHeader className="home" mode="ios">
                         <IonButton mode="ios"
                             href="/venues"
-                            className="homeBtn" color="rgb(153, 178, 189);">Venues</IonButton>
+                            className="home-btn" color="rgb(153, 178, 189);">Venues</IonButton>
                         <IonCardTitle className="textBox">We got you some venues you might be interested in...</IonCardTitle>
                     </IonCardHeader>
-                    {this.state.currentArtistRecommandations.map(
-                        (venue, index) => {
-                            return (
-                                <IonCard
-                                    key={index}
-                                    href={`/allVenues/${venue['id']}`}
-                                    className=""
-                                    style={{ width: '250px' }}
-                                    mode="ios"
-                                >
-                                    <div className="venueBox">
-                                        <img src={venue['imageURL']} alt="img.jpg" />
+                    <div className="venue">
+                        {this.state.currentArtistRecommandations.map(
+                            (venue, index) => {
+                                return (
+                                    <IonCard
+                                        key={index}
+                                        href={`/allVenues/${venue['id']}`}
+                                        className=""
+                                        style={{ width: '250px' }}
+                                        mode="ios"
+                                    >
+                                        <div className="venueBox">
+                                            <img src={venue['imageURL']} alt="img.jpg" />
 
-                                        <IonItemGroup style={{ margin: '20px' }}>
-                                            <IonCardTitle
-                                                style={{ textAlign: 'center' }}
-                                                className="venueBoxText"
-                                            >
-                                                {venue['name']}
-                                            </IonCardTitle>
-                                            <IonCardSubtitle
-                                                style={{ textAlign: 'center' }}
-                                            >
-                                                {venue['address']}
-                                            </IonCardSubtitle>
-                                        </IonItemGroup>
+                                            <IonItemGroup style={{ margin: '20px' }}>
+                                                <IonCardTitle
+                                                    style={{ textAlign: 'center' }}
+                                                    className="venueBoxText"
+                                                >
+                                                    {venue['name']}
+                                                </IonCardTitle>
+                                                <IonCardSubtitle
+                                                    style={{ textAlign: 'center' }}
+                                                >
+                                                    {venue['address']}
+                                                </IonCardSubtitle>
+                                            </IonItemGroup>
 
-                                    </div>
-                                </IonCard>
-                            )
-                        }
+                                        </div>
+                                    </IonCard>
+                                )
+                            }
 
-                    )}
+                        )}
+                    </div>
+
+
+
 
                 </div>
 

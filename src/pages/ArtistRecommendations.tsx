@@ -122,43 +122,45 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
             </IonButton>
             )}
         </IonCardHeader>
+        <div className="venue">
+          {this.state.currentBookerRecommandations.map(
+            (artist, index) => {
+              let genres = '';
+              artist['genres'].forEach((el, index) => {
+                genres += el + ' ';
+              });
 
-        {this.state.currentBookerRecommandations.map(
-          (artist, index) => {
-            let genres = '';
-            artist['genres'].forEach((el, index) => {
-              genres += el + ' ';
-            });
+              return (
+                <IonCard
+                  key={index}
+                  href={`/allArtists/${artist['id']}`}
+                  className="profile"
+                  style={{ width: '250px' }}
+                  mode="ios"
+                >
+                  <div className="artistBox">
+                    <img src={artist['imageUrl']} alt="img.jpg" />
 
-            return (
-              <IonCard
-                key={index}
-                href={`/allArtists/${artist['id']}`}
-                className="profile"
-                style={{ width: '250px' }}
-                mode="ios"
-              >
-                <div className="artistBox">
-                  <img src={artist['imageUrl']} alt="img.jpg" />
+                    <IonItemGroup style={{ margin: '20px' }}>
+                      <IonCardTitle
+                        style={{ textAlign: 'center' }}
+                        className="artistBoxText"
+                      >
+                        {artist['artistName']}
+                      </IonCardTitle>
+                      <IonCardSubtitle
+                        style={{ textAlign: 'center' }}
+                      >
+                        {genres}
+                      </IonCardSubtitle>
+                    </IonItemGroup>
+                  </div>
+                </IonCard>
+              );
+            }
+          )}
+        </div>
 
-                  <IonItemGroup style={{ margin: '20px' }}>
-                    <IonCardTitle
-                      style={{ textAlign: 'center' }}
-                      className="artistBoxText"
-                    >
-                      {artist['artistName']}
-                    </IonCardTitle>
-                    <IonCardSubtitle
-                      style={{ textAlign: 'center' }}
-                    >
-                      {genres}
-                    </IonCardSubtitle>
-                  </IonItemGroup>
-                </div>
-              </IonCard>
-            );
-          }
-        )}
       </div>
 
     )
