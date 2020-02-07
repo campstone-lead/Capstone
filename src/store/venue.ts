@@ -7,12 +7,14 @@ axios.defaults.withCredentials = true;
  */
 const GET_VENUES = 'GET_VENUES';
 const GOT_ALL_VENUES = 'GOT_ALL_VENUES';
+const GET_SINGLE_VENUE = 'GET_SINGLE_VENUE';
 
 /**
  * INITIAL STATE
  */
 const defaultState = {
   all: [],
+  single: {},
   selected: {},
 };
 
@@ -21,6 +23,7 @@ const defaultState = {
  */
 const getVenues = venues => ({ type: GET_VENUES, venues });
 const gotAllVenues = venues => ({ type: GOT_ALL_VENUES, venues });
+const getSingleVenue = venue => ({ type: GET_SINGLE_VENUE, venue });
 
 /**
  * THUNK CREATORS
@@ -64,6 +67,19 @@ export const getAllVenues = () => async dispatch => {
     console.error(error);
   }
 };
+export const fetchOneVenue = id => async dispatch => {
+  try {
+    const res = await axios({
+      method: 'get',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/venues/${id}`,
+    });
+
+    dispatch(getSingleVenue(res.data || defaultState));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 /**
  * REDUCER
@@ -74,6 +90,8 @@ export default function(state = defaultState, action) {
       return { ...state, all: action.venues };
     case GOT_ALL_VENUES:
       return { ...state, all: action.venues };
+    case GET_SINGLE_VENUE:
+      return { ...state, single: action.venue };
     default:
       return state;
   }

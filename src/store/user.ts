@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../pages/history';
+axios.defaults.withCredentials = true;
 /**
  * ACTION TYPES
  */
@@ -64,7 +65,7 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;
