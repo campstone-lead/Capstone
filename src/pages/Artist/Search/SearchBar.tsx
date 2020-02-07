@@ -4,18 +4,26 @@ import React from 'react';
 // import { auth, me } from '../store/user';
 import { connect } from 'react-redux';
 import { string } from 'prop-types';
-import { deleteFilter } from '../../store/filter';
+import { deleteFilter, getState } from '../../../store/filter';
 
 interface IMyComponentProps {
   filters: Array<string>;
   deleteFilter: (filter: string) => void;
+  getState: (filter: any) => void;
 }
 
 export class SearchBar extends React.Component<IMyComponentProps, {}> {
   constructor(props) {
     super(props);
   }
-
+  componentDidMount() {
+    let filter = window.localStorage.getItem('filter');
+    let value: any;
+    if (filter !== null) {
+      value = JSON.parse(filter || '');
+      this.props.getState(value);
+    }
+  }
   render() {
     return (
       <IonItem>
@@ -56,6 +64,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   deleteFilter: filter => dispatch(deleteFilter(filter)),
+  getState: filter => dispatch(getState(filter)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

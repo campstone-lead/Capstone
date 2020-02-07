@@ -13,7 +13,7 @@ import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';
 import LandingPage from './landingPage';
 import './Tab1.css';
-import SearchBar from './Artist/SearchBar';
+import SearchBar from './Artist/Search/SearchBar';
 import ArtistRecommendations from './ArtistRecommendations';
 import VenueRecommendations from './VenueRecommendations';
 
@@ -48,7 +48,6 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     if (searchbar !== null) {
       let value: boolean;
       value = JSON.parse(searchbar || '');
-      console.log('value in component mount', searchbar);
       this.props.searchBarValue(value);
     }
     this.setState({
@@ -99,7 +98,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                 </div>
               </IonToolbar>
             </IonHeader>
-            {this.props.isSearchBarOpen ? (
+            {this.state.isSearchBarOpen ? (
               <IonContent>
                 <SearchBar />
               </IonContent>
