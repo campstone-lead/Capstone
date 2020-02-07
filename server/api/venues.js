@@ -18,15 +18,20 @@ router.get('/:query', async (req, res, next) => {
   try {
     let data = queryString.parse(req.params.query);
     let returnData = [];
-    console.log('here', data);
-    console.log('here', req.params);
     switch (data.main) {
       case 'Venues':
-        if (data.genre)
+        if (data.genre && Array.isArray(data.genre))
           returnData = await Venue.findAll({
             where: { genres: { [Op.contains]: data.genre } },
           });
-        else returnData = await Venue.findAll();
+        if (typeof data.genre === 'string') {
+          let genre = [];
+          genre.push(data.genre);
+          returnData = await Venue.findAll({
+            where: { genres: { [Op.contains]: genre } },
+          });
+        }
+        if (data.genre === undefined) returnData = await Venue.findAll();
         break;
       default:
         break;

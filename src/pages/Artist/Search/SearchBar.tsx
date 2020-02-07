@@ -12,17 +12,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { string } from 'prop-types';
 import { deleteFilter, getState } from '../../../store/filter';
+import { filterVenues } from '../../../store/venue';
 import AllVenuesView from './AllVenueFilter';
 
+interface IMyComponentState {
+  filters: any;
+}
 interface IMyComponentProps {
   filters: Array<string>;
+  filterSelected: any;
   deleteFilter: (filter: string) => void;
   getState: (filter: any) => void;
+  filterVenues: (
+    mainFilters: Array<string>,
+    genreFilters: Array<string>
+  ) => void;
 }
 
-export class SearchBar extends React.Component<IMyComponentProps, {}> {
+export class SearchBar extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
   constructor(props) {
     super(props);
+    this.state = {
+      filters: [],
+    };
+    this.deleteOnClick = this.deleteOnClick.bind(this);
   }
   componentDidMount() {
     let filter = window.localStorage.getItem('filter');
@@ -32,21 +48,21 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
       this.props.getState(value);
     }
   }
+  deleteOnClick(event) {
+    this.props.deleteFilter(event.target.title);
+    this.setState({
+      filters: this.props.filters,
+    });
+  }
   render() {
     return (
       <IonContent>
         <IonItem>
           <div>
             {this.props.filters.map((item, indx) => (
-              <IonChip
-                key={indx}
-                id={item}
-                onClick={() => {
-                  this.props.deleteFilter(item);
-                }}
-              >
+              <IonChip key={indx} id={item} onClick={this.deleteOnClick}>
                 <IonLabel>{item}</IonLabel>
-                <IonIcon icon={closeCircle} />
+                <IonIcon title={item} icon={closeCircle} />
               </IonChip>
             ))}
           </div>
@@ -62,7 +78,13 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
             <IonIcon icon={switcher} />
           </IonButton>
         </IonItem>
-        {this.props.filters.length === 0 ? '' : <AllVenuesView />}
+        {this.props.filters.length === 0 ? (
+          ''
+        ) : (
+          <div>
+            <AllVenuesView />
+          </div>
+        )}
       </IonContent>
     );
   }
@@ -70,11 +92,14 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
 
 const mapStateToProps = state => ({
   filters: state.filter.chosen,
+  filterSelected: state.venue.filterSelected,
 });
 
 const mapDispatchToProps = dispatch => ({
   deleteFilter: filter => dispatch(deleteFilter(filter)),
   getState: filter => dispatch(getState(filter)),
+  filterVenues: (mainFilters, genreFilters) =>
+    dispatch(filterVenues(mainFilters, genreFilters)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
