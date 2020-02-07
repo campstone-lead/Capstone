@@ -13,60 +13,25 @@ import { getAllVenues, filterVenues } from '../../../store/venue';
 import { connect } from 'react-redux';
 import '../../Tab1.css';
 
-interface IMyComponentState {
-  filterSelected: any;
-}
-
 interface IMyComponentProps {
-  venues: object;
-  me: object;
   filterSelected: any;
-  allSingle: { value: any; isChecked: boolean }[];
-  genres: { value: any; isChecked: boolean }[];
-  getAllVenues: () => void;
+  allSingleChosen: any;
+  genresChosen: any;
   filterVenues: (
     mainFilters: Array<string>,
     genreFilters: Array<string>
   ) => void;
 }
-export class AllVenuesView extends React.Component<
-  IMyComponentProps,
-  IMyComponentState
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterSelected: this.props.filterSelected,
-    };
-  }
+export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   async componentDidMount() {
-    let filter = window.localStorage.getItem('filter');
-    let value: any;
-    if (filter !== null) {
-      let allSingle: Array<string> = [],
-        genres: Array<string> = [];
-      value = JSON.parse(filter || '');
-      value.allSingle.map(filter => {
-        if (filter.isChecked) {
-          allSingle.push(filter.value);
-        }
-      });
-      value.genres.map(filter => {
-        if (filter.isChecked) genres.push(filter.value);
-      });
-      this.props.filterVenues(allSingle, genres);
-    }
-    // await this.props.getAllVenues();
+    this.props.filterVenues(
+      this.props.allSingleChosen,
+      this.props.genresChosen
+    );
   }
-  // componentWillReceiveProps(refresh) {
-  //   this.state = {
-  //     filterSelected: refresh.refresh,
-  //   };
-  // }
   render() {
     if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
-    console.log('renders in venue filter component');
     return (
       <IonContent>
         <div className="home">
@@ -108,15 +73,11 @@ export class AllVenuesView extends React.Component<
   }
 }
 const mapStateToProps = state => ({
-  venues: state.venue.all,
-  user: state.user,
-  allSingle: state.filter.allSingle,
-  genres: state.filter.genres,
   filterSelected: state.venue.filterSelected,
+  allSingleChosen: state.filter.allSingleChosen,
+  genresChosen: state.filter.genresChosen,
 });
 const mapDispatchToProps = dispatch => ({
-  me: () => dispatch(me()),
-  getAllVenues: () => dispatch(getAllVenues()),
   filterVenues: (mainFilters, genreFilters) =>
     dispatch(filterVenues(mainFilters, genreFilters)),
 });

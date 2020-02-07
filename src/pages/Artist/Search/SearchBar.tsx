@@ -10,17 +10,14 @@ import { closeCircle, switcher } from 'ionicons/icons';
 import React from 'react';
 // import { auth, me } from '../store/user';
 import { connect } from 'react-redux';
-import { string } from 'prop-types';
 import { deleteFilter, getState } from '../../../store/filter';
 import { filterVenues } from '../../../store/venue';
 import AllVenuesView from './AllVenueFilter';
 
-interface IMyComponentState {
-  filters: any;
-}
 interface IMyComponentProps {
   filters: Array<string>;
-  filterSelected: any;
+  allSingleChosen: any;
+  genresChosen: any;
   deleteFilter: (filter: string) => void;
   getState: (filter: any) => void;
   filterVenues: (
@@ -29,15 +26,9 @@ interface IMyComponentProps {
   ) => void;
 }
 
-export class SearchBar extends React.Component<
-  IMyComponentProps,
-  IMyComponentState
-> {
+export class SearchBar extends React.Component<IMyComponentProps, {}> {
   constructor(props) {
     super(props);
-    this.state = {
-      filters: [],
-    };
     this.deleteOnClick = this.deleteOnClick.bind(this);
   }
   componentDidMount() {
@@ -48,8 +39,12 @@ export class SearchBar extends React.Component<
       this.props.getState(value);
     }
   }
-  deleteOnClick(event) {
-    this.props.deleteFilter(event.target.title);
+  async deleteOnClick(event) {
+    await this.props.deleteFilter(event.target.title);
+    this.props.filterVenues(
+      this.props.allSingleChosen,
+      this.props.genresChosen
+    );
     this.setState({
       filters: this.props.filters,
     });
@@ -86,7 +81,8 @@ export class SearchBar extends React.Component<
 
 const mapStateToProps = state => ({
   filters: state.filter.chosen,
-  filterSelected: state.venue.filterSelected,
+  allSingleChosen: state.filter.allSingleChosen,
+  genresChosen: state.filter.genresChosen,
 });
 
 const mapDispatchToProps = dispatch => ({
