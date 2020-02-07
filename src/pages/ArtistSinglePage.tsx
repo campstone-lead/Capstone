@@ -174,7 +174,10 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
             {
               (this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) ?
                 <select onChange={this.handleChange}>
-                  {this.props.events.length !== 0 &&
+
+                  {
+                    this.props.events &&
+                    this.props.events.length !== 0 &&
                     this.props.events.map((event, index) => (
                       <option value={event.id} key={index}>
                         {event.name} - {event.venueName}
