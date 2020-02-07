@@ -35,7 +35,7 @@ export const getRecommendedVenues = id => async dispatch => {
       baseURL: 'http://localhost:8080/api/',
       url: `/venues/distance/${id}`,
     });
-    console.log('got recommended data->>>>', res.data);
+
     dispatch(getVenues(res.data));
   } catch (err) {
     console.log(err);
@@ -84,7 +84,7 @@ export const fetchOneVenue = id => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   switch (action.type) {
     case GET_VENUES:
       return { ...state, all: action.venues };

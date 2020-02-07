@@ -9,7 +9,7 @@ const Event = require('./event')
 const Recommendation = require('./recommendation')
 ///ASSOCIATIONS HERE:
 
-Venue.belongsTo(Booker, { allowNull: true })
+Venue.belongsTo(Booker)//, { allowNull: true })
 Booker.hasMany(Venue)
 
 Recommendation.belongsTo(Artist)

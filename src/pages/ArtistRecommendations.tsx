@@ -14,7 +14,7 @@ import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';
 import { getRecommendedVenues } from '../store/venue';
 import { getOneBooker } from '../store/booker';
-import { getRecommendedArtists } from '../store/artist';
+import { getRecommendedArtists, fetchArtists } from '../store/artist';
 import './Tab1.css';
 
 interface IMyComponentState {
@@ -31,16 +31,17 @@ interface IMyComponentProps {
   isSearchBarOpen: boolean;
   getRecommendedVenues: any;
   fetchVenues: any;
-  getRocommendedArtists: any;
+  getRecommendedArtists: any;
   venues: any;
   artists: any;
-  recommendations: Array<object>;
+  recommendations: Array<object>,
+  fetchArtists: any
 }
 
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,12 +53,12 @@ class ArtistRecommendation extends React.Component<
   async componentDidMount() {
     await this.props.me();
     if (this.props.user['id'] !== undefined) {
-      if (this.props.user['status'] === 'booker') {
-        const id = this.props.user['id'];
-        await this.props.fetchVenues(id);
-        if (this.props.venues !== undefined && this.props.venues.length > 0) {
+      const id = this.props.user['id'];
+      await this.props.fetchVenues(id);
+      if (this.props.venues.length !== 0) {
+        if (this.props.venues !== undefined) {
           await this.setState({ currentVenue: this.props.venues[0].id });
-          await this.props.getRocommendedArtists(this.state.currentVenue);
+          await this.props.getRecommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
             artist => artist['recommendations'][0].score <= 9
           );
@@ -66,6 +67,13 @@ class ArtistRecommendation extends React.Component<
           });
         }
       }
+      else {
+        await this.props.fetchArtists()
+        this.setState({
+          currentBookerRecommandations: this.props.artists,
+        });
+      }
+
     }
     let searchbar = window.localStorage.getItem('searchbar');
     if (searchbar !== null) {
@@ -80,7 +88,7 @@ class ArtistRecommendation extends React.Component<
 
   handleChange = async e => {
     this.setState({ currentVenue: Number(e.target.value) });
-    await this.props.getRocommendedArtists(this.state.currentVenue);
+    await this.props.getRecommendedArtists(this.state.currentVenue);
     const rec = this.props.artists.filter(
       artist => artist['recommendations'][0].score <= 9
     );
@@ -89,6 +97,7 @@ class ArtistRecommendation extends React.Component<
     });
   };
   render() {
+    console.log(this.state.currentBookerRecommandations)
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
@@ -110,53 +119,62 @@ class ArtistRecommendation extends React.Component<
                 ))}
               </select>
               <IonCardTitle className="textBox">
-                We got you some artist you might be interested in...
+                Here are some artists you might be interested in...
               </IonCardTitle>
             </div>
           ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
             </IonButton>
-          )}
+            )}
         </IonCardHeader>
+        {
+          <div className="venue">
+            {this.state.currentBookerRecommandations.map(
+              (artist, index) => {
+                let genres = '';
+                artist['genres'].forEach((el, index) => {
+                  genres += el + ' ';
+                });
 
-        {this.state.currentBookerRecommandations.map((artist, index) => {
-          let genres = '';
-          artist['genres'].forEach((el, index) => {
-            genres += el + ' ';
-          });
-
-          return (
-            <IonCard
-              key={index}
-              href={`/allArtists/${artist['id']}`}
-              className="profile"
-              style={{ width: '250px' }}
-              mode="ios"
-            >
-              <div className="artistBox">
-                <img src={artist['imageUrl']} alt="img.jpg" />
-
-                <IonItemGroup style={{ margin: '20px' }}>
-                  <IonCardTitle
-                    style={{ textAlign: 'center' }}
-                    className="artistBoxText"
+                return (
+                  <IonCard
+                    key={index}
+                    href={`/allArtists/${artist['id']}`}
+                    className="profile"
+                    style={{ width: '250px' }}
+                    mode="ios"
                   >
-                    {artist['artistName']}
-                  </IonCardTitle>
-                  <IonCardSubtitle style={{ textAlign: 'center' }}>
-                    {genres}
-                  </IonCardSubtitle>
-                </IonItemGroup>
-              </div>
-            </IonCard>
-          );
-        })}
+                    <div className="artistBox">
+                      <img src={artist['imageUrl']} alt="img.jpg" />
+
+                      <IonItemGroup style={{ margin: '20px' }}>
+                        <IonCardTitle
+                          style={{ textAlign: 'center' }}
+                          className="artistBoxText"
+                        >
+                          {artist['artistName']}
+                        </IonCardTitle>
+                        <IonCardSubtitle
+                          style={{ textAlign: 'center' }}
+                        >
+                          {genres}
+                        </IonCardSubtitle>
+                      </IonItemGroup>
+                    </div>
+                  </IonCard>
+                );
+              }
+            )
+            }
+          </div>
+        }
+
       </div>
     );
   }
@@ -174,8 +192,9 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRocommendedArtists: id => dispatch(getRecommendedArtists(id)),
+  getRecommendedArtists: id => dispatch(getRecommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
+  fetchArtists: () => dispatch(fetchArtists())
 });
 
 export default connect(

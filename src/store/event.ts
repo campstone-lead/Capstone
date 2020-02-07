@@ -8,6 +8,7 @@ axios.defaults.withCredentials = true;
  */
 const GET_EVENTS = 'GET_EVENTS'
 const GET_ONE_EVENT = 'GET_ONE_EVENT'
+const CREATE_EVENT = 'CREATE_EVENT'
 
 
 /**
@@ -23,6 +24,7 @@ const defaultState = {
  */
 const getEvents = events => ({ type: GET_EVENTS, events })
 const oneEvent = event => ({ type: GET_ONE_EVENT, event })
+const createEvent = event => ({ type: CREATE_EVENT, event })
 
 
 /**
@@ -55,6 +57,21 @@ export const fetchEvents = () => async dispatch => {
   }
 }
 
+export const createdEvent = (sentEvent) => async dispatch => {
+  try {
+
+    await axios({
+      method: "post",
+      baseURL: "http://localhost:8080/api/",
+      url: `/events/`,
+      data: sentEvent
+    })
+    dispatch(createEvent(sentEvent.event))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 
 /**
  * REDUCER
@@ -65,6 +82,8 @@ export default function (state = defaultState, action) {
       return { ...state, allEvents: action.events }
     case GET_ONE_EVENT:
       return { ...state, currentEvent: action.event }
+    case CREATE_EVENT:
+      return { ...state }
     default:
       return state
   }

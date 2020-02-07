@@ -55,7 +55,9 @@ router.put("/connection/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const data = await Event.create(req.body)
+    const data = await Event.create(req.body.event)
+    const venue = await Venue.findByPk(req.body.currentVenue)
+    data.setVenue(venue)
     res.json(data)
   } catch (error) {
     next(error)

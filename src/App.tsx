@@ -39,6 +39,7 @@ import {
   AllArtistView,
   ArtistSinglePage,
   VenueForm,
+  EventForm,
   Profile,
   Filter,
   SearchBar,
@@ -99,6 +100,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/genres" component={Genres} />
               <Route path="/artisttype" component={ArtistType} />
               <Route path="/addvenue" component={VenueForm} />
+              <Route path="/addevent" component={EventForm} />
               <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/filter" component={Filter} />
               <Route path="/searchbar" component={SearchBar} />

@@ -97,7 +97,7 @@ export const updatedVenue = (venue) => async dispatch => {
         longitude: newBooker["venue"].longitude,
         capacity: newBooker["venue"].capacity,
         genres: newBooker["venue"].genres,
-        bookerId: res.data.id || 1,
+        bookerId: res.data.id, //this used to be || 1, I took it out because I think we'd rather get an error than assign a venue to some other user's account, right?! --Emma
         imageURL: URL
       }
       await axios({
@@ -115,9 +115,9 @@ export const updatedVenue = (venue) => async dispatch => {
 
 //add new venue
 //add-venue-form.tsx
-export const createdVenue = (bookerId, sentVenue) => async dispatch => {
+export const createdVenue = (sentVenue) => async dispatch => {
   try {
-
+    console.log("URL", URL)
     let venueAxios = {
       description: sentVenue["description"],
       name: sentVenue["address"],
@@ -125,7 +125,6 @@ export const createdVenue = (bookerId, sentVenue) => async dispatch => {
       latitude: sentVenue["latitude"],
       longitude: sentVenue["longitude"],
       capacity: sentVenue["capacity"],
-      bookerId: bookerId || 1,
       imageURL: URL
     }
     await axios({
