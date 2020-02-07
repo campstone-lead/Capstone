@@ -55,7 +55,6 @@ export const logout = () => async dispatch => {
       baseURL: 'http://localhost:8080/',
       url: '/auth/logout/',
     });
-    window.localStorage.setItem('searchbar', JSON.stringify(false));
     window.localStorage.clear();
     dispatch(removeUser());
     history.push('/login');

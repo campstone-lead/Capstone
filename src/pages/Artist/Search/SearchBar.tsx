@@ -11,7 +11,7 @@ import React from 'react';
 // import { auth, me } from '../store/user';
 import { connect } from 'react-redux';
 import { deleteFilter, getState } from '../../../store/filter';
-import { filterVenues } from '../../../store/venue';
+import { customedFilter } from '../../../store/filter';
 import AllVenuesView from './AllVenueFilter';
 
 interface IMyComponentProps {
@@ -20,7 +20,7 @@ interface IMyComponentProps {
   genresChosen: any;
   deleteFilter: (filter: string) => void;
   getState: (filter: any) => void;
-  filterVenues: (
+  customedFilter: (
     mainFilters: Array<string>,
     genreFilters: Array<string>
   ) => void;
@@ -41,7 +41,7 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
   }
   async deleteOnClick(event) {
     await this.props.deleteFilter(event.target.title);
-    this.props.filterVenues(
+    this.props.customedFilter(
       this.props.allSingleChosen,
       this.props.genresChosen
     );
@@ -88,8 +88,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   deleteFilter: filter => dispatch(deleteFilter(filter)),
   getState: filter => dispatch(getState(filter)),
-  filterVenues: (mainFilters, genreFilters) =>
-    dispatch(filterVenues(mainFilters, genreFilters)),
+  customedFilter: (mainFilters, genreFilters) =>
+    dispatch(customedFilter(mainFilters, genreFilters)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
