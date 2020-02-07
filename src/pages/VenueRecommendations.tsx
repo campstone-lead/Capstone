@@ -14,7 +14,9 @@ import { connect } from 'react-redux';
 import './Tab1.css';
 
 interface IMyComponentState {
-  currentArtistRecommandations: Array<object>; //recommending Venues to artist
+  currentArtistRecommandations: Array<object>;
+  loading: boolean
+  //recommending Venues to artist
 }
 
 interface IMyComponentProps {
@@ -31,11 +33,12 @@ interface IMyComponentProps {
 class VenueRecommendations extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
       currentArtistRecommandations: [],
+      loading: false
     };
   }
 
@@ -46,77 +49,71 @@ class VenueRecommendations extends React.Component<
 
     await this.props.getRecommendedVenues(id);
 
-    console.log(this.props.venues, 'this.props.venues');
-
-    const rec = this.props.venues.filter(
-      venue => venue['recommendations'][0].score <= 9
+    let rec = this.props.venues;
+    rec = this.props.venues.filter(
+      venue => venue['recommendations'][0].score > 9
     );
 
-    this.setState({
+    await this.setState({
       currentArtistRecommandations: rec,
+      loading: true
     });
   }
   shouldComponentUpdate() {
-    return this.props.isSearchBarOpen;
+    if (this.state.loading)
+      return this.props.isSearchBarOpen;
+    return true;
+
   }
 
   render() {
-    console.log(this.props, 'THIS.PROPS');
-    console.log(
-      'currentArtistRecommendations',
-      this.state.currentArtistRecommandations
-    );
-
-    if (this.state.currentArtistRecommandations.length === 0) {
-      return <div>You have no current venue recommendations</div>;
-    } else {
-      return (
-        <div className="home">
-          <IonCardHeader className="home" mode="ios">
-            <IonButton
-              mode="ios"
-              href="/venues"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Venues
+    return (
+      <div className="home">
+        <IonCardHeader className="home" mode="ios">
+          <IonButton
+            mode="ios"
+            href="/venues"
+            className="homeBtn"
+            color="rgb(153, 178, 189);"
+          >
+            Venues
             </IonButton>
-            <IonCardTitle className="textBox">
-              We got you some venues you might be interested in...
+          <IonCardTitle className="textBox">
+            We got you some venues you might be interested in...
             </IonCardTitle>
-          </IonCardHeader>
-          {this.state.currentArtistRecommandations.map((venue, index) => {
-            return (
-              <IonCard
-                key={index}
-                href={`/allVenues/${venue['id']}`}
-                className=""
-                style={{ width: '250px' }}
-                mode="ios"
-              >
-                <div className="venueBox">
-                  <img src={venue['imageURL']} alt="img.jpg" />
+        </IonCardHeader>
+        {this.state.currentArtistRecommandations.map((venue, index) => {
+          return (
+            <IonCard
+              key={index}
+              href={`/allVenues/${venue['id']}`}
+              className=""
+              style={{ width: '250px' }}
+              mode="ios"
+            >
+              <div className="venueBox">
+                <img src={venue['imageURL']} alt="img.jpg" />
 
-                  <IonItemGroup style={{ margin: '20px' }}>
-                    <IonCardTitle
-                      style={{ textAlign: 'center' }}
-                      className="venueBoxText"
-                    >
-                      {venue['name']}
-                    </IonCardTitle>
-                    <IonCardSubtitle style={{ textAlign: 'center' }}>
-                      {venue['address']}
-                    </IonCardSubtitle>
-                  </IonItemGroup>
-                </div>
-              </IonCard>
-            );
-          })}
-        </div>
-      );
-    }
+                <IonItemGroup style={{ margin: '20px' }}>
+                  <IonCardTitle
+                    style={{ textAlign: 'center' }}
+                    className="venueBoxText"
+                  >
+                    {venue['name']}
+                  </IonCardTitle>
+                  <IonCardSubtitle style={{ textAlign: 'center' }}>
+                    {venue['address']}
+                  </IonCardSubtitle>
+                </IonItemGroup>
+              </div>
+            </IonCard>
+          );
+        })}
+      </div>
+    );
   }
 }
+
 const mapStateToProps = state => ({
   venues: state.venue.all,
   user: state.user,

@@ -122,7 +122,6 @@ flex-direction: column;
   flex-direction:column;
   align-items: center;
   font-family: 'Raleway', sans-serif;
-
 }
 
 .homeBtn{
@@ -131,15 +130,13 @@ flex-direction: column;
   height:40px;
 background-color: rgb(153, 178, 189);
 border-radius: 3%;
-  margin:20px;
+  margin:10px;
   font-family: 'Raleway', sans-serif;
   font-size: 20px;
 }
 .textBox{
   position: relative;
   margin:10px;
- display: flex;
- flex-wrap:wrap;
  bottom: -40px;
 }
 .artistBox{
@@ -216,4 +213,27 @@ position: relative;
   --background: -webkit-linear-gradient(to right, #485563, #29323c); /* Chrome 10-25, Safari 5.1-6 */
   --background: linear-gradient(to right, #485563, #29323c)
 
+}
+
+.venueBox{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  margin: 0px auto 5px auto;
+   text-align: left;
+}
+
+.venue{
+  margin-bottom:60px
+}
+.home-btn{
+
+  display: block;
+  width:225px;
+  height:40px;
+background-color: rgb(153, 178, 189);
+border-radius: 3%;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+  padding: -10em;
 }
