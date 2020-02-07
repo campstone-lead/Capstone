@@ -1,5 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+*{
+  font-family: 'Quicksand', sans-serif;
+}
 
 .welcome-card img {
   max-height: 35vh;
@@ -84,11 +88,11 @@ flex-direction: column;
 .logo{
   display: block;
   position: fixed;
-  max-width:45px;
-  max-height:45px;
+  max-width:35px;
+  max-height:35px;
   width: auto;
   height: auto;
-  border-radius: 50%;
+  border-radius: 100%;
   /* top:-5px;
   left: -75px; */
   left:10px;
@@ -189,4 +193,27 @@ position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+.landingPage{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Quicksand', sans-serif;
+}
+.title{
+  font-family: 'Quicksand', sans-serif;
+  text-align: start;
+}
+
+
+.btn1{
+  left: calc(50% + -100px);
+
+  margin-bottom:25px;
+}
+.jolly-btn{
+  --background: #485563; /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to right, #485563, #29323c); /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to right, #485563, #29323c)
+
 }

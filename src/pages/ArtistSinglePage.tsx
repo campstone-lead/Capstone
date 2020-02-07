@@ -50,7 +50,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
       eventId: Number(this.state.currentEvent),
       artistId: this.props.artist['id']
     }
-    console.log(request)
+
     await this.props.sendRequest(request);
 
   }
@@ -66,6 +66,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
       await this.props.gotOneEvents(el.id)
       let artist = this.props.selectedEvent['artists'].filter((artist) => artist.artistId === this.props.artist['id'])
       if (artist.length === 1) {
+
         await this.setState({ status: this.props.bookingStatus })
         if (this.props.bookingStatus !== null)
           await this.setState({ localStatus: this.props.bookingStatus['status'] })
@@ -75,7 +76,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
   }
 
   render() {
-
+    console.log('here', this.state)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -171,9 +172,12 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
               </IonTabBar>
             </IonCardContent>
             {
-              (this.props.bookingStatus === null) ?
+              (this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) ?
                 <select onChange={this.handleChange}>
-                  {this.props.events.length !== 0 &&
+
+                  {
+                    this.props.events &&
+                    this.props.events.length !== 0 &&
                     this.props.events.map((event, index) => (
                       <option value={event.id} key={index}>
                         {event.name} - {event.venueName}

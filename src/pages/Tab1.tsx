@@ -75,8 +75,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                     className="searchBar"
                     animated
                     showCancelButton="focus"
-                    cancelButtonText="x"
                     autocomplete="on"
+                    cancelButtonText="x"
                     onClick={() => {
                       this.props.searchBarValue(true);
                       this.setState({ isSearchBarOpen: true });
