@@ -1,0 +1,225 @@
+
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+#root{
+  background: linear-gradient(to right, #000000, #434343);
+}
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+#bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+ .search{
+ width:400px;
+ }
+
+.updatevenue{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: column;
+}
+.venuelabel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: column;
+}
+
+ .profile{
+
+   display:flex;
+   flex-direction:column;
+   align-items: center;
+   font-family: 'Raleway', sans-serif;
+   margin-bottom:none;
+
+
+ }
+ .profileImage{
+  margin:10px;
+  display: block;
+  max-width:400px;
+  max-height:500px;
+  width: auto;
+  height: auto;
+  border-radius: 3%;
+ }
+ .bookerImage{
+  margin:10px;
+  display: block;
+  max-width:200px;
+  max-height:200px;
+  width: auto;
+  height: auto;
+  border-radius: 3%;
+ }
+.items{
+  display:flex;
+   flex-direction:row;
+   align-items: center;
+}
+.items img{
+  margin:10px;
+  display: block;
+  max-width:80px;
+  max-height:80px;
+  width: auto;
+  height: auto;
+  border-radius: 3%;
+}
+.signUpItems{
+  width:150px;
+  height: 88px;
+  font-size: 20px;
+  font-family: 'Raleway', sans-serif;
+  margin:10px;
+}
+.signUpTitle{
+  font-size: 30px;
+  font-family: 'Raleway', sans-serif;
+}
+.logo{
+  display: block;
+  position: fixed;
+  max-width:35px;
+  max-height:35px;
+  width: auto;
+  height: auto;
+  border-radius: 100%;
+  /* top:-5px;
+  left: -75px; */
+  left:10px;
+}
+.tabHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchBar{
+  display: block;
+
+
+ top:5px;
+ left: 75px;
+ margin:10px;
+ margin-right: 80px;
+}
+.homeTitle{
+  font-size: 20px;
+  font-family: 'Raleway', sans-serif;
+  margin:20px;
+}
+.home{
+
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  font-family: 'Raleway', sans-serif;
+
+}
+
+.homeBtn{
+  display: block;
+  width:225px;
+  height:40px;
+background-color: rgb(153, 178, 189);
+border-radius: 3%;
+  margin:20px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+}
+.textBox{
+  position: relative;
+  margin:10px;
+ display: flex;
+ flex-wrap:wrap;
+ bottom: -40px;
+}
+.artistBox{
+  display:flex;
+   flex-direction:column;
+   align-items: center;
+   margin: 0px auto 10px auto;
+    text-align: left;
+}
+.artistBox img{
+  margin:10px;
+  display: block;
+  max-width:200px;
+  max-height:200px;
+  width: auto;
+  height: auto;
+  border-radius: 3%;
+}
+.backBtn{
+  display: block;
+position: fixed;
+ left: 3px;
+ margin:10px;
+ margin-right: 500px;
+}
+.artistBoxText{
+  position: relative;
+  margin:10px;
+ display: flex;
+ flex-wrap:wrap;
+ font-size: 20px;
+ font-family: 'Raleway', sans-serif;
+
+}
+.mainPageBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.selectBtn{
+display: block;
+position: relative;
+
+  max-width:200px;
+  max-height:200px;
+  width: auto;
+  height: auto;
+
+}
+.mainBoxSelect{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.landingPage{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(to right, #000000, #434343);
+  color: whitesmoke;
+  font-family: 'Quicksand', sans-serif;
+}
+.title{
+  color: whitesmoke;
+  font-family: 'Quicksand', sans-serif;
+  text-align: start;
+}
+.homePageBtn{
+  background: linear-gradient(to right, #000000, #434343);
+}
+
+
+.jolly-btn{
+  --background: rgba(169,3,41,1);
+  --background: -moz-linear-gradient(left, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%);
+  --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(169,3,41,1)), color-stop(44%, rgba(143,2,34,1)), color-stop(100%, rgba(109,0,25,1)));
+  --background: -webkit-linear-gradient(left, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%);
+  --background: -o-linear-gradient(left, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%);
+  --background: -ms-linear-gradient(left, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%);
+  --background: linear-gradient(to right, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%);
+
+
+  --color:#ffffff;
+}
