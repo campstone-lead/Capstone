@@ -34,6 +34,7 @@ import BookerSignup7 from './pages/booker/Signup/BookerSignup7';
 import AllArtistView from './pages/AllArtistView';
 import ArtistSinglePage from './pages/ArtistSinglePage';
 import VenueForm from './pages/booker/venue/add-venue-form';
+import EventForm from './pages/booker/event/add-event-form';
 import Profile from './pages/Profile';
 import Filter from './pages/Artist/Search/Filter';
 import SearchBar from './pages/Artist/Search/SearchBar';
@@ -100,6 +101,7 @@ export {
   AllArtistView,
   ArtistSinglePage,
   VenueForm,
+  EventForm,
   Profile,
   Filter,
   SearchBar,

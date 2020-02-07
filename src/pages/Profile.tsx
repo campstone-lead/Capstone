@@ -129,23 +129,41 @@ class Profile extends React.Component<IMyComponentProps, {}> {
               </ IonCardContent>
               <IonButton>Update profile</IonButton>
               <br></br>
-              <IonCardHeader>You manage the current venues:</IonCardHeader>
-              {this.props.venues !== undefined && (
-                this.props.venues.map(venue =>
-                  <IonCard key={venue['id']} className="profile" style={{ "width": "300px" }} mode="ios">
-                    <IonCardHeader className='items'>
-                      <IonItemGroup>
-                        <img src={venue['imageURL']} alt={venue['name']} />
-                      </IonItemGroup>
-                      <IonItemGroup>
-                        <IonCardTitle>{venue['name']}</IonCardTitle>
-                        <IonCardSubtitle>{venue['address']}</IonCardSubtitle>
-                      </IonItemGroup>
+              {(this.props.venues !== undefined && this.props.venues.length > 0) ? (
+                <div>
+                  <IonCardHeader>You manage the following venues:</IonCardHeader>
 
-                    </IonCardHeader>
-                  </IonCard>
+                  {this.props.venues.map(venue =>
+                    <IonCard key={venue['id']} className="profile" style={{ "width": "300px" }} mode="ios">
+                      <IonCardHeader className='items'>
+                        <IonItemGroup>
+                          <img src={venue['imageURL']} alt={venue['name']} />
+                        </IonItemGroup>
+                        <IonItemGroup>
+                          <IonCardTitle>{venue['name']}</IonCardTitle>
+                          <IonCardSubtitle>{venue['address']}</IonCardSubtitle>
+                        </IonItemGroup>
+
+                      </IonCardHeader>
+                    </IonCard>
+                  )}
+                </div>
+              )
+                :
+                (
+                  <div>
+                    <IonCardHeader>You do not currently manage any venues.</IonCardHeader>
+                    <IonButton
+                      mode="ios"
+                      href="/addvenue"
+                      className="homeBtn"
+                      color="rgb(153, 178, 189);"
+                    >
+                      Add venues
+                  </IonButton>
+                  </div>
                 )
-              )}
+              }
 
             </div>
             )

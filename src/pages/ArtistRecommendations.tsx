@@ -31,7 +31,7 @@ interface IMyComponentProps {
   isSearchBarOpen: boolean;
   getRecommendedVenues: any;
   fetchVenues: any;
-  getRocommendedArtists: any;
+  getRecommendedArtists: any;
   venues: any;
   artists: any;
   recommendations: Array<object>,
@@ -58,7 +58,7 @@ class ArtistRecommendation extends React.Component<
       if (this.props.venues.length !== 0) {
         if (this.props.venues !== undefined) {
           await this.setState({ currentVenue: this.props.venues[0].id });
-          await this.props.getRocommendedArtists(this.state.currentVenue);
+          await this.props.getRecommendedArtists(this.state.currentVenue);
           const rec = this.props.artists.filter(
             artist => artist['recommendations'][0].score <= 9
           );
@@ -88,7 +88,7 @@ class ArtistRecommendation extends React.Component<
 
   handleChange = async e => {
     this.setState({ currentVenue: Number(e.target.value) });
-    await this.props.getRocommendedArtists(this.state.currentVenue);
+    await this.props.getRecommendedArtists(this.state.currentVenue);
     const rec = this.props.artists.filter(
       artist => artist['recommendations'][0].score <= 9
     );
@@ -109,36 +109,29 @@ class ArtistRecommendation extends React.Component<
           >
             Artists
           </IonButton>
-
-          {
-
-            this.props.venues !== undefined &&
-            this.props.venues.length !== 0 &&
-            (this.props.venues.length > 0 ? (
-              <div className="mainBoxSelect">
-                <select onChange={this.handleChange} className="selectBtn">
-                  {this.props.venues.map((venue, index) => (
-                    <option value={venue.id} key={index}>
-                      {venue.name}
-                    </option>
-                  ))}
-                </select>
-                <IonCardTitle className="textBox">
-                  We got you some artist you might be interested in...
+          {this.props.venues !== undefined && this.props.venues.length > 0 ? (
+            <div className="mainBoxSelect">
+              <select onChange={this.handleChange} className="selectBtn">
+                {this.props.venues.map((venue, index) => (
+                  <option value={venue.id} key={index}>
+                    {venue.name}
+                  </option>
+                ))}
+              </select>
+              <IonCardTitle className="textBox">
+                Here are some artists you might be interested in...
               </IonCardTitle>
-              </div>
-            ) : (
-                <IonButton
-                  mode="ios"
-                  href="/addvenue"
-                  className="homeBtn"
-                  color="rgb(153, 178, 189);"
-                >
-                  Add venues
-            </IonButton>)
-            )
-          }
-
+            </div>
+          ) : (
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
+            </IonButton>
+            )}
         </IonCardHeader>
         {
           <div className="venue">
@@ -199,7 +192,7 @@ const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
   getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
-  getRocommendedArtists: id => dispatch(getRecommendedArtists(id)),
+  getRecommendedArtists: id => dispatch(getRecommendedArtists(id)),
   fetchVenues: id => dispatch(getOneBooker(id)),
   fetchArtists: () => dispatch(fetchArtists())
 });
