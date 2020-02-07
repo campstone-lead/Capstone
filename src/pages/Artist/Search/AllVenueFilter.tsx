@@ -18,18 +18,41 @@ import {
 
 import React from 'react';
 import { me } from '../../../store/user';
-import { getAllVenues } from '../../../store/venue';
+import { getAllVenues, filterVenues } from '../../../store/venue';
 import { connect } from 'react-redux';
 import '../../Tab1.css';
 
 interface IMyComponentProps {
   venues: object;
   me: object;
+  allSingle: { value: any; isChecked: boolean }[];
+  genres: { value: any; isChecked: boolean }[];
   getAllVenues: () => void;
+  filterVenues: (
+    mainFilters: Array<string>,
+    genreFilters: Array<string>
+  ) => void;
 }
 class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   async componentDidMount() {
-    await this.props.getAllVenues();
+    let filter = window.localStorage.getItem('filter');
+    let value: any;
+    if (filter !== null) {
+      let allSingle: Array<string> = [],
+        genres: Array<string> = [];
+      value = JSON.parse(filter || '');
+      value.allSingle.map(filter => {
+        if (filter.isChecked) {
+          console.log('hereee');
+          allSingle.push(filter.value);
+        }
+      });
+      value.genres.map(filter => {
+        if (filter.isChecked) genres.push(filter.value);
+      });
+      this.props.filterVenues(allSingle, genres);
+    }
+    // await this.props.getAllVenues();
   }
 
   render() {
@@ -78,9 +101,13 @@ class AllVenuesView extends React.Component<IMyComponentProps, {}> {
 const mapStateToProps = state => ({
   venues: state.venue.all,
   user: state.user,
+  allSingle: state.filter.allSingle,
+  genres: state.filter.genres,
 });
 const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   getAllVenues: () => dispatch(getAllVenues()),
+  filterVenues: (mainFilters, genreFilters) =>
+    dispatch(filterVenues(mainFilters, genreFilters)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AllVenuesView);

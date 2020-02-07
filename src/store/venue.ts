@@ -1,4 +1,5 @@
 import axios from 'axios';
+import queryString from 'query-string';
 // import history from '../pages/history'
 axios.defaults.withCredentials = true;
 
@@ -52,6 +53,24 @@ export const fetchVenues = () => async dispatch => {
     dispatch(getVenues(res.data || defaultState));
   } catch (err) {
     console.error(err);
+  }
+};
+
+export const filterVenues = (mainFilters, genreFilters) => async dispatch => {
+  try {
+    let myQueryString = queryString.stringify({
+      main: mainFilters,
+      genre: genreFilters,
+    });
+
+    console.log('my string', myQueryString);
+    const res = await axios({
+      method: 'get',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/venues/${myQueryString}`,
+    });
+  } catch (error) {
+    console.error(error);
   }
 };
 
