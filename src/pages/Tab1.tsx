@@ -93,28 +93,31 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                         Cancel
                     </IonButton>
 
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </IonToolbar>
-            </IonHeader>
-            {this.state.isSearchBarOpen ? (
-              <IonContent>
-                <SearchBar />
-              </IonContent>
-            ) : (
-              <IonContent>
-                {this.props.user['status'] === 'booker' ? (
-                  <ArtistRecommendations />
-                ) : (
-                  // then they must be an artists... so show them venues
-                  <VenueRecommendations />
+                    ) : (
+                        ''
+                      )}
+                  </div>
+                </IonToolbar>
+              </IonHeader>
+              {this.state.isSearchBarOpen ? (
+                <IonContent>
+                  <SearchBar />
+                </IonContent>
+              ) : (
+                  <IonContent>
+                    {this.props.user['status'] === 'booker' ? (
+                      <ArtistRecommendations />
+                    ) : (
+                        // then they must be an artists... so show them venues
+                        <VenueRecommendations />
+                      )}
+                  </IonContent>
                 )}
             </IonContent>
-          )}
+          )
+        }
       </IonPage>
-    );
+    )
   }
 }
 
