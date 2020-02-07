@@ -56,6 +56,7 @@ export const logout = () => async dispatch => {
       url: '/auth/logout/',
     });
     window.localStorage.setItem('searchbar', JSON.stringify(false));
+    window.localStorage.clear();
     dispatch(removeUser());
     history.push('/login');
   } catch (err) {
@@ -65,7 +66,7 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultUser, action) {
+export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;

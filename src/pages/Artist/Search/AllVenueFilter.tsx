@@ -3,42 +3,39 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  // IonIcon,
-  // IonItem,
-  // IonLabel,
   IonItemGroup,
-  // IonListHeader,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonSearchbar,
   IonContent,
-  IonBackButton,
 } from '@ionic/react';
 
 import React from 'react';
 import { me } from '../../../store/user';
-import { getAllVenues } from '../../../store/venue';
+import { getAllVenues, filterVenues } from '../../../store/venue';
 import { connect } from 'react-redux';
 import '../../Tab1.css';
 
 interface IMyComponentProps {
-  venues: object;
-  me: object;
-  getAllVenues: () => void;
+  filterSelected: any;
+  allSingleChosen: any;
+  genresChosen: any;
+  filterVenues: (
+    mainFilters: Array<string>,
+    genreFilters: Array<string>
+  ) => void;
 }
-class AllVenuesView extends React.Component<IMyComponentProps, {}> {
+export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   async componentDidMount() {
-    await this.props.getAllVenues();
+    this.props.filterVenues(
+      this.props.allSingleChosen,
+      this.props.genresChosen
+    );
   }
-
   render() {
-    if (!Array.isArray(this.props.venues))
+    if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
     return (
       <IonContent>
         <div className="home">
-          {this.props.venues.map((venue, index) => {
+          {this.props.filterSelected.map((venue, index) => {
             let genres = '';
             venue['genres'].forEach((el, index) => {
               genres += el + ' ';
@@ -60,7 +57,7 @@ class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                       style={{ textAlign: 'center' }}
                       className="artistBoxText"
                     >
-                      {venue['artistName']}
+                      {venue['name']}
                     </IonCardTitle>
                     <IonCardSubtitle style={{ textAlign: 'center' }}>
                       {genres}
@@ -76,11 +73,12 @@ class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   }
 }
 const mapStateToProps = state => ({
-  venues: state.venue.all,
-  user: state.user,
+  filterSelected: state.venue.filterSelected,
+  allSingleChosen: state.filter.allSingleChosen,
+  genresChosen: state.filter.genresChosen,
 });
 const mapDispatchToProps = dispatch => ({
-  me: () => dispatch(me()),
-  getAllVenues: () => dispatch(getAllVenues()),
+  filterVenues: (mainFilters, genreFilters) =>
+    dispatch(filterVenues(mainFilters, genreFilters)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AllVenuesView);

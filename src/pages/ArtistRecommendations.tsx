@@ -5,7 +5,7 @@ import {
   IonCardTitle,
   IonItemGroup,
   IonButton,
-  IonItem
+  IonItem,
 } from '@ionic/react';
 
 import React from 'react';
@@ -38,7 +38,10 @@ interface IMyComponentProps {
   fetchArtists: any
 }
 
-class ArtistRecommendation extends React.Component<IMyComponentProps, IMyComponentState> {
+class ArtistRecommendation extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,7 +108,6 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
             color="rgb(153, 178, 189);"
           >
             Artists
-
           </IonButton>
 
           {
@@ -181,8 +183,7 @@ class ArtistRecommendation extends React.Component<IMyComponentProps, IMyCompone
         }
 
       </div>
-
-    )
+    );
   }
 }
 
@@ -203,4 +204,7 @@ const mapDispatchToProps = dispatch => ({
   fetchArtists: () => dispatch(fetchArtists())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArtistRecommendation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArtistRecommendation);

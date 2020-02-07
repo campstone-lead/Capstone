@@ -10,19 +10,26 @@ import { closeCircle, switcher } from 'ionicons/icons';
 import React from 'react';
 // import { auth, me } from '../store/user';
 import { connect } from 'react-redux';
-import { string } from 'prop-types';
 import { deleteFilter, getState } from '../../../store/filter';
+import { filterVenues } from '../../../store/venue';
 import AllVenuesView from './AllVenueFilter';
 
 interface IMyComponentProps {
   filters: Array<string>;
+  allSingleChosen: any;
+  genresChosen: any;
   deleteFilter: (filter: string) => void;
   getState: (filter: any) => void;
+  filterVenues: (
+    mainFilters: Array<string>,
+    genreFilters: Array<string>
+  ) => void;
 }
 
 export class SearchBar extends React.Component<IMyComponentProps, {}> {
   constructor(props) {
     super(props);
+    this.deleteOnClick = this.deleteOnClick.bind(this);
   }
   componentDidMount() {
     let filter = window.localStorage.getItem('filter');
@@ -32,21 +39,25 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
       this.props.getState(value);
     }
   }
+  async deleteOnClick(event) {
+    await this.props.deleteFilter(event.target.title);
+    this.props.filterVenues(
+      this.props.allSingleChosen,
+      this.props.genresChosen
+    );
+    this.setState({
+      filters: this.props.filters,
+    });
+  }
   render() {
     return (
       <IonContent>
         <IonItem>
           <div>
             {this.props.filters.map((item, indx) => (
-              <IonChip
-                key={indx}
-                id={item}
-                onClick={() => {
-                  this.props.deleteFilter(item);
-                }}
-              >
+              <IonChip key={indx} id={item} onClick={this.deleteOnClick}>
                 <IonLabel>{item}</IonLabel>
-                <IonIcon icon={closeCircle} />
+                <IonIcon title={item} icon={closeCircle} />
               </IonChip>
             ))}
           </div>
@@ -70,11 +81,15 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
 
 const mapStateToProps = state => ({
   filters: state.filter.chosen,
+  allSingleChosen: state.filter.allSingleChosen,
+  genresChosen: state.filter.genresChosen,
 });
 
 const mapDispatchToProps = dispatch => ({
   deleteFilter: filter => dispatch(deleteFilter(filter)),
   getState: filter => dispatch(getState(filter)),
+  filterVenues: (mainFilters, genreFilters) =>
+    dispatch(filterVenues(mainFilters, genreFilters)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
