@@ -46,6 +46,7 @@ import {
   history,
   render,
   Tab3,
+  AllVenuesView,
 } from './AppImports';
 interface IMyComponentProps {
   user: object;
@@ -104,6 +105,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/artists" component={AllArtistView} />
               <Route path="/artistpassword" component={ArtistPassword} />
               <Route path="/artists" component={AllArtistView} />
+              <Route path="/venues" component={AllVenuesView} />
               <Route
                 path="/allArtists/:artistId"
                 component={ArtistSinglePage}
