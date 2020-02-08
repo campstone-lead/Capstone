@@ -34,16 +34,15 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
       return <IonCardTitle>Loading...</IonCardTitle>;
     return (
       <IonContent>
-        <div className="home">
+        <div className="home" style={{ paddingBottom: '140px' }}>
           {this.props.filterSelected.map((venue, index) => {
             let genres = '';
             venue['genres'].forEach((el, index) => {
               genres += el + ' ';
             });
-
             return (
               <IonCard
-                href={`/allVenues/${venue.id}`}
+                href={`/all${this.props.allSingleChosen[0]}/${venue.id}`}
                 key={index}
                 className="profile"
                 style={{ width: '250px' }}
@@ -57,8 +56,20 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                       style={{ textAlign: 'center' }}
                       className="artistBoxText"
                     >
-                      {venue['name']}
+                      {this.props.allSingleChosen[0] === 'Artists' &&
+                      venue.firstName
+                        ? venue.firstName.concat(' ', venue.lastName)
+                        : venue['name']}
                     </IonCardTitle>
+                    <IonCardSubtitle
+                      style={{
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        fontSize: '15px',
+                      }}
+                    >
+                      Genres:
+                    </IonCardSubtitle>
                     <IonCardSubtitle style={{ textAlign: 'center' }}>
                       {genres}
                     </IonCardSubtitle>

@@ -57,14 +57,37 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
 
     render() {
-        // console.log(this.props.booker, 'booker')
-        // console.log(this.props.events, 'this.props.events')
+        let genres = '';
+        if (this.props.venue !== undefined && this.props.venue['genres'] !== undefined) {
+            this.props.venue['genres'].forEach((el, index) => {
+                if (index !== this.props.venue['genres'].length - 1) {
+                    genres += el + ', ';
+                } else genres += el;
+            });
+        }
 
         if (!Array.isArray(this.props.events))
             return <IonCardTitle>Loading...</IonCardTitle>;
         return (
             <IonPage>
-
+                <IonHeader mode="ios">
+                    <IonToolbar mode="ios">
+                        <div className="tabHeader">
+                            <img
+                                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                                alt="logo.png"
+                                className="logo"
+                            />
+                            <IonSearchbar
+                                mode="ios"
+                                className="searchBar"
+                                animated
+                                showCancelButton="focus"
+                                cancelButtonText="x"
+                            ></IonSearchbar>
+                        </div>
+                    </IonToolbar>
+                </IonHeader>
                 <IonContent>
                     <IonBackButton defaultHref="/home/" mode="ios"
                         text=" Back "
@@ -76,8 +99,10 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         <IonCardHeader>
                             <IonCardTitle>{this.props.venue['name']}</IonCardTitle>
                         </IonCardHeader>
+                        <IonCardContent>
+                            <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>{this.props.venue['description']}</IonCardSubtitle>
+                        </IonCardContent>
 
-                        <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>{this.props.venue['description']}</IonCardSubtitle>
                         <br></br>
                         <IonList lines="inset">
                             <IonItem>
@@ -87,17 +112,26 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
                             <IonItem>
                                 <IonIcon slot="start" color="medium" icon={musicalNote} />
-                                <IonLabel style={{ "padding": "5px" }}>  Genres: {this.props.venue['genres']} </IonLabel>
+                                <IonLabel style={{ "padding": "5px" }}> {genres} </IonLabel>
                             </IonItem>
 
                             <IonItem>
                                 <IonIcon slot="start" color="medium" icon={body} />
                                 <IonLabel style={{ "padding": "5px" }}> Max Capacity: {this.props.venue['capacity']} </IonLabel>
                             </IonItem>
+                        </IonList>
+                        {this.props.booker['user'] ?
+                            <IonCardTitle>Booker: {this.props.booker["user"]["firstName"]}{' '}{this.props.booker["user"]["lastName"]}</IonCardTitle> : null}
+                        <h1>Upcoming Events:</h1>
+                        {this.props.events ? this.props.events.map((event, index) => {
+                            console.log(typeof event['date'])
+                            var dateObj = new Date(event['date'])
+                            var month = dateObj.getUTCMonth() + 1;
+                            var day = dateObj.getUTCDate();
+                            var year = dateObj.getUTCFullYear();
 
-                            {this.props.booker['user'] ? <IonItem><h1>Booker: {this.props.booker["user"]["firstName"]}</h1> <br></br> <h1>{this.props.booker["user"]["lastName"]}</h1> </IonItem> : null}
-                            <h1>Upcoming Events:</h1>
-                            {this.props.events ? this.props.events.map((event, index) => (
+                            let newdate = year + "/" + month + "/" + day;
+                            return (
                                 <IonCard key={index}
                                     href={`/events/${event['id']}`}
                                     className=""
@@ -116,13 +150,23 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                                             <IonCardSubtitle
                                                 style={{ textAlign: 'center' }}
                                             >
-                                                {event['date']}
+                                                {event['description']}
+                                            </IonCardSubtitle>
+                                            <IonCardSubtitle
+                                                style={{ textAlign: 'center' }}
+                                            >
+                                                {
+
+                                                    newdate
+
+                                                }
                                             </IonCardSubtitle>
                                         </IonItemGroup>
                                     </div>
                                 </IonCard>
-                            )) : <h3>This venue currently has no events</h3>}
-                        </IonList>
+                            )
+                        }) : <h3>This venue currently has no events</h3>}
+
                     </div>
                 </IonContent>
 
