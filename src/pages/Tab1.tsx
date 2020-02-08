@@ -19,6 +19,7 @@ import VenueRecommendations from './VenueRecommendations';
 
 interface IMyComponentState {
   isSearchBarOpen: boolean;
+  searchWord: string;
   // currentVenue: number;
   // currentBookerRecommandations: Array<object>;
 }
@@ -39,7 +40,9 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     this.state = {
       //false?
       isSearchBarOpen: this.props.isSearchBarOpen,
+      searchWord: '',
     };
+    this.onSearchBarChange = this.onSearchBarChange.bind(this);
   }
   async componentDidMount() {
     await this.props.me();
@@ -55,8 +58,13 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     });
   }
 
+  onSearchBarChange(event) {
+    event.preventDefault();
+    console.log(event.target.value);
+    this.setState({ searchWord: event.target.value });
+  }
+
   render() {
-    console.log('in tab1');
     return (
       <IonPage>
         {this.props.user['status'] === undefined ? (
@@ -82,6 +90,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                       this.props.searchBarValue(true);
                       this.setState({ isSearchBarOpen: true });
                     }}
+                    value={this.state.searchWord}
+                    onIonChange={this.onSearchBarChange}
                   ></IonSearchbar>
                   {this.state.isSearchBarOpen ? (
                     <IonButton

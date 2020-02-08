@@ -146,7 +146,7 @@ class ArtistRecommendation extends React.Component<
                   mode="ios"
                 >
                   <div className="artistBox">
-                    <img src={artist['imageUrl']} alt="img.jpg" />
+                    <img src={artist['imageURL']} alt="img.jpg" />
 
                     <IonItemGroup style={{ margin: '20px' }}>
                       <IonCardTitle
