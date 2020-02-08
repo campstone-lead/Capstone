@@ -117,7 +117,14 @@ export class Filter extends React.Component<
               marginBottom: '80px',
             }}
           >
-            <IonTitle style={{ fontSize: '30px' }}>Filters</IonTitle>
+            <IonTitle
+              style={{
+                marginLeft: '0px',
+                fontSize: '30px',
+              }}
+            >
+              Filters
+            </IonTitle>
           </IonHeader>
           <IonContent>
             <div>
@@ -145,21 +152,10 @@ export class Filter extends React.Component<
                   <IonLabel>{filter.value}</IonLabel>
                   <IonCheckbox
                     value={filter.value}
-                    onClick={
+                    onClick={this.mainOnClick}
+                    disabled={
+                      !filter.isChecked &&
                       this.props.allSingle.some(i => i.isChecked)
-                        ? this.mainOnClick
-                        : () => (
-                            <IonAlert
-                              isOpen={true}
-                              // onDidDismiss={() => setShowAlert1(false)}
-                              header={"Cant't add a filter"}
-                              subHeader={'Subtitle'}
-                              message={
-                                'You can only add one main category filter.'
-                              }
-                              buttons={['OK']}
-                            />
-                          )
                     }
                     checked={filter.isChecked}
                   />
