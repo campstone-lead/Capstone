@@ -14,6 +14,7 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
+  IonBackButton,
   IonAlert,
 } from '@ionic/react';
 import React from 'react';
@@ -104,12 +105,19 @@ export class Filter extends React.Component<
   render() {
     return (
       <IonPage>
-        <IonFab vertical="top" horizontal="start">
+        {/* <IonFab vertical="top" horizontal="start">
           <IonFabButton href="/home" color="light">
             <IonIcon size="large" icon={arrowBack} />
           </IonFabButton>
-        </IonFab>
+        </IonFab> */}
         <IonContent style={{ display: 'flex' }}>
+          <IonBackButton
+            defaultHref="/home/"
+            mode="ios"
+            text=" Apply filters "
+            color="dark"
+            className="backBtn"
+          />
           <IonHeader
             style={{
               marginLeft: '0px',
@@ -127,25 +135,36 @@ export class Filter extends React.Component<
             </IonTitle>
           </IonHeader>
           <IonContent>
-            <div>
-              {this.props.chosen.map((item, indx) => (
-                <IonChip key={indx} title={item} onClick={this.deleteOnClick}>
-                  <IonLabel>{item}</IonLabel>
-                  <IonIcon title={item} icon={closeCircle} />
-                </IonChip>
-              ))}
-            </div>
-            <div>
+            <IonItem>
               <IonLabel
                 style={{
-                  marginLeft: '15px',
+                  fontWeight: 'bold',
+                  fontSize: '20px',
+                }}
+              >
+                All filters
+              </IonLabel>
+            </IonItem>
+            <IonItem>
+              <div>
+                {this.props.chosen.map((item, indx) => (
+                  <IonChip key={indx} title={item} onClick={this.deleteOnClick}>
+                    <IonLabel>{item}</IonLabel>
+                    <IonIcon title={item} icon={closeCircle} />
+                  </IonChip>
+                ))}
+              </div>
+            </IonItem>
+            <IonItem>
+              <IonLabel
+                style={{
                   fontWeight: 'bold',
                   fontSize: '20px',
                 }}
               >
                 Main category
               </IonLabel>
-            </div>
+            </IonItem>
             <div>
               {this.props.allSingle.map((filter, indx) => (
                 <IonItem key={indx}>

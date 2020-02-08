@@ -67,7 +67,7 @@ export const sendRequest = request => async dispatch => {
       url: `/events/connection/`,
       data: request,
     });
-    console.log('got one event->>>>', res.data);
+    // console.log('got one event->>>>', res.data);
     dispatch(bookArtist(res.data));
   } catch (err) {
     console.log(err);
@@ -142,7 +142,7 @@ export const updatedArtist = artistInfo => async dispatch => {
         artistName: newArtist['artistName'],
         genres: newArtist['genres'],
         bio: newArtist['bio'],
-        imageUrl: newArtist['imageURL'],
+        imageURL: newArtist['imageURL'],
         zipCode: newArtist['zipCode'],
         instagramUrl: newArtist['instagramUrl'],
         spotifyUrl: newArtist['spotifyUrl'],
@@ -152,8 +152,6 @@ export const updatedArtist = artistInfo => async dispatch => {
         email: newArtist['email'],
         password: password,
       };
-      console.log(sendArtist, 'SENDARTIST');
-
       await axios({
         method: 'post',
         baseURL: 'http://localhost:8080/api/',

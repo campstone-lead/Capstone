@@ -120,7 +120,7 @@ class ArtistSinglePage extends React.Component<
 
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        {/* <IonHeader mode="ios">
           <IonToolbar mode="ios">
             <div className="tabHeader">
               <img
@@ -137,7 +137,7 @@ class ArtistSinglePage extends React.Component<
               ></IonSearchbar>
             </div>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
         <IonContent>
           <IonBackButton
             defaultHref="/home/"
