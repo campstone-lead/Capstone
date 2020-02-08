@@ -50,23 +50,26 @@ class VenueRecommendations extends React.Component<
         await this.props.getRecommendedVenues(id);
 
         let rec = this.props.venues;
+
         rec = this.props.venues.filter(
-            venue => venue['recommendations'][0].score > 9
+            venue => venue['recommendations'][0].score <= 10
         );
 
         await this.setState({
             currentArtistRecommandations: rec,
             loading: true
         });
-    }
-    shouldComponentUpdate() {
-        if (this.state.loading)
-            return this.props.isSearchBarOpen;
-        return true;
 
     }
+    // shouldComponentUpdate() {
+    //     if (this.state.loading)
+    //         return this.props.isSearchBarOpen;
+    //     return true;
+
+    // }
 
     render() {
+        console.log(this.props.venues)
         return (
             <div className="home">
                 <IonCardHeader className="home" mode="ios">

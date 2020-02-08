@@ -41,7 +41,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,8 +58,9 @@ class ArtistRecommendation extends React.Component<
       if (this.props.venues !== undefined && this.props.venues.length > 0) {
         await this.setState({ currentVenue: this.props.venues[0].id });
         await this.props.getRecommendedArtists(this.state.currentVenue);
+
         const rec = this.props.artists.filter(
-          artist => artist['recommendations'][0].score <= 9
+          artist => artist['recommendations'][0].score <= 10
         );
         this.setState({
           currentBookerRecommandations: rec,
@@ -119,15 +120,15 @@ class ArtistRecommendation extends React.Component<
               </IonCardTitle>
             </div>
           ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
             </IonButton>
-          )}
+            )}
         </IonCardHeader>
         {
           <div className="venue">
