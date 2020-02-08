@@ -113,13 +113,14 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
             </PlacesAutocomplete>
 
 
-            <IonItem routerLink="/signup/booker/3">
+            <IonItem>
               <br></br>
 
               <IonButton size="small" className="next" onClick={() => {
                 return this.props.updateVenue(this.state)
               }}
                 disabled={(this.state.address.length === 0 || this.state.latitude === 0)}
+                routerLink="/signup/booker/3"
               >Next</IonButton>
 
             </IonItem>

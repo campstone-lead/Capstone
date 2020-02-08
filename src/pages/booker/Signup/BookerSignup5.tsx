@@ -63,12 +63,13 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
 
 
 
-              <IonItem routerLink="/signup/booker/6">
+              <IonItem>
                 <br></br>
 
                 <IonButton size="small" className="next"
                   type="submit"
                   disabled={(this.state.capacity.length === 0)}
+                  routerLink="/signup/booker/6"
                 >Next</IonButton>
 
               </IonItem>
