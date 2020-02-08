@@ -98,14 +98,14 @@ class ArtistRecommendation extends React.Component<
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
-          <IonButton
+          {/* <IonButton
             mode="ios"
             href="/artists"
             className="homeBtn"
             color="rgb(153, 178, 189);"
           >
             Artists
-          </IonButton>
+          </IonButton> */}
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
               <select onChange={this.handleChange} className="selectBtn">

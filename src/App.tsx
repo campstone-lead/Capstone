@@ -119,7 +119,13 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 exact={true}
               />
             </IonRouterOutlet>
-            <IonTabBar slot="bottom">
+            <IonTabBar
+              slot="bottom"
+              // style={{
+              //   '--background':
+              //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
+              // }}
+            >
               <IonTabButton tab="tab1" href="/home">
                 <IonIcon icon={home} />
                 <IonLabel>Home</IonLabel>

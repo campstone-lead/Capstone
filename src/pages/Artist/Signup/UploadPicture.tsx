@@ -1,26 +1,44 @@
-import { IonActionSheet, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonFab, IonFabButton, IonIcon, IonItem, IonButton, IonAvatar } from '@ionic/react';
+import {
+  IonActionSheet,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonImg,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonItem,
+  IonButton,
+  IonAvatar,
+} from '@ionic/react';
 import React, { Component } from 'react';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { updatedArtist } from '../../../store/artist'
-import { connect } from 'react-redux'
+import { updatedArtist } from '../../../store/artist';
+import { connect } from 'react-redux';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-import { add } from 'ionicons/icons'
+import { add } from 'ionicons/icons';
 const { Camera } = Plugins;
 
-const DEFAULT_PIC = 'https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png'
+const DEFAULT_PIC =
+  'https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png';
 interface IMyComponentProps {
-  updateArtist: any
+  updateArtist: any;
 }
 
 interface IMyComponentState {
-  imageUrl: string
+  imageURL: string;
 }
-export class UploadPicture extends Component<IMyComponentProps, IMyComponentState>  {
+export class UploadPicture extends Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
   constructor(props: any) {
-    super(props)
-    this.state = { imageUrl: DEFAULT_PIC }
-    defineCustomElements(window)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    super(props);
+    this.state = { imageURL: DEFAULT_PIC };
+    defineCustomElements(window);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   // componentDidMount(){
   //   let artist=window.localStorage.getItem('artist')
@@ -37,14 +55,14 @@ export class UploadPicture extends Component<IMyComponentProps, IMyComponentStat
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
-    })
+      source: CameraSource.Photos,
+    });
 
-    var imageUrl = image.webPath;
+    var imageURL = image.webPath;
     // Can be set to the src of an image now
     this.setState({
-      imageUrl: imageUrl || DEFAULT_PIC
-    })
+      imageURL: imageURL || DEFAULT_PIC,
+    });
   }
   handleSubmit(event) {
     event.preventDefault();
@@ -52,7 +70,7 @@ export class UploadPicture extends Component<IMyComponentProps, IMyComponentStat
   }
 
   render() {
-    const { imageUrl } = this.state;
+    const { imageURL } = this.state;
     return (
       <IonPage>
         <IonHeader>
@@ -63,29 +81,35 @@ export class UploadPicture extends Component<IMyComponentProps, IMyComponentStat
         <IonContent>
           <form onSubmit={this.handleSubmit}>
             {/* <IonButton type='button'onClick={() => this.takePicture()}> add picture</IonButton> */}
-            <IonAvatar style={{ 'width': '370px', 'height': '370px', }} >\
-          <IonItem>
-                <img src={imageUrl} />
-                <IonFab vertical="bottom" horizontal="end" >
+            <IonAvatar style={{ width: '370px', height: '370px' }}>
+              \
+              <IonItem>
+                <img src={imageURL} />
+                <IonFab vertical="bottom" horizontal="end">
                   <IonFabButton onClick={() => this.takePicture()}>
                     <IonIcon icon={add}></IonIcon>
                   </IonFabButton>
-                </IonFab></IonItem>
+                </IonFab>
+              </IonItem>
             </IonAvatar>
             <IonItem routerLink={'/artistpassword'}>
-              <IonButton disabled={this.state.imageUrl === DEFAULT_PIC ? true : false} type="submit">done
-            </IonButton>
+              <IonButton
+                disabled={this.state.imageURL === DEFAULT_PIC ? true : false}
+                type="submit"
+              >
+                next
+              </IonButton>
             </IonItem>
           </form>
         </IonContent>
-      </IonPage >
+      </IonPage>
     );
-  };
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
-  }
-}
+    updateArtist: artistInfo => dispatch(updatedArtist(artistInfo)),
+  };
+};
 export default connect(null, mapDispatchToProps)(UploadPicture);

@@ -155,7 +155,7 @@ class ArtistSinglePage extends React.Component<
     console.log(this.props.bookingStatus)
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        {/* <IonHeader mode="ios">
           <IonToolbar mode="ios">
             <div className="tabHeader">
               <img
@@ -172,7 +172,7 @@ class ArtistSinglePage extends React.Component<
               ></IonSearchbar>
             </div>
           </IonToolbar>
-        </IonHeader>
+        </IonHeader> */}
         <IonContent>
           <IonBackButton
             defaultHref="/home/"

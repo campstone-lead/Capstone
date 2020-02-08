@@ -34,7 +34,6 @@ router.get('/distance/:artistId', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const data = await Venue.findByPk(req.params.id);
-    console.log('DATA ******', data);
     if (!data) {
       res.sendStatus(404);
     } else {
@@ -48,7 +47,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     if (!req.body.bookerId) {
-      req.body.bookerId = req.user.id
+      req.body.bookerId = req.user.id;
     }
     const data = await Venue.create(req.body);
     res.json(data);

@@ -65,24 +65,23 @@ export const sendRequest = request => async dispatch => {
       method: 'post',
       baseURL: 'http://localhost:8080/api/',
       url: `/events/connection/`,
-      data: request
-    })
-    dispatch(bookArtist(res.data))
+      data: request,
+    });
+    dispatch(bookArtist(res.data));
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
-export const sendResponse = (data) => async dispatch => {
+};
+export const sendResponse = data => async dispatch => {
   try {
     const res = await axios({
-      method: "put",
-      baseURL: "http://localhost:8080/api/",
+      method: 'put',
+      baseURL: 'http://localhost:8080/api/',
       url: `/events/connection/update`,
-      data: data
-
-    })
-    console.log('got one event->>>>', res.data)
-    dispatch(bookArtist(res.data))
+      data: data,
+    });
+    console.log('got one event->>>>', res.data);
+    dispatch(bookArtist(res.data));
   } catch (err) {
     console.log(err);
   }
@@ -156,7 +155,7 @@ export const updatedArtist = artistInfo => async dispatch => {
         artistName: newArtist['artistName'],
         genres: newArtist['genres'],
         bio: newArtist['bio'],
-        imageUrl: newArtist['imageURL'],
+        imageURL: newArtist['imageURL'],
         zipCode: newArtist['zipCode'],
         instagramUrl: newArtist['instagramUrl'],
         spotifyUrl: newArtist['spotifyUrl'],
@@ -166,8 +165,6 @@ export const updatedArtist = artistInfo => async dispatch => {
         email: newArtist['email'],
         password: password,
       };
-      console.log(sendArtist, 'SENDARTIST');
-
       await axios({
         method: 'post',
         baseURL: 'http://localhost:8080/api/',
@@ -185,7 +182,7 @@ export const updatedArtist = artistInfo => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultArtist, action) {
+export default function(state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
       return { ...state, allArtists: action.artists };

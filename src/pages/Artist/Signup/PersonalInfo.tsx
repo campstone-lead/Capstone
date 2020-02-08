@@ -8,6 +8,7 @@ import {
   IonInput,
   IonLabel,
   IonButton,
+  IonBackButton,
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
@@ -68,14 +69,33 @@ class PersonalInfoForm extends React.Component<
   render() {
     return (
       <IonPage>
-        <IonHeader>
-          <IonToolbar id="bar">
-            <IonTitle>Tell us about yourself...</IonTitle>
-            {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
-          </IonToolbar>
-        </IonHeader>
-
-        <IonContent>
+        <IonContent
+        // style={{
+        //   '--background':
+        //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg)',
+        // }}
+        >
+          <IonItem
+            style={{
+              height: '50px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            <div>
+              <IonBackButton
+                defaultHref="/signup0"
+                mode="ios"
+                text=""
+                color="dark"
+                // className="backBtn"
+              />
+            </div>
+            <div>
+              <IonTitle>Tell us about yourself...</IonTitle>
+            </div>
+          </IonItem>
           <form onSubmit={this.handleSubmit}>
             <IonItem>
               <IonLabel>First Name</IonLabel>
@@ -132,22 +152,36 @@ class PersonalInfoForm extends React.Component<
                 }
               />
             </IonItem>
-
-            <IonItem routerLink={'/artistnameform'}>
-              <IonButton
-                type="submit"
-                disabled={
-                  this.state.email === '' ||
-                  this.state.firstName === '' ||
-                  this.state.lastName === '' ||
-                  this.state.phone === ''
-                    ? true
-                    : false
-                }
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <IonItem
+                detail={false}
+                lines={'none'}
+                routerLink={'/artistnameform'}
               >
-                next
-              </IonButton>
-            </IonItem>
+                <IonButton
+                  size="default"
+                  style={{ width: '90px' }}
+                  strong
+                  type="submit"
+                  disabled={
+                    this.state.email === '' ||
+                    this.state.firstName === '' ||
+                    this.state.lastName === '' ||
+                    this.state.phone === ''
+                      ? true
+                      : false
+                  }
+                >
+                  Next
+                </IonButton>
+              </IonItem>
+            </div>
           </form>
         </IonContent>
       </IonPage>
