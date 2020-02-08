@@ -26,7 +26,7 @@ interface IMyComponentProps {
 class ArtistBioForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,7 +79,7 @@ class ArtistBioForm extends React.Component<
                 />
               </IonItem>
 
-              <IonItem routerLink="/zipcodeform">
+              <IonItem >
                 <br></br>
 
                 <IonButton
@@ -87,6 +87,7 @@ class ArtistBioForm extends React.Component<
                   size="small"
                   className="next"
                   type="submit"
+                  routerLink="/zipcodeform"
                 >
                   Next
                 </IonButton>

@@ -28,7 +28,6 @@ class BookerSignup1 extends React.Component<IMyComponentProps, IMyComponentState
 
   componentDidMount() {
     let booker = window.localStorage.getItem('booker')
-    console.log("hello?", booker)
     if (booker !== null) {
       booker = JSON.parse(booker || '');
       let newBooker = booker || {};

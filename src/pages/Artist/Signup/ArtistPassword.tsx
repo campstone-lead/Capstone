@@ -13,6 +13,7 @@ import {
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
+import { auth } from '../../../store/user'
 import { updatedArtist } from '../../../store/artist';
 
 interface IMyComponentState {
@@ -22,12 +23,13 @@ interface IMyComponentState {
 interface IMyComponentProps {
   // putType: (artistType: any) => void,
   updateArtist: any;
+  auth: any;
 }
 
 class ArtistPassword extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,10 +37,11 @@ class ArtistPassword extends React.Component<
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
-    this.props.updateArtist(this.state);
+    await this.props.updateArtist(this.state);
+    await this.props.auth(JSON.parse(window.localStorage.getItem("email") || ''), this.state.password);
+    window.localStorage.clear();
   }
   render() {
     return (
@@ -68,15 +71,13 @@ class ArtistPassword extends React.Component<
                 />
               </IonItem>
 
-              <IonItem routerLink="/home">
+              <IonItem >
                 <br></br>
 
                 <IonButton
                   type="submit"
                   disabled={this.state.password.length === 0 ? true : false}
-                  onClick={() => {
-                    window.localStorage.clear();
-                  }}
+                  routerLink="/home"
                 >
                   Done
                 </IonButton>
@@ -90,11 +91,12 @@ class ArtistPassword extends React.Component<
 }
 
 // const mapStateToProps = (state) => ({
-//     artist: state.artist
+//   email: state.artist.email
 // })
 
 const mapDispatchToProps = dispatch => ({
   updateArtist: artistInfo => dispatch(updatedArtist(artistInfo)),
+  auth: (email, password) => dispatch(auth(email, password))
 });
 
 export default connect(null, mapDispatchToProps)(ArtistPassword);

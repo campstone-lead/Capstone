@@ -29,7 +29,7 @@ interface IMyComponentProps {
 class PersonalInfoForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,7 +89,7 @@ class PersonalInfoForm extends React.Component<
                 mode="ios"
                 text=""
                 color="dark"
-                // className="backBtn"
+              // className="backBtn"
               />
             </div>
             <div>
@@ -162,18 +162,18 @@ class PersonalInfoForm extends React.Component<
               <IonItem
                 detail={false}
                 lines={'none'}
-                routerLink={'/artistnameform'}
               >
                 <IonButton
                   size="default"
                   style={{ width: '90px' }}
                   strong
                   type="submit"
+                  routerLink={'/artistnameform'}
                   disabled={
                     this.state.email === '' ||
-                    this.state.firstName === '' ||
-                    this.state.lastName === '' ||
-                    this.state.phone === ''
+                      this.state.firstName === '' ||
+                      this.state.lastName === '' ||
+                      this.state.phone === ''
                       ? true
                       : false
                   }
