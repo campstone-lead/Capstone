@@ -98,13 +98,15 @@ class BookerSignup1 extends React.Component<IMyComponentProps, IMyComponentState
 
 
 
-              <IonItem routerLink="/signup/booker/2" lines="none">
+              <IonItem lines="none">
 
                 <IonCardHeader>
                   <IonButton type="submit"
                     style={{ "width": "100px", "height": "38px" }}
                     color="tertiary"
-                    disabled={(this.state.email.length === 0 || this.state.firstName.length === 0 || this.state.lastName.length === 0 || this.state.phone.length === 0) ? true : false}>Next</IonButton>
+                    disabled={(this.state.email.length === 0 || this.state.firstName.length === 0 || this.state.lastName.length === 0 || this.state.phone.length === 0) ? true : false}
+                    routerLink="/signup/booker/2"
+                  >Next</IonButton>
                 </IonCardHeader>
 
               </IonItem>

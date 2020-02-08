@@ -3,12 +3,14 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import { updatedVenue } from '../../../store/booker'
+import { auth } from '../../../store/user'
 interface IMyComponentState {
   password: string,
 }
 interface IMyComponentProps {
   booker: object,
-  updateBooker: any
+  updateBooker: any,
+  auth: any
 
 }
 class Login extends React.Component<IMyComponentProps, IMyComponentState> {
@@ -20,9 +22,12 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    this.props.updateBooker(this.state);
+    await this.props.updateBooker(this.state);
+    console.log('local storage:', window.localStorage.getItem("email"))
+    await this.props.auth(JSON.parse(window.localStorage.getItem("email") || ''), this.state.password)
+    window.localStorage.clear();
 
   }
   render() {
@@ -50,13 +55,11 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
               </IonItem>
 
 
-              <IonItem routerLink='/home' >
+              <IonItem>
                 <br></br>
 
                 <IonButton type="submit" disabled={(this.state.password.length === 0) ? true : false}
-                  onClick={() => {
-                    window.localStorage.clear();
-                  }}
+                  routerLink='/home'
                 >Submit</IonButton>
               </IonItem>
 
@@ -73,6 +76,7 @@ const mapStateToProps = (state) => ({
   booker: state.booker
 })
 const mapDispatchToProps = (dispatch) => ({
-  updateBooker: (data) => dispatch(updatedVenue(data))
+  updateBooker: (data) => dispatch(updatedVenue(data)),
+  auth: (email, password) => dispatch(auth(email, password))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

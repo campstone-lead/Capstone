@@ -23,7 +23,6 @@ const defaultBooker = {
  */
 const getBooker = booker => ({ type: GET_BOOKER, booker })
 const bookerEvents = events => ({ type: BOOKER_EVENTS, events })
-//export const updatedBooker = newBookerData => ({type: UPDATE_BOOKER, newBookerData})
 export const updateBooker = newBookerData => ({ type: UPDATE_BOOKER, newBookerData })
 export const updatedBooker = newBookerData => ({ type: UPDATE_BOOKER, newBookerData })
 export const updateVenue = venue => ({ type: UPDATE_VENUE, venue })
@@ -64,19 +63,19 @@ export const updatedVenue = (venue) => async dispatch => {
   try {
 
     let booker = window.localStorage.getItem('booker')
-    let password = venue.password;
+    // let password = venue.password;
     booker = JSON.parse(booker || '');
     let newBooker = booker || {};
-
-    if (password === undefined) {
+    console.log('venue.password:', venue.password)
+    if (venue.password === undefined) {
       newBooker['venue'] = { ...newBooker['venue'], ...venue };
       window.localStorage.setItem('booker', JSON.stringify(newBooker))
     }
-    if (password !== undefined) {
+    else {
 
       let booker = {
         email: newBooker["email"],
-        password: password,
+        password: venue.password,
         firstName: newBooker["firstName"],
         lastName: newBooker["lastName"],
         phone: newBooker["phone"]
@@ -89,23 +88,19 @@ export const updatedVenue = (venue) => async dispatch => {
       })
 
       let URL = newBooker["venue"].photo.slice(5)
-      let v = {
-        description: newBooker["venue"].description,
-        name: newBooker["venue"].address,
-        address: newBooker["venue"].address,
-        latitude: newBooker["venue"].latitude,
-        longitude: newBooker["venue"].longitude,
-        capacity: newBooker["venue"].capacity,
-        genres: newBooker["venue"].genres,
-        bookerId: res.data.id, //this used to be || 1, I took it out because I think we'd rather get an error than assign a venue to some other user's account, right?! --Emma
-        imageURL: URL
-      }
+      newBooker["venue"]["name"] = newBooker["venue"]["address"]
+      let v = { ...newBooker["venue"], bookerId: res.data.id }
+
       await axios({
         method: "post",
         baseURL: "http://localhost:8080/api/",
         url: "/venues/",
         data: v
       })
+      window.localStorage.setItem(
+        'email',
+        JSON.stringify(newBooker["email"])
+      )
     }
     dispatch(updateVenue(newBooker))
   } catch (err) {
