@@ -33,7 +33,7 @@ interface IMyComponentState {
 export class UploadPicture extends Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props: any) {
     super(props);
     this.state = { imageURL: DEFAULT_PIC };
@@ -92,9 +92,10 @@ export class UploadPicture extends Component<
                 </IonFab>
               </IonItem>
             </IonAvatar>
-            <IonItem routerLink={'/artistpassword'}>
+            <IonItem >
               <IonButton
                 disabled={this.state.imageURL === DEFAULT_PIC ? true : false}
+                routerLink={'/artistpassword'}
                 type="submit"
               >
                 next

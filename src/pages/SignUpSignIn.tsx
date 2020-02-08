@@ -7,7 +7,8 @@ import { logoFacebook, logoGoogleplus } from 'ionicons/icons'
 
 interface IMyComponentState {
   email: string,
-  password: string
+  password: string,
+  isActive: boolean
 }
 interface IMyComponentProps {
   auth: any,
@@ -20,7 +21,8 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      isActive: true
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -31,11 +33,17 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
   async handleSubmit(event) {
     event.preventDefault();
     await this.props.auth(this.state.email, this.state.password);
+    if (window.localStorage.getItem("loginSuccess")) {
+      await this.setState({
+        isActive: true
+      })
+    }
+    window.localStorage.clear()
     await this.setState({
       email: '',
       password: ''
     })
-
+    console.log("isActive", this.state.isActive)
   }
   render() {
 
@@ -53,7 +61,7 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
         <IonContent>
 
           <IonCard className="welcome-card" >
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={async (event) => { await this.handleSubmit(event) }}>
               <IonItem lines="inset">
                 <IonLabel>Email</IonLabel>
                 <IonInput type="email" placeholder="       user@email.com" required
@@ -76,9 +84,13 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
 
 
               <br></br>
-              <IonItem lines="none" routerLink='/profile'>
+              <IonItem lines="none" routerLink={this.state.isActive ? '/profile' : undefined}>
                 <IonCardHeader>
-                  <IonButton type="submit" style={{ "width": "270px", "height": "38px" }}
+                  <IonButton
+                    type="submit"
+                    style={{ "width": "270px", "height": "38px" }}
+                    disabled={this.state.email.length === 0 || this.state.password.length === 0}
+
                     color="tertiary"
                   >Login</IonButton>
                 </IonCardHeader>

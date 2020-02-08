@@ -1,33 +1,33 @@
 import {
 
-    IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonItem,IonInput,IonLabel,IonButton
-  } from '@ionic/react';
-  import React from 'react';
-  import '../../Tab1.css';
-  import {connect} from 'react-redux'
-  import {updatedArtist} from '../../../store/artist'
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton
+} from '@ionic/react';
+import React from 'react';
+import '../../Tab1.css';
+import { connect } from 'react-redux'
+import { updatedArtist } from '../../../store/artist'
 
 
-  interface IMyComponentState {
-    zipCode: string,
-  }
-  interface IMyComponentProps{
-    putZipCode: (zipCode: string) => void,
-    updateArtist: any
-  }
+interface IMyComponentState {
+  zipCode: string,
+}
+interface IMyComponentProps {
+  putZipCode: (zipCode: string) => void,
+  updateArtist: any
+}
 
-  class ZipCodeForm extends React.Component<IMyComponentProps,IMyComponentState>  {
-    constructor(props) {
-      super(props);
-      this.state = {
-        zipCode: '',
-      }
-      this.handleSubmit = this.handleSubmit.bind(this);
+class ZipCodeForm extends React.Component<IMyComponentProps, IMyComponentState>  {
+  constructor(props) {
+    super(props);
+    this.state = {
+      zipCode: '',
     }
-    handleSubmit(event) {
-      event.preventDefault();
-      this.props.updateArtist(this.state)
-      this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.updateArtist(this.state)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   render() {
     return (<IonPage>
@@ -42,21 +42,26 @@ import {
 
 
 
-    <IonContent>
-    <form onSubmit={this.handleSubmit}>
+      <IonContent>
+        <form onSubmit={this.handleSubmit}>
 
-      <IonItem>
-        <IonInput type="number" placeholder="ZipCode" required
-        value={this.state.zipCode}
-        onIonChange={(e) => this.setState({zipCode:(e.target as HTMLInputElement).value})}
-        />
+          <IonItem>
+            <IonInput type="number" placeholder="ZipCode" required
+              value={this.state.zipCode}
+              onIonChange={(e) => this.setState({ zipCode: (e.target as HTMLInputElement).value })}
+            />
 
-      </IonItem>
+          </IonItem>
 
-      <IonItem routerLink="/genres">
-        <br></br>
-        <IonButton type = "submit" disabled={(this.state.zipCode.length ===0)?true:false}>Next</IonButton>
-        </IonItem>
+          <IonItem>
+            <br></br>
+            <IonButton
+              type="submit"
+              disabled={!(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipCode))}
+              routerLink="/genres"
+            >
+              Next</IonButton>
+          </IonItem>
         </form>
       </IonContent>
     </IonPage>)
@@ -69,5 +74,5 @@ const mapDispatchToProps = dispatch => {
     updateArtist: (artistInfo) => dispatch(updatedArtist(artistInfo))
   }
 }
-  export default connect(null, mapDispatchToProps)(ZipCodeForm);
+export default connect(null, mapDispatchToProps)(ZipCodeForm);
 

@@ -28,7 +28,7 @@ export const auth = (email, password) => async dispatch => {
       url: '/auth/login/',
       data: { email, password },
     });
-
+    window.localStorage.setItem("loginSuccess", JSON.stringify(true))
     dispatch(getUser(res.data || defaultUser));
   } catch (authError) {
     window.localStorage.setItem('error', JSON.stringify(authError));

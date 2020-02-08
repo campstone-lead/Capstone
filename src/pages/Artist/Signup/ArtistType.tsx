@@ -78,8 +78,10 @@ class ArtistType extends React.Component<IMyComponentProps, IMyComponentState>  
           <IonButton color={this.state.artistTypes.band ? 'primary' : 'secondary'} type="button" target="band" onClick={this.handleClick}>IN A BAND</IonButton>
           <IonItem>
             <br></br>
-            <IonItem routerLink={'/uploadpicture'}>
-              <IonButton type="submit">Next</IonButton>
+            <IonItem >
+              <IonButton type="submit"
+                routerLink={'/uploadpicture'}
+              >Next</IonButton>
             </IonItem>
           </IonItem>
 
