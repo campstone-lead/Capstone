@@ -41,7 +41,7 @@ interface IMyComponentProps {
   artist: object,
   fetchOneArtists: any,
   bookArtist: any,
-  bookingStatus: string,
+  bookingStatus: any,
   events: any,
   getBookerEvents: any,
   gotOneEvents: any,
@@ -73,13 +73,32 @@ class ArtistSinglePage extends React.Component<
     }
   }
   handleChange = async e => {
-    this.setState({ currentEvent: e.target.value });
+    await this.setState({ currentEvent: e.target.value });
+
+    if (this.props.bookingStatus !== null) {
+
+      let getArtistStatusforCurrentVenue = this.props.bookingStatus.filter(event => event.eventId === Number(this.state.currentEvent))
+      console.log(getArtistStatusforCurrentVenue)
+      if (getArtistStatusforCurrentVenue.length === 1) {
+        await this.setState({
+          localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
+          sender: getArtistStatusforCurrentVenue[0]['sender'] || ''
+        })
+      } else {
+        await this.setState({
+          localStatus: '',
+          sender: ''
+        })
+      }
+      console.log('heeere->>>>', this.state)
+    }
   };
   handleClickRespond = async (response) => {
-    let eventId = this.props.bookingStatus['eventId']
+    let eventId = Number(this.state.currentEvent)
     let artistId = this.props.artist['id']
     let filter = this.props.events.filter((el) => el.id === eventId)
-    await this.props.sendResponse({ status: response, eventId, artistId })
+    let req = { status: response, eventId, artistId }
+    await this.props.sendResponse(req)
     await this.setState({ localStatus: response, bookedArtistEvent: filter[0] })
   }
   handleClick = async () => {
@@ -98,25 +117,29 @@ class ArtistSinglePage extends React.Component<
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
     await this.props.getBookerEvents(bookerId)
-    if (this.props.events.length !== 0) {
-      this.setState({ currentEvent: this.props.events[0].id });
+    if (this.props.events.length !== 0)
+      await this.setState({ currentEvent: this.props.events[0].id });
 
-      this.props.events.forEach(async el => {
-        await this.props.gotOneEvents(el.id);
-        let artist = this.props.selectedEvent['artists'].filter(
-          artist => artist.artistId === this.props.artist['id']
-        );
-        if (artist.length === 1) {
-          await this.setState({ status: this.props.bookingStatus });
-          if (this.props.bookingStatus !== null)
-            await this.setState({
-              localStatus: this.props.bookingStatus['status'],
-              sender: this.props.bookingStatus['sender']
-            })
-          await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
+    await this.props.events.forEach(async el => {
+      await this.props.gotOneEvents(el.id);
+      let artist = this.props.selectedEvent['artists'].filter(
+        artist => artist.artistId === this.props.artist['id']
+      );
+      console.log(artist)
+      if (artist.length >= 1) {
+        await this.setState({ status: this.props.bookingStatus });
+        console.log('here', this.props.bookingStatus)
+        let getArtistStatusforCurrentVenue = this.props.bookingStatus.filter(event => event.eventId === this.state.currentEvent)
+        if (getArtistStatusforCurrentVenue.length !== 0) {
+          await this.setState({
+            localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
+            sender: getArtistStatusforCurrentVenue[0]['sender'] || ''
+          })
         }
-      });
-    }
+
+      }
+    });
+
 
   }
 
@@ -227,24 +250,25 @@ class ArtistSinglePage extends React.Component<
                 </IonTabButton>
               </IonTabBar>
             </IonCardContent>
+            {(this.props.events !== undefined) &&
+              <select onChange={this.handleChange}>
+                {this.props.events &&
+                  this.props.events.length !== 0 &&
+                  this.props.events.map((event, index) => (
+                    <option value={event.id} key={index}>
+                      {event.name} - {event.venueName}
+                    </option>
+                  ))}
+              </select>}
             {(this.state.sender === 'booker' || this.state.sender.length === 0) ?
 
               ((this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) && (this.state.localStatus !== 'pending') && (this.state.localStatus !== 'booked') && (this.state.localStatus !== 'declined') ?
-                (this.props.events !== undefined) &&
-                <select onChange={this.handleChange}>
-                  {this.props.events &&
-                    this.props.events.length !== 0 &&
-                    this.props.events.map((event, index) => (
-                      <option value={event.id} key={index}>
-                        {event.name} - {event.venueName}
-                      </option>
-                    ))}
-                </select>
-                :
+                null :
+
                 this.props.bookingStatus !== null ?
-                  <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>This artist is {this.props.bookingStatus['status']}
-                    {' '}
-                    for {this.state.bookedArtistInfo['name']}  at {this.state.bookedArtistInfo['venueName']}.
+                  <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>This artist is {this.state.localStatus}
+                    {'  '}
+                    at the selected venue.
   </IonCardSubtitle> : null
               ) : (this.props.bookingStatus !== null || this.state.bookedArtistInfo['status'] !== undefined) && (this.state.localStatus === 'pending') ?
                 <IonCardSubtitle>You have an incoming request from {this.props.artist['artistName']}!</IonCardSubtitle> :

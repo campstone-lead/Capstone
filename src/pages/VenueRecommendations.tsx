@@ -52,7 +52,7 @@ class VenueRecommendations extends React.Component<
         let rec = this.props.venues;
 
         rec = this.props.venues.filter(
-            venue => venue['recommendations'][0].score <= 5
+            venue => venue['recommendations'][0].score <= 10
         );
 
         await this.setState({
@@ -69,7 +69,7 @@ class VenueRecommendations extends React.Component<
     // }
 
     render() {
-
+        console.log(this.props.venues)
         return (
             <div className="home">
                 <IonCardHeader className="home" mode="ios">
