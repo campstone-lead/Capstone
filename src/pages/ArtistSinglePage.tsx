@@ -28,7 +28,8 @@ interface IMyComponentState {
   currentEvent: any,
   bookedArtistInfo: object,
   localStatus: string,
-  sender: string
+  sender: string,
+  bookedArtistEvent: object
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
@@ -38,19 +39,20 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
       currentEvent: '',
       bookedArtistInfo: {},
       localStatus: '',
-      sender: ''
+      sender: '',
+      bookedArtistEvent: {}
     }
   }
   handleChange = async e => {
     this.setState({ currentEvent: e.target.value });
 
   };
-  handleClickRespond = (response) => {
-    let eventId = this.props.bookingStatus
-    console.log(eventId, 'heeeere')
-    this.setState({ localStatus: response })
-
-
+  handleClickRespond = async (response) => {
+    let eventId = this.props.bookingStatus['eventId']
+    let artistId = this.props.artist['id']
+    let filter = this.props.events.filter((el) => el.id === eventId)
+    await this.props.sendResponse({ status: response, eventId, artistId })
+    await this.setState({ localStatus: response, bookedArtistEvent: filter[0] })
   }
   handleClick = async () => {
     this.setState({ localStatus: 'pending' })
@@ -100,7 +102,7 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
         else genres += el;
       })
     }
-
+    console.log(this.props.bookingStatus)
     return (
       < IonPage >
         <IonHeader mode="ios"  >
@@ -257,6 +259,6 @@ const mapDispatchToProps = (dispatch) => ({
   getBookerEvents: (id) => dispatch(getBookerEvents(id)),
   gotOneEvents: (id) => dispatch(gotOneEvents(id)),
   sendRequest: (request) => dispatch(sendRequest(request)),
-  sendResponse: (id) => dispatch(sendResponse(id))
+  sendResponse: (data) => dispatch(sendResponse(data))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistSinglePage);

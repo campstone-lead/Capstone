@@ -39,13 +39,21 @@ router.post("/connection", async (req, res, next) => {
   }
 })
 
-router.put("/connection/:id", async (req, res, next) => {
+router.put("/connection/update", async (req, res, next) => {
   try {
-    const connection = await ArtistEvent.findByPk(req.params.id)
+    const eventId = req.body.eventId;
+    const artistId = req.body.artistId;
+    const status = req.body.status;
+    const connection = await ArtistEvent.findOne({
+      where: {
+        artistId: artistId,
+        eventId: eventId,
+      }
+    })
     if (!connection) {
       res.sendStatus(404)
     } else {
-      await connection.update(req.body)
+      await connection.update({ status: status })
       res.json(connection)
     }
   } catch (error) {

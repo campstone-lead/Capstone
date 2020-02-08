@@ -72,12 +72,13 @@ export const sendRequest = (request) => async dispatch => {
     console.log(err)
   }
 }
-export const sendResponse = (id) => async dispatch => {
+export const sendResponse = (data) => async dispatch => {
   try {
     const res = await axios({
       method: "put",
       baseURL: "http://localhost:8080/api/",
-      url: `/events/connection/${id}`,
+      url: `/events/connection/update`,
+      data: data
 
     })
     console.log('got one event->>>>', res.data)
