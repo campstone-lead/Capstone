@@ -1,32 +1,11 @@
 import React from 'react';
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonToolbar,
-  IonItem,
-  IonLabel,
   IonButton,
   IonBackButton,
-  IonList,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
   IonCardSubtitle,
-  IonTabBar,
-  IonTabButton,
-  IonIcon,
-  IonSearchbar,
 } from '@ionic/react';
-import {
-  logoInstagram,
-  logoFacebook,
-  call,
-  mailOpen,
-  musicalNote,
-  microphone,
-  musicalNotes,
-} from 'ionicons/icons';
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
@@ -34,6 +13,7 @@ import { gotOneEvents } from '../store/event'
 import { fetchOneArtists, bookArtist, sendRequest, sendResponse } from '../store/artist'
 import { getBookerEvents } from '../store/booker'
 import history from './history'
+import ArtistProfileComponent from './ArtistProfileComponent';
 interface IMyComponentProps {
   user: object,
   genres: Array<string>,
@@ -90,7 +70,6 @@ class ArtistSinglePage extends React.Component<
           sender: ''
         })
       }
-      console.log('heeere->>>>', this.state)
     }
   };
   handleClickRespond = async (response) => {
@@ -125,10 +104,8 @@ class ArtistSinglePage extends React.Component<
       let artist = this.props.selectedEvent['artists'].filter(
         artist => artist.artistId === this.props.artist['id']
       );
-      console.log(artist)
       if (artist.length >= 1) {
         await this.setState({ status: this.props.bookingStatus });
-        console.log('here', this.props.bookingStatus)
         let getArtistStatusforCurrentVenue = this.props.bookingStatus.filter(event => event.eventId === this.state.currentEvent)
         if (getArtistStatusforCurrentVenue.length !== 0) {
           await this.setState({
@@ -144,14 +121,6 @@ class ArtistSinglePage extends React.Component<
   }
 
   render() {
-    let genres = '';
-    if (this.props.genres !== undefined) {
-      this.props.genres.forEach((el, index) => {
-        if (index !== this.props.genres.length - 1) {
-          genres += el + ', ';
-        } else genres += el;
-      });
-    }
     console.log(this.props.bookingStatus)
     return (
       <IonPage>
@@ -182,74 +151,10 @@ class ArtistSinglePage extends React.Component<
             className="backBtn"
           />
           <div className="profile">
-            <img
-              src={this.props.artist['imageURL']}
-              alt={this.props.artist['firstName']}
-              className="profileImage"
+            <ArtistProfileComponent
+              genres={this.props.genres}
+              artist={this.props.artist}
             />
-            <IonCardHeader>
-              <IonCardTitle>{this.props.artist['artistName']}</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                {this.props.artist['bio']}
-              </IonCardSubtitle>
-              <br></br>
-              <IonList lines="inset">
-                <IonItem>
-                  <IonIcon slot="start" color="medium" icon={musicalNotes} />
-                  <IonLabel style={{ padding: '5px' }}>
-                    {' '}
-                    {this.props.artist['type']}{' '}
-                  </IonLabel>
-                </IonItem>
-
-                <IonItem>
-                  <IonIcon slot="start" color="medium" icon={microphone} />
-                  <IonLabel style={{ padding: '5px' }}>
-                    {' '}
-                    My genres are: {genres}{' '}
-                  </IonLabel>
-                </IonItem>
-
-                <IonItem>
-                  <IonIcon slot="start" color="medium" icon={mailOpen} />
-                  <IonLabel style={{ padding: '5px' }}>
-                    {this.props.artist['email']}{' '}
-                  </IonLabel>
-                </IonItem>
-                <IonItem>
-                  <IonIcon slot="start" color="medium" icon={call} />
-                  <IonLabel style={{ padding: '5px' }}>
-                    {' '}
-                    {this.props.artist['phone']}{' '}
-                  </IonLabel>
-                </IonItem>
-              </IonList>
-
-              <IonTabBar slot="bottom">
-                <IonTabButton tab="tab2">
-                  <IonItem href={this.props.artist['instagramUrl']}>
-                    <IonIcon icon={logoInstagram} />
-                  </IonItem>
-                  <IonLabel>Instagram</IonLabel>
-                </IonTabButton>
-
-                <IonTabButton tab="tab2">
-                  <IonItem href={this.props.artist['spotifyUrl']}>
-                    <IonIcon icon={musicalNote} />
-                  </IonItem>
-                  <IonLabel>Spotify</IonLabel>
-                </IonTabButton>
-
-                <IonTabButton tab="tab2">
-                  <IonItem href={this.props.artist['facebookUrl']}>
-                    <IonIcon icon={logoFacebook} />
-                  </IonItem>
-                  <IonLabel>Facebook</IonLabel>
-                </IonTabButton>
-              </IonTabBar>
-            </IonCardContent>
             {(this.props.events !== undefined) &&
               <select onChange={this.handleChange}>
                 {this.props.events &&

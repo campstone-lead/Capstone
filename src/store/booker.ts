@@ -87,7 +87,6 @@ export const updatedVenue = (venue) => async dispatch => {
         data: booker
       })
 
-      let URL = newBooker["venue"].photo.slice(5)
       newBooker["venue"]["name"] = newBooker["venue"]["address"]
       let v = { ...newBooker["venue"], bookerId: res.data.id }
 

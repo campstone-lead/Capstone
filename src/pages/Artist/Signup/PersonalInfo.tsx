@@ -1,9 +1,7 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
   IonTitle,
-  IonToolbar,
   IonItem,
   IonInput,
   IonLabel,

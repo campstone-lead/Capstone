@@ -4,18 +4,18 @@ import {
   IonTitle,
   IonHeader,
   IonIcon,
-  IonFab,
-  IonFabButton,
+  // IonFab,
+  // IonFabButton,
   IonItem,
   IonChip,
   IonLabel,
-  IonList,
+  // IonList,
   IonCheckbox,
   IonSelect,
   IonSelectOption,
-  IonTextarea,
+  // IonTextarea,
   IonBackButton,
-  IonAlert,
+  // IonAlert,
 } from '@ionic/react';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -45,7 +45,7 @@ interface IMyComponentState {
 export class Filter extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
