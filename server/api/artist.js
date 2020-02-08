@@ -17,7 +17,7 @@ router.get('/:id', async (req, res, next) => {
     if (!data) {
       res.sendStatus(404);
     } else {
-      const artistStatus = await ArtistEvent.findOne({
+      const artistStatus = await ArtistEvent.findAll({
         where: { artistId: req.params.id },
       });
       res.json({ artist: data, status: artistStatus });

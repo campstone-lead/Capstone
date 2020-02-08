@@ -16,6 +16,9 @@ const ArtistEvent = db.define('ArtistEvent', {
   },
   bookerId: {
     type: Sequelize.INTEGER,
+  },
+  sender: {
+    type: Sequelize.ENUM('artist', 'booker')
   }
 })
 

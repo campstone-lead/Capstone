@@ -67,7 +67,20 @@ export const sendRequest = request => async dispatch => {
       url: `/events/connection/`,
       data: request,
     });
-    // console.log('got one event->>>>', res.data);
+    dispatch(bookArtist(res.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const sendResponse = data => async dispatch => {
+  try {
+    const res = await axios({
+      method: 'put',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/events/connection/update`,
+      data: data,
+    });
+    console.log('got one event->>>>', res.data);
     dispatch(bookArtist(res.data));
   } catch (err) {
     console.log(err);

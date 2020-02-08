@@ -237,7 +237,7 @@ const venues = [
     imageURL:
       'https://media-cdn.tripadvisor.com/media/photo-s/15/0e/f3/c3/elsewhere-courtyard.jpg',
     capacity: 1500,
-    bookerId: 3,
+    bookerId: 1,
   },
   {
     name: 'Basement NY',
@@ -256,7 +256,7 @@ const venues = [
     description: 'dimly lit bar featuring Djs and astrology-inspired cocktails',
     imageURL: 'https://media.timeout.com/images/104089109/630/472/image.jpg',
     capacity: 100,
-    bookerId: 3,
+    bookerId: 1,
   },
   {
     name: 'The Mercury Lounge',
@@ -286,7 +286,7 @@ const venues = [
     imageURL:
       'https://www.sachynmital.com/wp-content/uploads/2016/08/blog_theladles_05.jpg',
     capacity: 50,
-    bookerId: 3,
+    bookerId: 1,
   },
 ];
 
@@ -295,16 +295,18 @@ const artistEvent = [
     artistId: 3,
     eventId: 2,
     status: 'booked',
+    sender: 'booker'
   },
   {
     artistId: 4,
     eventId: 1,
-    status: 'pending',
+    sender: 'booker'
   },
   {
     artistId: 6,
     eventId: 3,
     status: 'pending',
+    sender: 'artist'
   },
 ];
 
