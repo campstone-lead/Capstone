@@ -5,7 +5,7 @@ import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
 import { gotOneEvents } from '../store/event'
-import { fetchOneArtists, bookArtist, sendRequest } from '../store/artist'
+import { fetchOneArtists, bookArtist, sendRequest, sendResponse } from '../store/artist'
 import { getBookerEvents } from '../store/booker'
 import history from './history'
 interface IMyComponentProps {
@@ -21,14 +21,14 @@ interface IMyComponentProps {
   gotOneEvents: any,
   selectedEvent: object,
   sendRequest: any,
-
-
+  sendResponse: any
 }
 interface IMyComponentState {
   status: any,
   currentEvent: any,
   bookedArtistInfo: object,
-  localStatus: string
+  localStatus: string,
+  sender: string
 }
 class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
@@ -37,18 +37,27 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
       status: null,
       currentEvent: '',
       bookedArtistInfo: {},
-      localStatus: ''
+      localStatus: '',
+      sender: ''
     }
   }
   handleChange = async e => {
     this.setState({ currentEvent: e.target.value });
 
   };
+  handleClickRespond = (response) => {
+    let eventId = this.props.bookingStatus
+    console.log(eventId, 'heeeere')
+    this.setState({ localStatus: response })
+
+
+  }
   handleClick = async () => {
     this.setState({ localStatus: 'pending' })
     let request = {
       eventId: Number(this.state.currentEvent),
-      artistId: this.props.artist['id']
+      artistId: this.props.artist['id'],
+      sender: 'booker'
     }
 
     await this.props.sendRequest(request);
@@ -60,7 +69,6 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
     await this.props.fetchOneArtists(id)
     const bookerId = this.props.user['id']
     await this.props.getBookerEvents(bookerId)
-    console.log('events here', this.props.events)
     if (this.props.events.length !== 0) {
       this.setState({ currentEvent: this.props.events[0].id })
 
@@ -71,15 +79,18 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 
           await this.setState({ status: this.props.bookingStatus })
           if (this.props.bookingStatus !== null)
-            await this.setState({ localStatus: this.props.bookingStatus['status'] })
+            await this.setState({
+              localStatus: this.props.bookingStatus['status'],
+              sender: this.props.bookingStatus['sender']
+            })
           await this.setState({ bookedArtistInfo: this.props.selectedEvent['event'] })
         }
       })
     }
+
   }
 
   render() {
-    console.log('here', this.state)
     let genres = '';
     if (this.props.genres !== undefined) {
       this.props.genres.forEach((el, index) => {
@@ -174,8 +185,8 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
 
               </IonTabBar>
             </IonCardContent>
+            {(this.state.sender === 'booker' || this.state.sender.length === 0) ?
 
-            {
               ((this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) && (this.state.localStatus !== 'pending') && (this.state.localStatus !== 'booked') && (this.state.localStatus !== 'declined') ?
                 (this.props.events !== undefined) &&
                 <select onChange={this.handleChange}>
@@ -195,16 +206,29 @@ class ArtistSinglePage extends React.Component<IMyComponentProps, IMyComponentSt
                     {' '}
                     for {this.state.bookedArtistInfo['name']}  at {this.state.bookedArtistInfo['venueName']}.
   </IonCardSubtitle> : null
-              )
+              ) : (this.props.bookingStatus !== null || this.state.bookedArtistInfo['status'] !== undefined) && (this.state.localStatus === 'pending') ?
+                <IonCardSubtitle>You have an incoming request from {this.props.artist['artistName']}!</IonCardSubtitle> :
+                <IonCardSubtitle>You have {this.state.localStatus} {this.props.artist['artistName']}!</IonCardSubtitle>
             }
-            {this.props.events !== undefined && this.props.events.length !== 0 ?
-              <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
-                {(this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) && (this.state.localStatus === 'pending') ?
-                  'Pending request sent' :
-                  (this.state.localStatus === 'booked') ?
-                    'Booked' : (this.state.localStatus === 'declined') ? 'declined' : 'Book me'}
+            {
+              (this.state.sender === 'booker' || this.state.sender.length === 0) ? (this.props.events !== undefined && this.props.events.length !== 0 ?
+                <IonButton onClick={async () => await this.handleClick()} disabled={(this.state.localStatus.length === 0) ? false : true}>
+                  {(this.props.bookingStatus === null || this.state.bookedArtistInfo['status'] === undefined) && (this.state.localStatus === 'pending') ?
+                    'Pending request sent' :
+                    (this.state.localStatus === 'booked') ?
+                      'Booked' : (this.state.localStatus === 'declined') ? 'declined' : 'Book me'}
 
-              </IonButton> : <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>You cannot add any artists if you have no events! </IonCardSubtitle>
+                </IonButton> : <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>You cannot add any artists if you have no events! </IonCardSubtitle>) : (
+                  <div>
+                    <IonButton disabled={(this.state.localStatus === 'declined' || this.state.localStatus === 'booked') ? true : false}
+                      onClick={() => this.handleClickRespond('booked')}
+
+                    >Accept</IonButton>
+                    <IonButton disabled={(this.state.localStatus === 'declined' || this.state.localStatus === 'booked') ? true : false}
+                      onClick={() => this.handleClickRespond('declined')}
+                    >Decline</IonButton>
+                  </div>
+                )
             }
 
             <br></br>
@@ -232,6 +256,7 @@ const mapDispatchToProps = (dispatch) => ({
   bookArtist: (info) => dispatch(bookArtist(info)),
   getBookerEvents: (id) => dispatch(getBookerEvents(id)),
   gotOneEvents: (id) => dispatch(gotOneEvents(id)),
-  sendRequest: (request) => dispatch(sendRequest(request))
+  sendRequest: (request) => dispatch(sendRequest(request)),
+  sendResponse: (id) => dispatch(sendResponse(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistSinglePage);

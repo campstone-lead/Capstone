@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { me } from '../store/user'
 import { fetchEvents } from '../store/event'
 import { fetchOneVenue } from '../store/venue';
+import { sendRequest } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
 import history from './history'
 
@@ -17,7 +18,8 @@ interface IMyComponentProps {
     fetchOneVenue: any,
     getOneBooker: any,
     getBookerEvents: any,
-    events: any
+    events: any,
+    sendRequest: any
 
 }
 
@@ -146,7 +148,8 @@ const mapDispatchToProps = (dispatch) => ({
     me: () => dispatch(me()),
     fetchOneVenue: (id) => dispatch(fetchOneVenue(id)),
     getOneBooker: (id) => dispatch(getOneBooker(id)),
-    getBookerEvents: (id) => dispatch(getBookerEvents(id))
+    getBookerEvents: (id) => dispatch(getBookerEvents(id)),
+    sendRequest: (request) => dispatch(request)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(VenueSinglePage);

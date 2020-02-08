@@ -281,18 +281,19 @@ const venues = [
 const artistEvent = [
   {
     artistId: 3,
-    eventId: 2,
-    status: 'booked'
+    eventId: 1,
+    status: 'booked',
+    sender: 'booker'
   },
   {
     artistId: 4,
     eventId: 1,
-    status: 'pending',
+    sender: 'booker'
   },
   {
     artistId: 6,
-    eventId: 3,
-    status: 'pending',
+    eventId: 1,
+    sender: 'artist'
   }
 ]
 
