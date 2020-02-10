@@ -9,16 +9,10 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete'
-// import './venue-form.css'
 
 interface IMyComponentState {
-  latitude: Number,
-  longitude: Number,
-  address: String,
-  imageUrl: string,
-  description: string,
-  capacity: string,
-  photo: string
+  venue: object,
+  genreTypes: object
 }
 interface IMyComponentProps {
   booker: any,
@@ -29,35 +23,51 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
   constructor(props) {
     super(props);
     this.state = {
-      latitude: 0,
-      longitude: 0,
-      address: '',
-      imageUrl: '',
-      description: '',
-      capacity: '',
-      photo: ''
+      venue: {
+        latitude: 0,
+        longitude: 0,
+        address: '',
+        imageUrl: '',
+        description: '',
+        capacity: '',
+        genres: []
+      },
+      genreTypes: {
+        rock: false,
+        jazz: false,
+        electronic: false,
+        pop: false,
+        hipHop: false,
+        indie: false,
+        country: false,
+        metal: false,
+        house: false,
+        techno: false,
+      }
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount() {
-    let venue = window.localStorage.getItem('venue')
-    if (venue !== null) {
-      venue = JSON.parse(venue || '');
-      let newVenue = venue || {};
-      this.setState({
-        address: newVenue["address"],
-        latitude: newVenue["latitude"],
-        longitude: newVenue["longitude"],
-        imageUrl: newVenue["imageUrl"],
-        description: newVenue["description"],
-        capacity: newVenue["capacity"],
-        photo: newVenue["photo"],
-      })
-    }
-  }
+  // componentDidMount() {
+  //   let venue = window.localStorage.getItem('venue')
+  //   if (venue !== null) {
+  //     venue = JSON.parse(venue || '');
+  //     let newVenue = venue || {};
+  //     this.setState({
+  //       address: newVenue["address"],
+  //       latitude: newVenue["latitude"],
+  //       longitude: newVenue["longitude"],
+  //       imageUrl: newVenue["imageUrl"],
+  //       description: newVenue["description"],
+  //       capacity: newVenue["capacity"],
+  //       photo: newVenue["photo"],
+  //     })
+  //   }
+  //   console.log("this.state", this.state)
+  // }
   handleChange = address => {
-    this.setState({ address });
+    this.setState({ venue: { ...this.state.venue, address } });
   };
 
   handleSelect = address => {
@@ -65,96 +75,118 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
       .then(results => getLatLng(results[0]))
       .then(latLng => {
         this.setState({
-          latitude: latLng.lat,
-          longitude: latLng.lng,
-          address
+          venue: {
+            ...this.state.venue,
+            latitude: latLng.lat,
+            longitude: latLng.lng,
+            address
+          }
         })
         console.log('Success grabbing adress!')
       })
       .catch(error => console.error('Error', error));
   };
 
-  handleSubmit(event) {
+  handleClick(event) {
     event.preventDefault();
-    console.log('this.props.booker.id:', this.props.booker.id)
-    console.log('this.state:', this.state)
-    this.props.createVenue(this.state)
+    this.setState({
+      genreTypes: {
+        ...this.state.genreTypes,
+        [event.target.target]: !this.state.genreTypes[event.target.target]
+      }
+    })
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    const filtered = Object.keys(this.state.genreTypes).filter((key) => this.state.genreTypes[key])
+    await this.setState({ venue: { ...this.state.venue, genres: filtered } })
+    this.props.createVenue(this.state.venue)
   }
   render() {
-    return (<IonPage>
-      <IonHeader >
-        <IonToolbar id="bar" >
-          <IonTitle >Create a new venue</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+    let genresArray = Object.keys(this.state.genreTypes)
+    return (
+      <IonPage>
+        <IonHeader >
+          <IonToolbar id="bar" >
+            <IonTitle >Create a new venue</IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
 
-      <IonContent>
-        <form onSubmit={this.handleSubmit} className='updatevenue' >
+        <IonContent>
+          <form onSubmit={this.handleSubmit} className='updatevenue' >
 
-          {/* <IonCardHeader>
+            {/* <IonCardHeader>
         <IonCardTitle>Describe the venue</IonCardTitle>
       </IonCardHeader>  */}
-          <PlacesAutocomplete
-            value={this.state.address}
-            onChange={this.handleChange}
-            onSelect={this.handleSelect}
-          >
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-              <div>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Venues ...',
-                    className: 'searchInput',
-                  })}
+            <IonLabel className='venuelabel'>Venue</IonLabel>
 
-                />
-                <div className="searchInput">
-                  {loading && <div>Loading...</div>}
-                  {suggestions.map(suggestion => {
-                    const className = suggestion.active
-                      ? 'suggestion-item--active'
-                      : 'suggestion-item';
+            <PlacesAutocomplete
+              value={this.state.venue["address"]}
+              onChange={this.handleChange}
+              onSelect={this.handleSelect}
+            >
+              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                <div>
+                  <input
+                    {...getInputProps({
+                      placeholder: 'Search Venues ...',
+                      className: 'searchInput',
+                    })}
 
-                    const style = suggestion.active
-                      ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                    return (
-                      <div
-                        {...getSuggestionItemProps(suggestion, {
-                          className,
-                          style,
-                        })}
-                      >
-                        <span>{suggestion.description}</span>
-                      </div>
-                    );
-                  })}
+                  />
+                  <div className="searchInput">
+                    {loading && <div>Loading...</div>}
+                    {suggestions.map(suggestion => {
+                      const className = suggestion.active
+                        ? 'suggestion-item--active'
+                        : 'suggestion-item';
+
+                      const style = suggestion.active
+                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className,
+                            style,
+                          })}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
+            </PlacesAutocomplete>
+            <IonLabel className='venuelabel'>Describe the venue</IonLabel>
+            <IonItem >
+              <IonInput clearInput type="text" required
+                value={this.state.venue["description"]}
+                onIonChange={(e) => this.setState({ venue: { ...this.state.venue, description: (e.target as HTMLInputElement).value } })}
+              />
+            </IonItem>
+            <IonLabel className='venuelabel'>Capacity</IonLabel>
+            <IonItem >
+              <IonInput clearInput type="number" min='0' required
+                value={this.state.venue["capacity"]}
+                onIonChange={(e) => this.setState({ venue: { ...this.state.venue, capacity: (e.target as HTMLInputElement).value } })}
+              />
+            </IonItem>
+            <IonLabel className='venuelabel'>Genres</IonLabel>
+            {genresArray.map((genre) =>
+              <IonButton color={this.state.genreTypes[genre] ? 'primary' : 'secondary'} type="button" target={genre} onClick={this.handleClick}>{genre}</IonButton>
             )}
-          </PlacesAutocomplete>
-          <IonLabel className='venuelabel'>Describe the venue</IonLabel>
-          <IonItem >
-            <IonInput clearInput type="text" required
-              value={this.state.description}
-              onIonChange={(e) => this.setState({ description: (e.target as HTMLInputElement).value })}
-            />
-          </IonItem>
-          <IonLabel className='venuelabel'>Capacity</IonLabel>
-          <IonItem >
-            <IonInput clearInput type="number" min='0' required
-              value={this.state.capacity}
-              onIonChange={(e) => this.setState({ capacity: (e.target as HTMLInputElement).value })}
-            />
-          </IonItem>
-          <IonButton color='secondary' >Upload a picture</IonButton>
-          <IonItem routerLink="/profile">
-            <IonButton type="submit">create</IonButton>
-          </IonItem>
-        </form>
-      </IonContent>
-    </IonPage>)
+
+            <IonButton color='secondary' >Upload a picture</IonButton>
+            <IonItem routerLink="/profile">
+              <IonButton type="submit">Create</IonButton>
+            </IonItem>
+          </form>
+        </IonContent>
+      </IonPage>)
   }
 }
 const mapStateToProps = (state) => ({

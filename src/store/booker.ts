@@ -63,10 +63,8 @@ export const updatedVenue = (venue) => async dispatch => {
   try {
 
     let booker = window.localStorage.getItem('booker')
-    // let password = venue.password;
     booker = JSON.parse(booker || '');
     let newBooker = booker || {};
-    console.log('venue.password:', venue.password)
     if (venue.password === undefined) {
       newBooker['venue'] = { ...newBooker['venue'], ...venue };
       window.localStorage.setItem('booker', JSON.stringify(newBooker))
@@ -111,7 +109,8 @@ export const updatedVenue = (venue) => async dispatch => {
 //add-venue-form.tsx
 export const createdVenue = (sentVenue) => async dispatch => {
   try {
-    console.log("URL", URL)
+    console.log('sentVenue:', sentVenue)
+
     let venueAxios = {
       description: sentVenue["description"],
       name: sentVenue["address"],
@@ -119,7 +118,7 @@ export const createdVenue = (sentVenue) => async dispatch => {
       latitude: sentVenue["latitude"],
       longitude: sentVenue["longitude"],
       capacity: sentVenue["capacity"],
-      imageURL: URL
+      genres: sentVenue["genres"]
     }
     await axios({
       method: "post",

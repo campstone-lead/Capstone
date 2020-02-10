@@ -91,6 +91,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
     }
 
     async componentDidMount() {
+        console.log("HERE", this.props["match"]["params"])
         const id = Number(history.location.pathname.slice(11))
         await this.props.me();
         await this.props.fetchOneArtists(this.props.user['id']);
@@ -198,6 +199,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                             venue={this.props.venue}
                             booker={this.props.booker}
                             events={this.props.events}
+                            isOwner={this.props.user["status"] === "booker" && this.props.user["id"] === this.props.venue["bookerId"]}
                         />
 
                         <select onChange={this.handleChange}>

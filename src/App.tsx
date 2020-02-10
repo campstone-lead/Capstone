@@ -100,7 +100,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/genres" component={Genres} />
               <Route path="/artisttype" component={ArtistType} />
               <Route path="/addvenue" component={VenueForm} />
-              <Route path="/addevent" component={EventForm} />
+              <Route path="/addevent/" component={EventForm} />
               <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/filter" component={Filter} />
               <Route path="/searchbar" component={SearchBar} />
@@ -112,7 +112,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 path="/allArtists/:artistId"
                 component={ArtistSinglePage}
               />
-              <Route path="/allVenues/:id" component={VenueSinglePage} />
+              <Route path="/allVenues/:venueId" component={VenueSinglePage} />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
@@ -121,10 +121,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
             </IonRouterOutlet>
             <IonTabBar
               slot="bottom"
-              // style={{
-              //   '--background':
-              //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
-              // }}
+            // style={{
+            //   '--background':
+            //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
+            // }}
             >
               <IonTabButton tab="tab1" href="/home">
                 <IonIcon icon={home} />

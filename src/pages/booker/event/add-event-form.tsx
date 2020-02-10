@@ -1,29 +1,22 @@
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonCardTitle, IonCard, IonDatetime
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonCard, IonDatetime
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../../../store/user';
 import { getOneBooker } from '../../../store/booker';
-import { createdVenue } from '../../../store/booker'
 import { createdEvent } from '../../../store/event'
-// import './venue-form.css'
 
 interface IMyComponentState {
-  // imageUrl: string,
-  // description: string,
-  // date: string,
-  // photo: string,
   event: object,
 
   currentVenue: number,
-  // name: string,
+  // defaultedVenue: number
 
 }
 interface IMyComponentProps {
   booker: any,
-  // createVenue: (venue: object) => void,
   createEvent: (event: object) => void,
   fetchVenues: any;
   venues: any;
@@ -43,13 +36,15 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
         name: ''
       },
       currentVenue: 0,
+      // defaultedVenue: 0,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentDidMount() {
     await this.props.me();
-    console.log('this.props.user:', this.props.user)
+    // if (this.props["match"]["params"]["venueId"]) await this.setState({ defaultedVenue: this.props["match"]["params"]["venueId"] })
+
     if (this.props.user !== undefined) {
       if (this.props.user['status'] === 'booker') {
         const id = this.props.user['id'];
@@ -86,9 +81,10 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
 
           {this.props.venues && this.props.venues.length > 0 ?
             <div className="mainBoxSelect">
+              {/* <select onChange={this.handleSelect} defaultValue={this.state.defaultedVenue} className="selectBtn"> */}
               <select onChange={this.handleSelect} className="selectBtn">
                 {this.props.venues.map((venue, index) => (
-                  <option value={venue.id} key={index}>
+                  <option value={venue.id} key={index} >
                     {venue.name}
                   </option>
                 ))}
@@ -108,12 +104,6 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
           }
         </IonCard>
 
-
-
-        {/* {this.state.currentVenue === 0 ? null :
-(
-
-)} */}
         <IonContent>
           <form onSubmit={this.handleSubmit} className='updatevenue' >
 
@@ -149,15 +139,7 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
               />
             </IonItem>
 
-            {/* <IonLabel className='venuelabel'>Genres</IonLabel>
-            <IonItem >
-              <IonInput clearInput type="number" min='0' required
-                value={this.state.event["capacity"]}
-                onIonChange={(e) => this.setState({
-                  event: {...this.state.event, capacity: (e.target as HTMLInputElement).value}
-                })}
-              />
-            </IonItem> */}
+
 
             <IonButton color='secondary' >Upload a picture</IonButton>
 
@@ -166,7 +148,7 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
             </IonItem>
           </form>
         </IonContent>
-      </IonPage>)
+      </IonPage >)
   }
 }
 const mapStateToProps = (state) => ({
@@ -177,7 +159,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
   return {
     me: () => dispatch(me()),
-    createVenue: (venue) => dispatch(createdVenue(venue)),
     fetchVenues: id => dispatch(getOneBooker(id)),
     createEvent: (event) => dispatch(createdEvent(event))
   }

@@ -1,12 +1,14 @@
 import React from 'react';
-import { IonItem, IonItemGroup, IonLabel, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon } from '@ionic/react';
-import { home, body, musicalNote } from 'ionicons/icons'
+import { IonItem, IonItemGroup, IonLabel, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonButton, IonTabButton } from '@ionic/react';
+import { home, body, musicalNote, add } from 'ionicons/icons'
 import './Tab1.css';
+import { findByLabelText } from '@testing-library/react';
 
 interface IMyComponentProps {
   venue: object,
   booker: object,
   events: Array<object>,
+  isOwner: boolean
 }
 
 interface IMyComponentState {
@@ -19,28 +21,6 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
       currentEvent: '',
     }
   }
-
-
-
-  async componentDidMount() {
-
-    // if (this.props.events.length !== 0)
-    //   this.setState({ currentEvent: this.props.events[0].id })
-
-    // if (this.props.attendedEvents !== null) {
-
-    //   let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(event => event.eventId === this.state.currentEvent)
-    //   if (getArtistStatusforCurrentVenue.length !== 0) {
-    //     await this.setState({
-    //       localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
-    //       sender: getArtistStatusforCurrentVenue[0]['sender'] || ''
-    //     })
-    //   }
-    // }
-
-  }
-
-
 
   render() {
     let genres = '';
@@ -80,9 +60,16 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
         </IonList>
         {this.props.booker['user'] ?
           <IonCardTitle>Booker: {this.props.booker["user"]["firstName"]}{' '}{this.props.booker["user"]["lastName"]}</IonCardTitle> : null}
-        <h1>Upcoming Events:</h1>
+        <div style={{ "display": "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <h1>Upcoming Events:</h1>
+          {this.props.isOwner && (
+            <IonButton routerLink={`/addevent/${this.props.venue["id"]}`}>
+              <IonIcon icon={add} />
+            </IonButton>
+          )}
+
+        </div>
         {this.props.events ? this.props.events.map((event, index) => {
-          console.log(typeof event['date'])
           var dateObj = new Date(event['date'])
           var month = dateObj.getUTCMonth() + 1;
           var day = dateObj.getUTCDate();
@@ -97,7 +84,6 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
               mode="ios"
             >
               <div className="eventBox">
-                <img src={event['imageURL']} alt="img.jpg" />
                 <IonItemGroup style={{ margin: '20px' }}>
                   <IonCardTitle
                     style={{ textAlign: 'center' }}
@@ -123,7 +109,7 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
               </div>
             </IonCard>
           )
-        }) : <h3>This venue currently has no events</h3>}
+        }) : <h3>There are no upcoming events at this venue</h3>}
       </>
     )
   }
