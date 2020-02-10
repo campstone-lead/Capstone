@@ -39,6 +39,7 @@ import {
   ArtistSinglePage,
   VenueForm,
   EventForm,
+  EventSinglePage,
   Profile,
   Filter,
   SearchBar,
@@ -117,6 +118,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 component={ArtistSinglePage}
               />
               <Route path="/allVenues/:id" component={VenueSinglePage} />
+              <Route path="/events/:id" component={EventSinglePage} />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
