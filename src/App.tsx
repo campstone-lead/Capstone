@@ -50,33 +50,61 @@ import {
   AllVenuesView,
 } from './AppImports';
 import VenueSinglePage from './pages/VenueSinglePage';
+import { searchBarValue } from './store/filter';
 interface IMyComponentProps {
   user: object;
   userId: Number;
   me: any;
   history: any;
   logout: any;
+  isSearchBarOpen: boolean;
+  searchBarValue: (value: boolean) => void;
 }
 interface IMyComponentState {
   loaded: boolean;
+  isSearchBarOpen: boolean;
 }
 class App extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
     super(props);
     this.state = {
+      isSearchBarOpen: this.props.isSearchBarOpen,
       loaded: false,
     };
+    this.onTab1Click = this.onTab1Click.bind(this);
   }
 
   async componentDidMount() {
     await this.props.me();
 
-    this.setState({ loaded: true });
+    let searchbar = window.localStorage.getItem('searchbar');
+    if (searchbar !== null) {
+      let value: boolean;
+      value = JSON.parse(searchbar || '');
+      this.props.searchBarValue(value);
+    }
+    this.setState({
+      isSearchBarOpen: this.props.isSearchBarOpen,
+      loaded: true,
+    });
+  }
+
+  async onTab1Click(event) {
+    event.preventDefault();
+    await this.props.searchBarValue(false);
+    this.setState({
+      isSearchBarOpen: false,
+    });
+    // window.localStorage.setItem('searchbar', JSON.stringify(false));
   }
 
   render() {
     return (
-      <IonApp>
+      <IonApp
+      // style={{
+      //   background: 'url(https://wallpaperaccess.com/full/851202.jpg)',
+      // }}
+      >
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet>
@@ -119,14 +147,8 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 exact={true}
               />
             </IonRouterOutlet>
-            <IonTabBar
-              slot="bottom"
-              // style={{
-              //   '--background':
-              //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
-              // }}
-            >
-              <IonTabButton tab="tab1" href="/home">
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="tab1" href="/home" onClick={this.onTab1Click}>
                 <IonIcon icon={home} />
                 <IonLabel>Home</IonLabel>
               </IonTabButton>
@@ -171,9 +193,11 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
 const mapStateToProps = state => ({
   user: state.user,
   userId: state.user.id,
+  isSearchBarOpen: state.filter.isSearchBarOpen,
 });
 const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),
   logout: () => dispatch(logout()),
+  searchBarValue: value => dispatch(searchBarValue(value)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

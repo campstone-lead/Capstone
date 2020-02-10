@@ -51,7 +51,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     if (searchbar !== null) {
       let value: boolean;
       value = JSON.parse(searchbar || '');
-      this.props.searchBarValue(value);
+      await this.props.searchBarValue(value);
     }
     this.setState({
       isSearchBarOpen: this.props.isSearchBarOpen,
@@ -115,7 +115,12 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                 <SearchBar />
               </IonContent>
             ) : (
-              <IonContent>
+              <IonContent
+                style={{
+                  '--background':
+                    'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                }}
+              >
                 {this.props.user['status'] === 'booker' ? (
                   <ArtistRecommendations />
                 ) : (
