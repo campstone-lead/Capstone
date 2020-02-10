@@ -40,6 +40,7 @@ import {
   ArtistSinglePage,
   VenueForm,
   EventForm,
+  EventSinglePage,
   Profile,
   Filter,
   SearchBar,
@@ -113,6 +114,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 component={ArtistSinglePage}
               />
               <Route path="/allVenues/:id" component={VenueSinglePage} />
+              <Route path="/events/:id" component={EventSinglePage} />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
@@ -121,10 +123,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
             </IonRouterOutlet>
             <IonTabBar
               slot="bottom"
-              // style={{
-              //   '--background':
-              //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
-              // }}
+            // style={{
+            //   '--background':
+            //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
+            // }}
             >
               <IonTabButton tab="tab1" href="/home">
                 <IonIcon icon={home} />
