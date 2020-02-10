@@ -57,47 +57,35 @@ async function switchMainFilter(data) {
 
 async function switchGenreFilter(data) {
   let returnData = [];
-  if (data.genre && Array.isArray(data.genre)) {
-    returnData = [
-      ...returnData,
+  async function helperFunc(genre) {
+    let allGenres = [];
+    allGenres = [
+      ...allGenres,
       ...(await Artist.findAll({
-        where: { genres: { [Op.contains]: data.genre } },
+        where: { genres: { [Op.contains]: genre } },
       })),
     ];
-    returnData = [
-      ...returnData,
-      ...(await Venue.findAll({
-        where: { genres: { [Op.contains]: data.genre } },
-      })),
-    ];
-    returnData = [
-      ...returnData,
+    allGenres = [
+      ...allGenres,
       ...(await Event.findAll({
-        where: { genres: { [Op.contains]: data.genre } },
+        where: { genres: { [Op.contains]: genre } },
       })),
     ];
+    allGenres = [
+      ...allGenres,
+      ...(await Venue.findAll({
+        where: { genres: { [Op.contains]: genre } },
+      })),
+    ];
+    return allGenres;
+  }
+  if (data.genre && Array.isArray(data.genre)) {
+    returnData = helperFunc(data.genre);
   }
   if (typeof data.genre === 'string') {
     let genre = [];
     genre.push(data.genre);
-    returnData = [
-      ...returnData,
-      ...(await Artist.findAll({
-        where: { genres: { [Op.contains]: genre } },
-      })),
-    ];
-    returnData = [
-      ...returnData,
-      ...(await Event.findAll({
-        where: { genres: { [Op.contains]: genre } },
-      })),
-    ];
-    returnData = [
-      ...returnData,
-      ...(await Venue.findAll({
-        where: { genres: { [Op.contains]: genre } },
-      })),
-    ];
+    returnData = helperFunc(genre);
   }
   return returnData;
 }
@@ -107,7 +95,7 @@ async function findByWord(data) {
   returnData = [
     ...returnData,
     ...(await Artist.findAll({
-      where: { firstName: { [Op.like]: '%' + data.word + '%' } },
+      where: { firstName: { [Op.like]: `${data.word}%` } },
     })),
   ];
   return returnData;
@@ -116,11 +104,13 @@ async function findByWord(data) {
 router.get('/:query', async (req, res, next) => {
   try {
     let data = queryString.parse(req.params.query);
+
+    console.log('HERE', data);
     let returnData = [];
-    if (data.main) returnData = await switchMainFilter(data);
+    if (data.main !== undefined) returnData = await switchMainFilter(data);
     else {
-      if (data.genre) returnData = await switchGenreFilter(data);
-      else if (data.word) returnData = await findByWord(data);
+      if (data.genre !== undefined) returnData = await switchGenreFilter(data);
+      else if (data.word !== undefined) returnData = await findByWord(data);
     }
     // const data = await Venue.findAll()
     res.json(returnData);

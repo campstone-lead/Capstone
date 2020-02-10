@@ -18,6 +18,7 @@ interface IMyComponentProps {
   filters: Array<string>;
   allSingleChosen: any;
   genresChosen: any;
+  word: string;
   deleteFilter: (filter: string) => void;
   getState: (filter: any) => void;
   customedFilter: (
@@ -42,7 +43,7 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
         await this.props.customedFilter(
           this.props.allSingleChosen,
           this.props.genresChosen,
-          ''
+          this.props.word
         );
     }
   }
@@ -51,13 +52,14 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
     await this.props.customedFilter(
       this.props.allSingleChosen,
       this.props.genresChosen,
-      ''
+      this.props.word
     );
     this.setState({
       filters: this.props.filters,
     });
   }
   render() {
+    console.log('here');
     return (
       <IonContent
         style={{
@@ -73,7 +75,9 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
           <div>
             {this.props.filters.map((item, indx) => (
               <IonChip key={indx} id={item} onClick={this.deleteOnClick}>
-                <IonLabel>{item}</IonLabel>
+                <IonLabel>
+                  {item} {this.props.word}
+                </IonLabel>
                 <IonIcon title={item} icon={closeCircle} />
               </IonChip>
             ))}
@@ -90,7 +94,11 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
             <IonIcon icon={switcher} />
           </IonButton>
         </IonItem>
-        {this.props.filters.length === 0 ? '' : <SearchResults />}
+        {this.props.filters.length === 0 && this.props.word.length === 0 ? (
+          ''
+        ) : (
+          <SearchResults />
+        )}
       </IonContent>
     );
   }
@@ -100,6 +108,7 @@ const mapStateToProps = state => ({
   filters: state.filter.chosen,
   allSingleChosen: state.filter.allSingleChosen,
   genresChosen: state.filter.genresChosen,
+  word: state.filter.word,
 });
 
 const mapDispatchToProps = dispatch => ({

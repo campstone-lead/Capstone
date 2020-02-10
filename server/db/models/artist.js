@@ -6,6 +6,10 @@ const fetch = require('node-fetch');
 const googleMapsApiKey = require('../../../secrets');
 
 const Artist = db.define('artist', {
+  tableName: {
+    type: Sequelize.STRING,
+    defaultValue: 'Artist',
+  },
   firstName: {
     type: Sequelize.STRING,
     allowNull: false,

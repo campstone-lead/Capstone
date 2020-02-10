@@ -29,7 +29,7 @@ interface IMyComponentProps {
   error: any;
   user: object;
   me: any;
-
+  word: string;
   searchBarValue: (value: boolean) => void;
   isSearchBarOpen: boolean;
   allSingleChosen: any;
@@ -58,6 +58,16 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     await this.props.me();
 
     let searchbar = window.localStorage.getItem('searchbar');
+    let filter = await window.localStorage.getItem('filter');
+    if (filter !== null) {
+      let value: any;
+      value = JSON.parse(filter || '');
+      await this.props.customedFilter(
+        this.props.allSingleChosen,
+        this.props.genresChosen,
+        value.word
+      );
+    }
     if (searchbar !== null) {
       let value: boolean;
       value = JSON.parse(searchbar || '');
@@ -65,31 +75,30 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     }
     this.setState({
       isSearchBarOpen: this.props.isSearchBarOpen,
+      searchWord: this.props.word,
     });
   }
 
   async onSearchBarChange(event) {
     event.preventDefault();
+    this.setState({ searchWord: event.target.value });
     console.log(event.target.value);
-    // this.setState({ searchWord: event.target.value });
     let filter = await window.localStorage.getItem('filter');
-    let value: any;
     if (filter !== null) {
+      let value: any;
       value = JSON.parse(filter || '');
-      await this.props.getState(value);
+      this.props.getState(value);
       await this.props.customedFilter(
         this.props.allSingleChosen,
         this.props.genresChosen,
         this.state.searchWord
       );
-    }
-
-    this.setState({ searchWord: event.target.value });
+      window.localStorage.setItem(
+        'filter',
+        JSON.stringify({ ...value, word: event.target.value })
+      );
+    } else await this.props.customedFilter([], [], this.state.searchWord);
   }
-
-  // async onSearchBarInput(event) {
-
-  // }
 
   render() {
     return (
@@ -176,6 +185,7 @@ const mapStateToProps = state => ({
   isSearchBarOpen: state.filter.isSearchBarOpen,
   venues: state.booker.venues,
   artists: state.artist.allArtists,
+  word: state.filter.word,
 });
 const mapDispatchToProps = dispatch => ({
   auth: (email, password) => dispatch(auth(email, password)),

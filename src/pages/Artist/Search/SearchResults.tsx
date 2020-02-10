@@ -17,6 +17,7 @@ interface IMyComponentProps {
   filterSelected: any;
   allSingleChosen: any;
   genresChosen: any;
+  word: string;
   customedFilter: (
     mainFilters: Array<string>,
     genreFilters: Array<string>,
@@ -28,10 +29,11 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
     await this.props.customedFilter(
       this.props.allSingleChosen,
       this.props.genresChosen,
-      ''
+      this.props.word
     );
   }
   render() {
+    console.log('sdfs');
     if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
     return (
@@ -49,7 +51,7 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
             });
             return (
               <IonCard
-                href={`/all${this.props.allSingleChosen[0]}/${venue.id}`}
+                href={`/all${venue.tableName}s/${venue.id}`}
                 key={index}
                 className="profile"
                 style={{
@@ -61,6 +63,7 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                 mode="ios"
               >
                 <div className="artistBox">
+                  {venue.tableName}
                   <img src={venue['imageURL']} alt="img.jpg" />
 
                   <IonItemGroup style={{ margin: '20px' }}>
@@ -68,8 +71,7 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                       style={{ textAlign: 'center' }}
                       className="artistBoxText"
                     >
-                      {this.props.allSingleChosen[0] === 'Artists' &&
-                      venue.firstName
+                      {venue.tableName === 'Artist' && venue.firstName
                         ? venue.firstName.concat(' ', venue.lastName)
                         : venue['name']}
                     </IonCardTitle>
@@ -99,6 +101,7 @@ const mapStateToProps = state => ({
   filterSelected: state.filter.filterSelected,
   allSingleChosen: state.filter.allSingleChosen,
   genresChosen: state.filter.genresChosen,
+  word: state.filter.word,
 });
 const mapDispatchToProps = dispatch => ({
   customedFilter: (mainFilters, genreFilters, input) =>

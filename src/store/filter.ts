@@ -45,6 +45,7 @@ const defaultFilter = {
   isSearchBarOpen: false,
   filterSelected: [],
   inputFilters: [],
+  word: '',
 };
 
 // Action creator
@@ -73,7 +74,11 @@ export const searchBarValue = value => ({
   value,
 });
 
-const getFilterSelected = filters => ({ type: GET_FILTER_SELECTED, filters });
+const getFilterSelected = (filters, word) => ({
+  type: GET_FILTER_SELECTED,
+  filters,
+  word,
+});
 
 //thunk creator
 export const customedFilter = (
@@ -85,7 +90,7 @@ export const customedFilter = (
     let myQueryString = queryString.stringify({
       main: mainFilters,
       genre: genreFilters,
-      // input
+      word: input,
     });
 
     const res = await axios({
@@ -93,7 +98,7 @@ export const customedFilter = (
       baseURL: 'http://localhost:8080/api/',
       url: `/filters/${myQueryString}`,
     });
-    dispatch(getFilterSelected(res.data));
+    dispatch(getFilterSelected(res.data, input));
   } catch (error) {
     console.error(error);
   }
@@ -224,7 +229,7 @@ export default function(state = defaultFilter, action) {
       };
 
     case GET_FILTER_SELECTED:
-      return { ...state, filterSelected: action.filters };
+      return { ...state, filterSelected: action.filters, word: action.word };
 
     default:
       return state;
