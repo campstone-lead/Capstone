@@ -1,11 +1,9 @@
 import {
-  IonActionSheet,
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonImg,
   IonFab,
   IonFabButton,
   IonIcon,
@@ -84,7 +82,7 @@ export class UploadPicture extends Component<
             <IonAvatar style={{ width: '370px', height: '370px' }}>
               \
               <IonItem>
-                <img src={imageURL} />
+                <img src={imageURL} alt='img' />
                 <IonFab vertical="bottom" horizontal="end">
                   <IonFabButton onClick={() => this.takePicture()}>
                     <IonIcon icon={add}></IonIcon>

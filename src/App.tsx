@@ -18,7 +18,6 @@ import {
   Tab2,
   me,
   logout,
-  LandingPage,
   PersonalInfo,
   ZipCodeForm,
   ArtistNameForm,
@@ -45,12 +44,13 @@ import {
   Filter,
   SearchBar,
   connect,
-  history,
-  render,
   Tab3,
+  Tab4,
   AllVenuesView,
+  NotificationWall
 } from './AppImports';
 import VenueSinglePage from './pages/VenueSinglePage';
+import { notifications } from 'ionicons/icons';
 interface IMyComponentProps {
   user: object;
   userId: Number;
@@ -82,8 +82,11 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
           <IonTabs>
             <IonRouterOutlet>
               <Route path="/home" component={Tab1} exact={true} />
-              <Route path="/tab2" component={Tab2} />
-              <Route path="/tab3" component={Tab3} />
+              <Route path="/tab2" component={Tab2} exact={true} />
+              <Route path="/tab3" component={Tab3} exact={true} />
+              <Route path="/tab4" component={Tab4} exact={true} />
+              <Route path="/notifications" component={NotificationWall} />
+
               <Route path="/profile" component={Profile} />
               <Route path="/login" component={SignUpSignIn} />
               <Route path="/signup0" component={SignUpZero} />
@@ -109,6 +112,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/artistpassword" component={ArtistPassword} />
               <Route path="/artists" component={AllArtistView} />
               <Route path="/venues" component={AllVenuesView} />
+
               <Route
                 path="/allArtists/:artistId"
                 component={ArtistSinglePage}
@@ -123,10 +127,6 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
             </IonRouterOutlet>
             <IonTabBar
               slot="bottom"
-            // style={{
-            //   '--background':
-            //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg) !important',
-            // }}
             >
               <IonTabButton tab="tab1" href="/home">
                 <IonIcon icon={home} />
@@ -134,7 +134,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               </IonTabButton>
 
               <IonTabButton
-                tab="tab3"
+                tab="tab2"
                 href="/profile"
                 disabled={this.props.userId !== undefined ? false : true}
               >
@@ -146,15 +146,24 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 </IonLabel>
               </IonTabButton>
 
+              <IonTabButton tab="tab4" href="/notifications"
+                disabled={this.props.userId !== undefined ? false : true}
+              >
+                {this.props.userId !== undefined ? (
+                  <IonIcon icon={notifications} />
+                ) : null}
+                <IonLabel> {this.props.userId === undefined ? '' : 'Notifications'}</IonLabel>
+              </IonTabButton>
+
               {this.props.userId !== undefined ? (
-                <IonTabButton tab="tab2" onClick={this.props.logout}>
+                <IonTabButton tab="tab3" onClick={this.props.logout}>
                   <IonIcon icon={logOut} />
                   <IonLabel>Logout</IonLabel>
                 </IonTabButton>
               ) : null}
 
               {this.props.userId === undefined ? (
-                <IonTabButton tab="tab2" href="/login">
+                <IonTabButton tab="tab3" href="/login">
                   {this.props.userId === undefined ? (
                     <IonIcon icon={logIn} />
                   ) : null}
@@ -163,6 +172,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                   </IonLabel>
                 </IonTabButton>
               ) : null}
+
+
+
+
             </IonTabBar>
           </IonTabs>
         </IonReactRouter>
