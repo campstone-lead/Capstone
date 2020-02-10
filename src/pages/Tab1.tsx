@@ -16,6 +16,7 @@ import './Tab1.css';
 import SearchBar from './Artist/Search/SearchBar';
 import ArtistRecommendations from './ArtistRecommendations';
 import VenueRecommendations from './VenueRecommendations';
+import { getState, customedFilter } from '../store/filter';
 
 interface IMyComponentState {
   isSearchBarOpen: boolean;
@@ -28,8 +29,17 @@ interface IMyComponentProps {
   error: any;
   user: object;
   me: any;
+
   searchBarValue: (value: boolean) => void;
   isSearchBarOpen: boolean;
+  allSingleChosen: any;
+  genresChosen: any;
+  getState: (value: any) => void;
+  customedFilter: (
+    mainFilters: Array<string>,
+    genreFilters: Array<string>,
+    input: string
+  ) => void;
   // getRecommendedVenues: any;
   // venues: any;
   recommendations: Array<object>;
@@ -58,11 +68,28 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
     });
   }
 
-  onSearchBarChange(event) {
+  async onSearchBarChange(event) {
     event.preventDefault();
     console.log(event.target.value);
+    // this.setState({ searchWord: event.target.value });
+    let filter = await window.localStorage.getItem('filter');
+    let value: any;
+    if (filter !== null) {
+      value = JSON.parse(filter || '');
+      await this.props.getState(value);
+      await this.props.customedFilter(
+        this.props.allSingleChosen,
+        this.props.genresChosen,
+        this.state.searchWord
+      );
+    }
+
     this.setState({ searchWord: event.target.value });
   }
+
+  // async onSearchBarInput(event) {
+
+  // }
 
   render() {
     return (
@@ -72,7 +99,13 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
         ) : (
           <IonContent>
             <IonHeader mode="ios">
-              <IonToolbar mode="ios">
+              <IonToolbar
+                mode="ios"
+                style={{
+                  '--background':
+                    'url(https://wallpaperaccess.com/full/851202.jpg)',
+                }}
+              >
                 <div className="tabHeader">
                   <img
                     src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
@@ -81,6 +114,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                   />
                   <IonSearchbar
                     mode="ios"
+                    color="light"
                     className="searchBar"
                     animated
                     showCancelButton="focus"
@@ -147,6 +181,9 @@ const mapDispatchToProps = dispatch => ({
   auth: (email, password) => dispatch(auth(email, password)),
   me: () => dispatch(me()),
   searchBarValue: value => dispatch(searchBarValue(value)),
+  getState: value => dispatch(getState(value)),
+  customedFilter: (mainFilters, genreFilters, input) =>
+    dispatch(customedFilter(mainFilters, genreFilters, input)),
   // getRecommendedVenues: id => dispatch(getRecommendedVenues(id)),
 });
 

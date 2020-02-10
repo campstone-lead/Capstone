@@ -44,6 +44,7 @@ const defaultFilter = {
   genresChosen: [],
   isSearchBarOpen: false,
   filterSelected: [],
+  inputFilters: [],
 };
 
 // Action creator
@@ -75,11 +76,16 @@ export const searchBarValue = value => ({
 const getFilterSelected = filters => ({ type: GET_FILTER_SELECTED, filters });
 
 //thunk creator
-export const customedFilter = (mainFilters, genreFilters) => async dispatch => {
+export const customedFilter = (
+  mainFilters,
+  genreFilters,
+  input
+) => async dispatch => {
   try {
     let myQueryString = queryString.stringify({
       main: mainFilters,
       genre: genreFilters,
+      // input
     });
 
     const res = await axios({

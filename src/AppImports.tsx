@@ -59,7 +59,7 @@ import history from './history';
 import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3';
-import AllVenuesView from './pages/Artist/Search/AllVenueFilter';
+import AllVenuesView from './pages/Artist/Search/SearchResults';
 export {
   IonApp,
   IonIcon,

@@ -100,11 +100,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
 
   render() {
     return (
-      <IonApp
-      // style={{
-      //   background: 'url(https://wallpaperaccess.com/full/851202.jpg)',
-      // }}
-      >
+      <IonApp>
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet>
@@ -148,13 +144,25 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               />
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
-              <IonTabButton tab="tab1" href="/home" onClick={this.onTab1Click}>
+              <IonTabButton
+                style={{
+                  '--background':
+                    'url(https://wallpaperaccess.com/full/851202.jpg)',
+                }}
+                tab="tab1"
+                href="/home"
+                onClick={this.onTab1Click}
+              >
                 <IonIcon icon={home} />
                 <IonLabel>Home</IonLabel>
               </IonTabButton>
 
               <IonTabButton
                 tab="tab3"
+                style={{
+                  '--background':
+                    'url(https://wallpaperaccess.com/full/851202.jpg)',
+                }}
                 href="/profile"
                 disabled={this.props.userId !== undefined ? false : true}
               >
@@ -167,14 +175,28 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               </IonTabButton>
 
               {this.props.userId !== undefined ? (
-                <IonTabButton tab="tab2" onClick={this.props.logout}>
+                <IonTabButton
+                  style={{
+                    '--background':
+                      'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  }}
+                  tab="tab2"
+                  onClick={this.props.logout}
+                >
                   <IonIcon icon={logOut} />
                   <IonLabel>Logout</IonLabel>
                 </IonTabButton>
               ) : null}
 
               {this.props.userId === undefined ? (
-                <IonTabButton tab="tab2" href="/login">
+                <IonTabButton
+                  style={{
+                    '--background':
+                      'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  }}
+                  tab="tab2"
+                  href="/login"
+                >
                   {this.props.userId === undefined ? (
                     <IonIcon icon={logIn} />
                   ) : null}

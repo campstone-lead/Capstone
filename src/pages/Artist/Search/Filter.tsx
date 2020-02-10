@@ -45,7 +45,7 @@ interface IMyComponentState {
 export class Filter extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,12 +57,12 @@ export class Filter extends React.Component<
     this.mainOnClick = this.mainOnClick.bind(this);
     this.deleteOnClick = this.deleteOnClick.bind(this);
   }
-  componentDidMount() {
-    let filter = window.localStorage.getItem('filter');
+  async componentDidMount() {
+    let filter = await window.localStorage.getItem('filter');
     let value: any;
     if (filter !== null) {
       value = JSON.parse(filter || '');
-      this.props.getState(value);
+      await this.props.getState(value);
       this.setState({
         genres: value.genres,
         allSingle: value.allSingle,
@@ -79,28 +79,29 @@ export class Filter extends React.Component<
       });
     }
   }
-  genresOnClick(event) {
+  async genresOnClick(event) {
     this.setState({
       ...this.state,
       checkedGenres: event.target.value,
     });
-    this.props.chooseGenres(event.target.value);
+    await this.props.chooseGenres(event.target.value);
   }
-  mainOnClick(event) {
+  async mainOnClick(event) {
+    const val = event.target.value;
     if (event.target.value) {
-      this.props.chooseAllSingle(event.target.value);
+      await this.props.chooseAllSingle(event.target.value);
       this.setState({
         ...this.state,
-        allSingle: event.target.value,
+        allSingle: val,
       });
     }
   }
-  deleteOnClick(event) {
+  async deleteOnClick(event) {
     this.setState({
       allSingle: this.props.allSingle,
       genres: this.props.genres,
     });
-    this.props.deleteFilter(event.target.title);
+    await this.props.deleteFilter(event.target.title);
   }
   render() {
     return (

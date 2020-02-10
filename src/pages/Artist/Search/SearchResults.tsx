@@ -19,21 +19,28 @@ interface IMyComponentProps {
   genresChosen: any;
   customedFilter: (
     mainFilters: Array<string>,
-    genreFilters: Array<string>
+    genreFilters: Array<string>,
+    input: string
   ) => void;
 }
 export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   async componentDidMount() {
     await this.props.customedFilter(
       this.props.allSingleChosen,
-      this.props.genresChosen
+      this.props.genresChosen,
+      ''
     );
   }
   render() {
     if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
     return (
-      <IonContent>
+      <IonContent
+        style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }}
+      >
         <div className="home" style={{ paddingBottom: '140px' }}>
           {this.props.filterSelected.map((venue, index) => {
             let genres = '';
@@ -45,7 +52,12 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                 href={`/all${this.props.allSingleChosen[0]}/${venue.id}`}
                 key={index}
                 className="profile"
-                style={{ width: '250px' }}
+                style={{
+                  '--background':
+                    'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  width: '250px',
+                }}
+                // style={{ width: '250px' }}
                 mode="ios"
               >
                 <div className="artistBox">
@@ -89,7 +101,7 @@ const mapStateToProps = state => ({
   genresChosen: state.filter.genresChosen,
 });
 const mapDispatchToProps = dispatch => ({
-  customedFilter: (mainFilters, genreFilters) =>
-    dispatch(customedFilter(mainFilters, genreFilters)),
+  customedFilter: (mainFilters, genreFilters, input) =>
+    dispatch(customedFilter(mainFilters, genreFilters, input)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AllVenuesView);
