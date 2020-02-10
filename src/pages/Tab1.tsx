@@ -5,6 +5,7 @@ import {
   IonToolbar,
   IonSearchbar,
   IonContent,
+  IonItem
 } from '@ionic/react';
 
 import React from 'react';
@@ -70,62 +71,64 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
         {this.props.user['status'] === undefined ? (
           <LandingPage />
         ) : (
-          <IonContent>
-            <IonHeader mode="ios">
-              <IonToolbar mode="ios">
-                <div className="tabHeader">
-                  <img
-                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                    alt="logo.png"
-                    className="logo"
-                  />
-                  <IonSearchbar
-                    mode="ios"
-                    className="searchBar"
-                    animated
-                    showCancelButton="focus"
-                    autocomplete="on"
-                    cancelButtonText="x"
-                    onClick={() => {
-                      this.props.searchBarValue(true);
-                      this.setState({ isSearchBarOpen: true });
-                    }}
-                    value={this.state.searchWord}
-                    onIonChange={this.onSearchBarChange}
-                  ></IonSearchbar>
-                  {this.state.isSearchBarOpen ? (
-                    <IonButton
-                      fill="clear"
-                      color="dark"
+            <IonContent>
+              <IonHeader mode="ios">
+                <IonToolbar mode="ios">
+                  <div className="tabHeader">
+                    <IonItem routerLink='/home'>
+                      <img
+                        src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                        alt="logo.png"
+                        className="logo"
+                      />
+                    </IonItem>
+                    <IonSearchbar
+                      mode="ios"
+                      className="searchBar"
+                      animated
+                      showCancelButton="focus"
+                      autocomplete="on"
+                      cancelButtonText="x"
                       onClick={() => {
-                        this.props.searchBarValue(false);
-                        this.setState({ isSearchBarOpen: false });
+                        this.props.searchBarValue(true);
+                        this.setState({ isSearchBarOpen: true });
                       }}
-                    >
-                      Cancel
+                      value={this.state.searchWord}
+                      onIonChange={this.onSearchBarChange}
+                    ></IonSearchbar>
+                    {this.state.isSearchBarOpen ? (
+                      <IonButton
+                        fill="clear"
+                        color="dark"
+                        onClick={() => {
+                          this.props.searchBarValue(false);
+                          this.setState({ isSearchBarOpen: false });
+                        }}
+                      >
+                        Cancel
                     </IonButton>
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </IonToolbar>
-            </IonHeader>
-            {this.state.isSearchBarOpen ? (
-              <IonContent>
-                <SearchBar />
-              </IonContent>
-            ) : (
-              <IonContent>
-                {this.props.user['status'] === 'booker' ? (
-                  <ArtistRecommendations />
-                ) : (
-                  // then they must be an artists... so show them venues
-                  <VenueRecommendations />
+                    ) : (
+                        ''
+                      )}
+                  </div>
+                </IonToolbar>
+              </IonHeader>
+              {this.state.isSearchBarOpen ? (
+                <IonContent>
+                  <SearchBar />
+                </IonContent>
+              ) : (
+                  <IonContent>
+                    {this.props.user['status'] === 'booker' ? (
+                      <ArtistRecommendations />
+                    ) : (
+                        // then they must be an artists... so show them venues
+                        <VenueRecommendations />
+                      )}
+                  </IonContent>
                 )}
-              </IonContent>
-            )}
-          </IonContent>
-        )}
+            </IonContent>
+          )}
       </IonPage>
     );
   }
