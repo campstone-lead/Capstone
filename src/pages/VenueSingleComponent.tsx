@@ -20,28 +20,6 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
     }
   }
 
-
-
-  async componentDidMount() {
-
-    // if (this.props.events.length !== 0)
-    //   this.setState({ currentEvent: this.props.events[0].id })
-
-    // if (this.props.attendedEvents !== null) {
-
-    //   let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(event => event.eventId === this.state.currentEvent)
-    //   if (getArtistStatusforCurrentVenue.length !== 0) {
-    //     await this.setState({
-    //       localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
-    //       sender: getArtistStatusforCurrentVenue[0]['sender'] || ''
-    //     })
-    //   }
-    // }
-
-  }
-
-
-
   render() {
     let genres = '';
     if (this.props.venue !== undefined && this.props.venue['genres'] !== undefined) {
