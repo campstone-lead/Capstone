@@ -3,16 +3,9 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  // IonIcon,
-  // IonItem,
-  // IonLabel,
-  IonItemGroup,
-  // IonListHeader,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonSearchbar,
   IonContent,
+  IonItemGroup,
+  IonPage,
   IonBackButton,
 } from '@ionic/react';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonItemGroup, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonSearchbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonItem, IonList, IonCardHeader, IonCardTitle, IonCardSubtitle, IonIcon } from '@ionic/react';
 import { notificationsOutline } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
@@ -8,7 +8,7 @@ import { fetchEvents, gotOneEvents } from '../store/event'
 import { fetchOneVenue, getAllVenues } from '../store/venue';
 import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
-import history from './history'
+
 
 interface IMyComponentProps {
   user: object,
@@ -147,6 +147,8 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                       </IonItem>
                     )
                 }
+
+                return null;
               })
             }
           </IonList>

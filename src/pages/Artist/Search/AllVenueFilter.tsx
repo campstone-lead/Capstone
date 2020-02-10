@@ -1,6 +1,5 @@
 import {
   IonCard,
-  IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonItemGroup,
@@ -8,7 +7,7 @@ import {
 } from '@ionic/react';
 
 import React from 'react';
-import { me } from '../../../store/user';
+// import { me } from '../../../store/user';
 import { customedFilter } from '../../../store/filter';
 import { connect } from 'react-redux';
 import '../../Tab1.css';
@@ -57,7 +56,7 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                       className="artistBoxText"
                     >
                       {this.props.allSingleChosen[0] === 'Artists' &&
-                      venue.firstName
+                        venue.firstName
                         ? venue.firstName.concat(' ', venue.lastName)
                         : venue['name']}
                     </IonCardTitle>

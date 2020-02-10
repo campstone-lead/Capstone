@@ -1,10 +1,9 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonItemGroup, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonSearchbar } from '@ionic/react';
-import { home, body, musicalNote } from 'ionicons/icons'
+import { IonContent, IonHeader, IonPage, IonToolbar, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonSearchbar } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
-import { fetchEvents, gotOneEvents } from '../store/event'
+import { gotOneEvents } from '../store/event'
 import { fetchOneVenue } from '../store/venue';
 import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
