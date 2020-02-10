@@ -15,22 +15,17 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
-  IonTabBar,
-  IonTabButton,
   IonIcon,
 } from '@ionic/react';
 import {
-  logoInstagram,
-  logoFacebook,
   call,
   mailOpen,
-  musicalNote,
-  microphone,
 } from 'ionicons/icons';
 import './Tab1.css';
 import { connect } from 'react-redux';
 import { getOneBooker } from '../store/booker';
 import { me } from '../store/user';
+import ArtistProfileComponent from './ArtistProfileComponent';
 interface IMyComponentProps {
   user: object;
   genres: Array<string>;
@@ -48,14 +43,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     }
   }
   render() {
-    let genres = '';
-    if (this.props.genres !== undefined) {
-      this.props.genres.forEach((el, index) => {
-        if (index !== this.props.genres.length - 1) {
-          genres += el + ', ';
-        } else genres += el;
-      });
-    }
+
     return (
       <IonPage>
         <IonHeader>
@@ -66,143 +54,87 @@ class Profile extends React.Component<IMyComponentProps, {}> {
         <IonContent>
           {this.props.user['status'] === 'artist' ? (
             <div className="profile">
-              <img
-                src={this.props.user['imageURL']}
-                alt={this.props.user['firstName']}
-                className="profileImage"
+              <ArtistProfileComponent
+                genres={this.props.genres}
+                artist={this.props.user}
               />
-              <IonCardHeader>
-                <IonCardTitle>{this.props.user['artistName']}</IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                  {this.props.user['bio']}
-                </IonCardSubtitle>
-                <br></br>
-                <IonList lines="inset">
-                  <IonItem>
-                    <IonIcon slot="start" color="medium" icon={microphone} />
-                    <IonLabel style={{ padding: '5px' }}>
-                      {' '}
-                      My genres are: {genres}{' '}
-                    </IonLabel>
-                  </IonItem>
-
-                  <IonItem>
-                    <IonIcon slot="start" color="medium" icon={mailOpen} />
-                    <IonLabel style={{ padding: '5px' }}>
-                      {this.props.user['email']}{' '}
-                    </IonLabel>
-                  </IonItem>
-                  <IonItem>
-                    <IonIcon slot="start" color="medium" icon={call} />
-                    <IonLabel style={{ padding: '5px' }}>
-                      {' '}
-                      {this.props.user['phone']}{' '}
-                    </IonLabel>
-                  </IonItem>
-                </IonList>
-
-                <IonTabBar slot="bottom">
-                  <IonTabButton tab="tab2">
-                    <IonItem href={this.props.user['instagramUrl']}>
-                      <IonIcon icon={logoInstagram} />
-                    </IonItem>
-                    <IonLabel>Instagram</IonLabel>
-                  </IonTabButton>
-
-                  <IonTabButton tab="tab2">
-                    <IonItem href={this.props.user['spotifyUrl']}>
-                      <IonIcon icon={musicalNote} />
-                    </IonItem>
-                    <IonLabel>Spotify</IonLabel>
-                  </IonTabButton>
-
-                  <IonTabButton tab="tab2">
-                    <IonItem href={this.props.user['facebookUrl']}>
-                      <IonIcon icon={logoFacebook} />
-                    </IonItem>
-                    <IonLabel>Facebook</IonLabel>
-                  </IonTabButton>
-                </IonTabBar>
-              </IonCardContent>
               <IonButton>Update profile</IonButton>
             </div>
           ) : (
-            <div className="profile">
-              <img
-                src={this.props.user['imageURL']}
-                alt={this.props.user['firstName']}
-                className="bookerImage"
-              />
-              <IonCardHeader>
-                <IonCardTitle>
-                  {this.props.user['firstName']} {this.props.user['lastName']}
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <IonList lines="inset">
-                  <IonItem>
-                    <IonIcon slot="start" color="medium" icon={mailOpen} />
-                    <IonLabel style={{ padding: '5px' }}>
-                      {this.props.user['email']}{' '}
-                    </IonLabel>
-                  </IonItem>
+              <div className="profile">
+                <img
+                  src={this.props.user['imageURL']}
+                  alt={this.props.user['firstName']}
+                  className="bookerImage"
+                />
+                <IonCardHeader>
+                  <IonCardTitle>
+                    {this.props.user['firstName']} {this.props.user['lastName']}
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <IonList lines="inset">
+                    <IonItem>
+                      <IonIcon slot="start" color="medium" icon={mailOpen} />
+                      <IonLabel style={{ padding: '5px' }}>
+                        {this.props.user['email']}{' '}
+                      </IonLabel>
+                    </IonItem>
 
-                  <IonItem>
-                    <IonIcon slot="start" color="medium" icon={call} />
-                    <IonLabel style={{ padding: '5px' }}>
-                      {' '}
-                      {this.props.user['phone']}{' '}
-                    </IonLabel>
-                  </IonItem>
-                </IonList>
-              </IonCardContent>
-              <IonButton>Update profile</IonButton>
-              <br></br>
-              {this.props.venues !== undefined &&
-              this.props.venues.length > 0 ? (
-                <div>
-                  <IonCardHeader>
-                    You manage the following venues:
+                    <IonItem>
+                      <IonIcon slot="start" color="medium" icon={call} />
+                      <IonLabel style={{ padding: '5px' }}>
+                        {' '}
+                        {this.props.user['phone']}{' '}
+                      </IonLabel>
+                    </IonItem>
+                  </IonList>
+                </IonCardContent>
+                <IonButton>Update profile</IonButton>
+                <br></br>
+                {this.props.venues &&
+                  this.props.venues.length > 0 ? (
+                    <div>
+                      <IonCardHeader>
+                        You manage the following venues:
                   </IonCardHeader>
 
-                  {this.props.venues.map(venue => (
-                    <IonCard
-                      key={venue['id']}
-                      className="profile"
-                      style={{ width: '300px' }}
-                      mode="ios"
-                    >
-                      <IonCardHeader className="items">
-                        <IonItemGroup>
-                          <img src={venue['imageURL']} alt={venue['name']} />
-                        </IonItemGroup>
-                        <IonItemGroup>
-                          <IonCardTitle>{venue['name']}</IonCardTitle>
-                          <IonCardSubtitle>{venue['address']}</IonCardSubtitle>
-                        </IonItemGroup>
-                      </IonCardHeader>
-                    </IonCard>
-                  ))}
-                </div>
-              ) : (
-                <div>
-                  <IonCardHeader>
-                    You do not currently manage any venues.
+                      {this.props.venues.map(venue => (
+                        <IonCard
+                          key={venue['id']}
+                          className="profile"
+                          style={{ width: '300px' }}
+                          mode="ios"
+                        >
+                          <IonCardHeader className="items">
+                            <IonItemGroup>
+                              <img src={venue['imageURL']} alt={venue['name']} />
+                            </IonItemGroup>
+                            <IonItemGroup>
+                              <IonCardTitle>{venue['name']}</IonCardTitle>
+                              <IonCardSubtitle>{venue['address']}</IonCardSubtitle>
+                            </IonItemGroup>
+                          </IonCardHeader>
+                        </IonCard>
+                      ))}
+                    </div>
+                  ) : (
+                    <div>
+                      <IonCardHeader>
+                        You do not currently manage any venues.
                   </IonCardHeader>
-                  <IonButton
-                    mode="ios"
-                    href="/addvenue"
-                    className="homeBtn"
-                    color="rgb(153, 178, 189);"
-                  >
-                    Add venues
+                      <IonButton
+                        mode="ios"
+                        href="/addvenue"
+                        className="homeBtn"
+                        color="rgb(153, 178, 189);"
+                      >
+                        Add venues
                   </IonButton>
-                </div>
-              )}
-            </div>
-          )}
+                    </div>
+                  )}
+              </div>
+            )}
         </IonContent>
       </IonPage>
     );

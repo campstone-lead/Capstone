@@ -25,7 +25,7 @@ interface IMyComponentProps {
 class PersonalInfoForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,10 +83,11 @@ class PersonalInfoForm extends React.Component<
                 }
               />
             </IonItem>
-            <IonItem routerLink={'/artistbioform'}>
+            <IonItem >
               <IonButton
                 type="submit"
                 disabled={this.state.artistName === '' ? true : false}
+                routerLink={'/artistbioform'}
               >
                 next
               </IonButton>

@@ -120,9 +120,12 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
           <IonButton color={this.state.genreTypes.house ? 'primary' : 'secondary'} type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
           <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'} type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
 
-          <IonItem routerLink="/artisttype">
+          <IonItem >
             <br></br>
-            <IonButton type="submit" disabled={(Object.keys(this.state.genreTypes).some(key => this.state.genreTypes[key] === true)) ? false : true}>Next</IonButton>
+            <IonButton type="submit"
+              disabled={Object.keys(this.state.genreTypes).every((key) => !this.state.genreTypes[key])}
+              routerLink="/artisttype"
+            >Next</IonButton>
           </IonItem>
         </form>
       </IonContent>

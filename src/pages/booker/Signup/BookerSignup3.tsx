@@ -76,12 +76,13 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
             Take Picture
           </IonFabButton>
           <img src={this.state.photo} alt="" />
-          <IonItem routerLink="/signup/booker/4">
+          <IonItem>
             <br></br>
 
             <IonButton size="small" className="next"
               onClick={this.handleClick}
               disabled={(this.state.photo.length === 0)}
+              routerLink="/signup/booker/4"
             >Next</IonButton>
 
           </IonItem>
