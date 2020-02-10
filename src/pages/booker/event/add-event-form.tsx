@@ -40,7 +40,6 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
         imageUrl: '',
         description: '',
         date: '',
-        photo: '',
         name: ''
       },
       currentVenue: 0,
@@ -80,9 +79,9 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
           </IonToolbar>
         </IonHeader>
 
-        <IonCardTitle className="textBox">
+        <IonLabel>
           Please select the venue for this event
-        </IonCardTitle>
+        </IonLabel>
         <IonCard>
 
           {this.props.venues && this.props.venues.length > 0 ?

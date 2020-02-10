@@ -123,16 +123,25 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                       <IonCardHeader>
                         You do not currently manage any venues.
                   </IonCardHeader>
-                      <IonButton
-                        mode="ios"
-                        href="/addvenue"
-                        className="homeBtn"
-                        color="rgb(153, 178, 189);"
-                      >
-                        Add venues
-                  </IonButton>
                     </div>
                   )}
+                <IonButton
+                  mode="ios"
+                  href="/addvenue"
+                  className="homeBtn"
+                  color="rgb(153, 178, 189);"
+                >
+                  Add a venue
+                  </IonButton>
+
+                <IonButton
+                  mode="ios"
+                  href="/addevent"
+                  className="homeBtn"
+                  color="rgb(153, 178, 189);"
+                >
+                  Create an event
+                  </IonButton>
               </div>
             )}
         </IonContent>
