@@ -16,7 +16,16 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const data = await Event.findByPk(req.params.id)
+    const data = await Event.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [
+        {
+          model: Venue
+        }
+      ]
+    })
     if (!data) {
       res.sendStatus(404)
     } else {
