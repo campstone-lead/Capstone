@@ -40,7 +40,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -119,15 +119,15 @@ class ArtistRecommendation extends React.Component<
               </IonCardTitle>
             </div>
           ) : (
-              <IonButton
-                mode="ios"
-                href="/addvenue"
-                className="homeBtn"
-                color="rgb(153, 178, 189);"
-              >
-                Add venues
+            <IonButton
+              mode="ios"
+              href="/addvenue"
+              className="homeBtn"
+              color="rgb(153, 178, 189);"
+            >
+              Add venues
             </IonButton>
-            )}
+          )}
         </IonCardHeader>
         {
           <div className="venue">
@@ -139,10 +139,15 @@ class ArtistRecommendation extends React.Component<
 
               return (
                 <IonCard
+                  style={{
+                    '--background':
+                      'url(https://wallpaperaccess.com/full/851202.jpg)',
+                    width: '250px',
+                  }}
                   key={index}
                   href={`/allArtists/${artist['id']}`}
                   className="profile"
-                  style={{ width: '250px' }}
+                  // style={{ width: '250px' }}
                   mode="ios"
                 >
                   <div className="artistBox">
@@ -153,7 +158,7 @@ class ArtistRecommendation extends React.Component<
                         style={{ textAlign: 'center' }}
                         className="artistBoxText"
                       >
-                        {artist['artistName']}
+                        {artist['name']}
                       </IonCardTitle>
                       <IonCardSubtitle style={{ textAlign: 'center' }}>
                         {genres}

@@ -16,23 +16,31 @@ interface IMyComponentProps {
   filterSelected: any;
   allSingleChosen: any;
   genresChosen: any;
+  word: string;
   customedFilter: (
     mainFilters: Array<string>,
-    genreFilters: Array<string>
+    genreFilters: Array<string>,
+    input: string
   ) => void;
 }
 export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
   async componentDidMount() {
     await this.props.customedFilter(
       this.props.allSingleChosen,
-      this.props.genresChosen
+      this.props.genresChosen,
+      this.props.word
     );
   }
   render() {
     if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
     return (
-      <IonContent>
+      <IonContent
+        style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }}
+      >
         <div className="home" style={{ paddingBottom: '140px' }}>
           {this.props.filterSelected.map((venue, index) => {
             let genres = '';
@@ -41,13 +49,26 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
             });
             return (
               <IonCard
-                href={`/all${this.props.allSingleChosen[0]}/${venue.id}`}
+                href={`/all${venue.tableName}s/${venue.id}`}
                 key={index}
                 className="profile"
-                style={{ width: '250px' }}
+                style={{
+                  '--background':
+                    'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  width: '250px',
+                }}
+                // style={{ width: '250px' }}
                 mode="ios"
               >
-                <div className="artistBox">
+                <div
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    color: 'black',
+                  }}
+                  className="artistBox"
+                >
+                  {venue.tableName}
                   <img src={venue['imageURL']} alt="img.jpg" />
 
                   <IonItemGroup style={{ margin: '20px' }}>
@@ -55,9 +76,8 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                       style={{ textAlign: 'center' }}
                       className="artistBoxText"
                     >
-                      {this.props.allSingleChosen[0] === 'Artists' &&
-                        venue.firstName
-                        ? venue.firstName.concat(' ', venue.lastName)
+                      {venue.tableName === 'Artist' && venue.artistName
+                        ? venue.artistName
                         : venue['name']}
                     </IonCardTitle>
                     <IonCardSubtitle
@@ -86,9 +106,10 @@ const mapStateToProps = state => ({
   filterSelected: state.filter.filterSelected,
   allSingleChosen: state.filter.allSingleChosen,
   genresChosen: state.filter.genresChosen,
+  word: state.filter.word,
 });
 const mapDispatchToProps = dispatch => ({
-  customedFilter: (mainFilters, genreFilters) =>
-    dispatch(customedFilter(mainFilters, genreFilters)),
+  customedFilter: (mainFilters, genreFilters, input) =>
+    dispatch(customedFilter(mainFilters, genreFilters, input)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AllVenuesView);

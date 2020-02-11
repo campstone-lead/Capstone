@@ -2,7 +2,6 @@ import React from 'react';
 import { IonItem, IonItemGroup, IonLabel, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonButton, IonTabButton } from '@ionic/react';
 import { home, body, musicalNote, add } from 'ionicons/icons'
 import './Tab1.css';
-import { findByLabelText } from '@testing-library/react';
 
 interface IMyComponentProps {
   venue: object,

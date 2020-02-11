@@ -41,7 +41,7 @@ import Profile from './pages/Profile';
 import Filter from './pages/Artist/Search/Filter';
 import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
-import NotificationWall from './pages/NotificationWall'
+import NotificationWall from './pages/NotificationWall';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 import { me, logout } from './store/user';
@@ -62,7 +62,10 @@ import history from './history';
 import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3';
-import AllVenuesView from './pages/Artist/Search/AllVenueFilter';
+import AllVenuesView from './pages/Artist/Search/SearchResults';
+import VenueSinglePage from './pages/VenueSinglePage';
+import { searchBarValue } from './store/filter';
+import './socket';
 export {
   IonApp,
   IonIcon,
@@ -116,5 +119,7 @@ export {
   AllVenuesView,
   NotificationWall,
   notifications,
-  Tab4
+  Tab4,
+  VenueSinglePage,
+  searchBarValue,
 };
