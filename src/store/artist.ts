@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import socket from '../socket';
+import { act } from 'react-dom/test-utils';
 /**
  * ACTION TYPES
  */
@@ -16,12 +17,13 @@ const defaultArtist = {
   artist: {},
   booked: {},
   status: '',
+  allReq: []
 };
 
 /**
  * ACTION CREATORS
  */
-
+export const getReq = req => ({ type: 'GET_REQUEST', req });
 export const getArtists = artists => ({ type: GET_ARTISTS, artists });
 export const bookArtist = info => ({ type: BOOK_ARTIST, info });
 export const getOneArtist = artist => ({ type: GET_ONE_ARTIST, artist });
@@ -46,15 +48,19 @@ export const createConnection = (artistId, venueId) => async dispatch => {
     console.log(err);
   }
 };
-export const sendRequest = request => async dispatch => {
+export const sendRequest = request1 => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
       baseURL: 'http://localhost:8080/api/',
       url: `/events/connection/`,
-      data: request,
+      data: request1,
     });
-    dispatch(bookArtist(res.data));
+    const request = res.data;
+    dispatch(bookArtist(request));
+    // console.log('about to send a request', request)
+    socket.emit('send-request', request)
+
   } catch (err) {
     console.log(err);
   }
@@ -67,8 +73,11 @@ export const sendResponse = data => async dispatch => {
       url: `/events/connection/update`,
       data: data,
     });
-    console.log('got one event->>>>', res.data);
+
     dispatch(bookArtist(res.data));
+    const response = res.data;
+
+    socket.emit('send-response', response)
   } catch (err) {
     console.log(err);
   }
@@ -108,7 +117,7 @@ export const fetchOneArtists = id => async dispatch => {
       baseURL: 'http://localhost:8080/api/',
       url: `/artists/${id}`,
     });
-    console.log('here', res.data.artist);
+
     dispatch(getOneArtist(res.data || defaultArtist));
   } catch (err) {
     console.error(err);
@@ -181,6 +190,9 @@ export default function (state = defaultArtist, action) {
     case UPDATE_ARTIST:
 
       return { ...state, ...action.newArtistData };
+    case 'GET_REQUEST':
+
+      return { ...state, allReq: [...state.allReq, action.req] };
 
     default:
       return state;

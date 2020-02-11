@@ -1,7 +1,7 @@
 const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-const {User, Artist} = require('../db/models')
+const { User, Artist } = require('../db/models')
 module.exports = router
 
 /**
@@ -31,14 +31,14 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     googleConfig,
     (token, refreshToken, profile, done) => {
       const googleId = profile.id
-      console.log(googleId)
+      // console.log(googleId)
       const email = profile.emails[0].value
       const firstName = profile.name.givenName
       const lastName = profile.name.familyName
 
       User.findOrCreate({
-        where: {googleId},
-        defaults: {email, firstName, lastName}
+        where: { googleId },
+        defaults: { email, firstName, lastName }
       })
         .then(([user]) => done(null, user))
         .catch(done)
@@ -49,7 +49,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   router.get(
     '/',
-    passport.authenticate('google', {scope: ['email', 'profile']})
+    passport.authenticate('google', { scope: ['email', 'profile'] })
   )
 
   router.get(
