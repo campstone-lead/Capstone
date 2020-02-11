@@ -6,9 +6,7 @@ axios.defaults.withCredentials = true;
  */
 const GET_BOOKER = 'GET_BOOKER'
 const UPDATE_BOOKER = 'UPDATE_BOOKER'
-const UPDATE_VENUE = 'UPDATE_VENUE'
 const REMOVE_USER = 'REMOVE_USER'
-const CREATE_VENUE = 'CREATE_VENUE'
 const BOOKER_EVENTS = 'BOOKER_EVENTS'
 /**
  *
@@ -23,10 +21,8 @@ const defaultBooker = {
  */
 const getBooker = booker => ({ type: GET_BOOKER, booker })
 const bookerEvents = events => ({ type: BOOKER_EVENTS, events })
-export const updateBooker = newBookerData => ({ type: UPDATE_BOOKER, newBookerData })
+// export const updateBooker = newBookerData => ({ type: UPDATE_BOOKER, newBookerData })
 export const updatedBooker = newBookerData => ({ type: UPDATE_BOOKER, newBookerData })
-export const updateVenue = venue => ({ type: UPDATE_VENUE, venue })
-export const createVenue = venue => ({ type: CREATE_VENUE, venue })
 export const removeUser = () => ({ type: REMOVE_USER })
 /**
  * THUNK CREATORS
@@ -61,7 +57,6 @@ export const getBookerEvents = (id) => async dispatch => {
 }
 export const updatedVenue = (venue) => async dispatch => {
   try {
-
     let booker = window.localStorage.getItem('booker')
     booker = JSON.parse(booker || '');
     let newBooker = booker || {};
@@ -85,7 +80,6 @@ export const updatedVenue = (venue) => async dispatch => {
         data: booker
       })
 
-      newBooker["venue"]["name"] = newBooker["venue"]["address"]
       let v = { ...newBooker["venue"], bookerId: res.data.id }
 
       await axios({
@@ -99,7 +93,6 @@ export const updatedVenue = (venue) => async dispatch => {
         JSON.stringify(newBooker["email"])
       )
     }
-    dispatch(updateVenue(newBooker))
   } catch (err) {
     console.error(err)
   }
@@ -107,26 +100,14 @@ export const updatedVenue = (venue) => async dispatch => {
 
 //add new venue
 //add-venue-form.tsx
-export const createdVenue = (sentVenue) => async dispatch => {
+export const createdVenue = (v) => async dispatch => {
   try {
-    console.log('sentVenue:', sentVenue)
-
-    let venueAxios = {
-      description: sentVenue["description"],
-      name: sentVenue["address"],
-      address: sentVenue["address"],
-      latitude: sentVenue["latitude"],
-      longitude: sentVenue["longitude"],
-      capacity: sentVenue["capacity"],
-      genres: sentVenue["genres"]
-    }
     await axios({
       method: "post",
       baseURL: "http://localhost:8080/api/",
       url: `/venues/`,
-      data: venueAxios
+      data: v
     })
-    dispatch(createVenue(sentVenue))
   } catch (err) {
     console.error(err)
   }
@@ -141,10 +122,6 @@ export default function (state = defaultBooker, action) {
     case UPDATE_BOOKER:
       window.localStorage.setItem('booker', JSON.stringify(action.newBookerData))
       return { ...state, ...action.newBookerData }
-    case UPDATE_VENUE:
-      return action.venue;
-    case CREATE_VENUE:
-      return action.venue
     case REMOVE_USER:
       return {};
     case BOOKER_EVENTS:

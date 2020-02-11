@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem, IonLabel, IonInput } from '@ionic/react';
 import './BookerSignup2.css';
 import { connect } from 'react-redux'
 import PlacesAutocomplete, {
@@ -11,7 +11,9 @@ import { updatedVenue } from '../../../store/booker'
 interface IMyComponentState {
   latitude: Number,
   longitude: Number,
-  address: String,
+  name: string,
+  address: string,
+  fullAddress: string,
   on: boolean
 }
 interface IMyComponentProps {
@@ -26,7 +28,9 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
     this.state = {
       latitude: 0,
       longitude: 0,
+      name: '',
       address: '',
+      fullAddress: '',
       on: false
     }
   }
@@ -43,17 +47,23 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
     }
   }
   handleChange = address => {
-    this.setState({ address });
+    this.setState({ fullAddress: address });
   };
 
-  handleSelect = address => {
-    geocodeByAddress(address)
+  handleSelect = fullAddress => {
+    geocodeByAddress(fullAddress)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
+        let addressArr = fullAddress.split(', ')
+        let name = addressArr[0]
+        if (addressArr.length > 4) addressArr.shift()
+        let address = addressArr.join(', ')
         this.setState({
           latitude: latLng.lat,
           longitude: latLng.lng,
-          address
+          fullAddress,
+          address,
+          name
         })
         console.log('Success grabbing adress!')
       })
@@ -73,7 +83,7 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
           <IonCard className="welcome-card">
 
             <PlacesAutocomplete
-              value={this.state.address}
+              value={this.state.fullAddress}
               onChange={this.handleChange}
               onSelect={this.handleSelect}
             >
@@ -112,7 +122,20 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
               )}
             </PlacesAutocomplete>
 
-
+            <IonLabel className='venuelabel'>Venue name</IonLabel>
+            <IonItem >
+              <IonInput clearInput type="text" required
+                value={this.state.name}
+                onIonChange={(e) => this.setState({ name: (e.target as HTMLInputElement).value })}
+              />
+            </IonItem>
+            <IonLabel className='venuelabel'>Address</IonLabel>
+            <IonItem >
+              <IonInput clearInput type="text" required
+                value={this.state.address}
+                onIonChange={(e) => this.setState({ address: (e.target as HTMLInputElement).value })}
+              />
+            </IonItem>
             <IonItem>
               <br></br>
 

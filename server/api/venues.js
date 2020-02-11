@@ -46,11 +46,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log('req.body!!!:', req.body)
     if (!req.body.bookerId) {
       req.body.bookerId = req.user.id;
     }
-    console.log('req.body:', req.body)
     const data = await Venue.create(req.body);
     res.json(data);
   } catch (error) {

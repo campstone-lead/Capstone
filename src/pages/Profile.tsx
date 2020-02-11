@@ -43,7 +43,6 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     }
   }
   render() {
-
     return (
       <IonPage>
         <IonHeader>
@@ -102,6 +101,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                       {this.props.venues.map(venue => (
                         <IonCard
                           key={venue['id']}
+                          href={`/allVenues/${venue['id']}`}
                           className="profile"
                           style={{ width: '300px' }}
                           mode="ios"

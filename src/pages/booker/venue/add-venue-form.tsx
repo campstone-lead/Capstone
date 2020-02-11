@@ -12,10 +12,10 @@ import PlacesAutocomplete, {
 
 interface IMyComponentState {
   venue: object,
-  genreTypes: object
+  genreTypes: object,
+  fullAddress: string
 }
 interface IMyComponentProps {
-  booker: any,
   createVenue: (venue: object) => void
 }
 
@@ -26,6 +26,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
       venue: {
         latitude: 0,
         longitude: 0,
+        name: '',
         address: '',
         imageUrl: '',
         description: '',
@@ -43,43 +44,33 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
         metal: false,
         house: false,
         techno: false,
-      }
+      },
+      fullAddress: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this)
   }
 
-  // componentDidMount() {
-  //   let venue = window.localStorage.getItem('venue')
-  //   if (venue !== null) {
-  //     venue = JSON.parse(venue || '');
-  //     let newVenue = venue || {};
-  //     this.setState({
-  //       address: newVenue["address"],
-  //       latitude: newVenue["latitude"],
-  //       longitude: newVenue["longitude"],
-  //       imageUrl: newVenue["imageUrl"],
-  //       description: newVenue["description"],
-  //       capacity: newVenue["capacity"],
-  //       photo: newVenue["photo"],
-  //     })
-  //   }
-  //   console.log("this.state", this.state)
-  // }
   handleChange = address => {
-    this.setState({ venue: { ...this.state.venue, address } });
+    this.setState({ fullAddress: address });
   };
 
-  handleSelect = address => {
-    geocodeByAddress(address)
+  handleSelect = fullAddress => {
+    geocodeByAddress(fullAddress)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
+        let addressArr = fullAddress.split(', ')
+        let name = addressArr[0]
+        if (addressArr.length > 4) addressArr.shift()
+        let address = addressArr.join(', ')
         this.setState({
+          fullAddress,
           venue: {
             ...this.state.venue,
             latitude: latLng.lat,
             longitude: latLng.lng,
-            address
+            address,
+            name
           }
         })
         console.log('Success grabbing adress!')
@@ -101,7 +92,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
     event.preventDefault();
     const filtered = Object.keys(this.state.genreTypes).filter((key) => this.state.genreTypes[key])
     await this.setState({ venue: { ...this.state.venue, genres: filtered } })
-    this.props.createVenue(this.state.venue)
+    await this.props.createVenue(this.state.venue)
   }
   render() {
     let genresArray = Object.keys(this.state.genreTypes)
@@ -117,13 +108,10 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
         <IonContent>
           <form onSubmit={this.handleSubmit} className='updatevenue' >
 
-            {/* <IonCardHeader>
-        <IonCardTitle>Describe the venue</IonCardTitle>
-      </IonCardHeader>  */}
             <IonLabel className='venuelabel'>Venue</IonLabel>
 
             <PlacesAutocomplete
-              value={this.state.venue["address"]}
+              value={this.state.fullAddress}
               onChange={this.handleChange}
               onSelect={this.handleSelect}
             >
@@ -161,6 +149,20 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
                 </div>
               )}
             </PlacesAutocomplete>
+            <IonLabel className='venuelabel'>Venue name</IonLabel>
+            <IonItem >
+              <IonInput clearInput type="text" required
+                value={this.state.venue["name"]}
+                onIonChange={(e) => this.setState({ venue: { ...this.state.venue, name: (e.target as HTMLInputElement).value } })}
+              />
+            </IonItem>
+            <IonLabel className='venuelabel'>Address</IonLabel>
+            <IonItem >
+              <IonInput clearInput type="text" required
+                value={this.state.venue["address"]}
+                onIonChange={(e) => this.setState({ venue: { ...this.state.venue, address: (e.target as HTMLInputElement).value } })}
+              />
+            </IonItem>
             <IonLabel className='venuelabel'>Describe the venue</IonLabel>
             <IonItem >
               <IonInput clearInput type="text" required
@@ -177,7 +179,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
             </IonItem>
             <IonLabel className='venuelabel'>Genres</IonLabel>
             {genresArray.map((genre) =>
-              <IonButton color={this.state.genreTypes[genre] ? 'primary' : 'secondary'} type="button" target={genre} onClick={this.handleClick}>{genre}</IonButton>
+              <IonButton key={genre} color={this.state.genreTypes[genre] ? 'primary' : 'secondary'} type="button" target={genre} onClick={this.handleClick}>{genre}</IonButton>
             )}
 
             <IonButton color='secondary' >Upload a picture</IonButton>
@@ -189,12 +191,10 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
       </IonPage>)
   }
 }
-const mapStateToProps = (state) => ({
-  booker: state.booker
-})
+
 const mapDispatchToProps = dispatch => {
   return {
     createVenue: (venue) => dispatch(createdVenue(venue))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AddVenueForm);
+export default connect(null, mapDispatchToProps)(AddVenueForm);
