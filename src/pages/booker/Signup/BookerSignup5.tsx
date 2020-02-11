@@ -1,8 +1,12 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonCard } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonCard, IonIcon } from '@ionic/react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import './BookerSignup2.css';
+import {
+  people
+} from 'ionicons/icons';
+
 import { updatedVenue } from '../../../store/booker'
 interface IMyComponentState {
   capacity: string
@@ -48,11 +52,11 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
+          <div className="welcome-card">
             <form onSubmit={this.handleSubmit} >
               <IonTitle>How many people can fit in your venue?</IonTitle>
-              <IonItem >
-
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={people} />
                 <IonInput type="text" required
                   value={this.state.capacity}
                   onIonChange={(e) => this.setState({ capacity: (e.target as HTMLInputElement).value })}
@@ -63,7 +67,7 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
 
 
 
-              <IonItem>
+              <div>
                 <br></br>
 
                 <IonButton size="small" className="next"
@@ -72,12 +76,12 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                   routerLink="/signup/booker/6"
                 >Next</IonButton>
 
-              </IonItem>
+              </div>
 
 
             </form>
 
-          </IonCard>
+          </div>
         </IonContent>
       </IonPage>
     )

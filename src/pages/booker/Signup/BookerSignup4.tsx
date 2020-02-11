@@ -1,9 +1,13 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonCard } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import './BookerSignup2.css';
 import { updatedVenue } from '../../../store/booker'
+import {
+  create
+} from 'ionicons/icons';
+
 interface IMyComponentState {
   description: string
 }
@@ -41,19 +45,18 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
 
       <IonPage>
         <IonHeader >
-          <IonToolbar id="bar" >
+          <IonToolbar  >
             <IonTitle>Venue description</IonTitle>
-            {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
           </IonToolbar>
         </IonHeader>
 
         <IonContent>
 
-          <IonCard className="welcome-card">
+          <div className="welcome-card">
             <form onSubmit={this.handleSubmit} >
               <IonTitle>Add venue description here...</IonTitle>
-              <IonItem >
-
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={create} />
                 <IonInput type="text" required
                   value={this.state.description}
                   onIonChange={(e) => this.setState({ description: (e.target as HTMLInputElement).value })}
@@ -62,19 +65,17 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                 />
               </IonItem>
 
-              <IonItem>
-                <br></br>
-
+              <div style={{ margin: "10px" }}>
                 <IonButton size="small" className="next" type="submit"
                   disabled={(this.state.description.length === 0)}
                   routerLink="/signup/booker/5"
                 >Next</IonButton>
+              </div>
 
-              </IonItem>
 
             </form>
 
-          </IonCard>
+          </div>
         </IonContent>
       </IonPage>
     )

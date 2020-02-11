@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem, IonLabel, IonInput } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem, IonLabel, IonInput, IonIcon, IonCardHeader } from '@ionic/react';
 import './BookerSignup2.css';
 import { connect } from 'react-redux'
 import PlacesAutocomplete, {
@@ -7,7 +7,9 @@ import PlacesAutocomplete, {
   getLatLng
 } from 'react-places-autocomplete'
 import { updatedVenue } from '../../../store/booker'
-
+import {
+  navigate
+} from 'ionicons/icons';
 interface IMyComponentState {
   latitude: Number,
   longitude: Number,
@@ -80,12 +82,13 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
-
+          <div className="welcome-card">
+            <IonCardHeader>Type bellow the place or address for your first venue</IonCardHeader>
             <PlacesAutocomplete
               value={this.state.fullAddress}
               onChange={this.handleChange}
               onSelect={this.handleSelect}
+
             >
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
@@ -123,32 +126,37 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
             </PlacesAutocomplete>
 
             <IonLabel className='venuelabel'>Venue name</IonLabel>
-            <IonItem >
+            <IonItem lines="inset">
+              <IonIcon mode="ios" slot="start" color="medium" icon={navigate} />
               <IonInput clearInput type="text" required
                 value={this.state.name}
                 onIonChange={(e) => this.setState({ name: (e.target as HTMLInputElement).value })}
               />
             </IonItem>
             <IonLabel className='venuelabel'>Address</IonLabel>
-            <IonItem >
+            <IonItem lines="inset" >
+              <IonIcon mode="ios" slot="start" color="medium" icon={navigate} />
               <IonInput clearInput type="text" required
                 value={this.state.address}
                 onIonChange={(e) => this.setState({ address: (e.target as HTMLInputElement).value })}
               />
             </IonItem>
-            <IonItem>
-              <br></br>
 
-              <IonButton size="small" className="next" onClick={() => {
-                return this.props.updateVenue(this.state)
-              }}
-                disabled={(this.state.address.length === 0 || this.state.latitude === 0)}
-                routerLink="/signup/booker/3"
-              >Next</IonButton>
 
-            </IonItem>
+            <div style={{ margin: "15px" }}>
+              <IonItem lines="none">
+                <IonButton size="small" className="next" onClick={() => {
+                  return this.props.updateVenue(this.state)
+                }}
+                  disabled={(this.state.address.length === 0 || this.state.latitude === 0)}
+                  routerLink="/signup/booker/3"
+                >Next</IonButton>
 
-          </IonCard>
+              </IonItem>
+            </div>
+
+
+          </div>
         </IonContent>
       </IonPage>
     )

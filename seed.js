@@ -312,21 +312,21 @@ const artistEvent = [
 
 const events = [
   {
-    id: 1,
+
     name: 'Friday Night Rock',
     description: 'Friday Night Rock need two rock bands to play at.',
     date: new Date('May 11, 2020 22:30:00 UTC'),
     venueId: 2,
   },
   {
-    id: 2,
+
     name: 'Boss Lady',
     description: 'In need of two techno artists or band to play at!!! ',
     venueId: 4,
     date: new Date('April 21, 2020 20:30:00 UTC'),
   },
   {
-    id: 3,
+
     name: 'Saturday Late Night Party',
     description: "Looking for at least two dj's.",
     date: new Date('May 03, 2020 22:30:00 UTC'),

@@ -237,3 +237,9 @@ border-radius: 3%;
   font-size: 20px;
   padding: -10em;
 }
+.genres{
+  display: flex;
+  flex-direction: column;
+  flex-direction: wrap;
+  justify-content: space-evenly;
+}

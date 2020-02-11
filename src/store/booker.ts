@@ -80,7 +80,7 @@ export const updatedVenue = (venue) => async dispatch => {
         data: booker
       })
 
-      let v = { ...newBooker["venue"], bookerId: res.data.id }
+      let v = { ...newBooker["venue"], bookerId: res.data.id, imageURL: newBooker["venue"].photo }
 
       await axios({
         method: "post",

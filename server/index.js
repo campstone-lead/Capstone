@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
 const cors = require('cors')
+
+var multer = require('multer')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -66,7 +68,31 @@ const createApp = () => {
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+  //multer
+  var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+  var upload = multer({ storage: storage }).single('file')
 
+  app.post('/upload', (req, res, next) => {
+
+    upload(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        return res.status(500).json(err)
+      } else if (err) {
+        return res.status(500).json(err)
+      }
+      console.log(req.file)
+      return res.status(200).send(req.file)
+
+    })
+
+  });
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
 

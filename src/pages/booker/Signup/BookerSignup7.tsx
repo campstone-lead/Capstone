@@ -1,9 +1,13 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonCard } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import { updatedVenue } from '../../../store/booker'
 import { auth } from '../../../store/user'
+import {
+  lock
+} from 'ionicons/icons';
+
 interface IMyComponentState {
   password: string,
 }
@@ -42,11 +46,12 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
+          <div className="welcome-card">
             <form onSubmit={this.handleSubmit}>
               <IonTitle>Let's add a password...</IonTitle>
 
-              <IonItem>
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={lock} />
 
                 <IonInput type="password" placeholder="Password" required
                   value={this.state.password}
@@ -55,18 +60,20 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
               </IonItem>
 
 
-              <IonItem>
-                <br></br>
+              <div style={{ margin: "10px" }}>
+                <IonItem lines="none">
 
-                <IonButton type="submit" disabled={(this.state.password.length === 0) ? true : false}
-                  routerLink='/home'
-                >Submit</IonButton>
-              </IonItem>
+                  <IonButton type="submit" disabled={(this.state.password.length === 0) ? true : false}
+                    routerLink='/home'
+                    size="default"
+                  >Submit</IonButton>
+                </IonItem>
+              </div>
 
 
             </form>
 
-          </IonCard>
+          </div>
         </IonContent>
       </IonPage>
     )
