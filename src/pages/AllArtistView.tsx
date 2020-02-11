@@ -95,7 +95,7 @@ class AllArtistView extends React.Component<IMyComponentProps, {}> {
                         style={{ textAlign: 'center' }}
                         className="artistBoxText"
                       >
-                        {artist['artistName']}
+                        {artist['name']}
                       </IonCardTitle>
                       <IonCardSubtitle style={{ textAlign: 'center' }}>
                         {genres}

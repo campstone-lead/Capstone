@@ -5,49 +5,91 @@ const { Venue, Event, Artist } = require('../db/models');
 module.exports = router;
 
 async function switchMainFilter(data) {
+  async function helperFunc(model, data) {
+    let helperFuncVal = [];
+    if (data.genre && Array.isArray(data.genre))
+      if (data.word)
+        helperFuncVal = await model.findAll({
+          where: {
+            genres: { [Op.contains]: data.genre },
+            name: { [Op.iLike]: `${data.word}%` },
+          },
+        });
+      else
+        helperFuncVal = await model.findAll({
+          where: { genres: { [Op.contains]: data.genre } },
+        });
+    if (typeof data.genre === 'string') {
+      let genre = [];
+      genre.push(data.genre);
+      if (data.word)
+        helperFuncVal = await model.findAll({
+          where: {
+            genres: { [Op.contains]: genre },
+            name: { [Op.iLike]: `${data.word}%` },
+          },
+        });
+      else
+        helperFuncVal = await model.findAll({
+          where: { genres: { [Op.contains]: genre } },
+        });
+    }
+    if (data.genre === undefined)
+      if (data.word)
+        helperFuncVal = await model.findAll({
+          where: { name: { [Op.iLike]: `${data.word}%` } },
+        });
+      else helperFuncVal = await model.findAll();
+    return helperFuncVal;
+  }
   let returnData = [];
   switch (data.main) {
     case 'Venues':
-      if (data.genre && Array.isArray(data.genre))
-        returnData = await Venue.findAll({
-          where: { genres: { [Op.contains]: data.genre } },
-        });
-      if (typeof data.genre === 'string') {
-        let genre = [];
-        genre.push(data.genre);
-        returnData = await Venue.findAll({
-          where: { genres: { [Op.contains]: genre } },
-        });
-      }
-      if (data.genre === undefined) returnData = await Venue.findAll();
+      returnData = helperFunc(Venue, data);
       break;
     case 'Artists':
-      if (data.genre && Array.isArray(data.genre))
-        returnData = await Artist.findAll({
-          where: { genres: { [Op.contains]: data.genre } },
-        });
-      if (typeof data.genre === 'string') {
-        let genre = [];
-        genre.push(data.genre);
-        returnData = await Artist.findAll({
-          where: { genres: { [Op.contains]: genre } },
-        });
-      }
-      if (data.genre === undefined) returnData = await Artist.findAll();
+      returnData = helperFunc(Artist, data);
+      //   if (data.genre && Array.isArray(data.genre))
+      //     if (data.word)
+      //       returnData = await Artist.findAll({
+      //         where: {
+      //           genres: { [Op.contains]: data.genre },
+      //           [Op.or]: [
+      //             { firstName: { [Op.iLike]: `${data.word}%` } },
+      //             { lastName: { [Op.iLike]: `${data.word}%` } },
+      //           ],
+      //         },
+      //       });
+      //     else
+      //       returnData = await Artist.findAll({
+      //         where: {
+      //           genres: { [Op.contains]: data.genre },
+      //         },
+      //       });
+      //   if (typeof data.genre === 'string') {
+      //     let genre = [];
+      //     genre.push(data.genre);
+      //     if (data.word)
+      //       returnData = await Artist.findAll({
+      //         where: {
+      //           genres: { [Op.contains]: genre },
+      //           [Op.or]: [
+      //             { firstName: { [Op.iLike]: `${data.word}%` } },
+      //             { lastName: { [Op.iLike]: `${data.word}%` } },
+      //           ],
+      //         },
+      //       });
+      //     else
+      //       returnData = await Artist.findAll({
+      //         where: {
+      //           genres: { [Op.contains]: genre },
+      //         },
+      //       });
+      //   }
+      //   if (data.genre === undefined) returnData = await Artist.findAll();
       break;
     case 'Events':
-      if (data.genre && Array.isArray(data.genre))
-        returnData = await Event.findAll({
-          where: { genres: { [Op.contains]: data.genre } },
-        });
-      if (typeof data.genre === 'string') {
-        let genre = [];
-        genre.push(data.genre);
-        returnData = await Event.findAll({
-          where: { genres: { [Op.contains]: genre } },
-        });
-      }
-      if (data.genre === undefined) returnData = await Event.findAll();
+      returnData = helperFunc(Event, data);
       break;
     default:
       break;
@@ -95,7 +137,24 @@ async function findByWord(data) {
   returnData = [
     ...returnData,
     ...(await Artist.findAll({
-      where: { firstName: { [Op.like]: `${data.word}%` } },
+      where: {
+        [Op.or]: [
+          { firstName: { [Op.iLike]: `${data.word}%` } },
+          { lastName: { [Op.iLike]: `${data.word}%` } },
+        ],
+      },
+    })),
+  ];
+  returnData = [
+    ...returnData,
+    ...(await Venue.findAll({
+      where: { name: { [Op.iLike]: `${data.word}%` } },
+    })),
+  ];
+  returnData = [
+    ...returnData,
+    ...(await Event.findAll({
+      where: { name: { [Op.iLike]: `${data.word}%` } },
     })),
   ];
   return returnData;
@@ -104,7 +163,6 @@ async function findByWord(data) {
 router.get('/:query', async (req, res, next) => {
   try {
     let data = queryString.parse(req.params.query);
-
     console.log('HERE', data);
     let returnData = [];
     if (data.main !== undefined) returnData = await switchMainFilter(data);

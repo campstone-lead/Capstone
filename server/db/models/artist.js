@@ -24,7 +24,7 @@ const Artist = db.define('artist', {
       notEmpty: true,
     },
   },
-  artistName: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {

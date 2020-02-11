@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { updatedArtist } from '../../../store/artist';
 
 interface IMyComponentState {
-  artistName: string;
+  name: string;
 }
 interface IMyComponentProps {
   putArtistName: (name: any) => void;
@@ -25,11 +25,11 @@ interface IMyComponentProps {
 class PersonalInfoForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
-      artistName: '',
+      name: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -40,7 +40,7 @@ class PersonalInfoForm extends React.Component<
       artist = JSON.parse(artist || '');
       let newArtist = artist || {};
       this.setState({
-        artistName: newArtist['artistName'] || '',
+        name: newArtist['name'] || '',
       });
     }
   }
@@ -49,7 +49,7 @@ class PersonalInfoForm extends React.Component<
     event.preventDefault();
     this.props.putArtistName(this.state);
     this.setState({
-      artistName: '',
+      name: '',
     });
   }
   render() {
@@ -73,20 +73,20 @@ class PersonalInfoForm extends React.Component<
               <IonLabel>Artist Name</IonLabel>
               <IonInput
                 type="text"
-                placeholder="ArtistName"
+                placeholder="name"
                 required
-                value={this.state.artistName}
+                value={this.state.name}
                 onIonChange={e =>
                   this.setState({
-                    artistName: (e.target as HTMLInputElement).value,
+                    name: (e.target as HTMLInputElement).value,
                   })
                 }
               />
             </IonItem>
-            <IonItem >
+            <IonItem>
               <IonButton
                 type="submit"
-                disabled={this.state.artistName === '' ? true : false}
+                disabled={this.state.name === '' ? true : false}
                 routerLink={'/artistbioform'}
               >
                 next

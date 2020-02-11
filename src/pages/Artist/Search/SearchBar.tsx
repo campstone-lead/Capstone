@@ -59,7 +59,6 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
     });
   }
   render() {
-    console.log('here');
     return (
       <IonContent
         style={{
@@ -75,9 +74,7 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
           <div>
             {this.props.filters.map((item, indx) => (
               <IonChip key={indx} id={item} onClick={this.deleteOnClick}>
-                <IonLabel>
-                  {item} {this.props.word}
-                </IonLabel>
+                <IonLabel>{item}</IonLabel>
                 <IonIcon title={item} icon={closeCircle} />
               </IonChip>
             ))}

@@ -63,8 +63,8 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
       let value: any;
       value = JSON.parse(filter || '');
       await this.props.customedFilter(
-        this.props.allSingleChosen,
-        this.props.genresChosen,
+        value.allSingleChosen,
+        value.genresChosen,
         value.word
       );
     }
@@ -82,15 +82,14 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   async onSearchBarChange(event) {
     event.preventDefault();
     this.setState({ searchWord: event.target.value });
-    console.log(event.target.value);
     let filter = await window.localStorage.getItem('filter');
     if (filter !== null) {
       let value: any;
       value = JSON.parse(filter || '');
       this.props.getState(value);
       await this.props.customedFilter(
-        this.props.allSingleChosen,
-        this.props.genresChosen,
+        value.allSingleChosen,
+        value.genresChosen,
         this.state.searchWord
       );
       window.localStorage.setItem(

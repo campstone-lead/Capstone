@@ -33,7 +33,6 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
     );
   }
   render() {
-    console.log('sdfs');
     if (!Array.isArray(this.props.filterSelected))
       return <IonCardTitle>Loading...</IonCardTitle>;
     return (
@@ -62,7 +61,14 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                 // style={{ width: '250px' }}
                 mode="ios"
               >
-                <div className="artistBox">
+                <div
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    color: 'black',
+                  }}
+                  className="artistBox"
+                >
                   {venue.tableName}
                   <img src={venue['imageURL']} alt="img.jpg" />
 
@@ -71,8 +77,8 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                       style={{ textAlign: 'center' }}
                       className="artistBoxText"
                     >
-                      {venue.tableName === 'Artist' && venue.firstName
-                        ? venue.firstName.concat(' ', venue.lastName)
+                      {venue.tableName === 'Artist' && venue.artistName
+                        ? venue.artistName
                         : venue['name']}
                     </IonCardTitle>
                     <IonCardSubtitle
