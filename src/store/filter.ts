@@ -87,6 +87,7 @@ export const customedFilter = (
   input
 ) => async dispatch => {
   try {
+    //stringifies all filter options
     let myQueryString = queryString.stringify({
       main: mainFilters,
       genre: genreFilters,
