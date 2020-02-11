@@ -44,7 +44,7 @@ const artists = [
   {
     firstName: 'Ariana',
     lastName: 'Grande',
-    artistName: 'Ariana Grande',
+    name: 'Ariana Grande',
     genres: ['hipHop', 'pop'],
     bio:
       "Ariana was born on June 26, 1993 in Boca Raton, Florida. Ariana's music career began in 2011 with the soundtrack Music from Victorious. In 2013, she released her first studio album Yours Truly, which entered atop the US Billboard 200. The album's lead single, The Way, opened in the top 10 of the Billboard Hot 100, with critics comparing her wide vocal range to that of Mariah Carey.",
@@ -62,7 +62,7 @@ const artists = [
   {
     firstName: 'Justin',
     lastName: 'Vernon',
-    artistName: 'Bon Iver',
+    name: 'Bon Iver',
     genres: ['indie', 'electronic'],
     bio:
       'Justin DeYarmond Edison Vernon (born April 30, 1981) is an American singer, songwriter, producer and multi-instrumentalist. He is best known as the primary songwriter and frontman of indie folk band Bon Iver. Vernon is also a member of the bands Volcano Choir, Big Red Machine, The Shouting Matches, and Gayngs.',
@@ -81,7 +81,7 @@ const artists = [
   {
     firstName: 'Claire',
     lastName: 'Boucher',
-    artistName: 'Grimes',
+    name: 'Grimes',
     genres: ['electronic'],
     bio:
       'Claire Elise Boucher (born March 17, 1988), known professionally as Grimes, is a Canadian singer, songwriter, record producer and visual artist. Her music incorporates elements of varied styles and genres including dream pop, R&B, electronic music, and hip hop.',
@@ -100,7 +100,7 @@ const artists = [
   {
     firstName: 'Mick',
     lastName: 'Jagger',
-    artistName: 'The Rolling Stones',
+    name: 'The Rolling Stones',
     genres: ['rock'],
     bio:
       'Singer, songwriter, actor and producer Michael Phillip Jagger was born on July 26, 1943, in Dartford, England. As the lead singer of the Rolling Stones, Mick Jagger has become a rock legend known for his gritty, blues-influenced songs and charismatic stage presence.',
@@ -118,7 +118,7 @@ const artists = [
   {
     firstName: 'James',
     lastName: 'Murphy',
-    artistName: 'LCD Soundsystem',
+    name: 'LCD Soundsystem',
     genres: ['indie', 'rock', 'electronic'],
     bio:
       'James Jeremiah Murphy (born February 4, 1970) is an American musician, DJ, singer, songwriter, and record producer. His most well-known musical project is LCD Soundsystem, which first gained attention with its single "Losing My Edge" in 2002 before releasing its eponymous debut album in February 2005',
@@ -136,7 +136,7 @@ const artists = [
   {
     firstName: 'Armand',
     lastName: 'Jakobsson',
-    artistName: 'DJ Seinfeld',
+    name: 'DJ Seinfeld',
     genres: ['house', 'electronic'],
     bio:
       'Armand Jakobsson is the artist known as DJ Seinfeld, Rimbaudian and Birds of Sweden. Under these aliases you’ll find sweeping emotive cuts, verdant dancefloor workouts and discerning dips into jungle and breaks.',
@@ -155,7 +155,7 @@ const artists = [
   {
     firstName: 'Amelie',
     lastName: 'Lens',
-    artistName: 'Amelie Lens',
+    name: 'Amelie Lens',
     genres: ['techno', 'electronic'],
     bio:
       'Amelie Lens (born 31 May 1990) is a Belgian electronic music DJ, record producer, and co-owner of the Lenske record label.',
@@ -173,7 +173,7 @@ const artists = [
   {
     firstName: 'Aubrey',
     lastName: 'Graham',
-    artistName: 'Drake',
+    name: 'Drake',
     genres: ['hipHop'],
     bio:
       'Aubrey Drake Graham (born October 24, 1986) is a Canadian rapper, singer, songwriter, producer, actor, and businessman. Drake initially gained recognition as an actor on the teen drama television series Degrassi: The Next Generation in the 2000s',
@@ -191,7 +191,7 @@ const artists = [
   {
     firstName: 'Robyn',
     lastName: 'Fenty',
-    artistName: 'Rihanna',
+    name: 'Rihanna',
     genres: ['hipHop', 'pop'],
     bio:
       'Robyn Rihanna Fenty is a Barbadian singer, songwriter, and businesswoman, who has been recognized for embracing various musical styles and reinventing her image throughout her career.',
@@ -295,18 +295,18 @@ const artistEvent = [
     artistId: 3,
     eventId: 2,
     status: 'booked',
-    sender: 'booker'
+    sender: 'booker',
   },
   {
     artistId: 4,
     eventId: 1,
-    sender: 'booker'
+    sender: 'booker',
   },
   {
     artistId: 6,
     eventId: 3,
     status: 'pending',
-    sender: 'artist'
+    sender: 'artist',
   },
 ];
 

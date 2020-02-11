@@ -47,7 +47,7 @@ router.post('/', async (req, res, next) => {
     const artist = await Artist.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      artistName: req.body.artistName,
+      name: req.body.name,
       genres: req.body.genres,
       bio: req.body.bio,
       imageURL: req.body.imageURL,
