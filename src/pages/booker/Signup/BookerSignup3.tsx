@@ -1,36 +1,49 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { IonContent, IonItem, IonPage, IonToolbar, IonButtons, IonBackButton, IonTitle, IonButton, IonFabButton, IonHeader } from '@ionic/react';
+import { connect } from 'react-redux';
+import {
+  IonContent,
+  IonItem,
+  IonPage,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonButton,
+  IonFabButton,
+  IonHeader,
+} from '@ionic/react';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
-import { updatedVenue } from '../../../store/booker'
+import { signUpVenue } from '../../../store/booker';
 
 interface IMyComponentProps {
-  booker: object,
-  updateVenue: any
+  booker: object;
+  signUpVenue: any;
 }
 
 interface IMyComponentState {
-  photo: string
+  photo: string;
 }
 
-class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState> {
+class BookerSignup3 extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
   constructor(props) {
-    super(props)
-    this.state = { photo: "" }
-    defineCustomElements(window)
-    this.handleClick = this.handleClick.bind(this)
-
+    super(props);
+    this.state = { photo: '' };
+    defineCustomElements(window);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
-    let booker = window.localStorage.getItem('booker')
-    booker = JSON.parse(booker || '');
-    let newBooker = booker || {};
-    if (newBooker["venue"]["photo"] !== undefined) {
+    let venue = window.localStorage.getItem('venue');
+    venue = JSON.parse(venue || '');
+    let newVenue = venue || {};
+    if (newVenue['photo'] !== undefined) {
       this.setState({
-        photo: newBooker["venue"].photo
-      })
+        photo: newVenue['photo'],
+      });
     }
   }
   async takePicture() {
@@ -44,23 +57,20 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
     // Can be set to the src of an image now
 
     this.setState({
-      photo: imageUrl || ''
-    })
+      photo: imageUrl || '',
+    });
     // this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
   }
 
   handleClick() {
-    this.props.updateVenue(this.state)
-
+    this.props.signUpVenue(this.state);
   }
 
   render() {
-
     return (
       <IonPage>
-
-        <IonHeader >
-          <IonToolbar id="bar" >
+        <IonHeader>
+          <IonToolbar id="bar">
             <IonTitle>Venue Image</IonTitle>
             {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
           </IonToolbar>
@@ -79,25 +89,27 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
           <IonItem>
             <br></br>
 
-            <IonButton size="small" className="next"
+            <IonButton
+              size="small"
+              className="next"
               onClick={this.handleClick}
-              disabled={(this.state.photo.length === 0)}
+              disabled={this.state.photo.length === 0}
               routerLink="/signup/booker/4"
-            >Next</IonButton>
-
+            >
+              Next
+            </IonButton>
           </IonItem>
-
         </IonContent>
       </IonPage>
     );
   }
-};
-const mapStateToProps = (state) => ({
-  booker: state.booker
-})
+}
+const mapStateToProps = state => ({
+  booker: state.booker,
+});
 
-const mapDispatchToProps = (dispatch) => ({
-  updateVenue: state => dispatch(updatedVenue(state))
-})
+const mapDispatchToProps = dispatch => ({
+  signUpVenue: state => dispatch(signUpVenue(state)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookerSignup3);
