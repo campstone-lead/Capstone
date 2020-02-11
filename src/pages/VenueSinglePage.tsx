@@ -91,7 +91,8 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
     async componentDidMount() {
         console.log("HERE", this.props["match"]["params"])
-        const id = Number(history.location.pathname.slice(11))
+        // const id = Number(history.location.pathname.slice(11))
+        const id = this.props["match"]["params"]["venueId"]
         await this.props.me();
         await this.props.fetchOneArtists(this.props.user['id']);
         await this.props.fetchOneVenue(id)
@@ -99,8 +100,10 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         await this.props.getOneBooker(bookerId)
         await this.props.getBookerEvents(bookerId)
 
-        if (this.props.events.length !== 0)
+        if (this.props.events && this.props.events.length !== 0)
             this.setState({ currentEvent: this.props.events[0].id })
+
+        console.log(typeof this.props.attendedEvents)
         if (this.props.attendedEvents !== null) {
 
             let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(event => event.eventId === this.state.currentEvent)
