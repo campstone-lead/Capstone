@@ -59,7 +59,11 @@ export const fetchEvents = () => async dispatch => {
 
 export const createdEvent = (sentEvent) => async dispatch => {
   try {
-    console.log('sentEvent:', sentEvent)
+    // NOTE: sentEvent is of the form:
+    // sentEvent = {
+    //   event: {},
+    //   venueId: 0
+    // }
     await axios({
       method: "post",
       baseURL: "http://localhost:8080/api/",

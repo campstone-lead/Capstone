@@ -90,7 +90,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
     }
 
     async componentDidMount() {
-        const id = Number(history.location.pathname.slice(11))
+        const id = this.props["match"]["params"]["venueId"]
         await this.props.me();
         await this.props.fetchOneArtists(this.props.user['id']);
         await this.props.fetchOneVenue(id)
@@ -98,8 +98,9 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         await this.props.getOneBooker(bookerId)
         await this.props.getBookerEvents(bookerId)
 
-        if (this.props.events.length !== 0)
+        if (this.props.events && this.props.events.length !== 0)
             this.setState({ currentEvent: this.props.events[0].id })
+
         if (this.props.attendedEvents !== null) {
 
             let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(event => event.eventId === this.state.currentEvent)
@@ -150,6 +151,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                             venue={this.props.venue}
                             booker={this.props.booker}
                             events={this.props.events}
+                            isOwner={this.props.user["status"] === "booker" && this.props.user["id"] === this.props.venue["bookerId"]}
                         />
 
                         <select onChange={this.handleChange}>
