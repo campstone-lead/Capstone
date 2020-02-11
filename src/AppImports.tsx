@@ -42,6 +42,7 @@ import Filter from './pages/Artist/Search/Filter';
 import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
 import NotificationWall from './pages/NotificationWall'
+import Chat from './pages/Chat'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 import { me, logout } from './store/user';
@@ -116,5 +117,6 @@ export {
   AllVenuesView,
   NotificationWall,
   notifications,
-  Tab4
+  Tab4,
+  Chat
 };

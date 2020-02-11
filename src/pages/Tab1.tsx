@@ -5,9 +5,10 @@ import {
   IonToolbar,
   IonSearchbar,
   IonContent,
-  IonItem
+  IonItem,
+  IonIcon
 } from '@ionic/react';
-
+import { mail } from 'ionicons/icons';
 import React from 'react';
 import { auth, me } from '../store/user';
 import { searchBarValue } from '../store/filter';
@@ -75,7 +76,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
               <IonHeader mode="ios">
                 <IonToolbar mode="ios">
                   <div className="tabHeader">
-                    <IonItem routerLink='/home'>
+                    <IonItem routerLink='/home' lines="none">
                       <img
                         src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
                         alt="logo.png"
@@ -110,6 +111,9 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                     ) : (
                         ''
                       )}
+                    <IonItem routerLink='/messages' lines="none">
+                      <IonIcon icon={mail} size="large" />
+                    </IonItem>
                   </div>
                 </IonToolbar>
               </IonHeader>

@@ -47,7 +47,8 @@ import {
   Tab3,
   Tab4,
   AllVenuesView,
-  NotificationWall
+  NotificationWall,
+  Chat
 } from './AppImports';
 import VenueSinglePage from './pages/VenueSinglePage';
 import { notifications } from 'ionicons/icons';
@@ -113,6 +114,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/artistpassword" component={ArtistPassword} />
               <Route path="/artists" component={AllArtistView} />
               <Route path="/venues" component={AllVenuesView} />
+              <Route path="/messages" component={Chat} />
 
               <Route
                 path="/allArtists/:artistId"
