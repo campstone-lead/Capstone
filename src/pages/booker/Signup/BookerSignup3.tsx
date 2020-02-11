@@ -1,40 +1,64 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import {
-  IonContent,
-  IonItem,
-  IonPage,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonTitle,
-  IonButton,
-  IonFabButton,
-  IonHeader,
-} from '@ionic/react';
+import axios from 'axios'
+import { connect } from 'react-redux'
+import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonToolbar, IonButtons, IonBackButton, IonTitle, IonButton, IonFabButton, IonHeader } from '@ionic/react';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-
-import { signUpVenue } from '../../../store/booker';
-
+import { add } from 'ionicons/icons';
+import { signUpVenue } from '../../../store/booker'
+axios.defaults.withCredentials = true;
 interface IMyComponentProps {
   booker: object;
   signUpVenue: any;
 }
 
 interface IMyComponentState {
-  photo: string;
+  photo: string,
+  selectedFile: any,
+  loaded: number,
+  url: any
 }
 
 class BookerSignup3 extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
-    super(props);
-    this.state = { photo: '' };
-    defineCustomElements(window);
-    this.handleClick = this.handleClick.bind(this);
+    super(props)
+    this.state = {
+      photo: 'https://www.ggcatering.com/images/venues/default_venue_2.jpg',
+      loaded: 0,
+      selectedFile: null,
+      url: {}
+    }
+    defineCustomElements(window)
+    this.handleClick = this.handleClick.bind(this)
+
+  }
+  onChangeHandler = async  event => {
+    event.persist()
+    await this.setState({
+      selectedFile: event.target.files[0],
+
+
+    })
+
+    await this.setState({ photo: this.state.selectedFile.name })
+  }
+  onClickHandler = async (e) => {
+    e.preventDefault() // <-- missing this
+    const formData = new FormData();
+
+    formData.append("file", this.state.selectedFile);
+    const res = await axios({
+      method: "post",
+      baseURL: "http://localhost:8080/",
+      url: `/upload`,
+      data: formData
+    })
+    await this.props.signUpVenue(this.state)
+    console.log(res.data)
+
   }
   componentDidMount() {
     let venue = window.localStorage.getItem('venue');
@@ -46,48 +70,73 @@ class BookerSignup3 extends React.Component<
       });
     }
   }
-  async takePicture() {
-    const image = await Plugins.Camera.getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      // source: CameraSource.Camera
-    });
-    var imageUrl = image.webPath;
-    // Can be set to the src of an image now
+  // async takePicture() {
+  //   const image = await Plugins.Camera.getPhoto({
+  //     quality: 100,
+  //     allowEditing: false,
+  //     resultType: CameraResultType.Uri,
+  //     // source: CameraSource.Camera
+  //   });
+  //   var imageUrl = image.webPath;
+  //   // Can be set to the src of an image now
+  //   const booker = JSON.parse(window.localStorage.getItem('booker') || '')
+  //   const venue = booker || {};
+  //   if (venue['venue'].photo) {
+  //     this.setState({ photo: venue['venue'].photo })
+  //   }
 
-    this.setState({
-      photo: imageUrl || '',
-    });
-    // this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
-  }
+  //   this.setState({
+  //     photo: imageUrl || ''
+  //   })
+
+  // }
 
   handleClick() {
     this.props.signUpVenue(this.state);
   }
 
   render() {
+    const imageURL = this.state.photo;
     return (
       <IonPage>
+
         <IonHeader>
-          <IonToolbar id="bar">
-            <IonTitle>Venue Image</IonTitle>
-            {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
+          <IonToolbar>
+            <IonTitle>Upload a venue image</IonTitle>
+            <IonButtons slot="start">
+              <IonBackButton defaultHref="/tab2" />
+            </IonButtons>
           </IonToolbar>
         </IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/tab2" />
-          </IonButtons>
+
+
         </IonToolbar>
-        <IonContent className="content">
-          <IonTitle>UPLOAD YOUR VENUE IMAGE</IonTitle>
-          <IonFabButton color="primary" onClick={() => this.takePicture()}>
-            Take Picture
-          </IonFabButton>
-          <img src={this.state.photo} alt="" />
-          <IonItem>
-            <br></br>
+        <IonContent >
+          <IonCardHeader>
+            Current Picture
+          </IonCardHeader>
+          <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+            <IonAvatar style={{ width: '370px', height: '370px', borderRadius: "50px" }}>
+              <img src={imageURL} alt='img' />
+            </IonAvatar>
+          </div>
+
+          < div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
+            <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+
+            <IonButton type="button" onClick={this.onClickHandler} >
+
+              <IonIcon icon={add}></IonIcon>
+              <IonLabel>Upload picture</IonLabel>
+
+            </IonButton>
+
+
+
 
             <IonButton
               size="small"
@@ -96,9 +145,11 @@ class BookerSignup3 extends React.Component<
               disabled={this.state.photo.length === 0}
               routerLink="/signup/booker/4"
             >
-              Next
+              <IonLabel>NEXT</IonLabel>
             </IonButton>
-          </IonItem>
+
+          </div>
+
         </IonContent>
       </IonPage>
     );

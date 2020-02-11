@@ -8,12 +8,15 @@ import {
   IonInput,
   IonLabel,
   IonButton,
+  IonIcon
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
 import { updatedArtist } from '../../../store/artist';
-
+import {
+  microphone
+} from 'ionicons/icons';
 interface IMyComponentState {
   name: string;
 }
@@ -25,7 +28,7 @@ interface IMyComponentProps {
 class PersonalInfoForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,31 +71,38 @@ class PersonalInfoForm extends React.Component<
         </IonHeader>
 
         <IonContent>
-          <form onSubmit={this.handleSubmit}>
-            <IonItem>
-              <IonLabel>Artist Name</IonLabel>
-              <IonInput
-                type="text"
-                placeholder="name"
-                required
-                value={this.state.name}
-                onIonChange={e =>
-                  this.setState({
-                    name: (e.target as HTMLInputElement).value,
-                  })
-                }
-              />
-            </IonItem>
-            <IonItem>
-              <IonButton
-                type="submit"
-                disabled={this.state.name === '' ? true : false}
-                routerLink={'/artistbioform'}
-              >
-                next
+          <div className="welcome-card">
+            <form onSubmit={this.handleSubmit}>
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={microphone} />
+                <IonInput
+                  type="text"
+                  placeholder="Artist name"
+                  required
+                  value={this.state.name}
+                  onIonChange={e =>
+                    this.setState({
+                      name: (e.target as HTMLInputElement).value,
+                    })
+                  }
+                />
+              </IonItem>
+              <div style={{ margin: "10px" }}>
+                <IonItem lines="none">
+                  <IonButton
+                    type="submit"
+                    disabled={this.state.name === '' ? true : false}
+                    routerLink={'/artistbioform'}
+                    size="default"
+                  >
+                    NEXT
               </IonButton>
-            </IonItem>
-          </form>
+                </IonItem>
+              </div>
+            </form>
+
+
+          </div>
         </IonContent>
       </IonPage>
     );

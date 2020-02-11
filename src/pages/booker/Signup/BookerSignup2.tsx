@@ -1,24 +1,15 @@
 import React from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonButton,
-  IonCard,
-  IonItem,
-  IonLabel,
-  IonInput,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem, IonLabel, IonInput, IonIcon, IonCardHeader } from '@ionic/react';
 import './BookerSignup2.css';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
-import { signUpVenue } from '../../../store/booker';
-
+  getLatLng
+} from 'react-places-autocomplete'
+import { signUpVenue } from '../../../store/booker'
+import {
+  navigate
+} from 'ionicons/icons';
 interface IMyComponentState {
   latitude: Number;
   longitude: Number;
@@ -91,11 +82,13 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
+          <div className="welcome-card">
+            <IonCardHeader>Type bellow the place or address for your first venue</IonCardHeader>
             <PlacesAutocomplete
               value={this.state.fullAddress}
               onChange={this.handleChange}
               onSelect={this.handleSelect}
+
             >
               {({
                 getInputProps,
@@ -103,57 +96,53 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                 getSuggestionItemProps,
                 loading,
               }) => (
-                <div>
-                  <input
-                    {...getInputProps({
-                      placeholder: 'Search Venues ...',
-                      className: 'searchInput',
-                    })}
-                  />
-                  <div className="searchInput">
-                    {loading && <div>Loading...</div>}
-                    {suggestions.map(suggestion => {
-                      const className = suggestion.active
-                        ? 'suggestion-item--active'
-                        : 'suggestion-item';
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: 'Search Venues ...',
+                        className: 'searchInput',
+                      })}
+                    />
+                    <div className="searchInput">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? 'suggestion-item--active'
+                          : 'suggestion-item';
 
-                      const style = suggestion.active
-                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                      return (
-                        <div
-                          {...getSuggestionItemProps(suggestion, {
-                            className,
-                            style,
-                          })}
-                        >
-                          <span>{suggestion.description}</span>
-                        </div>
-                      );
-                    })}
+                        const style = suggestion.active
+                          ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                          : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              className,
+                              style,
+                            })}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </PlacesAutocomplete>
 
-            <IonLabel className="venuelabel">Venue name</IonLabel>
-            <IonItem>
-              <IonInput
-                clearInput
-                type="text"
-                required
+            <IonLabel className='venuelabel'>Venue name</IonLabel>
+            <IonItem lines="inset">
+              <IonIcon mode="ios" slot="start" color="medium" icon={navigate} />
+              <IonInput clearInput type="text" required
                 value={this.state.name}
                 onIonChange={e =>
                   this.setState({ name: (e.target as HTMLInputElement).value })
                 }
               />
             </IonItem>
-            <IonLabel className="venuelabel">Address</IonLabel>
-            <IonItem>
-              <IonInput
-                clearInput
-                type="text"
-                required
+            <IonLabel className='venuelabel'>Address</IonLabel>
+            <IonItem lines="inset" >
+              <IonIcon mode="ios" slot="start" color="medium" icon={navigate} />
+              <IonInput clearInput type="text" required
                 value={this.state.address}
                 onIonChange={e =>
                   this.setState({
@@ -162,24 +151,22 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                 }
               />
             </IonItem>
-            <IonItem>
-              <br></br>
 
-              <IonButton
-                size="small"
-                className="next"
-                onClick={() => {
-                  return this.props.signUpVenue(this.state);
+
+            <div style={{ margin: "15px" }}>
+              <IonItem lines="none">
+                <IonButton size="small" className="next" onClick={() => {
+                  return this.props.signUpVenue(this.state)
                 }}
-                disabled={
-                  this.state.address.length === 0 || this.state.latitude === 0
-                }
-                routerLink="/signup/booker/3"
-              >
-                Next
-              </IonButton>
-            </IonItem>
-          </IonCard>
+                  disabled={(this.state.address.length === 0 || this.state.latitude === 0)}
+                  routerLink="/signup/booker/3"
+                >Next</IonButton>
+
+              </IonItem>
+            </div>
+
+
+          </div>
         </IonContent>
       </IonPage>
     );

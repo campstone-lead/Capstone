@@ -17,6 +17,7 @@ const SIGN_UP_BOOKER = 'SIGN_UP_BOOKER';
 const defaultBooker = {
   bookerEvents: [],
   booker: {},
+  venues: []
 };
 
 /**
@@ -85,7 +86,8 @@ export const signUpBooker = bookerInfo => async dispatch => {
       let venue = window.localStorage.getItem('venue');
       venue = JSON.parse(venue || '');
       let newVenue = venue || {};
-      newVenue = { ...newVenue, bookerId: res.data.id };
+      newVenue = { ...newVenue, bookerId: res.data.id, imageURL: newVenue['photo'] };
+
       await axios({
         method: 'post',
         baseURL: 'http://localhost:8080/api/',
@@ -172,10 +174,10 @@ export const createdVenue = v => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultBooker, action) {
+export default function (state = defaultBooker, action) {
   switch (action.type) {
     case GET_BOOKER:
-      return { ...state, booker: action.booker };
+      return { ...state, booker: action.booker.user, venues: action.booker.venues };
     case UPDATE_BOOKER:
       window.localStorage.setItem(
         'booker',

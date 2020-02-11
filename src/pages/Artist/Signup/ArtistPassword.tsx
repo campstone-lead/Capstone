@@ -8,12 +8,16 @@ import {
   IonInput,
   IonButton,
   IonCard,
+  IonIcon
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
 import { auth } from '../../../store/user'
 import { updatedArtist } from '../../../store/artist';
+import {
+  lock
+} from 'ionicons/icons';
 
 interface IMyComponentState {
   password: string;
@@ -52,11 +56,12 @@ class ArtistPassword extends React.Component<
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
+          <div className="welcome-card">
             <form onSubmit={this.handleSubmit}>
               <IonTitle>Let's add a password...</IonTitle>
 
-              <IonItem>
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={lock} />
                 <IonInput
                   type="password"
                   placeholder="Password"
@@ -70,19 +75,22 @@ class ArtistPassword extends React.Component<
                 />
               </IonItem>
 
-              <IonItem >
-                <br></br>
+              <div style={{ margin: "10px" }}>
+                <IonItem lines="none">
+                  <br></br>
 
-                <IonButton
-                  type="submit"
-                  disabled={this.state.password.length === 0 ? true : false}
-                  routerLink="/home"
-                >
-                  Done
+                  <IonButton
+                    type="submit"
+                    disabled={this.state.password.length === 0 ? true : false}
+                    routerLink="/home"
+                    size="default"
+                  >
+                    Done
                 </IonButton>
-              </IonItem>
+                </IonItem>
+              </div>
             </form>
-          </IonCard>
+          </div>
         </IonContent>
       </IonPage>
     );

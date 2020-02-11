@@ -74,14 +74,7 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
 
   handleSubmit(event) {
     event.preventDefault();
-    // console.log('THIS.STATE genres', this.state)
-    // console.log('Object.keys(this.state.genreTypes)', Object.keys(this.state.genreTypes))
 
-    // Object.keys(this.state.genreTypes).forEach(key=>{
-    //   if(this.state.genreTypes[key]){
-    //     this.state.genres.push(key)
-    //   }
-    // })
 
     const obj = this.state.genreTypes
     const keys = Object.keys(obj)
@@ -100,7 +93,7 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
       <IonHeader >
         <IonToolbar id="bar" >
           <IonTitle>Choose Genres</IonTitle>
-          <IonItem>
+          <IonItem lines="none">
             <IonLabel> <h3>Pick at least one</h3></IonLabel>
           </IonItem>
         </IonToolbar>
@@ -108,26 +101,31 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
 
 
       <IonContent>
-        <form onSubmit={this.handleSubmit}>
-          <IonButton color={this.state.genreTypes.rock ? 'primary' : 'secondary'} type="button" target="rock" onClick={this.handleClick}>ROCK</IonButton>
-          <IonButton color={this.state.genreTypes.jazz ? 'primary' : 'secondary'} type="button" target="jazz" onClick={this.handleClick}>JAZZ</IonButton>
-          <IonButton color={this.state.genreTypes.electronic ? 'primary' : 'secondary'} type="button" target="electronic" onClick={this.handleClick}>ELECTRONIC</IonButton>
-          <IonButton color={this.state.genreTypes.pop ? 'primary' : 'secondary'} type="button" target="pop" onClick={this.handleClick}>POP</IonButton>
-          <IonButton color={this.state.genreTypes.hipHop ? 'primary' : 'secondary'} type="button" target="hipHop" onClick={this.handleClick}>HIP-HOP</IonButton>
-          <IonButton color={this.state.genreTypes.indie ? 'primary' : 'secondary'} type="button" target="indie" onClick={this.handleClick}>INDIE</IonButton>
-          <IonButton color={this.state.genreTypes.country ? 'primary' : 'secondary'} type="button" target="country" onClick={this.handleClick}>COUNTRY</IonButton>
-          <IonButton color={this.state.genreTypes.metal ? 'primary' : 'secondary'} type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
-          <IonButton color={this.state.genreTypes.house ? 'primary' : 'secondary'} type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
-          <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'} type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
+        <div className="welcome-card">
+          <form onSubmit={this.handleSubmit} className="genres">
+            <IonButton color={this.state.genreTypes.rock ? 'primary' : 'secondary'} type="button" target="rock" onClick={this.handleClick}>ROCK</IonButton>
+            <IonButton color={this.state.genreTypes.jazz ? 'primary' : 'secondary'} type="button" target="jazz" onClick={this.handleClick}>JAZZ</IonButton>
+            <IonButton color={this.state.genreTypes.electronic ? 'primary' : 'secondary'} type="button" target="electronic" onClick={this.handleClick}>ELECTRONIC</IonButton>
+            <IonButton color={this.state.genreTypes.pop ? 'primary' : 'secondary'} type="button" target="pop" onClick={this.handleClick}>POP</IonButton>
+            <IonButton color={this.state.genreTypes.hipHop ? 'primary' : 'secondary'} type="button" target="hipHop" onClick={this.handleClick}>HIP-HOP</IonButton>
+            <IonButton color={this.state.genreTypes.indie ? 'primary' : 'secondary'} type="button" target="indie" onClick={this.handleClick}>INDIE</IonButton>
+            <IonButton color={this.state.genreTypes.country ? 'primary' : 'secondary'} type="button" target="country" onClick={this.handleClick}>COUNTRY</IonButton>
+            <IonButton color={this.state.genreTypes.metal ? 'primary' : 'secondary'} type="button" target="metal" onClick={this.handleClick}>METAL</IonButton>
+            <IonButton color={this.state.genreTypes.house ? 'primary' : 'secondary'} type="button" target="house" onClick={this.handleClick}>HOUSE</IonButton>
+            <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'} type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
 
-          <IonItem >
-            <br></br>
-            <IonButton type="submit"
-              disabled={Object.keys(this.state.genreTypes).every((key) => !this.state.genreTypes[key])}
-              routerLink="/artisttype"
-            >Next</IonButton>
-          </IonItem>
-        </form>
+            <div>
+              <IonItem lines="none">
+                <IonButton type="submit"
+                  disabled={Object.keys(this.state.genreTypes).every((key) => !this.state.genreTypes[key])}
+                  routerLink="/artisttype"
+                  size="default"
+                >Next</IonButton>
+              </IonItem>
+            </div>
+
+          </form>
+        </div>
       </IonContent>
 
     </IonPage>)

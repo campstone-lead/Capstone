@@ -1,18 +1,13 @@
 import React from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonCardHeader,
-  IonItem,
-  IonInput,
-  IonButton,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCardHeader, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
 import '../../Tab1.css';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { signUpBooker } from '../../../store/booker';
+import {
+  call,
+  mailOpen,
+  person
+} from 'ionicons/icons';
 interface IMyComponentState {
   email: string;
   firstName: string;
@@ -26,7 +21,7 @@ interface IMyComponentProps {
 class BookerSignup1 extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,10 +64,8 @@ class BookerSignup1 extends React.Component<
             <form onSubmit={this.handleSubmit}>
               <IonTitle>Tell us about yourself...</IonTitle>
               <IonItem lines="inset">
-                <IonInput
-                  type="text"
-                  placeholder="First Name"
-                  required
+                <IonIcon slot="start" color="medium" icon={person} />
+                <IonInput type="text" placeholder="First Name" required
                   value={this.state.firstName}
                   onIonChange={e =>
                     this.setState({
@@ -80,13 +73,7 @@ class BookerSignup1 extends React.Component<
                     })
                   }
                 />
-              </IonItem>
-
-              <IonItem lines="inset">
-                <IonInput
-                  type="text"
-                  placeholder="Last Name"
-                  required
+                <IonInput type="text" placeholder="Last Name" required
                   value={this.state.lastName}
                   onIonChange={e =>
                     this.setState({
@@ -94,13 +81,19 @@ class BookerSignup1 extends React.Component<
                     })
                   }
                 />
+
               </IonItem>
 
+
+
+
+
+
+
+
               <IonItem lines="inset">
-                <IonInput
-                  type="text"
-                  placeholder="Phone number"
-                  required
+                <IonIcon slot="start" color="medium" icon={call} />
+                <IonInput type="text" placeholder="Phone number" required
                   value={this.state.phone}
                   onIonChange={e =>
                     this.setState({
@@ -111,10 +104,8 @@ class BookerSignup1 extends React.Component<
               </IonItem>
 
               <IonItem lines="inset">
-                <IonInput
-                  type="email"
-                  placeholder="Email"
-                  required
+                <IonIcon slot="start" color="medium" icon={mailOpen} />
+                <IonInput type="email" placeholder="Email" required
                   value={this.state.email}
                   onIonChange={e =>
                     this.setState({
@@ -132,9 +123,9 @@ class BookerSignup1 extends React.Component<
                     color="tertiary"
                     disabled={
                       this.state.email.length === 0 ||
-                      this.state.firstName.length === 0 ||
-                      this.state.lastName.length === 0 ||
-                      this.state.phone.length === 0
+                        this.state.firstName.length === 0 ||
+                        this.state.lastName.length === 0 ||
+                        this.state.phone.length === 0
                         ? true
                         : false
                     }

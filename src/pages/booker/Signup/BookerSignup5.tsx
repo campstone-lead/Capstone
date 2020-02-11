@@ -1,19 +1,13 @@
 import React from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonItem,
-  IonInput,
-  IonButton,
-  IonCard,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonCard, IonIcon } from '@ionic/react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
 import './BookerSignup2.css';
-import { signUpVenue } from '../../../store/booker';
+import {
+  people
+} from 'ionicons/icons';
+
+import { signUpVenue } from '../../../store/booker'
 interface IMyComponentState {
   capacity: string;
 }
@@ -55,13 +49,12 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
-            <form onSubmit={this.handleSubmit}>
+          <div className="welcome-card">
+            <form onSubmit={this.handleSubmit} >
               <IonTitle>How many people can fit in your venue?</IonTitle>
-              <IonItem>
-                <IonInput
-                  type="text"
-                  required
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={people} />
+                <IonInput type="text" required
                   value={this.state.capacity}
                   onIonChange={e =>
                     this.setState({
@@ -73,7 +66,9 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                 />
               </IonItem>
 
-              <IonItem>
+
+
+              <div>
                 <br></br>
 
                 <IonButton
@@ -82,12 +77,14 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                   type="submit"
                   disabled={this.state.capacity.length === 0}
                   routerLink="/signup/booker/6"
-                >
-                  Next
-                </IonButton>
-              </IonItem>
+                >Next</IonButton>
+
+              </div>
+
+
             </form>
-          </IonCard>
+
+          </div>
         </IonContent>
       </IonPage>
     );

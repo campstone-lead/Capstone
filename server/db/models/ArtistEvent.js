@@ -36,7 +36,7 @@ const preHooks = async jointTable => {
       let event = await Event.findByPk(id)
       let venue = await Venue.findByPk(event.venueId)
       const booker = await Booker.findByPk(venue.bookerId)
-      jointTable.artistName = artist.artistName
+      jointTable.artistName = artist.name
       jointTable.bookerId = booker.id;
       jointTable.venueId = venue.id;
     }

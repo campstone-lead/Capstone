@@ -164,7 +164,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                                 ))}
                         </select>
 
-                        {(this.state.localStatus && (this.state.sender === 'booker')) && (this.state.localStatus === 'pending') ? <IonCardSubtitle>You have an incoming request from a booker</IonCardSubtitle> : (this.state.localStatus.length === 0) ? null : <IonCardSubtitle>This is  {' '}{(this.state.localStatus === 'booked') ? 'an aproved' : 'a declined'} request by the {this.props.booker['user']['firstName']}  {' '} {this.props.booker['user']['lastName']} for the selected event.</IonCardSubtitle>}
+                        {(this.state.localStatus && (this.state.sender === 'booker')) && (this.state.localStatus === 'pending') ? <IonCardSubtitle>You have an incoming request from a booker</IonCardSubtitle> : (this.state.localStatus.length === 0) ? null : <IonCardSubtitle>This is  {' '}{(this.state.localStatus === 'booked') ? 'an aproved' : 'a declined'} request by the {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} for the selected event.</IonCardSubtitle>}
                         {(this.state.sender && this.state.sender === 'booker') ?
                             <div>
                                 <IonButton disabled={(this.state.localStatus === 'declined' || this.state.localStatus === 'booked') ? true : false}

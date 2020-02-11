@@ -1,19 +1,13 @@
 import React from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonItem,
-  IonInput,
-  IonButton,
-  IonCard,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
 import './BookerSignup2.css';
-import { signUpVenue } from '../../../store/booker';
+import { signUpVenue } from '../../../store/booker'
+import {
+  create
+} from 'ionicons/icons';
+
 interface IMyComponentState {
   description: string;
 }
@@ -47,21 +41,20 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
   render() {
     return (
       <IonPage>
-        <IonHeader>
-          <IonToolbar id="bar">
+        <IonHeader >
+          <IonToolbar  >
             <IonTitle>Venue description</IonTitle>
-            {/* <IonSearchbar className="search" placeholder="Search for venue..."  color="red"/> */}
           </IonToolbar>
         </IonHeader>
 
         <IonContent>
-          <IonCard className="welcome-card">
-            <form onSubmit={this.handleSubmit}>
+
+          <div className="welcome-card">
+            <form onSubmit={this.handleSubmit} >
               <IonTitle>Add venue description here...</IonTitle>
-              <IonItem>
-                <IonInput
-                  type="text"
-                  required
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={create} />
+                <IonInput type="text" required
                   value={this.state.description}
                   onIonChange={e =>
                     this.setState({
@@ -73,21 +66,17 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
                 />
               </IonItem>
 
-              <IonItem>
-                <br></br>
-
-                <IonButton
-                  size="small"
-                  className="next"
-                  type="submit"
-                  disabled={this.state.description.length === 0}
+              <div style={{ margin: "10px" }}>
+                <IonButton size="small" className="next" type="submit"
+                  disabled={(this.state.description.length === 0)}
                   routerLink="/signup/booker/5"
-                >
-                  Next
-                </IonButton>
-              </IonItem>
+                >Next</IonButton>
+              </div>
+
+
             </form>
-          </IonCard>
+
+          </div>
         </IonContent>
       </IonPage>
     );
