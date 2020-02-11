@@ -5,7 +5,7 @@ const { Booker, Venue, Event } = require('../db/models')
 module.exports = router
 
 router.get("/", async (req, res, next) => {
-  console.log(req.session)
+
   try {
     const data = await Booker.findAll()
     res.json(data)

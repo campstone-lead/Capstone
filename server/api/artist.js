@@ -63,7 +63,7 @@ router.post('/', async (req, res, next) => {
     res.status(201);
     res.send(artist);
   } catch (error) {
-    console.log('HERE AFTER');
+
     next(error);
   }
 });

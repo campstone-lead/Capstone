@@ -51,6 +51,7 @@ import {
 } from './AppImports';
 import VenueSinglePage from './pages/VenueSinglePage';
 import { notifications } from 'ionicons/icons';
+import './socket'
 interface IMyComponentProps {
   user: object;
   userId: Number;

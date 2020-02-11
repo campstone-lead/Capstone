@@ -6,11 +6,11 @@ const session = require('express-session')
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
-const sessionStore = new SequelizeStore({db})
+const sessionStore = new SequelizeStore({ db })
 const PORT = process.env.PORT || 8080
 const app = express()
-// const socketio = require('socket.io')
-const cors=require('cors')
+const socketio = require('socket.io')
+const cors = require('cors')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -22,14 +22,13 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
-passport.serializeUser((user, done) => done(null,user.email))
+passport.serializeUser((user, done) => done(null, user.email))
 
-passport.deserializeUser(async (email,done) => {
+passport.deserializeUser(async (email, done) => {
   try {
-    let user = await db.models.booker.findOne({where: {email: email}})
-    if(user==null)
-   {
-     user=await db.models.artist.findOne({where: {email: email}})
+    let user = await db.models.booker.findOne({ where: { email: email } })
+    if (user == null) {
+      user = await db.models.artist.findOne({ where: { email: email } })
     }
     done(null, user)
   } catch (err) {
@@ -43,14 +42,14 @@ const createApp = () => {
 
   // body parsing middleware
   app.use(express.json())
-  app.use(express.urlencoded({extended: true}))
+  app.use(express.urlencoded({ extended: true }))
 
   // compression middleware
   app.use(compression())
   const config = {
     origin: 'http://localhost:8100',
     credentials: true,
-};
+  };
   app.use(cors(config));
   // session middleware with passport
   app.use(
@@ -102,8 +101,11 @@ const startListening = () => {
   )
 
   // set up our socket control center
-  // const io = socketio(server)
-  // require('./socket')(io)
+  const io = socketio(server)
+  // io.origins('http://localhost:8080')
+
+  require('./socket')(io)
+
 }
 
 const syncDb = () => db.sync()
