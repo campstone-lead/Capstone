@@ -310,26 +310,102 @@ const artistEvent = [
   },
 ];
 
+
 const events = [
   {
+    id: 1,
     name: 'Friday Night Rock',
-    description: 'Friday Night Rock is looking for two rock bands to play this Friday night. Come rock with us!',
+    description: 'Friday Night Rock needs two rock bands.',
     date: new Date('May 11, 2020 22:30:00 UTC'),
     venueId: 2,
   },
   {
+    id: 2,
     name: 'Boss Lady',
-    description: 'In need of two techno artists or bands!!! ',
-    venueId: 4,
+    description: 'In need of a indie rock band!!! ',
     date: new Date('April 21, 2020 20:30:00 UTC'),
+    venueId: 4,
   },
   {
+    id: 3,
     name: 'Saturday Late Night Party',
     description: "Looking for at least two DJs.",
     date: new Date('May 03, 2020 22:30:00 UTC'),
-    venueId: 5,
+    venueId: 7,
+  },
+  {
+    id: 4,
+    name: "Jazzy Valentine's Day Ball",
+    description: 'The Valentines Ball needs three experienced jazz musicians',
+    date: new Date('February 14, 2020 22:30:00 UTC'),
+    venueId: 6
+  },
+  {
+    id: 5,
+    name: 'Dance Dungeon',
+    description: 'Seeking an opener for our headliner Randomer.',
+    date: new Date('February 15, 2020 22:30:00 UTC'),
+    venueId: 8
+  },
+  {
+    id: 6,
+    name: 'New Artists Festival',
+    description: 'Looking for indie, rock, pop, and hip hop artists to join our lineup for a 3-day festival.',
+    date: new Date('March 20, 2020 22:30:00 UTC'),
+    venueId: 4
+  },
+  {
+    id: 7,
+    name: 'DJ Residency',
+    description: 'NOW HIRING: resident house DJ. Will play every friday night for an entire month.',
+    date: new Date('April 19, 2020 22:30:00 UTC'),
+    venueId: 1
+  },
+  {
+    id: 8,
+    name: 'Coding Bootcamp Graduation After-Party!',
+    description: 'Grace Hopper is having a graduation after-party for its 1911 cohort. We are looking for an exciting pop artist to perform for our students and families :)',
+    date: new Date('March 3, 2020 22:30:00 UTC'),
+    venueId: 5
+  },
+  {
+    id: 9,
+    name: 'Studio 54 Night Magic',
+    description: 'Need a few electronic artists ASAP to play our loft for a Studio 54 themed night. Each artist will have an hour long set',
+    date: new Date('February 24, 2020 22:30:00 UTC'),
+    venueId: 3
+  },
+  {
+    id: 10,
+    name: 'Three Year Anniversary',
+    description: 'Seeking rock and hip hop artists with a strong following to play at our hall',
+    date: new Date('February 14, 2020 22:30:00 UTC'),
+    venueId: 3
+  },
+  {
+    id: 11,
+    name: 'Mixmag NYC Launch Party',
+    description: 'Looking for Techno, electronic, and house djs to help us celebrate the launch of MixMag',
+    date: new Date('February 17, 2020 22:30:00 UTC'),
+    venueId: 1
+  },
+  {
+    id: 12,
+    name: 'Open Mic Saturdays',
+    description: 'Welcoming musicians of every level to perform on a busy night. Must be rock, indie, country, metal',
+    date: new Date('May 11, 2020 22:30:00 UTC'),
+    venueId: 2,
+  },
+  {
+    id: 13,
+    name: 'WARPER',
+    description: 'Need a headliner for a minimal techno party series',
+    date: new Date('May 11, 2020 22:30:00 UTC'),
+    venueId: 7,
   },
 ];
+
+
 const seed = () =>
   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
