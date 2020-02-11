@@ -40,10 +40,11 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     if (this.props.user['status'] === 'booker') {
       const id = this.props.user['id'];
       await this.props.getOneBooker(id);
+
     }
   }
   render() {
-
+    console.log(this.props.venues)
     return (
       <IonPage>
         <IonHeader>

@@ -1,31 +1,40 @@
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonButton
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonItem,
+  IonLabel,
+  IonButton,
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
-import { connect } from 'react-redux'
-import { updatedVenue } from '../../../store/booker'
+import { connect } from 'react-redux';
+import { signUpVenue } from '../../../store/booker';
 
 interface IMyComponentState {
   genreTypes: {
-    rock: boolean,
-    jazz: boolean,
-    electronic: boolean,
-    pop: boolean,
-    hipHop: boolean,
-    indie: boolean,
-    country: boolean,
-    metal: boolean,
-    house: boolean,
-    techno: boolean,
-  }
+    rock: boolean;
+    jazz: boolean;
+    electronic: boolean;
+    pop: boolean;
+    hipHop: boolean;
+    indie: boolean;
+    country: boolean;
+    metal: boolean;
+    house: boolean;
+    techno: boolean;
+  };
 }
 interface IMyComponentProps {
-  updateVenue: any
-
+  signUpVenue: any;
 }
 
-class VenueGenres extends React.Component<IMyComponentProps, IMyComponentState>  {
+class VenueGenres extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,8 +49,8 @@ class VenueGenres extends React.Component<IMyComponentProps, IMyComponentState> 
         metal: false,
         house: false,
         techno: false,
-      }
-    }
+      },
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -51,21 +60,20 @@ class VenueGenres extends React.Component<IMyComponentProps, IMyComponentState> 
     this.setState({
       genreTypes: {
         ...this.state.genreTypes,
-        [event.target.target]: !this.state.genreTypes[event.target.target]
-      }
-    })
+        [event.target.target]: !this.state.genreTypes[event.target.target],
+      },
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const obj = this.state.genreTypes
-    const keys = Object.keys(obj)
-    const filtered = keys.filter((key) => obj[key])
-    console.log(filtered)
-    this.props.updateVenue({
-      genres: filtered
-    })
-
+    const obj = this.state.genreTypes;
+    const keys = Object.keys(obj);
+    const filtered = keys.filter(key => obj[key]);
+    console.log(filtered);
+    this.props.signUpVenue({
+      genres: filtered,
+    });
   }
 
   render() {
@@ -95,26 +103,31 @@ class VenueGenres extends React.Component<IMyComponentProps, IMyComponentState> 
             <IonButton color={this.state.genreTypes.techno ? 'primary' : 'secondary'} type="button" target="techno" onClick={this.handleClick}>TECHNO</IonButton>
 
             <div>
-              <br></br>
-              <IonButton type="submit"
-                disabled={Object.keys(this.state.genreTypes).every((key) => !this.state.genreTypes[key])}
+
+              <IonButton
+                type="submit"
+                disabled={Object.keys(this.state.genreTypes).every(
+                  key => !this.state.genreTypes[key]
+                )}
                 routerLink="/signup/booker/7"
-                size="default"
-              >Next</IonButton>
+              >
+                Next
+              </IonButton>
+
             </div>
           </form>
         </div>
       </IonContent>
 
-    </IonPage>)
+
+    </IonPage>
+    );
   }
 }
-
-
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateVenue: (artistInfo) => dispatch(updatedVenue(artistInfo))
-  }
-}
+    signUpVenue: artistInfo => dispatch(signUpVenue(artistInfo)),
+  };
+};
 export default connect(null, mapDispatchToProps)(VenueGenres);

@@ -5,11 +5,11 @@ import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonTo
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add } from 'ionicons/icons';
-import { updatedVenue } from '../../../store/booker'
+import { signUpVenue } from '../../../store/booker'
 axios.defaults.withCredentials = true;
 interface IMyComponentProps {
-  booker: object,
-  updateVenue: any
+  booker: object;
+  signUpVenue: any;
 }
 
 interface IMyComponentState {
@@ -19,7 +19,10 @@ interface IMyComponentState {
   url: any
 }
 
-class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState> {
+class BookerSignup3 extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+  > {
   constructor(props) {
     super(props)
     this.state = {
@@ -53,18 +56,18 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
       url: `/upload`,
       data: formData
     })
-    await this.props.updateVenue(this.state)
+    await this.props.signUpVenue(this.state)
     console.log(res.data)
 
   }
   componentDidMount() {
-    let booker = window.localStorage.getItem('booker')
-    booker = JSON.parse(booker || '');
-    let newBooker = booker || {};
-    if (newBooker["venue"]["photo"] !== undefined) {
+    let venue = window.localStorage.getItem('venue');
+    venue = JSON.parse(venue || '');
+    let newVenue = venue || {};
+    if (newVenue['photo'] !== undefined) {
       this.setState({
-        photo: newBooker["venue"].photo
-      })
+        photo: newVenue['photo'],
+      });
     }
   }
   // async takePicture() {
@@ -89,8 +92,7 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
   // }
 
   handleClick() {
-    this.props.updateVenue(this.state)
-
+    this.props.signUpVenue(this.state);
   }
 
   render() {
@@ -136,9 +138,11 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
 
 
 
-            <IonButton size="small" className="next"
+            <IonButton
+              size="small"
+              className="next"
               onClick={this.handleClick}
-              disabled={(this.state.photo.length === 0)}
+              disabled={this.state.photo.length === 0}
               routerLink="/signup/booker/4"
             >
               <IonLabel>NEXT</IonLabel>
@@ -150,13 +154,13 @@ class BookerSignup3 extends React.Component<IMyComponentProps, IMyComponentState
       </IonPage>
     );
   }
-};
-const mapStateToProps = (state) => ({
-  booker: state.booker
-})
+}
+const mapStateToProps = state => ({
+  booker: state.booker,
+});
 
-const mapDispatchToProps = (dispatch) => ({
-  updateVenue: state => dispatch(updatedVenue(state))
-})
+const mapDispatchToProps = dispatch => ({
+  signUpVenue: state => dispatch(signUpVenue(state)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookerSignup3);
