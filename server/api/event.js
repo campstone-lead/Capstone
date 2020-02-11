@@ -5,7 +5,7 @@ const { Event, Venue, Booker, Artist, ArtistEvent } = require('../db/models')
 module.exports = router
 
 router.get("/", async (req, res, next) => {
-  console.log(req.session)
+
   try {
     const data = await Event.findAll()
     res.json(data)
@@ -63,10 +63,17 @@ router.put("/connection/update", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const data = await Event.create(req.body.event)
+    const event = await Event.create(req.body.event)
     const venue = await Venue.findByPk(req.body.currentVenue)
-    data.setVenue(venue)
-    res.json(data)
+    event.setVenue(venue)
+    //the below needs to be changed - this information shouldn't have to be reset in this way. We could put it in a hook maybe, but even then it would be a problem if someone updates the address, name, etc of the venue. The database can't do it's fancy normalizing if we leave it like this :( should update later. --Emma
+    event.update({
+      venueName: venue.name,
+      location: venue.address,
+      genres: venue.genres,
+      bookerId: venue.bookerId
+    })
+    res.json(event)
   } catch (error) {
     next(error)
   }

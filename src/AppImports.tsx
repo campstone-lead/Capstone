@@ -10,9 +10,10 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, contact, logOut, logIn } from 'ionicons/icons';
+import { home, contact, logOut, logIn, notifications } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
+import Tab4 from './pages/Tab4';
 import LandingPage from './pages/landingPage';
 import PersonalInfo from './pages/Artist/Signup/PersonalInfo';
 import ZipCodeForm from './pages/Artist/Signup/ZipCodeForm';
@@ -35,10 +36,12 @@ import AllArtistView from './pages/AllArtistView';
 import ArtistSinglePage from './pages/ArtistSinglePage';
 import VenueForm from './pages/booker/venue/add-venue-form';
 import EventForm from './pages/booker/event/add-event-form';
+import EventSinglePage from './pages/booker/event/EventSinglePage';
 import Profile from './pages/Profile';
 import Filter from './pages/Artist/Search/Filter';
 import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
+import NotificationWall from './pages/NotificationWall';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 import { me, logout } from './store/user';
@@ -60,6 +63,9 @@ import './theme/variables.css';
 import { render } from '@testing-library/react';
 import Tab3 from './pages/Tab3';
 import AllVenuesView from './pages/Artist/Search/SearchResults';
+import VenueSinglePage from './pages/VenueSinglePage';
+import { searchBarValue } from './store/filter';
+import './socket';
 export {
   IonApp,
   IonIcon,
@@ -102,6 +108,7 @@ export {
   ArtistSinglePage,
   VenueForm,
   EventForm,
+  EventSinglePage,
   Profile,
   Filter,
   SearchBar,
@@ -110,4 +117,9 @@ export {
   render,
   Tab3,
   AllVenuesView,
+  NotificationWall,
+  notifications,
+  Tab4,
+  VenueSinglePage,
+  searchBarValue,
 };

@@ -50,7 +50,7 @@ class VenueRecommendations extends React.Component<
 
     let rec = this.props.venues;
     rec = this.props.venues.filter(
-      venue => venue['recommendations'][0].score > 9
+      venue => venue['recommendations'][0].score <= 10
     );
 
     await this.setState({

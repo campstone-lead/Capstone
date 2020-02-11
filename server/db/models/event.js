@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 const Venue = require('./venue');
+const Booker = require('./booker');
 const Event = db.define('event', {
   tableName: {
     type: Sequelize.STRING,
@@ -37,17 +38,22 @@ const Event = db.define('event', {
   bookerId: {
     type: Sequelize.INTEGER,
   },
+  bookerName: {
+    type: Sequelize.STRING,
+  },
 });
 const preHooks = async jointTable => {
   try {
     const id = jointTable.venueId;
     if (jointTable.changed('venueId')) {
       let venue = await Venue.findByPk(id);
+      let booker = await Booker.findByPk(venue.bookerId);
       jointTable.location = venue.address;
       jointTable.imageURL = venue.imageURL;
       jointTable.genres = venue.genres;
       jointTable.venueName = venue.name;
       jointTable.bookerId = venue.bookerId;
+      jointTable.bookerName = booker.firstName + ' ' + booker.lastName;
     }
   } catch (err) {
     console.log(err);

@@ -6,18 +6,18 @@ const db = require('../db')
 router.post('/login', async (req, res, next) => {
   try {
     let user;
-    const booker = await Booker.findOne({where: {email: req.body.email}})
-    const artist=await Artist.findOne({where: {email: req.body.email}})
-    if(!booker){
-      if(!artist){
-        user=null
-      }else{
-        console.log('artist')
-        user=artist;
+    const booker = await Booker.findOne({ where: { email: req.body.email } })
+    const artist = await Artist.findOne({ where: { email: req.body.email } })
+    if (!booker) {
+      if (!artist) {
+        user = null
+      } else {
+
+        user = artist;
       }
-    }else {
-      console.log('booker')
-      user=booker;
+    } else {
+
+      user = booker;
     }
     if (!user) {
       console.log('No such user found:', req.body.email)
@@ -59,7 +59,6 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res, next) => {
-console.log(req.session,req.sessionID)
   res.json(req.user)
 })
 

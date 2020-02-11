@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import {
   IonPage,
   IonContent,
@@ -19,7 +20,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { connect } from 'react-redux';
-import { closeCircle, arrowBack } from 'ionicons/icons';
+import { closeCircle } from 'ionicons/icons';
 import {
   chooseGenres,
   deleteFilter,
