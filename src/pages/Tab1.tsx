@@ -101,6 +101,7 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   }
 
   render() {
+    console.log('hhhh');
     return (
       <IonPage>
         {this.props.user['status'] === undefined ? (
@@ -142,7 +143,11 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                       color="dark"
                       onClick={() => {
                         this.props.searchBarValue(false);
-                        this.setState({ isSearchBarOpen: false });
+                        window.localStorage.removeItem('filter');
+                        this.setState({
+                          isSearchBarOpen: false,
+                          searchWord: '',
+                        });
                       }}
                     >
                       Cancel
