@@ -67,6 +67,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "script/deploy",
     "eject": "react-scripts eject",
     "start-dev": "NODE_ENV='development' ionic serve & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js --ignore public --ignore src"
