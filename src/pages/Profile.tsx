@@ -43,6 +43,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     }
   }
   render() {
+
     return (
       <IonPage>
         <IonHeader>
