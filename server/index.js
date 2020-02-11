@@ -47,7 +47,7 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
   const config = {
-    origin: 'http://localhost:8100',
+    origin: 'http://localhost:8080',
     credentials: true,
   };
   app.use(cors(config));
@@ -68,7 +68,8 @@ const createApp = () => {
   app.use('/api', require('./api'))
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  // app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use(express.static(path.join(__dirname, '..', 'build')))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -83,7 +84,8 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+    // res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+    res.sendFile(path.join(__dirname, '..', 'build/index.html'))
   })
 
   // error handling endware
