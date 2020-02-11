@@ -1,10 +1,9 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonItemGroup, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonSearchbar } from '@ionic/react';
-import { home, body, musicalNote } from 'ionicons/icons'
+import { IonContent, IonHeader, IonPage, IonToolbar, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonSearchbar } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
-import { fetchEvents, gotOneEvents } from '../store/event'
+import { gotOneEvents } from '../store/event'
 import { fetchOneVenue } from '../store/venue';
 import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
@@ -102,21 +101,6 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
         if (this.props.events.length !== 0)
             this.setState({ currentEvent: this.props.events[0].id })
-
-        // this.props.events.forEach(async el => {
-        //     await this.props.gotOneEvents(el.id);
-        //     let artist = this.props.selectedEvent['artists'].filter(
-        //         artist => artist.artistId === this.props.user['id']
-        //     );
-        //     if (artist.length === 1) {
-        //         if (this.props.bookingStatus !== null)
-        //             await this.setState({
-        //                 localStatus: this.props.bookingStatus['status'],
-        //                 sender: this.props.bookingStatus['sender']
-        //             })
-
-        //     }
-        // })
         if (this.props.attendedEvents !== null) {
 
             let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(event => event.eventId === this.state.currentEvent)
@@ -126,45 +110,13 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                     sender: getArtistStatusforCurrentVenue[0]['sender'] || ''
                 })
             }
-            console.log('heeere->>>>', this.state)
+
         }
-
-        // if (this.props.events.length !== 0)
-        //     this.setState({ currentEvent: this.props.events[0].id })
-
-        // await this.setState({
-        //     localStatus: this.props.bookingStatus['status'],
-        //     sender: this.props.bookingStatus['sender'],
-        //     bookingInfo: this.props.bookingStatus
-        // })
-        // let artist = this.props.events.filter(
-        //     event => event['artistId'] === this.props.user['id']
-        // );
-        // console.log('here', artist)
-        // if (artist.length >= 1) {
-
-        //     await this.props.gotOneEvents(artist[0].id)
-
-        //     artist = this.props.selectedEvent['artists'].filter(
-        //         artist => artist.artistId === this.props.user['id']
-        //     );
-
-        //     if (artist.length >= 1)
-        //         await this.setState({
-        //             localStatus: artist[0]['status'] || '',
-        //             sender: artist[0]['sender'] || ''
-        //         })
-
-
-        // this.setState({ currentBooker: this.props.venue['bookerId'] })
     }
 
 
 
     render() {
-        console.log(this.props)
-
-
         if (!Array.isArray(this.props.events))
             return <IonCardTitle>Loading...</IonCardTitle>;
         return (
@@ -239,9 +191,6 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
     }
 }
 
-// <IonItem key={index}>
-// <h1>Upcoming Events: {event.name}</h1>
-// </IonItem>
 
 const mapStateToProps = (state) => ({
     user: state.user,

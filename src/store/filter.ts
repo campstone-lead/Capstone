@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import axios from 'axios';
 import queryString from 'query-string';
 
@@ -94,7 +95,7 @@ export const customedFilter = (mainFilters, genreFilters) => async dispatch => {
 };
 
 // Reducer
-export default function(state = defaultFilter, action) {
+export default function (state = defaultFilter, action) {
   let genresCopy, chosenCopy, allSingleCopy;
   let allSingle: Array<string> = [],
     genres: Array<string> = [];

@@ -1,4 +1,5 @@
 import React from 'react';
+import socket from '../socket';
 import {
   IonContent,
   IonPage,
@@ -58,7 +59,7 @@ class ArtistSinglePage extends React.Component<
     if (this.props.bookingStatus !== null) {
 
       let getArtistStatusforCurrentVenue = this.props.bookingStatus.filter(event => event.eventId === Number(this.state.currentEvent))
-      console.log(getArtistStatusforCurrentVenue)
+
       if (getArtistStatusforCurrentVenue.length === 1) {
         await this.setState({
           localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
@@ -121,7 +122,6 @@ class ArtistSinglePage extends React.Component<
   }
 
   render() {
-    console.log(this.props.bookingStatus)
     return (
       <IonPage>
         {/* <IonHeader mode="ios">
