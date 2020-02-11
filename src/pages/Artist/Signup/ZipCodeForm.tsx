@@ -1,12 +1,14 @@
 import {
 
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonCardHeader
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import { updatedArtist } from '../../../store/artist'
-
+import {
+  locate
+} from 'ionicons/icons';
 
 interface IMyComponentState {
   zipCode: string,
@@ -34,35 +36,43 @@ class ZipCodeForm extends React.Component<IMyComponentProps, IMyComponentState> 
       <IonHeader >
         <IonToolbar id="bar" >
           <IonTitle>Let us help to find the right venue for you</IonTitle>
-          <IonItem>
-            <IonLabel> <h3>Enter your zip code</h3></IonLabel>
-          </IonItem>
+
         </IonToolbar>
       </IonHeader>
 
 
 
       <IonContent>
-        <form onSubmit={this.handleSubmit}>
 
-          <IonItem>
-            <IonInput type="number" placeholder="ZipCode" required
-              value={this.state.zipCode}
-              onIonChange={(e) => this.setState({ zipCode: (e.target as HTMLInputElement).value })}
-            />
+        <div className="welcome-card">
+          <form onSubmit={this.handleSubmit}>
+            <IonItem lines="none">
+              <IonCardHeader> <h3>Enter your zip code</h3></IonCardHeader>
+            </IonItem>
+            <IonItem lines="inset">
+              <IonIcon slot="start" color="medium" icon={locate} />
+              <IonInput type="number" placeholder="ZipCode" required
+                value={this.state.zipCode}
+                onIonChange={(e) => this.setState({ zipCode: (e.target as HTMLInputElement).value })}
+              />
 
-          </IonItem>
+            </IonItem>
 
-          <IonItem>
-            <br></br>
-            <IonButton
-              type="submit"
-              disabled={!(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipCode))}
-              routerLink="/genres"
-            >
-              Next</IonButton>
-          </IonItem>
-        </form>
+            <div style={{ margin: "10px" }}>
+              <IonItem lines="none">
+                <br></br>
+                <IonButton
+                  type="submit"
+                  disabled={!(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zipCode))}
+                  routerLink="/genres"
+                  size="default"
+                >
+                  Next</IonButton>
+              </IonItem>
+            </div>
+          </form>
+
+        </div>
       </IonContent>
     </IonPage>)
   }

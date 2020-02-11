@@ -4,15 +4,20 @@ import {
   IonTitle,
   IonItem,
   IonInput,
-  IonLabel,
+  IonIcon,
   IonButton,
   IonBackButton,
+  IonLabel,
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
 import { updatedArtist } from '../../../store/artist';
-
+import {
+  call,
+  mailOpen,
+  person
+} from 'ionicons/icons';
 interface IMyComponentState {
   email: string;
   phone: string;
@@ -68,12 +73,9 @@ class PersonalInfoForm extends React.Component<
     return (
       <IonPage>
         <IonContent
-        // style={{
-        //   '--background':
-        //     'url(https://cuteiphonewallpaper.com/wp-content/uploads/2019/09/Gradient-iPhone-Wallpaper-Design.jpg)',
-        // }}
+
         >
-          <IonItem
+          <IonItem lines="inset"
             style={{
               height: '50px',
               display: 'flex',
@@ -94,93 +96,96 @@ class PersonalInfoForm extends React.Component<
               <IonTitle>Tell us about yourself...</IonTitle>
             </div>
           </IonItem>
-          <form onSubmit={this.handleSubmit}>
-            <IonItem>
-              <IonLabel>First Name</IonLabel>
-              <IonInput
-                type="text"
-                placeholder="FirstName"
-                required
-                value={this.state.firstName}
-                onIonChange={e =>
-                  this.setState({
-                    firstName: (e.target as HTMLInputElement).value,
-                  })
-                }
-              />
-            </IonItem>
-
-            <IonItem>
-              <IonLabel>Last Name</IonLabel>
-              <IonInput
-                type="text"
-                placeholder="LastName"
-                required
-                value={this.state.lastName}
-                onIonChange={e =>
-                  this.setState({
-                    lastName: (e.target as HTMLInputElement).value,
-                  })
-                }
-              />
-            </IonItem>
-
-            <IonItem>
-              <IonLabel>Email</IonLabel>
-              <IonInput
-                type="email"
-                placeholder="Email"
-                required
-                value={this.state.email}
-                onIonChange={e =>
-                  this.setState({ email: (e.target as HTMLInputElement).value })
-                }
-              />
-            </IonItem>
-
-            <IonItem>
-              <IonLabel>Phone Number</IonLabel>
-              <IonInput
-                type="number"
-                placeholder="PhoneNumber"
-                required
-                value={this.state.phone}
-                onIonChange={e =>
-                  this.setState({ phone: (e.target as HTMLInputElement).value })
-                }
-              />
-            </IonItem>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <IonItem
-                detail={false}
-                lines={'none'}
-              >
-                <IonButton
-                  size="default"
-                  style={{ width: '90px' }}
-                  strong
-                  type="submit"
-                  routerLink={'/artistnameform'}
-                  disabled={
-                    this.state.email === '' ||
-                      this.state.firstName === '' ||
-                      this.state.lastName === '' ||
-                      this.state.phone === ''
-                      ? true
-                      : false
+          <div className="welcome-card">
+            <form onSubmit={this.handleSubmit}>
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={person} />
+                <IonInput
+                  type="text"
+                  placeholder="First Name"
+                  required
+                  value={this.state.firstName}
+                  onIonChange={e =>
+                    this.setState({
+                      firstName: (e.target as HTMLInputElement).value,
+                    })
                   }
-                >
-                  Next
-                </IonButton>
+                />
+                <IonInput
+                  type="text"
+                  placeholder="Last Name"
+                  required
+                  value={this.state.lastName}
+                  onIonChange={e =>
+                    this.setState({
+                      lastName: (e.target as HTMLInputElement).value,
+                    })
+                  }
+                />
               </IonItem>
-            </div>
-          </form>
+
+
+
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={mailOpen} />
+                <IonInput
+                  type="email"
+                  placeholder="Email"
+                  required
+                  value={this.state.email}
+                  onIonChange={e =>
+                    this.setState({ email: (e.target as HTMLInputElement).value })
+                  }
+                />
+              </IonItem>
+
+              <IonItem lines="inset">
+                <IonIcon slot="start" color="medium" icon={call} />
+                <IonInput
+                  type="number"
+                  placeholder="PhoneNumber"
+                  required
+                  value={this.state.phone}
+                  onIonChange={e =>
+                    this.setState({ phone: (e.target as HTMLInputElement).value })
+                  }
+                />
+              </IonItem>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <IonItem
+                  detail={false}
+                  lines={'none'}
+                >
+                  <div style={{ margin: "10px" }}>
+                    <IonButton
+                      size="default"
+
+                      strong
+                      type="submit"
+                      routerLink={'/artistnameform'}
+                      disabled={
+                        this.state.email === '' ||
+                          this.state.firstName === '' ||
+                          this.state.lastName === '' ||
+                          this.state.phone === ''
+                          ? true
+                          : false
+                      }
+                    >
+                      NEXT
+                    </IonButton>
+                  </div>
+
+                </IonItem>
+              </div>
+            </form>
+          </div>
         </IonContent>
       </IonPage>
     );

@@ -67,15 +67,22 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
             </IonButton>
           )}
 
+
+
         </div>
-        {this.props.events ? this.props.events.map((event, index) => {
+
+        {this.props.events ? this.props.events.filter(event => event["venueId"] === this.props.venue['id']).map((event, index) => {
           var dateObj = new Date(event['date'])
           var month = dateObj.getUTCMonth() + 1;
           var day = dateObj.getUTCDate();
           var year = dateObj.getUTCFullYear();
 
-          let newdate = year + "/" + month + "/" + day;
+          let newdate = month + "/" + day + "/" + year;
+
           return (
+
+
+
             <IonCard key={index}
               href={`/events/${event['id']}`}
               className=""
@@ -108,10 +115,19 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
               </div>
             </IonCard>
           )
+
+
+
         }) : <h3>There are no upcoming events at this venue</h3>}
       </>
     )
   }
 }
 
+// {this.props.events ? this.props.events.filter(event) => event["venueId"] === this.props.venue["id"]
+// }
+
+
 export default VenueSingleComponent;
+
+

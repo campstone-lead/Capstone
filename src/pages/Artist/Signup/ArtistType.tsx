@@ -1,5 +1,5 @@
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonCardHeader
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
@@ -67,25 +67,28 @@ class ArtistType extends React.Component<IMyComponentProps, IMyComponentState>  
     return (<IonPage>
       <IonHeader >
         <IonToolbar id="bar" >
-          <IonTitle>ARE YOU?</IonTitle>
+          <IonTitle>ARTIST TYPE</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
-        <form onSubmit={this.handleSubmit}>
-          <IonButton color={this.state.artistTypes.dj ? 'primary' : 'secondary'} type="button" target="dj" onClick={this.handleClick}>DJ</IonButton>
-          <IonButton color={this.state.artistTypes.solo ? 'primary' : 'secondary'} type="button" target="solo" onClick={this.handleClick}>SOLO</IonButton>
-          <IonButton color={this.state.artistTypes.band ? 'primary' : 'secondary'} type="button" target="band" onClick={this.handleClick}>IN A BAND</IonButton>
-          <IonItem>
-            <br></br>
-            <IonItem >
+
+        <div className="welcome-card">
+
+          <form onSubmit={this.handleSubmit}>
+            <IonCardHeader>What type of artist are you?</IonCardHeader>
+            <IonButton color={this.state.artistTypes.dj ? 'primary' : 'secondary'} type="button" target="dj" onClick={this.handleClick}>DJ</IonButton>
+            <IonButton color={this.state.artistTypes.solo ? 'primary' : 'secondary'} type="button" target="solo" onClick={this.handleClick}>SOLO</IonButton>
+            <IonButton color={this.state.artistTypes.band ? 'primary' : 'secondary'} type="button" target="band" onClick={this.handleClick}>IN A BAND</IonButton>
+
+            <IonItem lines="none">
               <IonButton type="submit"
                 routerLink={'/uploadpicture'}
+                size="default"
               >Next</IonButton>
             </IonItem>
-          </IonItem>
-
-        </form>
+          </form>
+        </div>
       </IonContent>
 
     </IonPage>)

@@ -3,40 +3,39 @@ import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonItemGroup, IonL
 import { connect } from 'react-redux'
 import { me } from '../../../store/user'
 import { gotOneEvents } from '../../../store/event'
-import { fetchOneVenue } from '../../../store/venue'
-import history from '../../history'
+
 
 interface IMyComponentProps {
     user: object,
     me: any,
     event: object,
-    venue: object,
     gotOneEvents: any,
-    fetchOneVenue: any
 }
 
 interface IMyComponentState {
-
+    venue: object
 }
 
 class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentState>{
     constructor(props) {
         super(props)
         this.state = {
-
+            venue: {}
         }
     }
 
     async componentDidMount() {
-        const id = Number(history.location.pathname.slice(8))
+        const id = this.props["match"]["params"]["id"]
         await this.props.me()
         await this.props.gotOneEvents(id)
-        await this.props.fetchOneVenue(id)
+        this.setState({
+            venue: this.props.event['event']['venue']
+        })
+
     }
 
 
     render() {
-        console.log('venue', this.props.venue)
 
         if (!this.props.event['event']) {
             return <IonCardTitle>Loading...</IonCardTitle>;
@@ -69,7 +68,7 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         </IonToolbar>
                     </IonHeader>
                     <IonContent>
-                        <IonBackButton defaultHref={`/allVenues/${this.props.venue["id"]}`} mode="ios"
+                        <IonBackButton defaultHref={`/allVenues/${this.state.venue["id"]}`} mode="ios"
                             text=" Back "
                             color="dark"
                             className="backBtn"
@@ -117,13 +116,11 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 const mapStateToProps = (state) => ({
     user: state.user,
     event: state.event.currentEvent,
-    venue: state.venue.single
 })
 
 const mapDispatchToProps = (dispatch) => ({
     me: () => dispatch(me()),
     gotOneEvents: (id) => dispatch(gotOneEvents(id)),
-    fetchOneVenue: (id) => dispatch(fetchOneVenue(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventSinglePage)

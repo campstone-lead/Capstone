@@ -10,13 +10,19 @@ import {
   IonItem,
   IonButton,
   IonAvatar,
+  IonInput,
+  IonLabel,
+  IonCard,
+  IonCardHeader,
 } from '@ionic/react';
 import React, { Component } from 'react';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { updatedArtist } from '../../../store/artist';
 import { connect } from 'react-redux';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-import { add } from 'ionicons/icons';
+import { add, camera } from 'ionicons/icons';
+import axios from 'axios'
+axios.defaults.withCredentials = true;
 const { Camera } = Plugins;
 
 const DEFAULT_PIC =
@@ -27,6 +33,7 @@ interface IMyComponentProps {
 
 interface IMyComponentState {
   imageURL: string;
+  selectedFile: any
 }
 export class UploadPicture extends Component<
   IMyComponentProps,
@@ -34,20 +41,43 @@ export class UploadPicture extends Component<
   > {
   constructor(props: any) {
     super(props);
-    this.state = { imageURL: DEFAULT_PIC };
+    this.state = { imageURL: DEFAULT_PIC, selectedFile: null, };
     defineCustomElements(window);
-    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
-  // componentDidMount(){
-  //   let artist=window.localStorage.getItem('artist')
-  //   artist=JSON.parse(artist||'');
-  //   let newArtist=artist||{};
-  //   if(newArtist["photo"]!==undefined){
-  //     this.setState({
-  //       photo:newArtist["photo"]
-  //     })
-  //   }
-  // }
+
+  onChangeHandler = async  event => {
+    event.persist()
+    await this.setState({
+      selectedFile: event.target.files[0],
+    })
+
+    await this.setState({ imageURL: this.state.selectedFile.name })
+  }
+  onClickHandler = async (e) => {
+    e.preventDefault() // <-- missing this
+    const formData = new FormData();
+    formData.append("file", this.state.selectedFile);
+    const res = await axios({
+      method: "post",
+      baseURL: "http://localhost:8080/",
+      url: `/upload`,
+      data: formData
+    })
+    await this.props.updateArtist(this.state);
+    console.log(res.data)
+
+  }
+  async componentDidMount() {
+    let artist = window.localStorage.getItem('artistInfo')
+    artist = JSON.parse(artist || '');
+    let artistInfo = artist || {};
+    if (artistInfo['imageURL'] !== undefined) {
+      this.setState({
+        imageURL: artistInfo['imageURL']
+      })
+    }
+  }
   async takePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -61,11 +91,9 @@ export class UploadPicture extends Component<
     this.setState({
       imageURL: imageURL || DEFAULT_PIC,
     });
-  }
-  handleSubmit(event) {
-    event.preventDefault();
     this.props.updateArtist(this.state);
   }
+
 
   render() {
     const { imageURL } = this.state;
@@ -77,29 +105,39 @@ export class UploadPicture extends Component<
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <form onSubmit={this.handleSubmit}>
-            {/* <IonButton type='button'onClick={() => this.takePicture()}> add picture</IonButton> */}
-            <IonAvatar style={{ width: '370px', height: '370px' }}>
-              \
-              <IonItem>
-                <img src={imageURL} alt='img' />
-                <IonFab vertical="bottom" horizontal="end">
-                  <IonFabButton onClick={() => this.takePicture()}>
-                    <IonIcon icon={add}></IonIcon>
-                  </IonFabButton>
-                </IonFab>
-              </IonItem>
+          <IonCardHeader>
+            Current Picture
+          </IonCardHeader>
+          <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+            <IonAvatar style={{ width: '370px', height: '370px', borderRadius: "50px" }}>
+              <img src={imageURL} alt='img' />
             </IonAvatar>
-            <IonItem >
-              <IonButton
-                disabled={this.state.imageURL === DEFAULT_PIC ? true : false}
-                routerLink={'/artistpassword'}
-                type="submit"
-              >
-                next
-              </IonButton>
-            </IonItem>
-          </form>
+          </div>
+
+
+          < div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
+            <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+            <IonButton onClick={this.onClickHandler}>
+              <IonIcon icon={add}></IonIcon>
+              <IonLabel>Upload picture</IonLabel>
+            </IonButton>
+
+            <IonButton onClick={() => this.takePicture()}>
+              <IonIcon icon={camera}></IonIcon>
+              <IonLabel>Take picture</IonLabel>
+            </IonButton>
+            <IonButton
+              disabled={this.state.imageURL === DEFAULT_PIC ? true : false}
+              routerLink={'/artistpassword'}
+              type="submit"
+            >
+              <IonLabel>NEXT</IonLabel>
+            </IonButton>
+          </div>
+
         </IonContent>
       </IonPage>
     );

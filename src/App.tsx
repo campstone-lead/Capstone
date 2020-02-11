@@ -82,7 +82,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
     if (searchbar !== null) {
       let value: boolean;
       value = JSON.parse(searchbar || '');
-      this.props.searchBarValue(value);
+      await this.props.searchBarValue(value);
     }
     this.setState({
       isSearchBarOpen: this.props.isSearchBarOpen,
