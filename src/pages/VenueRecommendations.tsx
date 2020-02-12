@@ -96,11 +96,11 @@ class VenueRecommendations extends React.Component<
           {this.state.currentArtistRecommandations.map((venue, index) => {
             return (
               <IonCard
-                // style={{
-                //   '--background':
-                //     'url(https://wallpaperaccess.com/full/851202.jpg)',
-                //   width: '250px',
-                // }}
+                style={{
+                  '--background':
+                    'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  width: '250px',
+                }}
                 key={index}
                 href={`/allVenues/${venue['id']}`}
                 className=""
