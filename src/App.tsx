@@ -51,7 +51,10 @@ import {
   VenueSinglePage,
   searchBarValue,
   notifications,
+  UpdateBookerForm,
 } from './AppImports';
+
+
 interface IMyComponentProps {
   user: object;
   userId: Number;
@@ -121,6 +124,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/signup/booker/5" component={BookerSignup5} />
               <Route path="/signup/booker/6" component={BookerSignup6} />
               <Route path="/signup/booker/7" component={BookerSignup7} />
+              <Route path="/bookers/:id/update" component={UpdateBookerForm} />
               <Route path="/infoform" component={PersonalInfo} />
               <Route path="/artistnameform" component={ArtistNameForm} />
               <Route path="/artistbioform" component={ArtistBioForm} />
