@@ -143,11 +143,14 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
         return (
             <IonPage>
                 <IonHeader >
-                    <IonToolbar id="bar" >
+                    <IonToolbar id="bar" style={{ '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)' }}>
                         <IonTitle>Update Your Profile</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent>
+                <IonContent style={{
+                    '--background':
+                        'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                }}>
                     <IonBackButton mode="ios"
                         text=" Back "
                         color="dark"
@@ -156,7 +159,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                     />
 
                     <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "20px", alignContent: "center" }}>
-                        <IonAvatar style={{ width: '270px', height: '270px', borderRadius: "50px" }}>
+                        <IonAvatar style={{ width: '170px', height: '170px', marginTop: '20px', borderRadius: "50px" }}>
                             <img src={this.state.imageURL} alt='img' />
                         </IonAvatar>
                     </div>
@@ -179,8 +182,8 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column", alignContent: "center" }}>
                         <form onSubmit={this.handleSubmit}>
-                            <IonItem lines="inset">
-                                <IonIcon slot="start" color="medium" icon={person} />
+                            <IonItem lines="inset" style={{ '--background': 'none' }}>
+                                <IonIcon slot="start" color="black" icon={person} />
                                 <IonInput type="text" placeholder="First Name" required
                                     value={this.state.firstName}
                                     onIonChange={e =>
@@ -200,8 +203,8 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
 
                             </IonItem>
 
-                            <IonItem lines="inset">
-                                <IonIcon slot="start" color="medium" icon={call} />
+                            <IonItem lines="inset" style={{ '--background': 'none' }}>
+                                <IonIcon slot="start" color="black" icon={call} />
                                 <IonInput type="text" placeholder="Phone number" required
                                     value={this.state.phone}
                                     onIonChange={e =>
@@ -213,8 +216,8 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
 
                             </IonItem>
 
-                            <IonItem lines="inset">
-                                <IonIcon slot="start" color="medium" icon={mailOpen} />
+                            <IonItem lines="inset" style={{ '--background': 'none' }}>
+                                <IonIcon slot="start" color="black" icon={mailOpen} />
                                 <IonInput type="email" placeholder="Email" required
                                     value={this.state.email}
                                     onIonChange={e =>
@@ -225,8 +228,8 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                 />
 
                             </IonItem>
-                            <IonItem lines="inset">
-                                <IonIcon slot="start" color="medium" icon={lock} />
+                            <IonItem lines="inset" style={{ '--background': 'none' }}>
+                                <IonIcon slot="start" color="black" icon={lock} />
                                 <IonInput type="password" placeholder="Password" required
                                     value={this.state.password}
                                     onIonChange={e =>
@@ -236,12 +239,13 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                     }
                                 />
                                 <div style={{ margin: "10px" }}>
-                                    <IonItem lines="none">
+                                    <IonItem lines="none" style={{ '--background': 'none' }}>
 
                                         <IonButton
                                             type="submit"
                                             disabled={(this.state.password.length === 0) ? true : false}
                                             size="default"
+                                            routerLink='/profile'
                                         >Done</IonButton>
                                     </IonItem>
                                 </div>
