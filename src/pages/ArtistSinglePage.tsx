@@ -135,10 +135,10 @@ class ArtistSinglePage extends React.Component<
   render() {
     console.log(this.props['location']['state'])
     return (
-      <IonPage>
-        <IonHeader mode="ios">
-          <IonToolbar mode="ios">
-            <div className="tabHeader">
+      <IonPage >
+        <IonHeader mode="ios" >
+          <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+            <div className="tabHeader" >
               <img
                 src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
                 alt="logo.png"
@@ -150,7 +150,10 @@ class ArtistSinglePage extends React.Component<
             </div>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }} >
           <IonBackButton
             defaultHref="/home/"
             mode="ios"
@@ -165,7 +168,7 @@ class ArtistSinglePage extends React.Component<
               artist={this.props.artist}
             />
             {(this.props.user['status'] !== 'artist') && this.props.events !== undefined && (
-              <select onChange={this.handleChange} style={{ backgroundColor: 'lightgrey', width: '350px' }}>
+              <select onChange={this.handleChange} style={{ backgroundColor: 'white', width: '350px' }}>
                 {this.props.events &&
                   this.props.events.length !== 0 &&
                   this.props.events.map((event, index) => (

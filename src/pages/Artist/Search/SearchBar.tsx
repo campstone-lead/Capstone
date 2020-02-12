@@ -94,8 +94,8 @@ export class SearchBar extends React.Component<IMyComponentProps, {}> {
         {this.props.filters.length === 0 && this.props.word.length === 0 ? (
           ''
         ) : (
-          <SearchResults />
-        )}
+            <SearchResults />
+          )}
       </IonContent>
     );
   }

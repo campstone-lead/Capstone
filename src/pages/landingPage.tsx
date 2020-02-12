@@ -19,8 +19,12 @@ const LandingPage: React.FC = () => {
 
     return (
 
-        <IonContent >
-            <div className="landingPage">
+        <IonContent style={{
+            '--background':
+                'linear-gradient(to right, #000000, #434343)',
+
+        }} >
+            <div className="landingPage" style={{ color: 'white' }}>
 
                 <IonHeader color={'linear-gradient(to right, #000000, #434343)'} >
 
@@ -32,7 +36,7 @@ const LandingPage: React.FC = () => {
 
                                 className="logo"
                             />
-                            <h3 className="title" > Discover. Book .Connect.</h3>
+                            <h3 className="title" >HARMONIOUS</h3>
                         </div>
                     </IonToolbar>
 
@@ -49,12 +53,13 @@ const LandingPage: React.FC = () => {
                     <div data-src="https://www.pngitem.com/pimgs/m/134-1345781_pop-artists-pop-music-artists-collage-hd-png.png" />
                 </AutoplaySlider>
                 <IonCard className="profile" mode='ios'>
-                    <h3 className="title" style={{ "padding": "11px" }}>LEAD streamlines the booking process between an artist and a booker. </h3>
-                    <p style={{ "fontSize": "15.5px", "margin": "20px" }}>
+                    <h1 className='title' style={{ color: 'white' }}>Discover. Book .Connect.</h1>
+                    <h5 style={{ "padding": "11px", color: 'white', "marginLeft": "20px" }}>HARMONIOUS streamlines the booking process between an artist and a booker. </h5>
+                    <p style={{ "fontSize": "15.5px", "margin": "20px", color: 'white' }}>
                         Bookers can quickly discover and connect with artists through our recommendation engine, finding artists by distance and artistic style. Artists can also discover venues and the bookers to connect with instead of needlessly scouring the web. LEAD's job board for musicians is a simple and effective solution towards making everyone's life easier.
                     </p>
                 </IonCard>
-                <IonItem className='btn1' routerLink='/login' lines='none' >
+                <IonItem style={{ '--background': 'none' }} className='btn1' routerLink='/login' lines='none' >
                     <IonButton size="large" class="jolly-btn">Get Started</IonButton>
                 </IonItem>
             </div>

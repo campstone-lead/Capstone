@@ -104,12 +104,12 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
 
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" style={{ '--background': '#f3d2d1' }}>
           <IonCardHeader>
             <IonCardTitle>Notifications</IonCardTitle>
           </IonCardHeader>
         </IonHeader>
-        <IonContent>
+        <IonContent style={{ '--background': '#f3d2d1' }}>
 
           <IonList lines="inset">
             {

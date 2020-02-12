@@ -126,7 +126,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         return (
             <IonPage>
                 <IonHeader mode="ios">
-                    <IonToolbar mode="ios">
+                    <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
                         <div className="tabHeader">
                             <img
                                 src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
@@ -139,11 +139,15 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         </div>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent>
+                <IonContent style={{
+                    '--background':
+                        'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                }}>
                     <IonBackButton defaultHref="/home/" mode="ios"
                         text=" Back "
                         color="dark"
                         className="backBtn"
+                        style={{ '--background': 'none' }}
                     />
                     <div className="profile" style={{ marginTop: "50px", marginBottom: "20px" }}>
                         {/* VENUE VIEW WITH LIST OF EVENTS IS HERE NOW!!! */}
