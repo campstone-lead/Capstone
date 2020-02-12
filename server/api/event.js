@@ -72,16 +72,16 @@ router.put("/connection/update", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const event = await Event.create(req.body.event)
-    const venue = await Venue.findByPk(req.body.currentVenue)
-    event.setVenue(venue)
+    const event = await Event.create(req.body)
+    // const venue = await Venue.findByPk(req.body.event.venueId)
+    // event.setVenue(venue)
     //the below needs to be changed - this information shouldn't have to be reset in this way. We could put it in a hook maybe, but even then it would be a problem if someone updates the address, name, etc of the venue. The database can't do it's fancy normalizing if we leave it like this :( should update later. --Emma
-    event.update({
-      venueName: venue.name,
-      location: venue.address,
-      genres: venue.genres,
-      bookerId: venue.bookerId
-    })
+    // event.update({
+    //   venueName: venue.name,
+    //   location: venue.address,
+    //   genres: venue.genres,
+    //   bookerId: venue.bookerId
+    // })
     res.json(event)
   } catch (error) {
     next(error)
