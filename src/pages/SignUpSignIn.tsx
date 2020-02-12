@@ -58,12 +58,26 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
         </IonHeader>
 
 
-        <IonContent>
+        <IonContent style={{
+          '--background':
+            'linear-gradient(to right, #000000, #434343)',
+          color: 'white'
+        }} >
 
-          <IonCard className="welcome-card" >
+          <IonCard style={{
+            '--background':
+              'none',
+
+          }} className="welcome-card" >
             <form onSubmit={async (event) => { await this.handleSubmit(event) }}>
-              <IonItem lines="inset">
-                <IonLabel>Email</IonLabel>
+              <IonItem color='warning' lines="inset" style={{
+                '--background':
+                  'none',
+                color: 'white'
+
+              }}
+              >
+                <IonLabel >Email</IonLabel>
                 <IonInput type="email" placeholder="       user@email.com" required
                   value={this.state.email}
                   onIonChange={(e) => this.setState({ email: (e.target as HTMLInputElement).value })}
@@ -72,8 +86,18 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
               </IonItem>
 
 
-              <IonItem lines="inset">
-                <IonLabel>Password</IonLabel>
+              <IonItem lines="inset" style={{
+                '--background':
+                  'none',
+                color: 'white'
+
+              }} color='warning'>
+                <IonLabel style={{
+                  '--background':
+                    'none',
+                  color: 'white'
+
+                }} >Password</IonLabel>
                 <IonInput type="password" placeholder=" *******" required
                   value={this.state.password}
                   onIonChange={(e) => this.setState({ password: (e.target as HTMLInputElement).value })}
@@ -83,18 +107,17 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
               {error && error.response && <IonCardHeader> {error.response.data} </IonCardHeader>}
 
 
-              <br></br>
-              <IonItem lines="none" routerLink={this.state.isActive ? '/profile' : undefined}>
-                <IonCardHeader>
-                  <IonButton
-                    type="submit"
-                    style={{ "width": "270px", "height": "38px" }}
-                    disabled={this.state.email.length === 0 || this.state.password.length === 0}
 
-                    color="tertiary"
-                  >Login</IonButton>
-                </IonCardHeader>
-              </IonItem>
+              <IonCardHeader>
+                <IonButton
+                  type="submit"
+                  style={{ "width": "270px", "height": "38px", }}
+                  disabled={this.state.email.length === 0 || this.state.password.length === 0}
+                  routerLink={this.state.isActive ? '/profile' : undefined}
+                  color="tertiary"
+                >Login</IonButton>
+              </IonCardHeader>
+
 
 
 
@@ -105,7 +128,12 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
               <br></br>
               <br></br>
               <br></br>
-              <IonTitle>Not a member yet?</IonTitle>
+              <IonTitle style={{
+                '--background':
+                  'none',
+                color: 'white'
+
+              }}>Not a member yet?</IonTitle>
               <br></br>
 
               <IonButton href="/signup0" style={{ "width": "270px", "margin": "10px" }} color="tertiary" >Sign up</IonButton>
@@ -113,7 +141,7 @@ class SignUpSignIn extends React.Component<IMyComponentProps, IMyComponentState>
                 <IonIcon icon={logoGoogleplus} />
                 Sign up with Google
           </IonButton>
-              <IonButton style={{ "width": "270px", "margin": "10px" }} >
+              <IonButton style={{ "width": "270px", "margin": "10px", '--backrground': '#3171e0' }} color='secondary' >
                 <IonIcon icon={logoFacebook} />
                 Sign up with Facebook</IonButton>
             </div>

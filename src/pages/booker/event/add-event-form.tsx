@@ -121,7 +121,10 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
             <IonTitle >Create a new event</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }}>
 
 
 
@@ -137,7 +140,7 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
                         Please select the venue for this event
                  </IonLabel>
                       <select onChange={this.handleSelect} className="selectBtn"
-                        style={{ backgroundColor: 'lightgrey' }}
+                        style={{ backgroundColor: 'white' }}
                       >
                         {this.props.venues.map((venue, index) => (
                           <option value={venue.id} key={index} >
@@ -151,8 +154,9 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
                     <IonButton
                       mode="ios"
                       href="/addvenue"
-                      className="homeBtn"
-                      color="rgb(153, 178, 189);"
+
+
+
                     >
                       Add a venue
               </IonButton>
@@ -172,10 +176,10 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
                   </IonAvatar>
 
                 </div>
-                < div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column" }}>
+                < div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
                   <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
-                  <IonButton type="button" onClick={this.onClickHandler} color='secondary' size="small" >Upload a picture</IonButton>
+                  <IonButton type="button" onClick={this.onClickHandler} size="default" >Upload a picture</IonButton>
                 </div>
               </div>
               <div>
@@ -184,8 +188,8 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
                 <form onSubmit={this.handleSubmit} className='updatevenue' >
 
                   <IonLabel className='venuelabel'>Event name</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
+                  <IonItem lines="inset" style={{ marginBottom: "15px" }} color='none'>
+                    <IonIcon mode="ios" slot="start" color="black" icon={headset} />
                     <IonInput clearInput type="text" required
                       value={this.state.event["name"]}
                       style={{ width: "250px" }}
@@ -196,8 +200,8 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
                   </IonItem>
 
                   <IonLabel className='venuelabel'>Describe the event</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "10px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={create} />
+                  <IonItem lines="inset" style={{ marginBottom: "10px" }} color='none'>
+                    <IonIcon mode="ios" slot="start" color="black" icon={create} />
                     <IonInput clearInput type="text"
 
                       style={{ width: "250px" }}
@@ -209,10 +213,13 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
                   </IonItem>
 
                   <IonLabel className='venuelabel'>Time</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "10px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={time} />
+                  <IonItem lines="inset" style={{ marginBottom: "10px" }}
+                    color='none'
+                  >
+                    <IonIcon mode="ios" slot="start" color="black" icon={time} />
                     <IonDatetime
                       style={{ width: "250px" }}
+                      color="black"
                       value={this.state.event["date"]}
                       placeholder="Select date and time"
                       pickerFormat="MMM D YYYY h mm a"
@@ -226,7 +233,10 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
 
 
 
-                  <IonItem routerLink="/profile" lines="none">
+                  <IonItem routerLink="/profile" lines="none" style={{
+                    '--background':
+                      'none',
+                  }}>
                     <IonButton type="submit" size="default">create</IonButton>
                   </IonItem>
                 </form>
