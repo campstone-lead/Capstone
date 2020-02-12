@@ -42,6 +42,7 @@ import Filter from './pages/Artist/Search/Filter';
 import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
 import NotificationWall from './pages/NotificationWall';
+import UpdateBookerForm from './pages/UpdateBookerForm';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 import { me, logout } from './store/user';
@@ -118,6 +119,7 @@ export {
   Tab3,
   AllVenuesView,
   NotificationWall,
+  UpdateBookerForm,
   notifications,
   Tab4,
   VenueSinglePage,

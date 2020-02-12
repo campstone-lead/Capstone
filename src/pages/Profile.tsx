@@ -44,7 +44,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     }
   }
   render() {
-    console.log(this.props.venues)
+    console.log('this.props.user', this.props.user['id'])
     return (
       <IonPage>
         <IonHeader>
@@ -57,7 +57,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
             'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
         }} >
           {this.props.user['status'] === 'artist' ? (
-            <div className="profile">
+            <div className="profile" >
               <ArtistProfileComponent
                 genres={this.props.genres}
                 artist={this.props.user}
@@ -94,7 +94,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                     </IonItem>
                   </IonList>
                 </IonCardContent>
-                <IonButton>Update profile</IonButton>
+                <IonButton routerLink={`/bookers/${this.props.user['id']}/update`}>Update profile</IonButton>
                 <br></br>
                 {this.props.venues &&
                   this.props.venues.length > 0 ? (

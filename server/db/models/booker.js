@@ -19,14 +19,14 @@ const Booker = db.define('booker', {
   },
   imageURL: {
     type: Sequelize.STRING,
-    validate:{
-      isUrl:true
-    },
-    defaultValue:'https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png'
+    // validate:{
+    //   isUrl:true
+    // },
+    defaultValue: 'https://images.vexels.com/media/users/3/147101/isolated/preview/b4a49d4b864c74bb73de63f080ad7930-instagram-profile-button-by-vexels.png'
   },
-  phone:{
-    type:Sequelize.STRING,
-    allowNull:false,
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
     validate: {
       notEmpty: true
     }
@@ -39,9 +39,9 @@ const Booker = db.define('booker', {
       isEmail: true
     }
   },
-  status:{
-    type:Sequelize.STRING,
-    defaultValue:'booker'
+  status: {
+    type: Sequelize.STRING,
+    defaultValue: 'booker'
   },
   password: {
     type: Sequelize.STRING,
@@ -67,7 +67,7 @@ module.exports = Booker
 /**
  * instanceMethods
  */
-Booker.prototype.correctPassword = function(candidatePwd) {
+Booker.prototype.correctPassword = function (candidatePwd) {
   return Booker.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
@@ -75,11 +75,11 @@ Booker.prototype.correctPassword = function(candidatePwd) {
  * classMethods
  */
 
-Booker.generateSalt = function() {
+Booker.generateSalt = function () {
   return crypto.randomBytes(16).toString('base64')
 }
 
-Booker.encryptPassword = function(plainText, salt) {
+Booker.encryptPassword = function (plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
