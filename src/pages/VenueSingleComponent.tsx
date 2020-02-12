@@ -33,30 +33,28 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
     return (
       <>
         <img src={this.props.venue['imageURL']} alt="img.jpg" />
-        <IonCardHeader>
-          <IonCardTitle>{this.props.venue['name']}</IonCardTitle>
-        </IonCardHeader>
+
         <IonCardContent>
           <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>{this.props.venue['description']}</IonCardSubtitle>
         </IonCardContent>
 
         <br></br>
-        <IonList lines="inset">
-          <IonItem>
-            <IonIcon slot="start" color="medium" icon={home} />
+        <div className="ion-item-border " >
+          <IonItem style={{ '--background': 'none' }}>
+            <IonIcon slot="start" color="black" icon={home} />
             <IonLabel style={{ "padding": "5px" }}>  {this.props.venue['address']} </IonLabel>
           </IonItem>
 
-          <IonItem>
-            <IonIcon slot="start" color="medium" icon={musicalNote} />
+          <IonItem style={{ '--background': 'none' }}>
+            <IonIcon slot="start" color="black" icon={musicalNote} />
             <IonLabel style={{ "padding": "5px" }}> {genres} </IonLabel>
           </IonItem>
 
-          <IonItem>
-            <IonIcon slot="start" color="medium" icon={body} />
+          <IonItem style={{ '--background': 'none' }}>
+            <IonIcon slot="start" color="black" icon={body} />
             <IonLabel style={{ "padding": "5px" }}> Max Capacity: {this.props.venue['capacity']} </IonLabel>
           </IonItem>
-        </IonList>
+        </div>
         {this.props.booker['user'] ?
           <IonCardTitle>Booker: {this.props.booker["user"]["firstName"]}{' '}{this.props.booker["user"]["lastName"]}</IonCardTitle> : null}
         <div style={{ "display": "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
@@ -86,10 +84,10 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
             <IonCard key={index}
               href={`/allEvents/${event['id']}`}
               className=""
-              style={{ width: '250px' }}
+              style={{ width: '250px', '--background': '#fcbcdb' }}
               mode="ios"
             >
-              <div className="eventBox">
+              <div className="eventBox" >
                 <IonItemGroup style={{ margin: '20px' }}>
                   <IonCardTitle
                     style={{ textAlign: 'center' }}
