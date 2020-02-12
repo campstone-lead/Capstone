@@ -51,6 +51,7 @@ import {
   VenueSinglePage,
   searchBarValue,
   notifications,
+  UpdateArtistForm
 } from './AppImports';
 interface IMyComponentProps {
   user: object;
@@ -132,9 +133,9 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/filter" component={Filter} />
               <Route path="/searchbar" component={SearchBar} />
+              <Route path="/artists/update" component={UpdateArtistForm} />
               <Route path="/artists" component={AllArtistView} />
               <Route path="/artistpassword" component={ArtistPassword} />
-              <Route path="/artists" component={AllArtistView} />
               <Route path="/venues" component={AllVenuesView} />
 
               <Route

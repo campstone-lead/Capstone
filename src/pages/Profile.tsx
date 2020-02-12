@@ -59,7 +59,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                 genres={this.props.genres}
                 artist={this.props.user}
               />
-              <IonButton>Update profile</IonButton>
+              <IonButton routerLink="/artists/update">Update profile</IonButton>
             </div>
           ) : (
               <div className="profile">

@@ -163,6 +163,23 @@ export const updatedArtist = incomingArtist => async dispatch => {
   }
 };
 
+export const editArtist = artist => async dispatch => {
+  try {
+
+      const newArtist = await axios({
+        method: 'put',
+        baseURL: 'http://localhost:8080/api/',
+        url: '/artists/',
+        data: artist
+      });
+
+      dispatch(updateArtist(newArtist));
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 /**
  * REDUCER
  */

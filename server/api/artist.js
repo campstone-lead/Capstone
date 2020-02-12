@@ -67,3 +67,12 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
+
+ router.put('/', async (req,res,next) => {
+    try {
+      const artist = await Artist.findByPk(req.user.id)
+      artist.update(req.body)
+    } catch (error) {
+      next(error)
+    }
+  })
