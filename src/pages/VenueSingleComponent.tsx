@@ -84,7 +84,7 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
 
 
             <IonCard key={index}
-              href={`/events/${event['id']}`}
+              href={`/allEvents/${event['id']}`}
               className=""
               style={{ width: '250px' }}
               mode="ios"

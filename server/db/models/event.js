@@ -3,6 +3,10 @@ const db = require('../db');
 const Venue = require('./venue');
 const Booker = require('./booker');
 const Event = db.define('event', {
+  tableName: {
+    type: Sequelize.STRING,
+    defaultValue: 'Event',
+  },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
