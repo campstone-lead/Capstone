@@ -49,7 +49,7 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
   const config = {
-    origin: 'http://localhost:8080',
+    origin: 'http://localhost:8100',
     credentials: true,
   };
   app.use(cors(config));
