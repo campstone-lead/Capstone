@@ -49,7 +49,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
       <IonPage>
         <IonHeader>
           <IonToolbar id="bar">
-            <IonTitle>Profile</IonTitle>
+            <IonTitle>Profsile</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent>

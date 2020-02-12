@@ -2,7 +2,8 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const fetch = require('node-fetch');
-const googleMapsApiKey = require('../../../secrets');
+// const googleMapsApiKey = require('../../../secrets');
+require('../../../secrets');
 
 const Venue = db.define('venue', {
   tableName: {
@@ -92,7 +93,7 @@ const preHooks = async venue => {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeLocation(
           venue.address
-        )}&key=${googleMapsApiKey}`
+        )}&key=${process.env.GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
       venue.latitude = data.results[0].geometry.location.lat;
@@ -122,10 +123,10 @@ const generateRecs = async venue => {
       const artists = await db.models.artist.findAll();
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${
-          venue.latitude
+        venue.latitude
         },${venue.longitude}&destinations=${makeLatLngList(
           artists
-        )}&key=${googleMapsApiKey}`
+        )}&key=${process.env.GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
 
