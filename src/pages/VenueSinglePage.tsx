@@ -117,6 +117,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
 
     render() {
+        let filteredEvents = this.props.events.filter(event => event["venueId"] === this.props.venue['id'])
         if (!Array.isArray(this.props.events))
             return <IonCardTitle>Loading...</IonCardTitle>;
         return (
@@ -129,13 +130,9 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                                 alt="logo.png"
                                 className="logo"
                             />
-                            <IonSearchbar
-                                mode="ios"
-                                className="searchBar"
-                                animated
-                                showCancelButton="focus"
-                                cancelButtonText="x"
-                            ></IonSearchbar>
+                            <IonCardTitle>
+                                {this.props.venue['name']}
+                            </IonCardTitle>
                         </div>
                     </IonToolbar>
                 </IonHeader>
@@ -145,7 +142,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         color="dark"
                         className="backBtn"
                     />
-                    <div className="profile">
+                    <div className="profile" style={{ marginTop: "50px", marginBottom: "20px" }}>
                         {/* VENUE VIEW WITH LIST OF EVENTS IS HERE NOW!!! */}
                         <VenueSingleComponent
                             venue={this.props.venue}
@@ -154,18 +151,29 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                             isOwner={this.props.user["status"] === "booker" && this.props.user["id"] === this.props.venue["bookerId"]}
                         />
 
-                        <select onChange={this.handleChange}>
-                            {this.props.events &&
-                                this.props.events.length !== 0 &&
-                                this.props.events.map((event, index) => (
-                                    <option value={event.id} key={index}>
-                                        {event.name} - {event.venueName}
-                                    </option>
-                                ))}
-                        </select>
+                        {(this.props.user['status'] !== 'booker') &&
+                            (filteredEvents.length !== 0) ?
+                            <select onChange={this.handleChange}>
+                                {this.props.events &&
+                                    this.props.events.length !== 0 &&
+                                    filteredEvents.map((event, index) => {
 
-                        {(this.state.localStatus && (this.state.sender === 'booker')) && (this.state.localStatus === 'pending') ? <IonCardSubtitle>You have an incoming request from a booker</IonCardSubtitle> : (this.state.localStatus.length === 0) ? null : <IonCardSubtitle>This is  {' '}{(this.state.localStatus === 'booked') ? 'an aproved' : 'a declined'} request by the {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} for the selected event.</IonCardSubtitle>}
-                        {(this.state.sender && this.state.sender === 'booker') ?
+                                        return <option value={event.id} key={index}>
+                                            {event.name} - {event.venueName}
+                                        </option>
+                                    })}
+                            </select> : (filteredEvents.length === 0) && <IonCardTitle>There are no current events happening here.</IonCardTitle>
+                        }
+
+                        {
+                            (this.props.user['status'] !== 'booker' && filteredEvents.length !== 0) && ((this.state.localStatus && (this.state.sender === 'booker')) ? ((this.state.localStatus === 'pending') ? <IonCardSubtitle>You have an incoming request from a booker</IonCardSubtitle> : (this.state.localStatus.length === 0) ? null : <IonCardSubtitle>This is  {' '}{(this.state.localStatus === 'booked') ? 'an aproved' : 'a declined'} request by the {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} for the selected event.</IonCardSubtitle>)
+
+                                : (this.state.sender === 'artist' && this.state.localStatus) && (
+                                    (this.state.localStatus === 'pending') ? <IonCardSubtitle>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} is pending...</IonCardSubtitle> : (this.state.localStatus === 'booked') ? <IonCardSubtitle>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} has been approved.</IonCardSubtitle> : <IonCardSubtitle>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} has been declined.</IonCardSubtitle>
+                                )
+                            )}
+
+                        {(this.props.user['status'] !== 'booker' && filteredEvents.length !== 0) && ((this.state.sender && this.state.sender === 'booker') ?
                             <div>
                                 <IonButton disabled={(this.state.localStatus === 'declined' || this.state.localStatus === 'booked') ? true : false}
                                     onClick={() => this.handleClickRespond('booked')}
@@ -175,12 +183,12 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                                     onClick={() => this.handleClickRespond('declined')}
                                 >Decline</IonButton>
                             </div>
-                            : <IonButton style={{ "fontSize": "15.5px", "margin": "20px" }}
+                            : (this.props.user['status'] !== 'booker') && (filteredEvents.length !== 0) && <IonButton style={{ "fontSize": "15.5px", "margin": "20px" }}
                                 onClick={async () => await this.handleClick()}
                                 disabled={(!this.state.localStatus) ? false : true}
 
 
-                            > {(!this.state.localStatus) ? 'Connect' : (this.state.localStatus === 'pending') ? 'Pending Request sent' : (this.state.localStatus === 'booked') ? 'Booked' : 'Declined'}</IonButton>
+                            > {(!this.state.localStatus) ? 'Connect' : (this.state.localStatus === 'pending') ? 'Pending Request sent' : (this.state.localStatus === 'booked') ? 'Booked' : 'Declined'}</IonButton>)
                         }
                     </div>
                 </IonContent>

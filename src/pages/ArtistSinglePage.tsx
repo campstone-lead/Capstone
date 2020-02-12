@@ -1,11 +1,12 @@
 import React from 'react';
-import socket from '../socket';
+
 import {
   IonContent,
   IonPage,
   IonButton,
   IonBackButton,
   IonCardSubtitle,
+  IonHeader, IonToolbar, IonCardTitle
 } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux';
@@ -46,7 +47,7 @@ interface IMyComponentState {
 class ArtistSinglePage extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -132,6 +133,20 @@ class ArtistSinglePage extends React.Component<
   render() {
     return (
       <IonPage>
+        <IonHeader mode="ios">
+          <IonToolbar mode="ios">
+            <div className="tabHeader">
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <IonCardTitle>
+                {this.props.artist['name']}
+              </IonCardTitle>
+            </div>
+          </IonToolbar>
+        </IonHeader>
         <IonContent>
           <IonBackButton
             defaultHref="/home/"
@@ -140,12 +155,13 @@ class ArtistSinglePage extends React.Component<
             color="dark"
             className="backBtn"
           />
-          <div className="profile">
+
+          <div className="profile" style={{ marginTop: "50px" }}>
             <ArtistProfileComponent
               genres={this.props.genres}
               artist={this.props.artist}
             />
-            {this.props.events !== undefined && (
+            {(this.props.user['status'] !== 'artist') && this.props.events !== undefined && (
               <select onChange={this.handleChange}>
                 {this.props.events &&
                   this.props.events.length !== 0 &&
@@ -156,80 +172,85 @@ class ArtistSinglePage extends React.Component<
                   ))}
               </select>
             )}
-            {this.state.sender === 'booker' ||
-            this.state.sender.length === 0 ? (
-              (this.props.bookingStatus === null ||
-                this.state.bookedArtistInfo['status'] === undefined) &&
-              this.state.localStatus !== 'pending' &&
-              this.state.localStatus !== 'booked' &&
-              this.state.localStatus !== 'declined' ? null : this.props
-                  .bookingStatus !== null ? (
-                <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                  This artist is {this.state.localStatus}
-                  {'  '}
-                  at the selected venue.
-                </IonCardSubtitle>
-              ) : null
-            ) : (this.props.bookingStatus !== null ||
-                this.state.bookedArtistInfo['status'] !== undefined) &&
-              this.state.localStatus === 'pending' ? (
-              <IonCardSubtitle>
-                You have an incoming request from {this.props.artist['name']}!
-              </IonCardSubtitle>
-            ) : (
-              <IonCardSubtitle>
-                You have {this.state.localStatus} {this.props.artist['name']}!
-              </IonCardSubtitle>
-            )}
-            {this.state.sender === 'booker' ||
-            this.state.sender.length === 0 ? (
-              this.props.events !== undefined &&
-              this.props.events.length !== 0 ? (
-                <IonButton
-                  onClick={async () => await this.handleClick()}
-                  disabled={this.state.localStatus.length === 0 ? false : true}
-                >
-                  {(this.props.bookingStatus === null ||
+            {
+
+              (this.props.user['status'] !== 'artist') &&
+              (this.state.sender === 'booker' ||
+                this.state.sender.length === 0 ? (
+                  (this.props.bookingStatus === null ||
                     this.state.bookedArtistInfo['status'] === undefined) &&
-                  this.state.localStatus === 'pending'
-                    ? 'Pending request sent'
-                    : this.state.localStatus === 'booked'
-                    ? 'Booked'
-                    : this.state.localStatus === 'declined'
-                    ? 'declined'
-                    : 'Book me'}
-                </IonButton>
-              ) : (
-                <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                  You cannot add any artists if you have no events!{' '}
+                    this.state.localStatus !== 'pending' &&
+                    this.state.localStatus !== 'booked' &&
+                    this.state.localStatus !== 'declined' ? null : this.props
+                      .bookingStatus !== null ? (
+                        <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                          This artist is {this.state.localStatus}
+                          {'  '}
+                          at the selected venue.
                 </IonCardSubtitle>
-              )
-            ) : (
-              <div>
-                <IonButton
-                  disabled={
-                    this.state.localStatus === 'declined' ||
-                    this.state.localStatus === 'booked'
-                      ? true
-                      : false
-                  }
-                  onClick={() => this.handleClickRespond('booked')}
-                >
-                  Accept
+                      ) : null
+                ) : (this.props.bookingStatus !== null ||
+                  this.state.bookedArtistInfo['status'] !== undefined) &&
+                  this.state.localStatus === 'pending' ? (
+                    <IonCardSubtitle>
+                      You have an incoming request from {this.props.artist['name']}!
+              </IonCardSubtitle>
+                  ) : (
+                    <IonCardSubtitle>
+                      You have {this.state.localStatus} {this.props.artist['name']}!
+              </IonCardSubtitle>
+                  ))}
+            {
+
+              (this.props.user['status'] !== 'artist') && (this.state.sender === 'booker' ||
+                this.state.sender.length === 0 ? (
+                  this.props.events !== undefined &&
+                    this.props.events.length !== 0 ? (
+                      <IonButton
+                        onClick={async () => await this.handleClick()}
+                        disabled={this.state.localStatus.length === 0 ? false : true}
+                      >
+                        {(this.props.bookingStatus === null ||
+                          this.state.bookedArtistInfo['status'] === undefined) &&
+                          this.state.localStatus === 'pending'
+                          ? 'Pending request sent'
+                          : this.state.localStatus === 'booked'
+                            ? 'Booked'
+                            : this.state.localStatus === 'declined'
+                              ? 'declined'
+                              : 'Book me'}
+                      </IonButton>
+                    ) : (
+                      <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                        You cannot add any artists if you have no events!{' '}
+                      </IonCardSubtitle>
+                    )
+                ) : (
+                  <div>
+                    <IonButton
+                      disabled={
+                        this.state.localStatus === 'declined' ||
+                          this.state.localStatus === 'booked'
+                          ? true
+                          : false
+                      }
+                      onClick={() => this.handleClickRespond('booked')}
+                    >
+                      Accept
                 </IonButton>
-                <IonButton
-                  disabled={
-                    this.state.localStatus === 'declined' ||
-                    this.state.localStatus === 'booked'
-                      ? true
-                      : false
-                  }
-                  onClick={() => this.handleClickRespond('declined')}
-                >
-                  Decline
+                    <IonButton
+                      disabled={
+                        this.state.localStatus === 'declined' ||
+                          this.state.localStatus === 'booked'
+                          ? true
+                          : false
+                      }
+                      onClick={() => this.handleClickRespond('declined')}
+                    >
+                      Decline
                 </IonButton>
-              </div>
-            )}
+                  </div>
+                ))}
 
             <br></br>
             <br></br>
