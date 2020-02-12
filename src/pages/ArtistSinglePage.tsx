@@ -107,9 +107,11 @@ class ArtistSinglePage extends React.Component<
     await this.props.fetchOneArtists(id);
     const bookerId = this.props.user['id'];
     await this.props.getBookerEvents(bookerId);
-    if (this.props.events.length !== 0)
+    if (this.props.events.length !== 0) {
+
       await this.setState({ currentEvent: this.props.events[0].id });
 
+    }
     await this.props.events.forEach(async el => {
       await this.props.gotOneEvents(el.id);
       let artist = this.props.selectedEvent['artists'].filter(
@@ -131,6 +133,7 @@ class ArtistSinglePage extends React.Component<
   }
 
   render() {
+    console.log(this.props['location']['state'])
     return (
       <IonPage>
         <IonHeader mode="ios">
@@ -162,7 +165,7 @@ class ArtistSinglePage extends React.Component<
               artist={this.props.artist}
             />
             {(this.props.user['status'] !== 'artist') && this.props.events !== undefined && (
-              <select onChange={this.handleChange}>
+              <select onChange={this.handleChange} style={{ backgroundColor: 'lightgrey', width: '350px' }}>
                 {this.props.events &&
                   this.props.events.length !== 0 &&
                   this.props.events.map((event, index) => (
@@ -184,8 +187,8 @@ class ArtistSinglePage extends React.Component<
                     this.state.localStatus !== 'declined' ? null : this.props
                       .bookingStatus !== null ? (
                         <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                          This artist is {this.state.localStatus}
-                          {'  '}
+                          This artist is {this.state.localStatus + "  "}
+
                           at the selected venue.
                 </IonCardSubtitle>
                       ) : null
@@ -197,7 +200,7 @@ class ArtistSinglePage extends React.Component<
               </IonCardSubtitle>
                   ) : (
                     <IonCardSubtitle>
-                      You have {this.state.localStatus} {this.props.artist['name']}!
+                      You have {this.state.localStatus + "  "} {this.props.artist['name']}!
               </IonCardSubtitle>
                   ))}
             {

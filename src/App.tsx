@@ -142,7 +142,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 component={ArtistSinglePage}
               />
               <Route path="/allVenues/:venueId" component={VenueSinglePage} />
-              <Route path="/events/:id" component={EventSinglePage} />
+              <Route path="/allEvents/:id" component={EventSinglePage} />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
