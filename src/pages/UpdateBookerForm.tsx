@@ -1,61 +1,127 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCardHeader, IonBackButton, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonAvatar, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
 import './Tab1.css';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { connect } from 'react-redux'
 import { editBooker } from '../store/booker'
+import axios from 'axios'
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { me } from '../store/user'
 import {
     call,
     mailOpen,
     person,
-    lock
+    lock,
+    add,
+    camera
 } from 'ionicons/icons';
-import { UploadPicture } from '../AppImports';
+
+axios.defaults.withCredentials = true;
+const { Camera } = Plugins;
 
 interface IMyComponentState {
     email: string;
     firstName: string;
     lastName: string;
     phone: string;
-
     password: string;
+    imageURL: string;
+    selectedFile: any
+
 }
 
 interface IMyComponentProps {
     booker: object;
     editBooker: any;
     me: any;
+    user: object;
 }
 
 class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentState> {
     constructor(props) {
         super(props)
         this.state = {
+            imageURL: '',
+            selectedFile: null,
             email: '',
             firstName: '',
             lastName: '',
             phone: '',
             password: ''
+
         }
+        defineCustomElements(window);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    onChangeHandler = async  event => {
+        event.persist()
+        await this.setState({
+            selectedFile: event.target.files[0],
+        })
+
+        await this.setState({ imageURL: this.state.selectedFile.name })
+        let obj = this.state
+        window.localStorage.setItem('booker', JSON.stringify(obj))
+    }
+
+    onClickHandler = async (e) => {
+        e.preventDefault() // <-- missing this
+        const formData = new FormData();
+        formData.append("file", this.state.selectedFile);
+        const res = await axios({
+            method: "post",
+            baseURL: "http://localhost:8080/",
+            url: `/upload`,
+            data: formData
+        })
+        console.log(res.data)
+    }
 
     async componentDidMount() {
         await this.props.me()
         let booker = window.localStorage.getItem('booker')
         console.log('BOOKER:', booker)
+
+        this.setState({
+            email: this.props.user['email'],
+            imageURL: this.props.user['imageURL'],
+            firstName: this.props.user['firstName'],
+            lastName: this.props.user['lastName'],
+            phone: this.props.user['phone'],
+
+        })
+
         if (booker !== null) {
             booker = JSON.parse(booker || '');
             let newBooker = booker || {};
             this.setState({
                 email: newBooker['email'],
+                imageURL: newBooker['imageURL'],
                 firstName: newBooker['firstName'],
                 lastName: newBooker['lastName'],
                 phone: newBooker['phone'],
-                password: newBooker['password']
+
             })
+        } else {
+            window.localStorage.setItem('booker', JSON.stringify(this.state))
         }
+    }
+    async takePicture() {
+        const image = await Camera.getPhoto({
+            quality: 90,
+            allowEditing: false,
+            resultType: CameraResultType.Uri,
+            source: CameraSource.Photos,
+        });
+
+        var imageURL = image.webPath;
+        // Can be set to the src of an image now
+        await this.setState({
+            imageURL: imageURL || '',
+        });
+        let obj = this.state
+        window.localStorage.setItem('booker', JSON.stringify(obj))
     }
 
 
@@ -63,13 +129,14 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
         event.preventDefault()
         this.props.editBooker(this.props["match"]["params"]["id"], this.state);
 
-        this.setState({
-            email: this.state.email,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            phone: this.state.phone,
-            password: this.state.password
-        })
+        // this.setState({
+        //     email: this.state.email,
+        //     imageURL: this.state.imageURL,
+        //     firstName: this.state.firstName,
+        //     lastName: this.state.lastName,
+        //     phone: this.state.phone,
+        //     password: this.state.password
+        // })
     }
 
     render() {
@@ -87,9 +154,30 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                         className="backBtn"
                         defaultHref={'/profile'}
                     />
-                    <UploadPicture />
 
-                    <div className="welcome-card">
+                    <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "20px", alignContent: "center" }}>
+                        <IonAvatar style={{ width: '270px', height: '270px', borderRadius: "50px" }}>
+                            <img src={this.state.imageURL} alt='img' />
+                        </IonAvatar>
+                    </div>
+
+
+                    < div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
+                        <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+                        <IonButton onClick={this.onClickHandler}>
+                            <IonIcon icon={add}></IonIcon>
+                            <IonLabel>Upload picture</IonLabel>
+                        </IonButton>
+
+                        <IonButton onClick={() => this.takePicture()}>
+                            <IonIcon icon={camera}></IonIcon>
+                            <IonLabel>Take picture</IonLabel>
+                        </IonButton>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column", alignContent: "center" }}>
                         <form onSubmit={this.handleSubmit}>
                             <IonItem lines="inset">
                                 <IonIcon slot="start" color="medium" icon={person} />
@@ -109,14 +197,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                         })
                                     }
                                 />
-                                <div style={{ margin: "10px" }}>
-                                    <IonItem lines="none">
 
-                                        <IonButton type="submit" disabled={(this.state.firstName.length && this.state.lastName.length === 0) ? true : false}
-                                            size="default"
-                                        >Update</IonButton>
-                                    </IonItem>
-                                </div>
                             </IonItem>
 
                             <IonItem lines="inset">
@@ -129,14 +210,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                         })
                                     }
                                 />
-                                <div style={{ margin: "10px" }}>
-                                    <IonItem lines="none">
 
-                                        <IonButton type="submit" disabled={(this.state.phone.length === 0) ? true : false}
-                                            size="default"
-                                        >Update</IonButton>
-                                    </IonItem>
-                                </div>
                             </IonItem>
 
                             <IonItem lines="inset">
@@ -149,14 +223,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                         })
                                     }
                                 />
-                                <div style={{ margin: "10px" }}>
-                                    <IonItem lines="none">
 
-                                        <IonButton type="submit" disabled={(this.state.email.length === 0) ? true : false}
-                                            size="default"
-                                        >Update</IonButton>
-                                    </IonItem>
-                                </div>
                             </IonItem>
                             <IonItem lines="inset">
                                 <IonIcon slot="start" color="medium" icon={lock} />
@@ -175,7 +242,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                             type="submit"
                                             disabled={(this.state.password.length === 0) ? true : false}
                                             size="default"
-                                        >Update</IonButton>
+                                        >Done</IonButton>
                                     </IonItem>
                                 </div>
                             </IonItem>
@@ -188,7 +255,8 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
 }
 
 const mapStateToProps = (state) => ({
-    booker: state.booker
+    booker: state.booker,
+    user: state.user
 })
 
 const mapDispatchToProps = (dispatch) => ({
