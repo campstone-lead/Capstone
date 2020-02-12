@@ -117,9 +117,12 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
 
     render() {
-        let filteredEvents = this.props.events.filter(event => event["venueId"] === this.props.venue['id'])
+        let filteredEvents = new Array(0)
+
         if (!Array.isArray(this.props.events))
             return <IonCardTitle>Loading...</IonCardTitle>;
+        if (this.props.events !== undefined)
+            filteredEvents = this.props.events.filter(event => event["venueId"] === this.props.venue['id'])
         return (
             <IonPage>
                 <IonHeader mode="ios">
