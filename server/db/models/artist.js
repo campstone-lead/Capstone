@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const fetch = require('node-fetch');
-const googleMapsApiKey = require('../../../secrets');
+// const googleMapsApiKey = require('../../../secrets');
 
 const Artist = db.define('artist', {
   tableName: {
@@ -133,7 +133,7 @@ module.exports = Artist;
 /**
  * instanceMethods
  */
-Artist.prototype.correctPassword = function(candidatePwd) {
+Artist.prototype.correctPassword = function (candidatePwd) {
   return Artist.encryptPassword(candidatePwd, this.salt()) === this.password();
 };
 
@@ -141,11 +141,11 @@ Artist.prototype.correctPassword = function(candidatePwd) {
  * classMethods
  */
 
-Artist.generateSalt = function() {
+Artist.generateSalt = function () {
   return crypto.randomBytes(16).toString('base64');
 };
 
-Artist.encryptPassword = function(plainText, salt) {
+Artist.encryptPassword = function (plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
@@ -166,7 +166,7 @@ const preHooks = async artist => {
   if (artist.changed('zipCode')) {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${artist.zipCode}&key=${googleMapsApiKey}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${artist.zipCode}&key=${process.env.GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
       artist.latitude = data.results[0].geometry.location.lat;
@@ -196,10 +196,10 @@ const generateRecs = async artist => {
       const venues = await db.models.venue.findAll();
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${
-          artist.latitude
+        artist.latitude
         },${artist.longitude}&destinations=${makeLatLngList(
           venues
-        )}&key=${googleMapsApiKey}`
+        )}&key=${process.env.GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
 
