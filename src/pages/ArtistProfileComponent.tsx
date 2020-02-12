@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   IonItem,
@@ -23,13 +22,16 @@ import {
 } from 'ionicons/icons';
 import './Tab1.css';
 interface IMyComponentProps {
-  genres: Array<string>,
-  artist: object,
+  genres: Array<string>;
+  artist: object;
 }
 interface IMyComponentState {
-  status: any,
+  status: any;
 }
-class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyComponentState> {
+class ArtistProfileComponent extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
   render() {
     let genres = '';
     if (this.props.genres) {
@@ -85,34 +87,61 @@ class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyCompo
               </IonLabel>
             </IonItem>
           </IonList>
-
+          {/* <div> */}
           <IonTabBar slot="bottom">
-            <IonTabButton tab="tab2" onClick={() => window.open(this.props.artist['instagramUrl'], '_system', 'location=yes')}>
-              <IonItem >
+            <IonTabButton
+              tab="tab2"
+              onClick={() =>
+                window.open(
+                  this.props.artist['instagramUrl'],
+                  '_system',
+                  'location=yes'
+                )
+              }
+            >
+              <IonItem>
                 <IonIcon icon={logoInstagram} />
               </IonItem>
               <IonLabel>Instagram</IonLabel>
             </IonTabButton>
 
-            <IonTabButton tab="tab2" onClick={() => window.open(this.props.artist['spotifyUrl'], '_system', 'location=yes')}>
-              <IonItem >
+            <IonTabButton
+              tab="tab2"
+              onClick={() =>
+                window.open(
+                  this.props.artist['spotifyUrl'],
+                  '_system',
+                  'location=yes'
+                )
+              }
+            >
+              <IonItem>
                 <IonIcon icon={musicalNote} />
               </IonItem>
               <IonLabel>Spotify</IonLabel>
             </IonTabButton>
 
-            <IonTabButton tab="tab2" onClick={() => window.open(this.props.artist['facebookUrl'], '_system', 'location=yes')}>
+            <IonTabButton
+              tab="tab2"
+              onClick={() =>
+                window.open(
+                  this.props.artist['facebookUrl'],
+                  '_system',
+                  'location=yes'
+                )
+              }
+            >
               <IonItem>
                 <IonIcon icon={logoFacebook} />
               </IonItem>
               <IonLabel>Facebook</IonLabel>
             </IonTabButton>
           </IonTabBar>
+          {/* </div> */}
         </IonCardContent>
       </>
-    )
+    );
   }
 }
 
-
-export default ArtistProfileComponent
+export default ArtistProfileComponent;

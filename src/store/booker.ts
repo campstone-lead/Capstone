@@ -17,7 +17,7 @@ const SIGN_UP_BOOKER = 'SIGN_UP_BOOKER';
 const defaultBooker = {
   bookerEvents: [],
   booker: {},
-  venues: []
+  venues: [],
 };
 
 /**
@@ -86,7 +86,11 @@ export const signUpBooker = bookerInfo => async dispatch => {
       let venue = window.localStorage.getItem('venue');
       venue = JSON.parse(venue || '');
       let newVenue = venue || {};
-      newVenue = { ...newVenue, bookerId: res.data.id, imageURL: newVenue['photo'] };
+      newVenue = {
+        ...newVenue,
+        bookerId: res.data.id,
+        imageURL: newVenue['photo'],
+      };
 
       await axios({
         method: 'post',
@@ -117,7 +121,49 @@ export const signUpVenue = venueParam => async dispatch => {
   }
 };
 
-// export const signUpWithGoogle
+export const signUpWithGoogleBooker = bookerInfo => async dispatch => {
+  try {
+    let google = window.localStorage.getItem('google');
+    if (bookerInfo.password) {
+      google = JSON.parse(google || '');
+      let newBooker = google || {};
+      let sendBooker = {
+        email: newBooker['email'],
+        firstName: newBooker['firstName'],
+        lastName: newBooker['lastName'],
+        googleId: newBooker['googleId'],
+        phone: bookerInfo.phone,
+      };
+      const res = await axios({
+        method: 'post',
+        baseURL: 'http://localhost:8080/api/',
+        url: '/bookers/',
+        data: sendBooker,
+      });
+
+      let venue = window.localStorage.getItem('venue');
+      venue = JSON.parse(venue || '');
+      let newVenue = venue || {};
+      newVenue = {
+        ...newVenue,
+        bookerId: res.data.id,
+        imageURL: newVenue['photo'],
+      };
+
+      await axios({
+        method: 'post',
+        baseURL: 'http://localhost:8080/api/',
+        url: '/venues/',
+        data: newVenue,
+      });
+      window.localStorage.removeItem('booker');
+      window.localStorage.removeItem('venue');
+      // login signedupwith google user
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // export const updatedVenue = venue => async dispatch => {
 //   try {
@@ -174,10 +220,14 @@ export const createdVenue = v => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultBooker, action) {
+export default function(state = defaultBooker, action) {
   switch (action.type) {
     case GET_BOOKER:
-      return { ...state, booker: action.booker.user, venues: action.booker.venues };
+      return {
+        ...state,
+        booker: action.booker.user,
+        venues: action.booker.venues,
+      };
     case UPDATE_BOOKER:
       window.localStorage.setItem(
         'booker',
