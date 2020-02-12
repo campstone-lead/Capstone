@@ -9,6 +9,7 @@ const {
   Event,
 } = require('./server/db/models');
 
+
 const bookers = [
   {
     firstName: 'Liana',
@@ -207,17 +208,7 @@ const artists = [
   },
 ];
 
-const venues = [
-  {
-    name: 'Grace Hopper',
-    genres: ['pop', 'hipHop'],
-    address: 'Hanover Square floor 25, New York, NY 10004',
-    description: 'Party time!',
-    imageURL:
-      'https://42floors.com/images/H7e12c12a6a7af0b60c0d4d4f0b342c8ab6ee5cecS780x520W0seB505153O/5497bbaa0dc21e8fcb877b00128d3e911d692c20',
-    capacity: 100,
-    bookerId: 2,
-  },
+const lianaVenues = [
   {
     name: 'The Bowery Ballroom',
     genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
@@ -226,7 +217,6 @@ const venues = [
     imageURL:
       'https://mavenprodcontent.blob.core.windows.net/media/BoweryBallroom/Private%20Events/Bowery_Interiors_v.2-1.jpg',
     capacity: 500,
-    bookerId: 1,
   },
   {
     name: 'Elsewhere',
@@ -237,7 +227,6 @@ const venues = [
     imageURL:
       'https://media-cdn.tripadvisor.com/media/photo-s/15/0e/f3/c3/elsewhere-courtyard.jpg',
     capacity: 1500,
-    bookerId: 1,
   },
   {
     name: 'Basement NY',
@@ -247,7 +236,6 @@ const venues = [
     imageURL:
       'https://www.discotech.me/wp-content/uploads/2019/11/basementny2-1030x686.jpg',
     capacity: 2000,
-    bookerId: 1,
   },
   {
     name: 'Mood Ring',
@@ -256,27 +244,6 @@ const venues = [
     description: 'dimly lit bar featuring Djs and astrology-inspired cocktails',
     imageURL: 'https://media.timeout.com/images/104089109/630/472/image.jpg',
     capacity: 100,
-    bookerId: 1,
-  },
-  {
-    name: 'The Mercury Lounge',
-    genres: ['indie', 'rock', 'pop', 'hipHop'],
-    address: '217 E Houston St, New York, NY 10002',
-    description: 'cozy, intimate space for up and coming artists!',
-    imageURL:
-      'https://upload.wikimedia.org/wikipedia/commons/3/38/WSTM_Team_Dustizeff_0082.jpg',
-    capacity: 300,
-    bookerId: 2,
-  },
-  {
-    name: 'Blue Note Jazz Club',
-    genres: ['jazz'],
-    address: '131 W 3rd St, New York, NY, 10012',
-    description: 'legendary jazz musicians play here!',
-    imageURL:
-      'https://i.pinimg.com/originals/e7/c9/b9/e7c9b935700d409a2999a587b44e28d9.jpg',
-    capacity: 300,
-    bookerId: 2,
   },
   {
     name: 'Petes Candy Store',
@@ -286,138 +253,216 @@ const venues = [
     imageURL:
       'https://www.sachynmital.com/wp-content/uploads/2016/08/blog_theladles_05.jpg',
     capacity: 50,
-    bookerId: 1,
+  },
+]
+
+const arianaVenues = [
+  {
+    name: 'Grace Hopper',
+    genres: ['pop', 'hipHop'],
+    address: 'Hanover Square floor 25, New York, NY 10004',
+    description: 'Party time!',
+    imageURL:
+      'https://42floors.com/images/H7e12c12a6a7af0b60c0d4d4f0b342c8ab6ee5cecS780x520W0seB505153O/5497bbaa0dc21e8fcb877b00128d3e911d692c20',
+    capacity: 100,
+  },
+  {
+    name: 'The Mercury Lounge',
+    genres: ['indie', 'rock', 'pop', 'hipHop'],
+    address: '217 E Houston St, New York, NY 10002',
+    description: 'cozy, intimate space for up and coming artists!',
+    imageURL:
+      'https://upload.wikimedia.org/wikipedia/commons/3/38/WSTM_Team_Dustizeff_0082.jpg',
+    capacity: 300,
+  },
+  {
+    name: 'Blue Note Jazz Club',
+    genres: ['jazz'],
+    address: '131 W 3rd St, New York, NY, 10012',
+    description: 'legendary jazz musicians play here!',
+    imageURL:
+      'https://i.pinimg.com/originals/e7/c9/b9/e7c9b935700d409a2999a587b44e28d9.jpg',
+    capacity: 300,
   },
 ];
-
-const artistEvent = [
-  {
-    artistId: 3,
-    eventId: 2,
-    status: 'booked',
-    sender: 'booker',
-  },
-  {
-    artistId: 4,
-    eventId: 1,
-    sender: 'booker',
-  },
-  {
-    artistId: 6,
-    eventId: 3,
-    status: 'pending',
-    sender: 'artist',
-  },
-];
-
 
 const events = [
   {
-    id: 1,
     name: 'Friday Night Rock',
     description: 'Friday Night Rock needs two rock bands.',
     date: new Date('May 11, 2020 22:30:00 UTC'),
-    venueId: 2,
+    //boweryball
+    // venueId: 2,
   },
   {
-    id: 2,
     name: 'Boss Lady',
     description: 'In need of a indie rock band!!! ',
     date: new Date('April 21, 2020 20:30:00 UTC'),
-    venueId: 4,
+    // venueId: 4,
+    //petes candy
   },
   {
-    id: 3,
     name: 'Saturday Late Night Party',
     description: "Looking for at least two DJs.",
     date: new Date('May 03, 2020 22:30:00 UTC'),
-    venueId: 7,
+    // venueId: 7,
+    //mercury
   },
   {
-    id: 4,
     name: "Jazzy Valentine's Day Ball",
     description: 'The Valentines Ball needs three experienced jazz musicians',
     date: new Date('February 14, 2020 22:30:00 UTC'),
-    venueId: 6
+    // venueId: 6
+    //blue note
   },
   {
-    id: 5,
     name: 'Dance Dungeon',
     description: 'Seeking an opener for our headliner Randomer.',
     date: new Date('February 15, 2020 22:30:00 UTC'),
-    venueId: 8
+    // venueId: 8
+    // basemenet
   },
   {
-    id: 6,
     name: 'New Artists Festival',
     description: 'Looking for indie, rock, pop, and hip hop artists to join our lineup for a 3-day festival.',
     date: new Date('March 20, 2020 22:30:00 UTC'),
-    venueId: 4
+    // venueId: 4
+    // mercury
   },
   {
-    id: 7,
     name: 'DJ Residency',
     description: 'NOW HIRING: resident house DJ. Will play every friday night for an entire month.',
     date: new Date('April 19, 2020 22:30:00 UTC'),
-    venueId: 1
+    // venueId: 1
+    // mood ring
   },
   {
-    id: 8,
     name: 'Coding Bootcamp Graduation After-Party!',
     description: 'Grace Hopper is having a graduation after-party for its 1911 cohort. We are looking for an exciting pop artist to perform for our students and families :)',
     date: new Date('March 3, 2020 22:30:00 UTC'),
-    venueId: 5
+    // venueId: 5
+    //GH
   },
   {
-    id: 9,
     name: 'Studio 54 Night Magic',
     description: 'Need a few electronic artists ASAP to play our loft for a Studio 54 themed night. Each artist will have an hour long set',
     date: new Date('February 24, 2020 22:30:00 UTC'),
-    venueId: 3
+    // venueId: 3
+    // elsewhere
   },
   {
-    id: 10,
     name: 'Three Year Anniversary',
     description: 'Seeking rock and hip hop artists with a strong following to play at our hall',
     date: new Date('February 14, 2020 22:30:00 UTC'),
-    venueId: 3
+    // venueId: 3
+    //elsewhere
   },
   {
-    id: 11,
     name: 'Mixmag NYC Launch Party',
     description: 'Looking for Techno, electronic, and house djs to help us celebrate the launch of MixMag',
     date: new Date('February 17, 2020 22:30:00 UTC'),
-    venueId: 1
+    // venueId: 1
+    //mood ring
   },
   {
-    id: 12,
     name: 'Open Mic Saturdays',
     description: 'Welcoming musicians of every level to perform on a busy night. Must be rock, indie, country, metal',
     date: new Date('May 11, 2020 22:30:00 UTC'),
-    venueId: 2,
+    // venueId: 2,
+    //pets candhy
   },
   {
-    id: 13,
     name: 'WARPER',
     description: 'Need a headliner for a minimal techno party series',
     date: new Date('May 11, 2020 22:30:00 UTC'),
-    venueId: 7,
+    // venueId: 7,
+    //basement
   },
 ];
 
+// const venueIdsForEvents = [2, 4, 7, 6, 8, 4, 1, 5, 3, 3, 1, 2, 7] OLDDDD
 
-const seed = () =>
-  Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-    Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
-      Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-        Promise.all(events.map(event => Event.create(event))).then(() =>
-          Promise.all(
-            artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1))
-          )
-        )
-      )
-    )
-  );
+// name: 'Grace Hopper',         1 6
+// name: 'The Bowery Ballroom',  2 1
+// name: 'Elsewhere',            3 2
+// name: 'Basement NY',          4 3
+// name: 'Mood Ring',            5 4
+// name: 'The Mercury Lounge',   6 7
+// name: 'Blue Note Jazz Club',  7 8
+// name: 'Petes Candy Store',    8 5
+
+// const venueIdsForEvents = [1, 3, 8, 7, 5, 3, 6, 4, 2, 2, 6, 1, 8]
+const venueIdsForEvents = [1, 5, 7, 8, 3, 7, 4, 6, 2, 2, 4, 5, 3]
+
+
+async function seed() {
+  let createdBookers = []
+  let newBooker;
+  for (let i = 0; i < bookers.length; i++) {
+    newBooker = await Booker.create(bookers[i])
+    createdBookers.push(newBooker)
+  }
+  let createdArtists = []
+  let newArtist;
+  for (let i = 0; i < artists.length; i++) {
+    newArtist = await Artist.create(artists[i])
+    createdArtists.push(newArtist)
+  }
+  let createdVenues = []
+  let newVenue;
+  for (let i = 0; i < lianaVenues.length; i++) {
+    newVenue = await Venue.create(lianaVenues[i])
+    await newVenue.setBooker(createdBookers[0]) //liana
+    createdVenues.push(newVenue)
+  }
+  for (let i = 0; i < arianaVenues.length; i++) {
+    newVenue = await Venue.create(arianaVenues[i])
+    await newVenue.setBooker(createdBookers[1]) //ariana
+    createdVenues.push(newVenue)
+  }
+  let createdEvents = []
+  let newEvent;
+  for (let i = 0; i < artists.length; i++) {
+    newEvent = await Event.create(events[i])
+    await newEvent.update({ venueId: createdVenues[venueIdsForEvents[i] - 1].id })
+    createdEvents.push(newEvent)
+  }
+
+
+  await ArtistEvent.create({
+    artistId: createdArtists[2].id,
+    eventId: createdEvents[1].id,
+    status: 'booked',
+    sender: 'booker',
+  })
+  await ArtistEvent.create({
+    artistId: createdArtists[3].id,
+    eventId: createdEvents[0].id,
+    sender: 'booker',
+  })
+  await ArtistEvent.create({
+    artistId: createdArtists[5].id,
+    eventId: createdEvents[2].id,
+    status: 'pending',
+    sender: 'artist',
+  })
+}
+
+
+
+
+// const seed = () =>
+//   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
+//     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
+//       Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
+//         Promise.all(events.map(event => Event.create(event))).then(() =>
+//           Promise.all(
+//             artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1))
+//           )
+//         )
+//       )
+//     )
+//   );
 
 const main = () => {
   console.log('Syncing db...');
