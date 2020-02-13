@@ -22,13 +22,15 @@ const removeUser = () => ({ type: REMOVE_USER });
  */
 export const auth = (email, password) => async dispatch => {
   try {
-    const res = await axios({
-      method: 'post',
-      // baseURL: 'http://localhost:8080/auth/',
-      baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
-      url: '/login/',
-      data: { email, password },
-    });
+    // const res = await axios({
+    //   method: 'post',
+    //   // baseURL: 'http://localhost:8080/auth/',
+    //   baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
+    //   url: '/login/',
+    //   data: { email, password },
+    // });
+    const res = await axios.post('/auth/login/',{ email, password })
+
     window.localStorage.setItem("loginSuccess", JSON.stringify(true))
     dispatch(getUser(res.data || defaultUser));
   } catch (authError) {
@@ -38,12 +40,13 @@ export const auth = (email, password) => async dispatch => {
 };
 export const me = () => async dispatch => {
   try {
-    const res = await axios({
-      method: 'get',
-      baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
-      // baseURL: 'http://localhost:8080/auth/',
-      url: '/me/',
-    });
+    // const res = await axios({
+    //   method: 'get',
+    //   baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
+    //   // baseURL: 'http://localhost:8080/auth/',
+    //   url: '/me/',
+    // });
+    const res = await axios.get('/auth/me/')
 
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
