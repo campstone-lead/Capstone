@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonItem, IonLabel, IonInput, IonIcon, IonCardHeader } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonInput, IonIcon, IonCardHeader } from '@ionic/react';
 import './BookerSignup2.css';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, {
@@ -68,7 +68,6 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
           address,
           name,
         });
-        console.log('Success grabbing adress!');
       })
       .catch(error => console.error('Error', error));
   };

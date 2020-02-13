@@ -1,6 +1,6 @@
 import {
 
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonCardHeader
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonIcon, IonCardHeader
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';

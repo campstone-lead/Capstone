@@ -51,6 +51,7 @@ import {
   VenueSinglePage,
   searchBarValue,
   notifications,
+  UpdateArtistForm,
   UpdateBookerForm,
 } from './AppImports';
 
@@ -124,7 +125,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/signup/booker/5" component={BookerSignup5} />
               <Route path="/signup/booker/6" component={BookerSignup6} />
               <Route path="/signup/booker/7" component={BookerSignup7} />
-              <Route path="/bookers/:id/update" component={UpdateBookerForm} />
+              <Route path="/bookers/update" component={UpdateBookerForm} />
               <Route path="/infoform" component={PersonalInfo} />
               <Route path="/artistnameform" component={ArtistNameForm} />
               <Route path="/artistbioform" component={ArtistBioForm} />
@@ -136,9 +137,9 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/filter" component={Filter} />
               <Route path="/searchbar" component={SearchBar} />
+              <Route path="/artists/update" component={UpdateArtistForm} />
               <Route path="/artists" component={AllArtistView} />
               <Route path="/artistpassword" component={ArtistPassword} />
-              <Route path="/artists" component={AllArtistView} />
               <Route path="/venues" component={AllVenuesView} />
 
               <Route

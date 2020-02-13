@@ -4,15 +4,10 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonFab,
-  IonFabButton,
   IonIcon,
-  IonItem,
   IonButton,
   IonAvatar,
-  IonInput,
   IonLabel,
-  IonCard,
   IonCardHeader,
 } from '@ionic/react';
 import React, { Component } from 'react';
@@ -65,7 +60,6 @@ export class UploadPicture extends Component<
       data: formData
     })
     await this.props.updateArtist(this.state);
-    console.log(res.data)
 
   }
   async componentDidMount() {

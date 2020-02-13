@@ -7,7 +7,6 @@ import {
   IonIcon,
   IonButton,
   IonBackButton,
-  IonLabel,
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';

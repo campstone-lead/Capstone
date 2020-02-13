@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonItemGroup, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonAvatar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonIcon, IonAvatar } from '@ionic/react';
 import { connect } from 'react-redux'
 import { me } from '../../../store/user'
 import { gotOneEvents } from '../../../store/event'
@@ -10,7 +10,6 @@ import {
     locate,
     create,
     musicalNotes,
-    arrowBack
 } from 'ionicons/icons';
 
 interface IMyComponentProps {
