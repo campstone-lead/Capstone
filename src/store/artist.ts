@@ -38,8 +38,8 @@ export const createConnection = (artistId, venueId) => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/',
-      url: '/api/events/connection',
+      baseURL: 'http://localhost:8080/api/',
+      url: '/events/connection',
       data: { artistId, venueId },
     });
     dispatch(bookArtist(res.data));

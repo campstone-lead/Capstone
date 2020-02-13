@@ -49,7 +49,8 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
   const config = {
-    origin: 'http://localhost:8100',
+    // origin: 'http://localhost:8100',
+    origin: 'https://harmonious-capstone.herokuapp.com/',
     credentials: true,
   };
   app.use(cors(config));

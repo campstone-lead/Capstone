@@ -24,8 +24,9 @@ export const auth = (email, password) => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/',
-      url: '/auth/login/',
+      // baseURL: 'http://localhost:8080/auth/',
+      baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
+      url: '/login/',
       data: { email, password },
     });
     window.localStorage.setItem("loginSuccess", JSON.stringify(true))
@@ -39,7 +40,8 @@ export const me = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/auth/',
+      baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
+      // baseURL: 'http://localhost:8080/auth/',
       url: '/me/',
     });
 
@@ -52,8 +54,8 @@ export const logout = () => async dispatch => {
   try {
     await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/',
-      url: '/auth/logout/',
+      baseURL: 'http://localhost:8080/auth/',
+      url: '/logout/',
     });
     window.localStorage.clear();
     dispatch(removeUser());
