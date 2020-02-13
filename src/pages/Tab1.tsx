@@ -103,82 +103,82 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   render() {
     console.log('hhhh');
     return (
-      <IonPage>
+      <IonPage >
         {this.props.user['status'] === undefined ? (
           <LandingPage />
         ) : (
-          <IonContent>
-            <IonHeader mode="ios">
-              <IonToolbar
-                mode="ios"
-                style={{
-                  '--background':
-                    'url(https://wallpaperaccess.com/full/851202.jpg)',
-                }}
-              >
-                <div className="tabHeader">
-                  <img
-                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                    alt="logo.png"
-                    className="logo"
-                  />
-                  <IonSearchbar
-                    mode="ios"
-                    color="light"
-                    className="searchBar"
-                    animated
-                    showCancelButton="focus"
-                    autocomplete="on"
-                    cancelButtonText="x"
-                    onClick={() => {
-                      this.props.searchBarValue(true);
-                      this.setState({ isSearchBarOpen: true });
-                    }}
-                    value={this.state.searchWord}
-                    onIonChange={this.onSearchBarChange}
-                  ></IonSearchbar>
-                  {this.state.isSearchBarOpen ? (
-                    <IonButton
-                      fill="clear"
-                      color="dark"
+            <IonContent >
+              <IonHeader mode="ios">
+                <IonToolbar
+                  mode="ios"
+                  style={{
+                    '--background':
+                      'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  }}
+                >
+                  <div className="tabHeader">
+                    <img
+                      src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                      alt="logo.png"
+                      className="logo"
+                    />
+                    <IonSearchbar
+                      mode="ios"
+                      color="light"
+                      className="searchBar"
+                      animated
+                      showCancelButton="focus"
+                      autocomplete="on"
+                      cancelButtonText="x"
                       onClick={() => {
-                        this.props.searchBarValue(false);
-                        window.localStorage.removeItem('filter');
-                        this.setState({
-                          isSearchBarOpen: false,
-                          searchWord: '',
-                        });
+                        this.props.searchBarValue(true);
+                        this.setState({ isSearchBarOpen: true });
                       }}
-                    >
-                      Cancel
+                      value={this.state.searchWord}
+                      onIonChange={this.onSearchBarChange}
+                    ></IonSearchbar>
+                    {this.state.isSearchBarOpen ? (
+                      <IonButton
+                        fill="clear"
+                        color="dark"
+                        onClick={() => {
+                          this.props.searchBarValue(false);
+                          window.localStorage.removeItem('filter');
+                          this.setState({
+                            isSearchBarOpen: false,
+                            searchWord: '',
+                          });
+                        }}
+                      >
+                        Cancel
                     </IonButton>
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </IonToolbar>
-            </IonHeader>
-            {this.state.isSearchBarOpen ? (
-              <IonContent>
-                <SearchBar />
-              </IonContent>
-            ) : (
-              <IonContent
-                style={{
-                  '--background':
-                    'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
-                }}
-              >
-                {this.props.user['status'] === 'booker' ? (
-                  <ArtistRecommendations />
-                ) : (
-                  // then they must be an artists... so show them venues
-                  <VenueRecommendations />
+                    ) : (
+                        ''
+                      )}
+                  </div>
+                </IonToolbar>
+              </IonHeader>
+              {this.state.isSearchBarOpen ? (
+                <IonContent>
+                  <SearchBar />
+                </IonContent>
+              ) : (
+                  <IonContent
+                    style={{
+                      '--background':
+                        'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                    }}
+                  >
+                    {this.props.user['status'] === 'booker' ? (
+                      <ArtistRecommendations />
+                    ) : (
+                        // then they must be an artists... so show them venues
+                        <VenueRecommendations />
+                      )}
+                  </IonContent>
                 )}
-              </IonContent>
-            )}
-          </IonContent>
-        )}
+            </IonContent>
+          )}
       </IonPage>
     );
   }

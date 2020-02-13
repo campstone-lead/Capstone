@@ -126,7 +126,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         return (
             <IonPage>
                 <IonHeader mode="ios">
-                    <IonToolbar mode="ios">
+                    <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
                         <div className="tabHeader">
                             <img
                                 src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
@@ -139,11 +139,15 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         </div>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent>
+                <IonContent style={{
+                    '--background':
+                        'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                }}>
                     <IonBackButton defaultHref="/home/" mode="ios"
                         text=" Back "
                         color="dark"
                         className="backBtn"
+                        style={{ '--background': 'none' }}
                     />
                     <div className="profile" style={{ marginTop: "50px", marginBottom: "20px" }}>
                         {/* VENUE VIEW WITH LIST OF EVENTS IS HERE NOW!!! */}
@@ -169,11 +173,14 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         }
 
                         {
-                            (this.props.user['status'] !== 'booker' && filteredEvents.length !== 0) && ((this.state.localStatus && (this.state.sender === 'booker')) ? ((this.state.localStatus === 'pending') ? <IonCardSubtitle>You have an incoming request from a booker</IonCardSubtitle> : (this.state.localStatus.length === 0) ? null : <IonCardSubtitle>This is  {' '}{(this.state.localStatus === 'booked') ? 'an aproved' : 'a declined'} request by the {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} for the selected event.</IonCardSubtitle>)
 
-                                : (this.state.sender === 'artist' && this.state.localStatus) && (
-                                    (this.state.localStatus === 'pending') ? <IonCardSubtitle>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} is pending...</IonCardSubtitle> : (this.state.localStatus === 'booked') ? <IonCardSubtitle>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} has been approved.</IonCardSubtitle> : <IonCardSubtitle>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} has been declined.</IonCardSubtitle>
-                                )
+                            (this.props.user['status'] !== 'booker' &&
+
+                                filteredEvents.length !== 0) && ((this.state.localStatus && (this.state.sender === 'booker')) ? ((this.state.localStatus === 'pending') ? <IonCardSubtitle color='black'>You have an incoming request from a booker</IonCardSubtitle> : (this.state.localStatus.length === 0) ? null : <IonCardSubtitle color='black'>This is  {' '}{(this.state.localStatus === 'booked') ? 'an aproved' : 'a declined'} request by the {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} for the selected event.</IonCardSubtitle>)
+
+                                    : (this.state.sender === 'artist' && this.state.localStatus) && (
+                                        (this.state.localStatus === 'pending') ? <IonCardSubtitle color='black'>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} is pending...</IonCardSubtitle> : (this.state.localStatus === 'booked') ? <IonCardSubtitle color='black'>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} has been approved.</IonCardSubtitle> : <IonCardSubtitle color='black'>You request for {this.props.booker['booker']['firstName']}  {' '} {this.props.booker['booker']['lastName']} has been declined.</IonCardSubtitle>
+                                    )
                             )}
 
                         {(this.props.user['status'] !== 'booker' && filteredEvents.length !== 0) && ((this.state.sender && this.state.sender === 'booker') ?

@@ -60,6 +60,24 @@ export const getBookerEvents = id => async dispatch => {
     console.log(err);
   }
 };
+
+export const editBooker = (id, editedBooker) => async dispatch => {
+  try {
+    const res = await axios({
+      method: 'put',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/bookers/${id}`,
+      data: editedBooker
+    });
+    dispatch(updatedBooker(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+
+
 //thunk for signup as a booker
 export const signUpBooker = bookerInfo => async dispatch => {
   try {

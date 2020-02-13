@@ -96,26 +96,31 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
             return (
                 <IonPage>
-                    <IonHeader mode="ios">
-                        <IonToolbar mode="ios">
-                            <div className="tabHeader1">
-                                <IonButton style={{ borderRadius: "50%" }}
-
-                                    color="white" mode="ios"
-                                    routerLink={`/allVenues/${this.state.venue["id"]}`}
-                                >
-                                    <IonIcon slot="start" color="medium" icon={arrowBack} size="large"
-                                    />
-                                </IonButton>
-
-                                <IonCardTitle className="title">
+                    <IonHeader mode="ios" >
+                        <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+                            <div className="tabHeader" >
+                                <img
+                                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                                    alt="logo.png"
+                                    className="logo"
+                                />
+                                <IonCardTitle>
                                     {this.props.event['event']['name']}
                                 </IonCardTitle>
                             </div>
                         </IonToolbar>
                     </IonHeader>
 
-                    <IonContent>
+                    <IonContent style={{
+                        '--background':
+                            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                    }}> <IonBackButton
+                            defaultHref="/home/"
+                            mode="ios"
+                            text=" Back "
+                            color="dark"
+                            className="backBtn"
+                        />
                         <div style={{ display: "flex", flexDirection: "column", alignContent: "center" }}>
 
                             <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
@@ -124,24 +129,30 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                                 </IonAvatar>
                             </div>
 
-                            <div style={{ margin: "10px" }}>
-                                <IonItem lines="inset" style={{ width: "70%" }}>
-                                    <IonIcon slot="start" color="medium" icon={time} title="Date" />
-                                    <IonLabel style={{ padding: '5px' }}>
-                                        <IonCardTitle>Date</IonCardTitle>
-                                        <p>
+                            <div style={{ margin: "10px" }} >
+                                <IonItem lines="inset" style={{
+                                    width: "70%", '--background':
+                                        'none'
+                                }}>
+                                    <IonIcon slot="start" color="black" icon={time} title="Date" />
+                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                        <IonCardTitle color='black'>Date</IonCardTitle>
+                                        <p style={{ padding: '5px', color: 'black' }}>
                                             {' '}{newdate}
                                         </p>
                                     </IonLabel>
                                 </IonItem>
 
                                 <IonItem lines="inset" routerLink={`/allVenues/${this.props.event['event'].venueId}`}
-                                    style={{ width: "70%" }}
+                                    style={{
+                                        width: "70%", '--background':
+                                            'none'
+                                    }}
                                 >
-                                    <IonIcon slot="start" color="medium" icon={image} title="Date" />
-                                    <IonLabel style={{ padding: '5px' }}>
-                                        <IonCardTitle>Venue</IonCardTitle>
-                                        <p>
+                                    <IonIcon slot="start" color="black" icon={image} title="Date" />
+                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                        <IonCardTitle color='black'>Venue</IonCardTitle>
+                                        <p style={{ padding: '5px', color: 'black' }}>
                                             {this.props.event['event'].venueName}
                                         </p>
                                     </IonLabel>
@@ -150,11 +161,14 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
 
 
-                                <IonItem lines="inset" style={{ width: "70%" }}>
-                                    <IonIcon slot="start" color="medium" icon={locate} title="Date" />
-                                    <IonLabel style={{ padding: '5px' }}>
-                                        <IonCardTitle>Location</IonCardTitle>
-                                        <p>
+                                <IonItem lines="inset" style={{
+                                    width: "70%", '--background':
+                                        'none'
+                                }}>
+                                    <IonIcon slot="start" color="black" icon={locate} title="Date" />
+                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                        <IonCardTitle color='black'>Location</IonCardTitle>
+                                        <p style={{ padding: '5px', color: 'black' }}>
                                             {' '}{this.props.event['event'].location}
                                         </p>
                                     </IonLabel>
@@ -162,11 +176,14 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
 
 
-                                <IonItem lines="inset" style={{ width: "70%" }}>
-                                    <IonIcon slot="start" color="medium" icon={musicalNotes} title="Date" />
-                                    <IonLabel style={{ padding: '5px' }}>
-                                        <IonCardTitle>Genres seeking</IonCardTitle>
-                                        <p>
+                                <IonItem lines="inset" style={{
+                                    width: "70%", '--background':
+                                        'none'
+                                }}>
+                                    <IonIcon slot="start" color="black" icon={musicalNotes} title="Date" />
+                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                        <IonCardTitle color='black'>Genres seeking</IonCardTitle>
+                                        <p style={{ padding: '5px', color: 'black' }}>
                                             {' '}{genres}
                                         </p>
                                     </IonLabel>
@@ -174,11 +191,15 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
 
 
-                                <IonItem lines="inset" style={{ width: "70%" }}>
-                                    <IonIcon slot="start" color="medium" icon={create} title="Date" />
-                                    <IonLabel style={{ padding: '5px' }}>
-                                        <IonCardTitle>Description</IonCardTitle>
-                                        <p>
+                                <IonItem lines="inset" style={{
+                                    width: "70%", '--background':
+                                        'none',
+
+                                }}>
+                                    <IonIcon slot="start" color="black" icon={create} title="Date" />
+                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                        <IonCardTitle color='black'>Description</IonCardTitle>
+                                        <p style={{ padding: '5px', color: 'black' }}>
                                             {' '}{this.props.event['event'].description}
                                         </p>
                                     </IonLabel>
@@ -192,7 +213,7 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                             justifyContent: "space-around",
                         }}>
                             {/* <p style={{ "margin": "20px" }}>Click the button below if you are interested in playing this event!</p> */}
-                            <IonCardSubtitle style={{ "margin": "20px" }}>
+                            <IonCardSubtitle style={{ "margin": "20px", color: 'black' }}>
                                 {this.props.user['status'] === 'artist' && this.state.sender === 'artist' ?
                                     (this.state.localStatus.length === 0 ? ' ' :
                                         this.state.localStatus === 'pending' ? `You sent a pending request for ${this.state.venue['name']}.` : this.state.localStatus === 'booked' ?

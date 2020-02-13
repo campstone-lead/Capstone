@@ -44,7 +44,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     }
   }
   render() {
-    console.log(this.props.venues)
+    console.log('this.props.user', this.props.user['id'])
     return (
       <IonPage>
         <IonHeader>
@@ -52,9 +52,12 @@ class Profile extends React.Component<IMyComponentProps, {}> {
             <IonTitle>Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }} >
           {this.props.user['status'] === 'artist' ? (
-            <div className="profile">
+            <div className="profile" >
               <ArtistProfileComponent
                 genres={this.props.genres}
                 artist={this.props.user}
@@ -68,14 +71,14 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                   alt={this.props.user['firstName']}
                   className="bookerImage"
                 />
-                <IonCardHeader>
-                  <IonCardTitle>
+                <IonCardHeader style={{ '--background': 'none' }}>
+                  <IonCardTitle >
                     {this.props.user['firstName']} {this.props.user['lastName']}
                   </IonCardTitle>
                 </IonCardHeader>
-                <IonCardContent>
-                  <IonList lines="inset">
-                    <IonItem>
+                <IonCardContent >
+                  <IonList lines="inset" className="ion-item-border ">
+                    <IonItem >
                       <IonIcon slot="start" color="medium" icon={mailOpen} />
                       <IonLabel style={{ padding: '5px' }}>
                         {this.props.user['email']}{' '}
@@ -91,12 +94,14 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                     </IonItem>
                   </IonList>
                 </IonCardContent>
-                <IonButton>Update profile</IonButton>
+                <IonButton routerLink={`/bookers/${this.props.user['id']}/update`}>Update profile</IonButton>
                 <br></br>
                 {this.props.venues &&
                   this.props.venues.length > 0 ? (
                     <div>
-                      <IonCardHeader>
+                      <IonCardHeader style={{
+                        '--background': 'none',
+                      }}>
                         You manage the following venues:
                   </IonCardHeader>
 
@@ -105,7 +110,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                           key={venue['id']}
                           href={`/allVenues/${venue['id']}`}
                           className="profile"
-                          style={{ width: '300px' }}
+                          style={{ width: '300px', '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)' }}
                           mode="ios"
                         >
                           <IonCardHeader className="items">
@@ -131,7 +136,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                   mode="ios"
                   href="/addvenue"
                   className="homeBtn"
-                  color="rgb(153, 178, 189);"
+
                 >
                   Add a venue
                   </IonButton>
@@ -140,7 +145,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                   mode="ios"
                   href="/addevent"
                   className="homeBtn"
-                  color="rgb(153, 178, 189);"
+
                 >
                   Create an event
                   </IonButton>
