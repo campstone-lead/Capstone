@@ -58,9 +58,14 @@ class ArtistRecommendation extends React.Component<
         await this.setState({ currentVenue: this.props.venues[0].id });
         await this.props.getRecommendedArtists(this.state.currentVenue);
 
-        const rec = this.props.artists.filter(
-          artist => artist['recommendations'][0].score <= 10
+        let rec = this.props.artists.filter(
+          artist => artist['recommendations'][0].score <= 5
         );
+        if (rec.length === 0) {
+          rec = this.props.artists.filter(
+            (artist, index) => index < 5
+          );
+        }
         this.setState({
           currentBookerRecommandations: rec,
         });
@@ -83,17 +88,22 @@ class ArtistRecommendation extends React.Component<
   }
 
   handleChange = async e => {
-    this.setState({ currentVenue: Number(e.target.value) });
+    await this.setState({ currentVenue: Number(e.target.value) });
     await this.props.getRecommendedArtists(this.state.currentVenue);
-    const rec = this.props.artists.filter(
-      artist => artist['recommendations'][0].score <= 9
+    let rec = this.props.artists.filter(
+      artist => artist['recommendations'][0].score <= 5
     );
-    this.setState({
+    if (rec.length === 0) {
+      rec = this.props.artists.filter(
+        (artist, index) => index < 5
+      );
+    }
+    await this.setState({
       currentBookerRecommandations: rec,
     });
   };
   render() {
-    console.log(this.state.currentBookerRecommandations);
+    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">

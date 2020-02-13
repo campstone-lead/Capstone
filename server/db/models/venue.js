@@ -116,6 +116,23 @@ function makeLatLngList(rows) {
   );
   return locations.join('|');
 }
+const getMatchingGenres = (arr1, arr2) => {
+  let less = arr1.length <= arr2.length ? arr1 : arr2;
+  let greater = arr1.length > arr2.length ? arr1 : arr2;
+  let i = 0
+  let j = 0;
+  let match = []
+  while (i < less.length && j < greater.length) {
+    if (less[i] === greater[j]) {
+      match.push(less[i]);
+      i++;
+      j++;
+    } else if (less[i] < greater[j]) {
+      i++;
+    } else j++;
+  }
+  return match;
+}
 
 const generateRecs = async venue => {
   if (venue.changed('address')) {
@@ -139,11 +156,21 @@ const generateRecs = async venue => {
               artistId: artist.id,
             },
           });
+          let currentDistance = Number(
+            (data.rows[0].elements[index].distance.value / 1609).toFixed(3));
+          let score = currentDistance;
+          let currentArtistGenres = artist.genres.sort();
+          let currentVenueGenres = venue.genres.sort();
+          let matchingGenres = getMatchingGenres(currentArtistGenres, currentVenueGenres);
+          let greater = currentVenueGenres.length > currentArtistGenres.length ? currentVenueGenres : currentArtistGenres;
+          score = ((greater.length - matchingGenres.length) / 2) + currentDistance
+          // console.log((greater.length - matchingGenres.length), (greater.length - matchingGenres.length) / 2, score)
+
           try {
             await result.update({
-              score: Number(
-                (data.rows[0].elements[index].distance.value / 1609).toFixed(3)
-              ),
+              distance: currentDistance,
+              score: score.toFixed(3)
+              ,
             });
             // await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
           } catch (error) {

@@ -5,6 +5,9 @@ const db = require('../db')
 const Recommendation = db.define('recommendation', {
   score: {
     type: Sequelize.FLOAT
+  },
+  distance: {
+    type: Sequelize.FLOAT
   }
 })
 

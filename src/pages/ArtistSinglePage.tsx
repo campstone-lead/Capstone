@@ -198,11 +198,11 @@ class ArtistSinglePage extends React.Component<
                 ) : (this.props.bookingStatus !== null ||
                   this.state.bookedArtistInfo['status'] !== undefined) &&
                   this.state.localStatus === 'pending' ? (
-                    <IonCardSubtitle>
+                    <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
                       You have an incoming request from {this.props.artist['name']}!
               </IonCardSubtitle>
                   ) : (
-                    <IonCardSubtitle>
+                    <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
                       You have {this.state.localStatus + "  "} {this.props.artist['name']}!
               </IonCardSubtitle>
                   ))}
