@@ -2,6 +2,9 @@ import axios from 'axios';
 // import history from '../pages/history'
 axios.defaults.withCredentials = true;
 
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
+
 /**
  * ACTION TYPES
  */
@@ -32,8 +35,8 @@ export const getRecommendedVenues = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/venues/distance/${id}`,
+      baseURL: entryURL,
+      url: `/api/venues/distance/${id}`,
     });
 
     dispatch(getVenues(res.data));
@@ -45,8 +48,8 @@ export const fetchVenues = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/venues/distance/',
+      baseURL: entryURL,
+      url: '/api/venues/distance/',
     });
     window.localStorage.setItem('venueList', JSON.stringify(res.data));
     dispatch(getVenues(res.data || defaultState));
@@ -59,8 +62,8 @@ export const getAllVenues = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/venues',
+      baseURL: entryURL,
+      url: '/api/venues',
     });
     dispatch(gotAllVenues(res.data || defaultState));
   } catch (error) {
@@ -71,8 +74,8 @@ export const fetchOneVenue = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/venues/${id}`,
+      baseURL: entryURL,
+      url: `/api/venues/${id}`,
     });
 
     dispatch(getSingleVenue(res.data || defaultState));

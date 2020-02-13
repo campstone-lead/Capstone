@@ -2,6 +2,9 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
+
 // Action types
 const DELETE_FILTER = 'DELETE_FILTER';
 const CHOOSE_GENRES = 'CHOOSE_GENRES';
@@ -97,8 +100,8 @@ export const customedFilter = (
 
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/filters/${myQueryString}`,
+      baseURL: entryURL,
+      url: `/api/filters/${myQueryString}`,
     });
     dispatch(getFilterSelected(res.data, input));
   } catch (error) {

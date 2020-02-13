@@ -1,7 +1,8 @@
 import io from 'socket.io-client'
 import { bookArtist, getArtists, getReq } from './store/artist'
 import store from './store'
-const socket = io('http://localhost:8080')
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+const socket = io(entryURL)
 
 socket.on('connect', () => {
   console.log('Connected in the client here!')

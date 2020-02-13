@@ -1,5 +1,8 @@
 import axios from 'axios';
 import socket from '../socket';
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 /**
  * ACTION TYPES
  */
@@ -38,8 +41,8 @@ export const createConnection = (artistId, venueId) => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/events/connection',
+      baseURL: entryURL,
+      url: '/api/events/connection',
       data: { artistId, venueId },
     });
     dispatch(bookArtist(res.data));
@@ -51,8 +54,8 @@ export const sendRequest = request1 => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/events/connection/`,
+      baseURL: entryURL,
+      url: `/api/events/connection/`,
       data: request1,
     });
     const request = res.data;
@@ -67,8 +70,8 @@ export const sendResponse = data => async dispatch => {
   try {
     const res = await axios({
       method: 'put',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/events/connection/update`,
+      baseURL: entryURL,
+      url: `/api/events/connection/update`,
       data: data,
     });
 
@@ -84,8 +87,8 @@ export const getRecommendedArtists = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/artists/distance/${id}`,
+      baseURL: entryURL,
+      url: `/api/artists/distance/${id}`,
     });
 
     dispatch(getArtists(res.data));
@@ -98,8 +101,8 @@ export const fetchArtists = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/artists',
+      baseURL: entryURL,
+      url: '/api/artists',
     });
 
     dispatch(getArtists(res.data || defaultArtist));
@@ -112,8 +115,8 @@ export const fetchOneArtists = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/artists/${id}`,
+      baseURL: entryURL,
+      url: `/api/artists/${id}`,
     });
 
     dispatch(getOneArtist(res.data || defaultArtist));
@@ -144,8 +147,8 @@ export const updatedArtist = incomingArtist => async dispatch => {
       newArtist = { ...formerArtist, ...incomingArtist }
       await axios({
         method: 'post',
-        baseURL: 'http://localhost:8080/api/',
-        url: '/artists/',
+        baseURL: entryURL,
+        url: '/api/artists/',
         data: newArtist,
       });
       window.localStorage.setItem(
@@ -164,8 +167,8 @@ export const editArtist = artist => async dispatch => {
 
     const newArtist = await axios({
       method: 'put',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/artists/',
+      baseURL: entryURL,
+      url: '/api/artists/',
       data: artist
     });
 

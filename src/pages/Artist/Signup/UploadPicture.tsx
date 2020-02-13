@@ -17,6 +17,9 @@ import { connect } from 'react-redux';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add, camera } from 'ionicons/icons';
 import axios from 'axios'
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 axios.defaults.withCredentials = true;
 const { Camera } = Plugins;
 
@@ -55,7 +58,7 @@ export class UploadPicture extends Component<
     formData.append("file", this.state.selectedFile);
     const res = await axios({
       method: "post",
-      baseURL: "http://localhost:8080/",
+      baseURL: entryURL,
       url: `/upload`,
       data: formData
     })

@@ -1,6 +1,10 @@
 import axios from 'axios';
 import history from '../pages/history';
 axios.defaults.withCredentials = true;
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
+
 /**
  * ACTION TYPES
  */
@@ -24,12 +28,10 @@ export const auth = (email, password) => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
-      // baseURL: 'http://localhost:8080/auth/',
-      baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
-      url: '/login/',
+      baseURL: entryURL,
+      url: '/auth/login/',
       data: { email, password },
     });
-    // const res = await axios.post('/auth/login/',{ email, password })
 
     window.localStorage.setItem("loginSuccess", JSON.stringify(true))
     dispatch(getUser(res.data || defaultUser));
@@ -42,11 +44,9 @@ export const me = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'https://harmonious-capstone.herokuapp.com/auth/',
-      // baseURL: 'http://localhost:8080/auth/',
-      url: '/me/',
+      baseURL: entryURL,
+      url: '/auth/me/',
     });
-    // const res = await axios.get('/auth/me/')
 
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
@@ -57,8 +57,8 @@ export const logout = () => async dispatch => {
   try {
     await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/auth/',
-      url: '/logout/',
+      baseURL: entryURL,
+      url: '/auth/logout/',
     });
     window.localStorage.clear();
     dispatch(removeUser());

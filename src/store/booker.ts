@@ -1,6 +1,9 @@
 import axios from 'axios';
 // import history from '../pages/history'
 import { auth } from './user';
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 axios.defaults.withCredentials = true;
 /**
  * ACTION TYPES
@@ -38,8 +41,8 @@ export const getOneBooker = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/bookers/${id}`,
+      baseURL: entryURL,
+      url: `/api/bookers/${id}`,
     });
     dispatch(getBooker(res.data));
   } catch (err) {
@@ -50,8 +53,8 @@ export const getBookerEvents = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/bookers/${id}/events`,
+      baseURL: entryURL,
+      url: `/api/bookers/${id}/events`,
     });
     dispatch(bookerEvents(res.data));
   } catch (err) {
@@ -63,8 +66,8 @@ export const editBooker = (editedBooker) => async dispatch => {
   try {
     const res = await axios({
       method: 'put',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/bookers`,
+      baseURL: entryURL,
+      url: `/api/bookers`,
       data: editedBooker
     });
     dispatch(updatedBooker(res.data))
@@ -94,8 +97,8 @@ export const signUpBooker = bookerInfo => async dispatch => {
       };
       const res = await axios({
         method: 'post',
-        baseURL: 'http://localhost:8080/api/',
-        url: '/bookers/',
+        baseURL: entryURL,
+        url: '/api/bookers/',
         data: sendBooker,
       });
 
@@ -106,8 +109,8 @@ export const signUpBooker = bookerInfo => async dispatch => {
 
       await axios({
         method: 'post',
-        baseURL: 'http://localhost:8080/api/',
-        url: '/venues/',
+        baseURL: entryURL,
+        url: '/api/venues/',
         data: newVenue,
       });
       window.localStorage.removeItem('booker');
@@ -133,45 +136,6 @@ export const signUpVenue = venueParam => async dispatch => {
   }
 };
 
-// export const signUpWithGoogle
-
-// export const updatedVenue = venue => async dispatch => {
-//   try {
-//     let booker = window.localStorage.getItem('booker');
-//     booker = JSON.parse(booker || '');
-//     let newBooker = booker || {};
-//     if (venue.password === undefined) {
-//       newBooker['venue'] = { ...newBooker['venue'], ...venue };
-//       window.localStorage.setItem('booker', JSON.stringify(newBooker));
-//     } else {
-//       let booker = {
-//         email: newBooker['email'],
-//         password: venue.password,
-//         firstName: newBooker['firstName'],
-//         lastName: newBooker['lastName'],
-//         phone: newBooker['phone'],
-//       };
-//       const res = await axios({
-//         method: 'post',
-//         baseURL: 'http://localhost:8080/api/',
-//         url: '/bookers/',
-//         data: booker,
-//       });
-
-//       let v = { ...newBooker['venue'], bookerId: res.data.id };
-
-//       await axios({
-//         method: 'post',
-//         baseURL: 'http://localhost:8080/api/',
-//         url: '/venues/',
-//         data: v,
-//       });
-//       window.localStorage.setItem('email', JSON.stringify(newBooker['email']));
-//     }
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
 
 //add new venue
 //add-venue-form.tsx
@@ -179,8 +143,8 @@ export const createdVenue = v => async dispatch => {
   try {
     await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/venues/`,
+      baseURL: entryURL,
+      url: `/api/venues/`,
       data: v,
     });
   } catch (err) {

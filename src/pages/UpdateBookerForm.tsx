@@ -16,6 +16,9 @@ import {
     camera
 } from 'ionicons/icons';
 
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
+
 axios.defaults.withCredentials = true;
 const { Camera } = Plugins;
 
@@ -71,7 +74,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
         formData.append("file", this.state.selectedFile);
         const res = await axios({
             method: "post",
-            baseURL: "http://localhost:8080/",
+            baseURL: entryURL,
             url: `/upload`,
             data: formData
         })

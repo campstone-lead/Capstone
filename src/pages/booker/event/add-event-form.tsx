@@ -9,6 +9,9 @@ import { me } from '../../../store/user';
 import { getOneBooker } from '../../../store/booker';
 import { createdEvent } from '../../../store/event'
 import { time, headset, create } from 'ionicons/icons';
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 axios.defaults.withCredentials = true;
 interface IMyComponentState {
   event: object,
@@ -106,7 +109,7 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
     formData.append("file", this.state.selectedFile);
     await axios({
       method: "post",
-      baseURL: "http://localhost:8080/",
+      baseURL: entryURL,
       url: `/upload`,
       data: formData
     })
