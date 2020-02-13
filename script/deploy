@@ -25,7 +25,7 @@ function cleanup_at_exit {
   git checkout heroku-deployment
 
   # remove the deploy branch
-  git branch -D deploy
+  # git branch -D deploy
 }
 trap cleanup_at_exit EXIT
 
@@ -39,7 +39,7 @@ git checkout -b deploy
 
 # "force" add the otherwise gitignored build files
 # git add -f public/bundle.js public/bundle.js.map
-git add -f build
+# git add -f build
 
 # create a commit, even if nothing changed
 git commit --allow-empty -m 'Deploying'
