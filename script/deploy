@@ -25,7 +25,7 @@ function cleanup_at_exit {
   git checkout heroku-deployment
 
   # remove the deploy branch
-  # git branch -D deploy
+  git branch -D deploy
 }
 trap cleanup_at_exit EXIT
 
