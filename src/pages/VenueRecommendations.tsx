@@ -48,10 +48,14 @@ class VenueRecommendations extends React.Component<
 
     await this.props.getRecommendedVenues(id);
 
-    let rec = this.props.venues;
-    rec = this.props.venues.filter(
-      venue => venue['recommendations'][0].score <= 10
+    let rec = this.props.venues.filter(
+      venue => venue['recommendations'][0].score <= 5
     );
+    if (rec.length === 0) {
+      rec = this.props.venues.filter(
+        (artist, index) => index < 5
+      );
+    }
 
     await this.setState({
       currentArtistRecommandations: rec,
@@ -104,7 +108,6 @@ class VenueRecommendations extends React.Component<
                 key={index}
                 href={`/allVenues/${venue['id']}`}
                 className=""
-                // style={{ width: '250px' }}
                 mode="ios"
               >
                 <div className="venueBox">
