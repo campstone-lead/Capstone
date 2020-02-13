@@ -15,6 +15,9 @@ const cors = require('cors')
 var multer = require('multer')
 module.exports = app
 
+const corsPath = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8100')
+
+
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
 if (process.env.NODE_ENV === 'test') {
@@ -49,8 +52,7 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
   const config = {
-    // origin: 'http://localhost:8100',
-    origin: 'https://harmonious-capstone.herokuapp.com/',
+    origin: corsPath,
     credentials: true,
   };
   app.use(cors(config));
