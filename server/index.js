@@ -94,8 +94,12 @@ const createApp = () => {
     })
 
   });
+
+  const entryPath = (process.env.NODE_ENV === 'development' ? 'public' : 'build')
+
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use(express.static(path.join(__dirname, '..', entryPath)))
+  // app.use(express.static(path.join(__dirname, '..', 'public')))
   //FOR DEPLOYMENT
   // app.use(express.static(path.join(__dirname, '..', 'build')))
 
@@ -112,7 +116,8 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+    res.sendFile(path.join(__dirname, '..', entryPath, '/index.html'))
+    // res.sendFile(path.join(__dirname, '..', 'public/index.html'))
     //FOR DEPLOYMENT
     // res.sendFile(path.join(__dirname, '..', 'build/index.html'))
   })
