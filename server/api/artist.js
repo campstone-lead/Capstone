@@ -68,11 +68,13 @@ router.post('/', async (req, res, next) => {
   }
 });
 
- router.put('/', async (req,res,next) => {
-    try {
+router.put('/', async (req, res, next) => {
+  try {
+    if (req.user.status === "artist") {
       const artist = await Artist.findByPk(req.user.id)
       artist.update(req.body)
-    } catch (error) {
-      next(error)
     }
-  })
+  } catch (error) {
+    next(error)
+  }
+})

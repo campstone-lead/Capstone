@@ -44,12 +44,11 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     }
   }
   render() {
-    console.log('this.props.user', this.props.user['id'])
     return (
       <IonPage>
         <IonHeader>
           <IonToolbar id="bar">
-            <IonTitle>Profile</IonTitle>
+            <IonTitle>{this.props.user["name"]}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent style={{
@@ -94,7 +93,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                     </IonItem>
                   </IonList>
                 </IonCardContent>
-                <IonButton routerLink={`/bookers/${this.props.user['id']}/update`}>Update profile</IonButton>
+                <IonButton routerLink={`/bookers/update`}>Update profile</IonButton>
                 <br></br>
                 {this.props.venues &&
                   this.props.venues.length > 0 ? (

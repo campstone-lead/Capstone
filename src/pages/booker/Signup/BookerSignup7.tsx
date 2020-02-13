@@ -26,7 +26,6 @@ class Login extends React.Component<IMyComponentProps, IMyComponentState> {
   }
   async handleSubmit(event) {
     event.preventDefault();
-    console.log('local storage:', window.localStorage.getItem('venue'));
     await this.props.signUpBooker(this.state);
     // await this.props.auth(JSON.parse(window.localStorage.getItem("email") || ''), this.state.password)
     window.localStorage.clear();

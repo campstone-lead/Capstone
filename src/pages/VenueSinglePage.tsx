@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonSearchbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
@@ -9,7 +9,6 @@ import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
 
 import VenueSingleComponent from './VenueSingleComponent'
-import history from './history'
 
 interface IMyComponentProps {
     user: object,

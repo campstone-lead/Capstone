@@ -81,7 +81,6 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
     async componentDidMount() {
         await this.props.me()
         let booker = window.localStorage.getItem('booker')
-        console.log('BOOKER:', booker)
 
         this.setState({
             email: this.props.user['email'],
@@ -127,7 +126,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
 
     handleSubmit(event) {
         event.preventDefault()
-        this.props.editBooker(this.props["match"]["params"]["id"], this.state);
+        this.props.editBooker(this.state);
 
         // this.setState({
         //     email: this.state.email,
@@ -265,7 +264,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     me: () => dispatch(me()),
-    editBooker: (id, editedBooker) => dispatch(editBooker(id, editedBooker))
+    editBooker: (editedBooker) => dispatch(editBooker(editedBooker))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateBookerForm)

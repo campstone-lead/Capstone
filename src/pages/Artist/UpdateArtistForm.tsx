@@ -1,5 +1,5 @@
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonDatetime, IonCardHeader, IonAvatar,
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonAvatar, IonBackButton,
 } from '@ionic/react';
 import React from 'react';
 import axios from 'axios'
@@ -7,36 +7,31 @@ import '../Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../../store/user';
 import { editArtist } from '../../store/artist';
-import { image, time, locate, headset, create, mailOpen, call, code } from 'ionicons/icons';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+
+import { headset, mailOpen, call, book, home, logoInstagram, logoFacebook, musicalNote, person, add, camera } from 'ionicons/icons';
+
 axios.defaults.withCredentials = true;
+const { Camera } = Plugins;
+
+
 interface IMyComponentState {
-  event: object;
   artist: object;
-  // formVals: Array<object>;
   selectedFile: any;
   photo: string
-  // defaultedVenue: number
-
 }
+
 interface IMyComponentProps {
-  // booker: any,
-  // createEvent: (event: object) => void,
   editArtist: any,
   user: object;
   me: any;
-
 }
 
 class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentState>  {
   constructor(props) {
     super(props);
     this.state = {
-      event: {
-        imageUrl: 'https://www.ggcatering.com/images/venues/default_venue_2.jpg',
-        description: '',
-        date: '',
-        name: '',
-      },
       artist: {
         firstName: "",
         lastName: "",
@@ -54,90 +49,73 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
       },
       selectedFile: null,
       photo: 'https://www.ggcatering.com/images/venues/default_venue_2.jpg',
-      // formVals: [{ displayName: 'First Name', icon: headset, name: 'firstName' },
-      // { displayName: 'Last Name', icon: headset, name: 'lastName' },
-      // { displayName: 'Artist Name', icon: headset, name: 'name' },
-      // // { displayName: 'Email', icon: headset, name: 'email' },
-      // // { displayName: 'Genres', icon: headset, name: 'genres' },
-      // { displayName: 'Phone', icon: call, name: 'phone' },
-      // // { displayName: 'Zip Code', icon: headset, name: 'zipCode' },
-      // // { displayName: 'Type', icon: headset, name: 'type' },
-      // // { displayName: 'Bio', icon: headset, name: 'bio' },
-      // // { displayName: 'ImageURL', icon: headset, name: 'imageURL' },
-      // {
-      //   displayName: 'Instagram Url',
-      //   icon: code,
-      //   name: 'instagramUrl'
-      // },
-      // {
-      //   displayName: 'Spotify Url',
-      //   icon: code,
-      //   name: 'spotifyUrl'
-      // },
-      // {
-      //   displayName: 'Facebook Url',
-      //   icon: code,
-      //   name: 'facebookUrl'
-      // }]
     }
+    defineCustomElements(window);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentDidMount() {
     await this.props.me();
-
-
     if (this.props.user && this.props.user['status'] === 'artist') {
       this.setState({ artist: this.props.user })
+      let artist = window.localStorage.getItem('artist')
+      if (artist) {
+
+        artist = JSON.parse(artist || '');
+        let newArtist = artist || {};
+        this.setState({ artist: newArtist })
+      } else {
+        window.localStorage.setItem('artist', JSON.stringify(this.state.artist))
+
+      }
     }
 
-    // let event = window.localStorage.getItem('event')
-    // if (event !== null) {
-    //   event = JSON.parse(event || '')
-    //   let newEvent = event || {};
-    //   await this.setState({ photo: newEvent['imageUrl'] })
-    // }
-
   }
+  async takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos,
+    });
 
+    var imageURL = image.webPath;
+    // Can be set to the src of an image now
+    await this.setState({
+      artist: { ...this.state.artist, imageURL: imageURL || '', }
+
+    });
+    let obj = this.state.artist
+    window.localStorage.setItem('artist', JSON.stringify(obj))
+  }
 
   async handleSubmit(e) {
     e.preventDefault();
-    // const event = {
-    //   name: this.state.event['name'],
-    //   description: this.state.event['description'],
-    //   date: this.state.event['date'],
-    //   imageURL: this.state.photo,
-    //   venueId: this.state.currentVenue
-    // }
-    // await this.props.createEvent(event)
     await this.props.editArtist(this.state.artist)
     window.localStorage.clear();
   }
-  onChangeHandler = async  e => {
-    e.persist()
+  onChangeHandler = async  event => {
+    event.persist()
     await this.setState({
-      selectedFile: e.target.files[0]
-
+      selectedFile: event.target.files[0],
     })
 
-    await this.setState({ photo: this.state.selectedFile.name })
-    let event = {
-      imageUrl: this.state.photo
-    }
-    window.localStorage.setItem('event', JSON.stringify(event))
+    await this.setState({ artist: { ...this.state.artist, imageURL: this.state.selectedFile.name } })
+    let obj = this.state.artist
+    window.localStorage.setItem('artist', JSON.stringify(obj))
   }
   onClickHandler = async (e) => {
     e.preventDefault()
     const formData = new FormData();
 
     formData.append("file", this.state.selectedFile);
-    await axios({
+    const res = await axios({
       method: "post",
       baseURL: "http://localhost:8080/",
       url: `/upload`,
       data: formData
     })
+    console.log(res.data)
 
   }
   handleFormChange = (e) => {
@@ -149,115 +127,93 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
     return (
       <IonPage>
         <IonHeader >
-          <IonToolbar id="bar" >
-            <IonTitle >Update profile</IonTitle>
+          <IonToolbar id="bar" style={{ '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)' }}>
+            <IonTitle >Update Your Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
+        <IonContent style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }}>
+          <IonBackButton mode="ios"
+            text=" Back "
+            color="dark"
+            className="backBtn"
+            defaultHref={'/profile'}
+          />
+
+          <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "20px", alignContent: "center" }}>
+            <IonAvatar style={{ width: '170px', height: '170px', marginTop: '20px', borderRadius: "50px" }}>
+              <img src={this.state.artist["imageURL"]} alt='img' />
+            </IonAvatar>
+          </div>
+
+          < div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
+            <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+            <IonButton onClick={this.onClickHandler}>
+              <IonIcon icon={add}></IonIcon>
+              <IonLabel>Upload picture</IonLabel>
+            </IonButton>
+
+            <IonButton onClick={() => this.takePicture()}>
+              <IonIcon icon={camera}></IonIcon>
+              <IonLabel>Take picture</IonLabel>
+            </IonButton>
+          </div>
 
 
 
-          <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column", margin: "30px" }}>
+          <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column", alignContent: "center" }}>
 
 
-            <div style={{
-              display: "flex", justifyContent: "space-around",
-              flexDirection: "column"
-            }} >
-              {/* START PICTURE */}
-              <div>
-                <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center", flexDirection: 'row' }}>
-                  <IonAvatar style={{ width: '170px', height: '170px', borderRadius: "50px" }}>
-                    <img src={this.state.photo} alt='img' />
-                  </IonAvatar>
+            <form onSubmit={this.handleSubmit} >
 
-                </div>
-                < div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column" }}>
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={person} />
+                <IonInput clearInput type="text"
+                  placeholder="First Name"
+                  name="firstName"
+                  value={this.state.artist["firstName"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
 
-                  <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
-                  <IonButton type="button" onClick={this.onClickHandler} color='secondary' size="small" >Upload a picture</IonButton>
-                </div>
-              </div>
-              {/* END PICTURE */}
+                <IonInput clearInput type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={this.state.artist["lastName"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-              <div>
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
+                <IonInput clearInput type="text"
+                  name="name"
+                  placeholder="Artist Name"
+                  value={this.state.artist["name"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={mailOpen} />
+                <IonInput clearInput type="text"
+                  name="email"
+                  placeholder="email@email.com"
+                  value={this.state.artist["email"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                <form onSubmit={this.handleSubmit} className='updatevenue' >
-
-                  {/* {this.state.formVals.map((item) =>
-                    <div key={item["name"]}>
-                      <IonLabel className='venuelabel'>{item["displayName"]}</IonLabel>
-                      <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                        <IonIcon mode="ios" slot="start" color="medium" icon={item["icon"]} />
-                        <IonInput clearInput type="text"
-                          name={item["name"]}
-                          value={this.state.artist[item["name"]]}
-                          style={{ width: "250px" }}
-                          onIonChange={(e) => this.handleFormChange(e)}
-                        />
-                      </IonItem>
-                    </div>
-                  )} */}
-
-
-                  {/* <IonLabel className='venuelabel'>First name</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name=""
-                      value={this.state.event["name"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.setState({
-                        event: { ...this.state.event, name: (e.target as HTMLInputElement).value }
-                      })}
-                    />
-                  </IonItem> */}
-                  <IonLabel className='venuelabel'>First Name</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="firstName"
-                      value={this.state.artist["firstName"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
-
-                  <IonLabel className='venuelabel'>Last Name</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="lastName"
-                      value={this.state.artist["lastName"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
-                  <IonLabel className='venuelabel'>Artist Name</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="name"
-                      value={this.state.artist["name"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
-
-                  {/* <IonLabel className='venuelabel'>Email</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="email"
-                      value={this.state.artist["email"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem> */}
-
-                  {/* <IonLabel className='venuelabel'>Genres</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
+              {/* <IonLabel className='venuelabel'>Genres</IonLabel>
+                  <IonItem lines="inset" style={{ '--background': 'none' }}>
                     <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
                     <IonInput clearInput type="text"
                       name={genres}
@@ -267,30 +223,30 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                     />
                   </IonItem> */}
 
-                  {/* <IonLabel className='venuelabel'>Phone</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="number"
-                      name="phone"
-                      value={this.state.artist["phone"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem> */}
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={call} />
+                <IonInput clearInput type="text"
+                  name="phone"
+                  placeholder="Phone"
+                  value={this.state.artist["phone"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                  {/* <IonLabel className='venuelabel'>Zip Code</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="zipCode"
-                      value={this.state.artist["zipCode"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem> */}
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={home} />
+                <IonInput clearInput type="text"
+                  name="zipCode"
+                  placeholder="Zip Code"
+                  value={this.state.artist["zipCode"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                  {/* <IonLabel className='venuelabel'>Type</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
+              {/* <IonLabel className='venuelabel'>Type</IonLabel>
+                  <IonItem lines="inset" style={{ '--background': 'none' }}>
                     <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
                     <IonInput clearInput type="text"
                       name={type}
@@ -300,19 +256,19 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                     />
                   </IonItem> */}
 
-                  <IonLabel className='venuelabel'>Bio</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="bio"
-                      value={this.state.artist["bio"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={book} />
+                <IonInput clearInput type="text"
+                  name="bio"
+                  placeholder="Bio"
+                  value={this.state.artist["bio"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                  {/* <IonLabel className='venuelabel'>ImageURL</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
+              {/* <IonLabel className='venuelabel'>ImageURL</IonLabel>
+                  <IonItem lines="inset" style={{ '--background': 'none' }}>
                     <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
                     <IonInput clearInput type="text"
                       name="imageURL"
@@ -322,45 +278,48 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                     />
                   </IonItem> */}
 
-                  <IonLabel className='venuelabel'>Instagram Url</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="instagramUrl"
-                      value={this.state.artist["instagramUrl"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={logoInstagram} />
+                <IonInput clearInput type="text"
+                  name="instagramUrl"
+                  placeholder="Instagram Url"
+                  value={this.state.artist["instagramUrl"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                  <IonLabel className='venuelabel'>Spotify Url</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="spotifyUrl"
-                      value={this.state.artist["spotifyUrl"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={musicalNote} />
+                <IonInput clearInput type="text"
+                  name="spotifyUrl"
+                  placeholder="Spotify Url"
+                  value={this.state.artist["spotifyUrl"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                  <IonLabel className='venuelabel'>Facebook Url</IonLabel>
-                  <IonItem lines="inset" style={{ marginBottom: "15px" }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
-                    <IonInput clearInput type="text"
-                      name="facebookUrl"
-                      value={this.state.artist["facebookUrl"]}
-                      style={{ width: "250px" }}
-                      onIonChange={(e) => this.handleFormChange(e)}
-                    />
-                  </IonItem>
+              <IonItem lines="inset" style={{ '--background': 'none' }}>
+                <IonIcon mode="ios" slot="start" color="medium" icon={logoFacebook} />
+                <IonInput clearInput type="text"
+                  name="facebookUrl"
+                  placeholder="Facebook Url"
+                  value={this.state.artist["facebookUrl"]}
+                  style={{ width: "250px" }}
+                  onIonChange={(e) => this.handleFormChange(e)}
+                />
+              </IonItem>
 
-                  <IonItem routerLink="/profile" lines="none">
-                    <IonButton type="submit" size="default">create</IonButton>
-                  </IonItem>
-                </form>
-              </div>
-            </div>
+              <IonItem routerLink="/profile" lines="none">
+                <IonButton
+                  type="submit"
+                  size="default"
+                  disabled={!(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.artist["zipCode"]))}
+                //  || !(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/.test(this.state.artist["email"]))}
+                >create</IonButton>
+              </IonItem>
+            </form>
           </div>
         </IonContent>
       </IonPage >)

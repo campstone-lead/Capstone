@@ -1,5 +1,5 @@
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonDatetime, IonCardHeader, IonAvatar,
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonDatetime, IonAvatar,
 } from '@ionic/react';
 import React from 'react';
 import axios from 'axios'
@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { me } from '../../../store/user';
 import { getOneBooker } from '../../../store/booker';
 import { createdEvent } from '../../../store/event'
-import { image, time, locate, headset, create } from 'ionicons/icons';
+import { time, headset, create } from 'ionicons/icons';
 axios.defaults.withCredentials = true;
 interface IMyComponentState {
   event: object,

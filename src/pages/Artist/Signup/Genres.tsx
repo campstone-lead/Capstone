@@ -79,7 +79,6 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState>  {
     const obj = this.state.genreTypes
     const keys = Object.keys(obj)
     const filtered = keys.filter((key) => obj[key])
-    console.log('filtered', filtered)
 
 
     this.props.updateArtist({

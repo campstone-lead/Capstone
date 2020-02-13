@@ -1,6 +1,5 @@
 import axios from 'axios';
 import socket from '../socket';
-import { act } from 'react-dom/test-utils';
 /**
  * ACTION TYPES
  */
@@ -58,7 +57,6 @@ export const sendRequest = request1 => async dispatch => {
     });
     const request = res.data;
     dispatch(bookArtist(request));
-    // console.log('about to send a request', request)
     socket.emit('send-request', request)
 
   } catch (err) {
@@ -126,11 +124,9 @@ export const fetchOneArtists = id => async dispatch => {
 export const updatedArtist = incomingArtist => async dispatch => {
   try {
     let currentArtist = window.localStorage.getItem('artistInfo');
-    console.log('currentArtist:', currentArtist)
 
     let newArtist;
 
-    console.log('incomingArtist:', incomingArtist)
     if (incomingArtist.password === undefined) {
       if (currentArtist === null) {
         window.localStorage.setItem('artistInfo', JSON.stringify(incomingArtist));
@@ -166,14 +162,14 @@ export const updatedArtist = incomingArtist => async dispatch => {
 export const editArtist = artist => async dispatch => {
   try {
 
-      const newArtist = await axios({
-        method: 'put',
-        baseURL: 'http://localhost:8080/api/',
-        url: '/artists/',
-        data: artist
-      });
+    const newArtist = await axios({
+      method: 'put',
+      baseURL: 'http://localhost:8080/api/',
+      url: '/artists/',
+      data: artist
+    });
 
-      dispatch(updateArtist(newArtist));
+    dispatch(updateArtist(newArtist));
 
   } catch (err) {
     console.error(err);
