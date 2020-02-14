@@ -1,8 +1,8 @@
 import axios from 'axios';
 import history from '../pages/history';
-axios.defaults.withCredentials = true;
-
 import { logoWindows } from 'ionicons/icons';
+
+axios.defaults.withCredentials = true;
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 

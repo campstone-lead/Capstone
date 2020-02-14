@@ -124,14 +124,7 @@ const createApp = () => {
   const entryPath = (process.env.NODE_ENV === 'development' ? 'public' : 'build')
 
   // static file-serving middleware
-<<<<<<< HEAD
   app.use(express.static(path.join(__dirname, '..', entryPath)))
-  // app.use(express.static(path.join(__dirname, '..', 'public')))
-=======
-  app.use(express.static(path.join(__dirname, '..', 'public')));
->>>>>>> f5dbf04ba6819ebc2ac0b2d3312330f67f3a4bb2
-  //FOR DEPLOYMENT
-  // app.use(express.static(path.join(__dirname, '..', 'build')))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -146,14 +139,7 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
-<<<<<<< HEAD
     res.sendFile(path.join(__dirname, '..', entryPath, '/index.html'))
-    // res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-=======
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'));
->>>>>>> f5dbf04ba6819ebc2ac0b2d3312330f67f3a4bb2
-    //FOR DEPLOYMENT
-    // res.sendFile(path.join(__dirname, '..', 'build/index.html'))
   });
 
   // error handling endware

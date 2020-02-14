@@ -23,6 +23,10 @@ import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import SignUpZero from './SignUp0';
 import FacebookLogin from 'react-facebook-login';
 
+const prodRedirectURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/signup0/' : 'http://localhost:8100/signup0/')
+// if (process.env.NODE_ENV !== 'production') require('../store/secrets')
+
+
 interface IMyComponentState {
   email: string;
   password: string;
@@ -227,7 +231,7 @@ class SignUpSignIn extends React.Component<
                 buttonText="LOGIN WITH GOOGLE"
                 uxMode="popup"
                 onSuccess={this.handleSuccess}
-                redirectUri="http://localhost:8100/signup0"
+                redirectUri={prodRedirectURL}
                 render={renderProps => (
                   <IonButton
                     routerLink="/signup0"
@@ -262,7 +266,7 @@ class SignUpSignIn extends React.Component<
                     fields="name,email,picture"
                     // onClick={responseFacebook}
                     callback={responseFacebook}
-                    redirectUri="http://localhost:8100/signup0"
+                    redirectUri={prodRedirectURL}
                     render={renderProps => (
                       <IonButton
                         style={{ width: '270px', margin: '10px' }}
