@@ -227,22 +227,8 @@ class SignUpSignIn extends React.Component<
                 buttonText="LOGIN WITH GOOGLE"
                 uxMode="popup"
                 onSuccess={this.handleSuccess}
-                // // onRequest={this.props.signUpWithGoogle}
-
                 redirectUri="http://localhost:8100/signup0"
                 render={renderProps => (
-                  // <GoogleLogin
-                  //   clientId={googleClientId}
-                  //   buttonText="LOGIN WITH GOOGLE"
-                  //   uxMode="redirect"
-                  //   onSuccess={() => this.props.signUpWithGoogle}
-                  //   isSignedIn
-                  //   onFailure={() => {
-                  //     console.log('not logged in');
-                  //   }}
-                  //   redirectUri="http://localhost:8100/signup0"
-                  // />
-
                   <IonButton
                     routerLink="/signup0"
                     style={{ width: '270px', margin: '10px' }}
@@ -257,14 +243,7 @@ class SignUpSignIn extends React.Component<
                   console.log('not logged in');
                 }}
               />
-              {/* <GoogleLogout
-                clientId={googleClientId}
-                buttonText="Logout"
-                onLogoutSuccess={() => {
-                  console.log('not logged in');
-                }}
-              ></GoogleLogout> */}
-              <IonButton
+              {/* <IonButton
                 style={{
                   width: '270px',
                   margin: '10px',
@@ -274,7 +253,7 @@ class SignUpSignIn extends React.Component<
               >
                 <IonIcon icon={logoFacebook} />
                 Sign up with Facebook
-              </IonButton>
+              </IonButton> */}
               {/* <IonButton
                 onClick={() => (
                   <FacebookLogin
