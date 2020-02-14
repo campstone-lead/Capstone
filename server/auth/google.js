@@ -1,8 +1,33 @@
-const passport = require('passport')
-const router = require('express').Router()
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-const { User, Artist } = require('../db/models')
-module.exports = router
+const passport = require('passport');
+const router = require('express').Router();
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const { User, Artist } = require('../db/models');
+module.exports = router;
+const cors = require('cors');
+
+////////////////////////////
+// const allowedOrigins = [
+//   'capacitor://localhost',
+//   'ionic://localhost',
+//   'http://localhost',
+//   'http://localhost:8080',
+//   'http://localhost:8100',
+// ];
+
+// // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (allowedOrigins.includes(origin) || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Origin not allowed by CORS'));
+//     }
+//   },
+// };
+
+// // Enable preflight requests for all routes
+// router.options('*', cors(corsOptions));
+//////////////////////////////////////
 
 /**
  * For OAuth keys and other secrets, your Node process will search
@@ -19,44 +44,45 @@ module.exports = router
  */
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  console.log('Google client ID / secret not found. Skipping Google OAuth.')
+  console.log('Google client ID / secret not found. Skipping Google OAuth.');
 } else {
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
-  }
+    callbackURL: process.env.GOOGLE_CALLBACK,
+  };
 
   const strategy = new GoogleStrategy(
     googleConfig,
     (token, refreshToken, profile, done) => {
-      const googleId = profile.id
+      const googleId = profile.id;
       // console.log(googleId)
-      const email = profile.emails[0].value
-      const firstName = profile.name.givenName
-      const lastName = profile.name.familyName
+      const email = profile.emails[0].value;
+      const firstName = profile.name.givenName;
+      const lastName = profile.name.familyName;
 
       User.findOrCreate({
         where: { googleId },
-        defaults: { email, firstName, lastName }
+        defaults: { email, firstName, lastName },
       })
         .then(([user]) => done(null, user))
-        .catch(done)
+        .catch(done);
     }
-  )
+  );
 
-  passport.use(strategy)
+  passport.use(strategy);
 
   router.get(
     '/',
     passport.authenticate('google', { scope: ['email', 'profile'] })
-  )
+  );
 
   router.get(
     '/callback',
+    // cors(corsOptions),
     passport.authenticate('google', {
-      successRedirect: '/user',
-      failureRedirect: '/login'
+      // successRedirect: 'http://localhost:8100/profile',
+      // failureRedirect: 'http://localhost:8100/login',
     })
-  )
+  );
 }

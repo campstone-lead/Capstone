@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   IonItem,
@@ -21,13 +20,16 @@ import {
 } from 'ionicons/icons';
 import './Tab1.css';
 interface IMyComponentProps {
-  genres: Array<string>,
-  artist: object,
+  genres: Array<string>;
+  artist: object;
 }
 interface IMyComponentState {
-  status: any,
+  status: any;
 }
-class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyComponentState> {
+class ArtistProfileComponent extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
   render() {
     let genres = '';
     if (this.props.genres) {
@@ -45,10 +47,12 @@ class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyCompo
           className="profileImage"
         />
 
-        <IonCardContent style={{
-          '--background':
-            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
-        }} >
+        <IonCardContent
+          style={{
+            '--background':
+              'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+          }}
+        >
           <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
             {this.props.artist['bio']}
           </IonCardSubtitle>
@@ -62,7 +66,7 @@ class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyCompo
               </IonLabel>
             </IonItem>
 
-            <IonItem >
+            <IonItem>
               <IonIcon slot="start" color="medium" icon={microphone} />
               <IonLabel style={{ padding: '5px' }}>
                 {' '}
@@ -85,22 +89,52 @@ class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyCompo
             </IonItem>
           </IonList>
           <div className="profileTab">
-            <IonTabBar slot="bottom" color="none" >
-              <IonTabButton tab="tab2" onClick={() => window.open(this.props.artist['instagramUrl'], '_system', 'location=yes')} color="none" >
+            <IonTabBar slot="bottom" color="none">
+              <IonTabButton
+                tab="tab2"
+                onClick={() =>
+                  window.open(
+                    this.props.artist['instagramUrl'],
+                    '_system',
+                    'location=yes'
+                  )
+                }
+                color="none"
+              >
                 <IonItem color="none">
                   <IonIcon icon={logoInstagram} />
                 </IonItem>
                 <IonLabel>Instagram</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="tab2" onClick={() => window.open(this.props.artist['spotifyUrl'], '_system', 'location=yes')} color="none">
-                <IonItem color="none" >
+              <IonTabButton
+                tab="tab2"
+                onClick={() =>
+                  window.open(
+                    this.props.artist['spotifyUrl'],
+                    '_system',
+                    'location=yes'
+                  )
+                }
+                color="none"
+              >
+                <IonItem color="none">
                   <IonIcon icon={musicalNote} />
                 </IonItem>
                 <IonLabel>Spotify</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="tab2" onClick={() => window.open(this.props.artist['facebookUrl'], '_system', 'location=yes')} color="white">
+              <IonTabButton
+                tab="tab2"
+                onClick={() =>
+                  window.open(
+                    this.props.artist['facebookUrl'],
+                    '_system',
+                    'location=yes'
+                  )
+                }
+                color="white"
+              >
                 <IonItem color="none">
                   <IonIcon icon={logoFacebook} />
                 </IonItem>
@@ -110,9 +144,8 @@ class ArtistProfileComponent extends React.Component<IMyComponentProps, IMyCompo
           </div>
         </IonCardContent>
       </>
-    )
+    );
   }
 }
 
-
-export default ArtistProfileComponent
+export default ArtistProfileComponent;

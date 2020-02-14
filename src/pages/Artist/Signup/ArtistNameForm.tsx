@@ -8,49 +8,60 @@ import {
   IonInput,
   IonLabel,
   IonButton,
-  IonIcon
+  IonIcon,
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
-import { updatedArtist } from '../../../store/artist';
-import {
-  microphone
-} from 'ionicons/icons';
+import { updatedArtist, signUpArtistWithGoogle } from '../../../store/artist';
+import { microphone } from 'ionicons/icons';
 interface IMyComponentState {
+  isGoogleOauth: boolean;
   name: string;
 }
 interface IMyComponentProps {
   putArtistName: (name: any) => void;
   updateArtist: any;
+  signUpArtistWithGoogle: any;
 }
 
 class PersonalInfoForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
+      isGoogleOauth: false,
       name: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let artist = window.localStorage.getItem('artistInfo');
+    let artistGoogle = window.localStorage.getItem('google');
     if (artist !== null) {
       artist = JSON.parse(artist || '');
       let newArtist = artist || {};
       this.setState({
         name: newArtist['name'] || '',
       });
+    } else if (artistGoogle !== null) {
+      artistGoogle = JSON.parse(artistGoogle || '');
+      let newArtist = artistGoogle || {};
+      await this.setState({
+        name: newArtist['name'] || '',
+        isGoogleOauth: true,
+      });
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.putArtistName(this.state);
+    if (this.state.isGoogleOauth)
+      this.props.signUpArtistWithGoogle({ name: this.state.name });
+    else this.props.putArtistName({ name: this.state.name });
     this.setState({
       name: '',
     });
@@ -87,7 +98,7 @@ class PersonalInfoForm extends React.Component<
                   }
                 />
               </IonItem>
-              <div style={{ margin: "10px" }}>
+              <div style={{ margin: '10px' }}>
                 <IonItem lines="none">
                   <IonButton
                     type="submit"
@@ -96,12 +107,10 @@ class PersonalInfoForm extends React.Component<
                     size="default"
                   >
                     NEXT
-              </IonButton>
+                  </IonButton>
                 </IonItem>
               </div>
             </form>
-
-
           </div>
         </IonContent>
       </IonPage>
@@ -111,6 +120,8 @@ class PersonalInfoForm extends React.Component<
 const mapDispatchToProps = dispatch => {
   return {
     putArtistName: artistInfo => dispatch(updatedArtist(artistInfo)),
+    signUpArtistWithGoogle: artistInfo =>
+      dispatch(signUpArtistWithGoogle(artistInfo)),
   };
 };
 export default connect(null, mapDispatchToProps)(PersonalInfoForm);
