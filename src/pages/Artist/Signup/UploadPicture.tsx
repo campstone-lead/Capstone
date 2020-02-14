@@ -4,15 +4,10 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonFab,
-  IonFabButton,
   IonIcon,
-  IonItem,
   IonButton,
   IonAvatar,
-  IonInput,
   IonLabel,
-  IonCard,
   IonCardHeader,
 } from '@ionic/react';
 import React, { Component } from 'react';

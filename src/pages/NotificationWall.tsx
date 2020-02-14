@@ -8,7 +8,8 @@ import { fetchEvents, gotOneEvents } from '../store/event'
 import { fetchOneVenue, getAllVenues } from '../store/venue';
 import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
-
+import { link } from 'fs';
+import { Link } from 'react-router-dom'
 
 interface IMyComponentProps {
   user: object,
@@ -103,12 +104,12 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
 
     return (
       <IonPage>
-        <IonHeader mode="ios">
+        <IonHeader mode="ios" style={{ '--background': '#f3d2d1' }}>
           <IonCardHeader>
             <IonCardTitle>Notifications</IonCardTitle>
           </IonCardHeader>
         </IonHeader>
-        <IonContent>
+        <IonContent style={{ '--background': '#f3d2d1' }}>
 
           <IonList lines="inset">
             {
@@ -119,7 +120,11 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                   if (((artist.artist.status === 'pending' && artist.artist.sender === 'artist') || (artist.artist.status === 'booked' && artist.artist.sender === 'booker') ||
                     (artist.artist.status === 'declined' && artist.artist.sender === 'booker')) && artist.artist.bookerId === this.props.user['id'])
                     return (
-                      <IonItem key={index} href={`/allArtists/${artist.artist.artistId}`}>
+
+                      <IonItem
+                        key={index}
+                        href={`/allArtists/${artist.artist.artistId}`}
+                      >
                         <IonIcon slot="start" color="medium" icon={notificationsOutline} />
                         <IonCardSubtitle style={{ padding: '5px', wordWrap: ' break-word', }}
                           color={(artist.artist.status === 'pending') ? 'black' : ''}
@@ -129,6 +134,9 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                           {' '} for {'  '} {artist.event.name} at {'  '}{artist.event.venueName}
                         </IonCardSubtitle>
                       </IonItem>
+
+
+
                     )
                 }
                 else {
@@ -136,7 +144,7 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                   if (((artist.artist.status === 'pending' && artist.artist.sender === 'booker') || (artist.artist.status === 'booked' && artist.artist.sender === 'artist') ||
                     (artist.artist.status === 'declined' && artist.artist.sender === 'artist')) && artist.artist.artistId === this.props.user['id'])
                     return (
-                      <IonItem key={index} href={`/allVenues/${artist.artist.venueId}`}>
+                      <IonItem key={index} href={`/allEvents/${artist.artist.eventId}`}>
                         <IonIcon slot="start" color="medium" icon={notificationsOutline} />
                         <IonCardSubtitle style={{ padding: '5px', wordWrap: ' break-word' }}
                           color={(artist.artist.status === 'pending') ? 'black' : ''}>

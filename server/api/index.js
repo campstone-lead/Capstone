@@ -7,6 +7,7 @@ router.use('/artists', require('./artist'));
 router.use('/venues', require('./venues'));
 router.use('/events', require('./event'));
 router.use('/filters', require('./filter'));
+router.use('/messages', require('./message'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');

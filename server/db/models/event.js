@@ -24,7 +24,7 @@ const Event = db.define('event', {
   imageURL: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://www.ggcatering.com/images/venues/default_venue_2.jpg',
+      'https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
   },
   location: {
     type: Sequelize.STRING,
@@ -49,7 +49,7 @@ const preHooks = async jointTable => {
       let venue = await Venue.findByPk(id);
       let booker = await Booker.findByPk(venue.bookerId);
       jointTable.location = venue.address;
-      jointTable.imageURL = venue.imageURL;
+      if (jointTable.imageURL === null) { jointTable.imageURL = venue.imageURL; }
       jointTable.genres = venue.genres;
       jointTable.venueName = venue.name;
       jointTable.bookerId = venue.bookerId;

@@ -4,8 +4,6 @@ import {
   IonLabel,
   IonList,
   IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
   IonCardSubtitle,
   IonTabBar,
   IonTabButton,
@@ -48,15 +46,18 @@ class ArtistProfileComponent extends React.Component<
           alt={this.props.artist['firstName']}
           className="profileImage"
         />
-        <IonCardHeader>
-          <IonCardTitle>{this.props.artist['artistName']}</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
+
+        <IonCardContent
+          style={{
+            '--background':
+              'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+          }}
+        >
           <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
             {this.props.artist['bio']}
           </IonCardSubtitle>
           <br></br>
-          <IonList lines="inset">
+          <IonList lines="inset" className="ion-item-border ">
             <IonItem>
               <IonIcon slot="start" color="medium" icon={musicalNotes} />
               <IonLabel style={{ padding: '5px' }}>
@@ -87,57 +88,60 @@ class ArtistProfileComponent extends React.Component<
               </IonLabel>
             </IonItem>
           </IonList>
-          {/* <div> */}
-          <IonTabBar slot="bottom">
-            <IonTabButton
-              tab="tab2"
-              onClick={() =>
-                window.open(
-                  this.props.artist['instagramUrl'],
-                  '_system',
-                  'location=yes'
-                )
-              }
-            >
-              <IonItem>
-                <IonIcon icon={logoInstagram} />
-              </IonItem>
-              <IonLabel>Instagram</IonLabel>
-            </IonTabButton>
+          <div className="profileTab">
+            <IonTabBar slot="bottom" color="none">
+              <IonTabButton
+                tab="tab2"
+                onClick={() =>
+                  window.open(
+                    this.props.artist['instagramUrl'],
+                    '_system',
+                    'location=yes'
+                  )
+                }
+                color="none"
+              >
+                <IonItem color="none">
+                  <IonIcon icon={logoInstagram} />
+                </IonItem>
+                <IonLabel>Instagram</IonLabel>
+              </IonTabButton>
 
-            <IonTabButton
-              tab="tab2"
-              onClick={() =>
-                window.open(
-                  this.props.artist['spotifyUrl'],
-                  '_system',
-                  'location=yes'
-                )
-              }
-            >
-              <IonItem>
-                <IonIcon icon={musicalNote} />
-              </IonItem>
-              <IonLabel>Spotify</IonLabel>
-            </IonTabButton>
+              <IonTabButton
+                tab="tab2"
+                onClick={() =>
+                  window.open(
+                    this.props.artist['spotifyUrl'],
+                    '_system',
+                    'location=yes'
+                  )
+                }
+                color="none"
+              >
+                <IonItem color="none">
+                  <IonIcon icon={musicalNote} />
+                </IonItem>
+                <IonLabel>Spotify</IonLabel>
+              </IonTabButton>
 
-            <IonTabButton
-              tab="tab2"
-              onClick={() =>
-                window.open(
-                  this.props.artist['facebookUrl'],
-                  '_system',
-                  'location=yes'
-                )
-              }
-            >
-              <IonItem>
-                <IonIcon icon={logoFacebook} />
-              </IonItem>
-              <IonLabel>Facebook</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-          {/* </div> */}
+              <IonTabButton
+                tab="tab2"
+                onClick={() =>
+                  window.open(
+                    this.props.artist['facebookUrl'],
+                    '_system',
+                    'location=yes'
+                  )
+                }
+                color="white"
+              >
+                <IonItem color="none">
+                  <IonIcon icon={logoFacebook} />
+                </IonItem>
+                <IonLabel>Facebook</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </div>
         </IonCardContent>
       </>
     );

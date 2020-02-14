@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonToolbar, IonButtons, IonBackButton, IonTitle, IonButton, IonFabButton, IonHeader } from '@ionic/react';
-import { Plugins, CameraResultType } from '@capacitor/core';
+import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonToolbar, IonButtons, IonBackButton, IonTitle, IonButton, IonHeader } from '@ionic/react';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add } from 'ionicons/icons';
 import { signUpVenue } from '../../../store/booker'
@@ -57,7 +56,6 @@ class BookerSignup3 extends React.Component<
       data: formData
     })
     await this.props.signUpVenue(this.state)
-    console.log(res.data)
 
   }
   componentDidMount() {
@@ -70,26 +68,6 @@ class BookerSignup3 extends React.Component<
       });
     }
   }
-  // async takePicture() {
-  //   const image = await Plugins.Camera.getPhoto({
-  //     quality: 100,
-  //     allowEditing: false,
-  //     resultType: CameraResultType.Uri,
-  //     // source: CameraSource.Camera
-  //   });
-  //   var imageUrl = image.webPath;
-  //   // Can be set to the src of an image now
-  //   const booker = JSON.parse(window.localStorage.getItem('booker') || '')
-  //   const venue = booker || {};
-  //   if (venue['venue'].photo) {
-  //     this.setState({ photo: venue['venue'].photo })
-  //   }
-
-  //   this.setState({
-  //     photo: imageUrl || ''
-  //   })
-
-  // }
 
   handleClick() {
     this.props.signUpVenue(this.state);

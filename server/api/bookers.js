@@ -46,14 +46,16 @@ router.post("/", async (req, res, next) => {
   }
 })
 
-router.put("/:id", async (req, res, next) => {
+router.put("/", async (req, res, next) => {
   try {
-    const booker = await Booker.findByPk(req.params.id)
-    if (!booker) {
-      res.sendStatus(404)
-    } else {
-      await booker.update(req.body)
-      res.json(booker)
+    if (req.user.status === "booker") {
+      const booker = await Booker.findByPk(req.user.id)
+      if (!booker) {
+        res.sendStatus(404)
+      } else {
+        await booker.update(req.body)
+        res.json(booker)
+      }
     }
   } catch (error) {
     next(error)

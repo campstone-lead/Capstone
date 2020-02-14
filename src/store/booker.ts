@@ -9,7 +9,6 @@ const GET_BOOKER = 'GET_BOOKER';
 const UPDATE_BOOKER = 'UPDATE_BOOKER';
 const REMOVE_USER = 'REMOVE_USER';
 const BOOKER_EVENTS = 'BOOKER_EVENTS';
-const SIGN_UP_BOOKER = 'SIGN_UP_BOOKER';
 /**
  *
  * INITIAL STATE
@@ -49,7 +48,6 @@ export const getOneBooker = id => async dispatch => {
 };
 export const getBookerEvents = id => async dispatch => {
   try {
-    console.log(id);
     const res = await axios({
       method: 'get',
       baseURL: 'http://localhost:8080/api/',
@@ -60,6 +58,24 @@ export const getBookerEvents = id => async dispatch => {
     console.log(err);
   }
 };
+
+export const editBooker = (editedBooker) => async dispatch => {
+  try {
+    const res = await axios({
+      method: 'put',
+      baseURL: 'http://localhost:8080/api/',
+      url: `/bookers`,
+      data: editedBooker
+    });
+    dispatch(updatedBooker(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+
+
 //thunk for signup as a booker
 export const signUpBooker = bookerInfo => async dispatch => {
   try {

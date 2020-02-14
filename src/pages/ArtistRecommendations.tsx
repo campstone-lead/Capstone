@@ -40,7 +40,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,9 +58,14 @@ class ArtistRecommendation extends React.Component<
         await this.setState({ currentVenue: this.props.venues[0].id });
         await this.props.getRecommendedArtists(this.state.currentVenue);
 
-        const rec = this.props.artists.filter(
-          artist => artist['recommendations'][0].score <= 10
+        let rec = this.props.artists.filter(
+          artist => artist['recommendations'][0].score <= 5
         );
+        if (rec.length === 0) {
+          rec = this.props.artists.filter(
+            (artist, index) => index < 5
+          );
+        }
         this.setState({
           currentBookerRecommandations: rec,
         });
@@ -83,17 +88,22 @@ class ArtistRecommendation extends React.Component<
   }
 
   handleChange = async e => {
-    this.setState({ currentVenue: Number(e.target.value) });
+    await this.setState({ currentVenue: Number(e.target.value) });
     await this.props.getRecommendedArtists(this.state.currentVenue);
-    const rec = this.props.artists.filter(
-      artist => artist['recommendations'][0].score <= 9
+    let rec = this.props.artists.filter(
+      artist => artist['recommendations'][0].score <= 5
     );
-    this.setState({
+    if (rec.length === 0) {
+      rec = this.props.artists.filter(
+        (artist, index) => index < 5
+      );
+    }
+    await this.setState({
       currentBookerRecommandations: rec,
     });
   };
   render() {
-    console.log(this.state.currentBookerRecommandations);
+    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
@@ -107,7 +117,9 @@ class ArtistRecommendation extends React.Component<
           </IonButton> */}
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
-              <select onChange={this.handleChange} className="selectBtn">
+              <select onChange={this.handleChange} className="selectBtn"
+                style={{ backgroundColor: "white" }}
+              >
                 {this.props.venues.map((venue, index) => (
                   <option value={venue.id} key={index}>
                     {venue.name}
@@ -119,15 +131,15 @@ class ArtistRecommendation extends React.Component<
               </IonCardTitle>
             </div>
           ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
             </IonButton>
-          )}
+            )}
         </IonCardHeader>
         {
           <div className="venue">
@@ -147,7 +159,7 @@ class ArtistRecommendation extends React.Component<
                   key={index}
                   href={`/allArtists/${artist['id']}`}
                   className="profile"
-                  // style={{ width: '250px' }}
+
                   mode="ios"
                 >
                   <div className="artistBox">

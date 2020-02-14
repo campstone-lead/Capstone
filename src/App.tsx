@@ -51,7 +51,12 @@ import {
   VenueSinglePage,
   searchBarValue,
   notifications,
+  UpdateArtistForm,
+  UpdateBookerForm,
+  ChatBox
 } from './AppImports';
+
+
 interface IMyComponentProps {
   user: object;
   userId: Number;
@@ -117,7 +122,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
     return (
       <IonApp>
         <IonReactRouter>
-          <IonTabs>
+          <IonTabs >
             <IonRouterOutlet>
               <Route path="/home" component={Tab1} exact={true} />
               <Route path="/tab2" component={Tab2} exact={true} />
@@ -142,6 +147,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/signup/booker/5" component={BookerSignup5} />
               <Route path="/signup/booker/6" component={BookerSignup6} />
               <Route path="/signup/booker/7" component={BookerSignup7} />
+              <Route path="/bookers/update" component={UpdateBookerForm} />
               <Route path="/infoform" component={PersonalInfo} />
               <Route path="/artistnameform" component={ArtistNameForm} />
               <Route path="/artistbioform" component={ArtistBioForm} />
@@ -153,29 +159,30 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/uploadpicture" component={UploadPicture} />
               <Route path="/filter" component={Filter} />
               <Route path="/searchbar" component={SearchBar} />
+              <Route path="/artists/update" component={UpdateArtistForm} />
               <Route path="/artists" component={AllArtistView} />
               <Route path="/artistpassword" component={ArtistPassword} />
-              <Route path="/artists" component={AllArtistView} />
               <Route path="/venues" component={AllVenuesView} />
+              <Route path="/messages" component={ChatBox} />
 
               <Route
                 path="/allArtists/:artistId"
                 component={ArtistSinglePage}
               />
               <Route path="/allVenues/:venueId" component={VenueSinglePage} />
-              <Route path="/events/:id" component={EventSinglePage} />
+              <Route path="/allEvents/:id" component={EventSinglePage} />
               <Route
                 path="/"
                 render={() => <Redirect to="/home" />}
                 exact={true}
               />
             </IonRouterOutlet>
-            <IonTabBar slot="bottom">
+            <IonTabBar slot="bottom" >
               <IonTabButton
-                style={{
-                  '--background':
-                    'url(https://wallpaperaccess.com/full/851202.jpg)',
-                }}
+                // style={{
+                //   '--background':
+                //     'url(https://wallpaperaccess.com/full/851202.jpg)',
+                // }}
                 tab="tab1"
                 href="/home"
                 onClick={this.onTab1Click}
@@ -186,10 +193,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
 
               <IonTabButton
                 tab="tab2"
-                style={{
-                  '--background':
-                    'url(https://wallpaperaccess.com/full/851202.jpg)',
-                }}
+                // style={{
+                //   '--background':
+                //     'url(https://wallpaperaccess.com/full/851202.jpg)',
+                // }}
                 href="/profile"
                 disabled={this.props.userId !== undefined ? false : true}
               >
@@ -204,10 +211,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <IonTabButton
                 tab="tab4"
                 href="/notifications"
-                style={{
-                  '--background':
-                    'url(https://wallpaperaccess.com/full/851202.jpg)',
-                }}
+                // style={{
+                //   '--background':
+                //     'url(https://wallpaperaccess.com/full/851202.jpg)',
+                // }}
                 disabled={this.props.userId !== undefined ? false : true}
               >
                 {this.props.userId !== undefined ? (
@@ -221,10 +228,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
 
               {this.props.userId !== undefined ? (
                 <IonTabButton
-                  style={{
-                    '--background':
-                      'url(https://wallpaperaccess.com/full/851202.jpg)',
-                  }}
+                  // style={{
+                  //   '--background':
+                  //     'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  // }}
                   tab="tab3"
                   onClick={this.props.logout}
                 >
@@ -235,10 +242,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
 
               {this.props.userId === undefined ? (
                 <IonTabButton
-                  style={{
-                    '--background':
-                      'url(https://wallpaperaccess.com/full/851202.jpg)',
-                  }}
+                  // style={{
+                  //   '--background':
+                  //     'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  // }}
                   tab="tab3"
                   href="/login"
                 >

@@ -1,26 +1,39 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonItemGroup, IonLabel, IonButton, IonBackButton, IonList, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonSearchbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonIcon, IonAvatar, IonCard } from '@ionic/react';
 import { connect } from 'react-redux'
 import { me } from '../../../store/user'
 import { gotOneEvents } from '../../../store/event'
-
+import { sendRequest, sendResponse } from '../../../store/artist';
+import {
+    image,
+    time,
+    locate,
+    create,
+    musicalNotes,
+} from 'ionicons/icons';
 
 interface IMyComponentProps {
     user: object,
     me: any,
     event: object,
     gotOneEvents: any,
+    sendRequest: any,
+    sendResponse: any
 }
 
 interface IMyComponentState {
-    venue: object
+    venue: object,
+    localStatus: any,
+    sender: string
 }
 
 class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentState>{
     constructor(props) {
         super(props)
         this.state = {
-            venue: {}
+            venue: {},
+            localStatus: '',
+            sender: '',
         }
     }
 
@@ -28,15 +41,41 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         const id = this.props["match"]["params"]["id"]
         await this.props.me()
         await this.props.gotOneEvents(id)
-        this.setState({
+        let artistStatus = this.props.event['artists'].filter((el) => el.artistId === this.props.user['id']);
+        if (artistStatus.length === 1) {
+            await this.setState({
+                localStatus: artistStatus[0].status,
+                sender: artistStatus[0].sender
+            })
+        }
+        await this.setState({
             venue: this.props.event['event']['venue']
         })
 
+
+    }
+    handleClick = async () => {
+        this.setState({ localStatus: 'pending', sender: 'artist' });
+        let request = {
+            eventId: this.props.event['event']['id'],
+            artistId: this.props.user['id'],
+            sender: 'artist'
+        }
+        console.log(request)
+        await this.props.sendRequest(request);
     }
 
+    handleClickRespond = async (response) => {
+        let eventId = this.props.event['event']['id']
+        let artistId = this.props.user['id']
+        const res = { status: response, eventId, artistId }
+        console.log('making a response to booker', res)
+        await this.setState({ localStatus: response, sender: 'booker' })
+        await this.props.sendResponse({ status: response, eventId, artistId })
 
+    }
     render() {
-
+        console.log(this.state)
         if (!this.props.event['event']) {
             return <IonCardTitle>Loading...</IonCardTitle>;
         } else {
@@ -56,55 +95,165 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
 
             return (
                 <IonPage>
-                    <IonHeader mode="ios">
-                        <IonToolbar mode="ios">
-                            <div className="tabHeader">
+                    <IonHeader mode="ios" >
+                        <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+                            <div className="tabHeader" >
                                 <img
                                     src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
                                     alt="logo.png"
                                     className="logo"
                                 />
+                                <IonCardTitle>
+                                    {this.props.event['event']['name']}
+                                </IonCardTitle>
                             </div>
                         </IonToolbar>
                     </IonHeader>
-                    <IonContent>
-                        <IonBackButton defaultHref={`/allVenues/${this.state.venue["id"]}`} mode="ios"
+
+                    <IonContent style={{
+                        '--background':
+                            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+                    }}> <IonBackButton
+                            defaultHref="/home/"
+                            mode="ios"
                             text=" Back "
                             color="dark"
                             className="backBtn"
                         />
-                        <div className="profile">
-                            <br></br>
-                            <br></br>
-                            <IonCardHeader>
-                                <IonCardTitle>{this.props.event['event'].name}</IonCardTitle>
-                            </IonCardHeader>
+                        <div style={{ display: "flex", flexDirection: "column", alignContent: "center" }}>
+
+                            <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
+                                <IonAvatar style={{ width: '270px', height: '270px', }}>
+                                    <img src={this.props.event['event']['imageURL']} alt='img' />
+                                </IonAvatar>
+                            </div>
+                            <IonCard style={{ margin: "30px", '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)' }}>
+                                <div style={{ margin: "10px" }} >
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none'
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={time} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Date</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{newdate}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+
+                                    <IonItem lines="inset" routerLink={`/allVenues/${this.props.event['event'].venueId}`}
+                                        style={{
+                                            width: "70%", '--background':
+                                                'none'
+                                        }}
+                                    >
+                                        <IonIcon slot="start" color="black" icon={image} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Venue</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {this.props.event['event'].venueName}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+
+
+
+
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none'
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={locate} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Location</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{this.props.event['event'].location}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+
+
+
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none'
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={musicalNotes} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Genres seeking</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{genres}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+
+
+
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none',
+
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={create} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Description</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{this.props.event['event'].description}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+                                </div>
+                            </IonCard>
+
                         </div>
-                        <br></br>
-                        <IonList lines="inset">
-                            <IonItem>
-                                <p><span style={{ "fontWeight": "bold" }}>DATE:</span>{' '}{newdate}</p>
-                            </IonItem>
-                            <IonItem>
-                                <p><span style={{ "fontWeight": "bold" }}>VENUE:</span>{' '}  {this.props.event['event'].venueName}</p>
-                            </IonItem>
-                            <IonItem>
 
-                                <p><span style={{ "fontWeight": "bold" }}>LOCATION:</span>{' '}{this.props.event['event'].location}</p>
-                            </IonItem>
-                            <IonItem>
-                                <p><span style={{ "fontWeight": "bold" }}>GENRES SEEKING: </span>{' '}{genres}</p>
+                        <div style={{
+                            display: "flex", alignContent: "center",
+                            flexDirection: "column",
+                            justifyContent: "space-around",
+                        }}>
+                            {/* <p style={{ "margin": "20px" }}>Click the button below if you are interested in playing this event!</p> */}
+                            <IonCardSubtitle style={{ "margin": "20px", color: 'black' }}>
+                                {this.props.user['status'] === 'artist' && this.state.sender === 'artist' ?
+                                    (this.state.localStatus.length === 0 ? ' ' :
+                                        this.state.localStatus === 'pending' ? `You sent a pending request for ${this.state.venue['name']}.` : this.state.localStatus === 'booked' ?
+                                            `Your request for ${this.state.venue['name']} was approved.` :
+                                            `Your request for ${this.state.venue['name']} was denied.`)
+                                    : this.state.sender === 'booker' &&
+                                    (this.state.localStatus.length === 0 ? ' ' :
+                                        this.state.localStatus === 'pending' ? `You have a pending request for ${this.state.venue['name']}.` : this.state.localStatus === 'booked' ?
+                                            `You approved the request for ${this.props.event['event']['name']}!` :
+                                            `Your declined the request for  ${this.props.event['event']['name']}.`
+                                    )
+                                }
+                            </IonCardSubtitle>
+                            {this.props.user['status'] === 'artist' && (this.state.sender === 'artist' || this.state.sender === '') ?
+                                <IonButton style={{ "fontSize": "15.5px", "margin": "25px", width: "70%" }} onClick={this.handleClick}
+                                    disabled={this.state.localStatus.length !== 0 ? true : false}
+                                >
+                                    {
+                                        (this.state.localStatus.length === 0 ? 'Connect' :
+                                            this.state.localStatus === 'pending' ? `Request is pending` : this.state.localStatus === 'booked' ?
+                                                `Request is approved.` :
+                                                `Request is denied.`)
 
+                                    }
+                                </IonButton>
+                                : this.state.sender === 'booker' && (
+                                    <div style={{ "marginBottom": "35px", marginLeft: "25px" }}>
+                                        <IonButton disabled={(this.state.localStatus === 'declined' || this.state.localStatus === 'booked') ? true : false}
+                                            onClick={() => this.handleClickRespond('booked')}
 
-                            </IonItem>
-                            <IonItem>
-                                <p><span style={{ "fontWeight": "bold" }}>DESCRIPTION:</span>{' '}{this.props.event['event'].description}</p>
-                            </IonItem>
-                        </IonList>
+                                        >Accept</IonButton>
+                                        <IonButton disabled={(this.state.localStatus === 'declined' || this.state.localStatus === 'booked') ? true : false}
+                                            onClick={() => this.handleClickRespond('declined')}
+                                        >Decline</IonButton>
+                                    </div>
+                                )
+                            }
+                        </div>
 
-                        <p style={{ "margin": "20px" }}>Click the button below if you are interested in playing this event!</p>
-
-                        <IonButton style={{ "fontSize": "15.5px", "margin": "20px" }}>Connect with Booker</IonButton>
                     </IonContent>
                 </IonPage>
             )
@@ -121,6 +270,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     me: () => dispatch(me()),
     gotOneEvents: (id) => dispatch(gotOneEvents(id)),
+    sendRequest: (request) => dispatch(sendRequest(request)),
+    sendResponse: (data) => dispatch(sendResponse(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventSinglePage)

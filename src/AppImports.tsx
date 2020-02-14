@@ -34,6 +34,7 @@ import BookerSignup6 from './pages/booker/Signup/BookerSignup6';
 import BookerSignup7 from './pages/booker/Signup/BookerSignup7';
 import AllArtistView from './pages/AllArtistView';
 import ArtistSinglePage from './pages/ArtistSinglePage';
+import ChatBox from './pages/chat/ChatBox';
 import VenueForm from './pages/booker/venue/add-venue-form';
 import EventForm from './pages/booker/event/add-event-form';
 import EventSinglePage from './pages/booker/event/EventSinglePage';
@@ -42,6 +43,8 @@ import Filter from './pages/Artist/Search/Filter';
 import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
 import NotificationWall from './pages/NotificationWall';
+import UpdateArtistForm from './pages/Artist/UpdateArtistForm';
+import UpdateBookerForm from './pages/UpdateBookerForm';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 import { me, logout } from './store/user';
@@ -118,8 +121,11 @@ export {
   Tab3,
   AllVenuesView,
   NotificationWall,
+  UpdateBookerForm,
   notifications,
   Tab4,
   VenueSinglePage,
   searchBarValue,
+  UpdateArtistForm,
+  ChatBox
 };

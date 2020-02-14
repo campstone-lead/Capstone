@@ -93,14 +93,31 @@ class SignUpSignIn extends React.Component<
           </IonToolbar>
         </IonHeader>
 
-        <IonContent>
-          <IonCard className="welcome-card">
+        <IonContent
+          style={{
+            '--background': 'linear-gradient(to right, #000000, #434343)',
+            color: 'white',
+          }}
+        >
+          <IonCard
+            style={{
+              '--background': 'none',
+            }}
+            className="welcome-card"
+          >
             <form
               onSubmit={async event => {
                 await this.handleSubmit(event);
               }}
             >
-              <IonItem lines="inset">
+              <IonItem
+                color="warning"
+                lines="inset"
+                style={{
+                  '--background': 'none',
+                  color: 'white',
+                }}
+              >
                 <IonLabel>Email</IonLabel>
                 <IonInput
                   type="email"
@@ -115,8 +132,22 @@ class SignUpSignIn extends React.Component<
                 />
               </IonItem>
 
-              <IonItem lines="inset">
-                <IonLabel>Password</IonLabel>
+              <IonItem
+                lines="inset"
+                style={{
+                  '--background': 'none',
+                  color: 'white',
+                }}
+                color="warning"
+              >
+                <IonLabel
+                  style={{
+                    '--background': 'none',
+                    color: 'white',
+                  }}
+                >
+                  Password
+                </IonLabel>
                 <IonInput
                   type="password"
                   placeholder=" *******"
@@ -134,7 +165,7 @@ class SignUpSignIn extends React.Component<
                 <IonCardHeader> {error.response.data} </IonCardHeader>
               )}
 
-              <br></br>
+              {/* <br></br>
               <IonItem
                 lines="none"
                 routerLink={this.state.isActive ? '/profile' : undefined}
@@ -152,14 +183,36 @@ class SignUpSignIn extends React.Component<
                     Login
                   </IonButton>
                 </IonCardHeader>
-              </IonItem>
+              </IonItem> */}
+
+              <IonCardHeader>
+                <IonButton
+                  type="submit"
+                  style={{ width: '270px', height: '38px' }}
+                  disabled={
+                    this.state.email.length === 0 ||
+                    this.state.password.length === 0
+                  }
+                  routerLink={this.state.isActive ? '/profile' : undefined}
+                  color="tertiary"
+                >
+                  Login
+                </IonButton>
+              </IonCardHeader>
             </form>
             <div className="profile">
               <br></br>
               <br></br>
               <br></br>
               <br></br>
-              <IonTitle>Not a member yet?</IonTitle>
+              <IonTitle
+                style={{
+                  '--background': 'none',
+                  color: 'white',
+                }}
+              >
+                Not a member yet?
+              </IonTitle>
               <br></br>
 
               <IonButton
@@ -211,7 +264,14 @@ class SignUpSignIn extends React.Component<
                   console.log('not logged in');
                 }}
               ></GoogleLogout> */}
-              <IonButton style={{ width: '270px', margin: '10px' }}>
+              <IonButton
+                style={{
+                  width: '270px',
+                  margin: '10px',
+                  '--backrground': '#3171e0',
+                }}
+                color="secondary"
+              >
                 <IonIcon icon={logoFacebook} />
                 Sign up with Facebook
               </IonButton>

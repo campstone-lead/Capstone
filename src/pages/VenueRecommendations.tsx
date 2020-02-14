@@ -32,7 +32,7 @@ interface IMyComponentProps {
 class VenueRecommendations extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,10 +48,14 @@ class VenueRecommendations extends React.Component<
 
     await this.props.getRecommendedVenues(id);
 
-    let rec = this.props.venues;
-    rec = this.props.venues.filter(
-      venue => venue['recommendations'][0].score <= 10
+    let rec = this.props.venues.filter(
+      venue => venue['recommendations'][0].score <= 5
     );
+    if (rec.length === 0) {
+      rec = this.props.venues.filter(
+        (artist, index) => index < 5
+      );
+    }
 
     await this.setState({
       currentArtistRecommandations: rec,
@@ -104,7 +108,6 @@ class VenueRecommendations extends React.Component<
                 key={index}
                 href={`/allVenues/${venue['id']}`}
                 className=""
-                // style={{ width: '250px' }}
                 mode="ios"
               >
                 <div className="venueBox">
@@ -114,35 +117,35 @@ class VenueRecommendations extends React.Component<
                     <IonCardTitle
                       style={{ textAlign: 'center' }}
                       className="venueBoxText"
-                      //     let rec = this.props.venues;
+                    //     let rec = this.props.venues;
 
-                      //     rec = this.props.venues.filter(
-                      //         venue => venue['recommendations'][0].score <= 10
-                      //     );
+                    //     rec = this.props.venues.filter(
+                    //         venue => venue['recommendations'][0].score <= 10
+                    //     );
 
-                      //     await this.setState({
-                      //         currentArtistRecommandations: rec,
-                      //         loading: true
-                      //     });
+                    //     await this.setState({
+                    //         currentArtistRecommandations: rec,
+                    //         loading: true
+                    //     });
 
-                      // }
-                      // // shouldComponentUpdate() {
-                      // //     if (this.state.loading)
-                      // //         return this.props.isSearchBarOpen;
-                      // //     return true;
+                    // }
+                    // // shouldComponentUpdate() {
+                    // //     if (this.state.loading)
+                    // //         return this.props.isSearchBarOpen;
+                    // //     return true;
 
-                      // // }
+                    // // }
 
-                      // render() {
-                      //     console.log(this.props.venues)
-                      //     return (
-                      //         <div className="home">
-                      //             <IonCardHeader className="home" mode="ios">
-                      //                 <IonButton
-                      //                     mode="ios"
-                      //                     href="/venues"
-                      //                     className="homeBtn"
-                      //                     color="rgb(153, 178, 189);"
+                    // render() {
+                    //     console.log(this.props.venues)
+                    //     return (
+                    //         <div className="home">
+                    //             <IonCardHeader className="home" mode="ios">
+                    //                 <IonButton
+                    //                     mode="ios"
+                    //                     href="/venues"
+                    //                     className="homeBtn"
+                    //                     color="rgb(153, 178, 189);"
                     >
                       {venue['name']}
                     </IonCardTitle>

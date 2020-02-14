@@ -3,7 +3,8 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const fetch = require('node-fetch');
-const googleMapsApiKey = require('../../../secrets');
+// const googleMapsApiKey = require('../../../secrets');
+require('../../../secrets');
 
 const Artist = db.define('artist', {
   tableName: {
@@ -133,7 +134,7 @@ module.exports = Artist;
 /**
  * instanceMethods
  */
-Artist.prototype.correctPassword = function(candidatePwd) {
+Artist.prototype.correctPassword = function (candidatePwd) {
   return Artist.encryptPassword(candidatePwd, this.salt()) === this.password();
 };
 
@@ -141,11 +142,11 @@ Artist.prototype.correctPassword = function(candidatePwd) {
  * classMethods
  */
 
-Artist.generateSalt = function() {
+Artist.generateSalt = function () {
   return crypto.randomBytes(16).toString('base64');
 };
 
-Artist.encryptPassword = function(plainText, salt) {
+Artist.encryptPassword = function (plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
@@ -166,7 +167,7 @@ const preHooks = async artist => {
   if (artist.changed('zipCode')) {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${artist.zipCode}&key=${googleMapsApiKey}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${artist.zipCode}&key=${process.env.GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
       artist.latitude = data.results[0].geometry.location.lat;
@@ -182,7 +183,23 @@ Artist.beforeUpdate(preHooks);
 Artist.beforeBulkCreate(artists => {
   artists.forEach(preHooks);
 });
-
+const getMatchingGenres = (arr1, arr2) => {
+  let less = arr1.length <= arr2.length ? arr1 : arr2;
+  let greater = arr1.length > arr2.length ? arr1 : arr2;
+  let i = 0
+  let j = 0;
+  let match = []
+  while (i < less.length && j < greater.length) {
+    if (less[i] === greater[j]) {
+      match.push(less[i]);
+      i++;
+      j++;
+    } else if (less[i] < greater[j]) {
+      i++;
+    } else j++;
+  }
+  return match;
+}
 function makeLatLngList(rows) {
   let locations = rows.map(row =>
     row.latitude.toString().concat(',', row.longitude.toString())
@@ -196,10 +213,10 @@ const generateRecs = async artist => {
       const venues = await db.models.venue.findAll();
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${
-          artist.latitude
+        artist.latitude
         },${artist.longitude}&destinations=${makeLatLngList(
           venues
-        )}&key=${googleMapsApiKey}`
+        )}&key=${process.env.GOOGLE_MAPS_API_KEY}`
       );
       const data = await response.json();
 
@@ -212,11 +229,20 @@ const generateRecs = async artist => {
               artistId: artist.id,
             },
           });
+          let currentDistance = Number(
+            (data.rows[0].elements[index].distance.value / 1609).toFixed(3));
+          let score = currentDistance;
+          let currentArtistGenres = artist.genres.sort();
+          let currentVenueGenres = venue.genres.sort();
+          let matchingGenres = getMatchingGenres(currentArtistGenres, currentVenueGenres);
+          let greater = currentVenueGenres.length > currentArtistGenres.length ? currentVenueGenres : currentArtistGenres;
+          score = ((greater.length - matchingGenres.length) / 2) + currentDistance
+
+
           try {
             await result.update({
-              score: Number(
-                (data.rows[0].elements[index].distance.value / 1609).toFixed(3)
-              ),
+              distance: currentDistance,
+              score: score
             });
             // await result.update({ score: parseFloat(data.rows[0].elements[index].distance.text) })
           } catch (error) {
