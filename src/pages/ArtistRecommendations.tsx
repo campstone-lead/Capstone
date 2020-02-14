@@ -90,8 +90,12 @@ class ArtistRecommendation extends React.Component<
   handleChange = async e => {
     await this.setState({ currentVenue: Number(e.target.value) });
     await this.props.getRecommendedArtists(this.state.currentVenue);
-    let rec = this.props.artists.filter(
-      artist => artist['recommendations'][0].score <= 5
+    let rec = this.props.artists.filter(artist => {
+      if (artist['recommendations']) {
+        return artist['recommendations'][0].score <= 5
+      }
+      return false;
+    }
     );
     if (rec.length === 0) {
       rec = this.props.artists.filter(
@@ -107,14 +111,6 @@ class ArtistRecommendation extends React.Component<
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
-          {/* <IonButton
-            mode="ios"
-            href="/artists"
-            className="homeBtn"
-            color="rgb(153, 178, 189);"
-          >
-            Artists
-          </IonButton> */}
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
               <select onChange={this.handleChange} className="selectBtn"
