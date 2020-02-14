@@ -18,11 +18,22 @@ import { Redirect } from 'react-router-dom';
 import { auth, me, signUpWithGoogle } from '../store/user';
 import { connect } from 'react-redux';
 import { logoFacebook, logoGoogleplus } from 'ionicons/icons';
-import googleClientId from '../store/secrets';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import SignUpZero from './SignUp0';
 import FacebookLogin from 'react-facebook-login';
-
+// let googleClientId;
+// async function getImport(){
+//   if (process.env.NODE_ENV !== 'production') {
+//     try {
+//       let data = await import('../store/secrets')
+//       googleClientId = data.default
+//       console.log('googleClientId:', googleClientId)
+//     } catch (error) {
+//       console.error(error)
+//     }
+//     // console.log('googleClientId:', googleClientId)
+//   }
+// }
 const prodRedirectURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/signup0/' : 'http://localhost:8100/signup0/')
 
 interface IMyComponentState {
@@ -44,19 +55,25 @@ class SignUpSignIn extends React.Component<
   > {
   constructor(props) {
     super(props);
+    // getImport()
     this.state = {
       email: '',
       password: '',
       isActive: true,
-      googleClientId: (process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CLIENT_ID : googleClientId) || ''
+      googleClientId: '306818867974-6ea8pgimounfq83vidnlafnmb1trj1ug.apps.googleusercontent.com'
+      // googleClientId: (process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CLIENT_ID : googleClientId) || ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
   }
 
   async componentDidMount() {
+
     window.localStorage.clear();
     window.sessionStorage.clear();
+    // this.setState({
+    //   googleClientId: (process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CLIENT_ID : googleClientId) || ''
+    // })
     await this.props.me();
   }
   async handleSubmit(event) {
