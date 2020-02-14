@@ -165,11 +165,14 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
 
 
                     < div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
-                        <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+                        <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" style={{ backgroundColor: 'white', borderRadius: '25px' }} />
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
-                        <IonButton onClick={this.onClickHandler}>
+                        <IonButton onClick={this.onClickHandler} disabled={
+
+                            (this.state.selectedFile === null) ? true : false
+                        }>
                             <IonIcon icon={add}></IonIcon>
                             <IonLabel>Upload picture</IonLabel>
                         </IonButton>

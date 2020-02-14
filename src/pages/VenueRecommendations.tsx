@@ -1,8 +1,6 @@
 import {
   IonCard,
   IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonItemGroup,
 } from '@ionic/react';
 
@@ -15,7 +13,6 @@ import './Tab1.css';
 interface IMyComponentState {
   currentArtistRecommandations: Array<object>;
   loading: boolean;
-  //recommending Venues to artist
 }
 
 interface IMyComponentProps {
@@ -47,10 +44,16 @@ class VenueRecommendations extends React.Component<
     const id = this.props.user['id'];
 
     await this.props.getRecommendedVenues(id);
-
-    let rec = this.props.venues.filter(
-      venue => venue['recommendations'][0].score <= 5
+    let rec = []
+    rec = this.props.venues.filter(
+      venue => {
+        if (venue['recommendations']) {
+          return venue['recommendations'][0].score <= 5
+        }
+        return false;
+      }
     );
+
     if (rec.length === 0) {
       rec = this.props.venues.filter(
         (artist, index) => index < 5
@@ -61,6 +64,7 @@ class VenueRecommendations extends React.Component<
       currentArtistRecommandations: rec,
       loading: true,
     });
+
   }
   shouldComponentUpdate() {
     if (this.state.loading) return this.props.isSearchBarOpen;
@@ -68,28 +72,13 @@ class VenueRecommendations extends React.Component<
   }
 
   render() {
+    console.log('here it is venues', this.props.venues)
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
-          {/* <IonButton
-            mode="ios"
-            href="/venues"
-            className="homeBtn"
-            color="rgb(153, 178, 189);"
-          >
-            Venues
-          </IonButton> */}
-          {/* <IonItem
-            // className="textBox"
-            style={{
-              fontWeight: 'bold',
-              fontSize: '20px',
-            }}
-          > */}
-          <IonCardTitle className="textBox">
+          <h3 className="textBox">
             Check out our venues that suit you the most:
-          </IonCardTitle>
-          {/* </IonItem> */}
+          </h3>
         </IonCardHeader>
         <div
           style={{
@@ -113,45 +102,17 @@ class VenueRecommendations extends React.Component<
                 <div className="venueBox">
                   <img src={venue['imageURL']} alt="img.jpg" />
 
-                  <IonItemGroup style={{ margin: '20px' }}>
-                    <IonCardTitle
-                      style={{ textAlign: 'center' }}
+                  <IonItemGroup style={{ margin: '10px' }}>
+                    <h4
+                      style={{ textAlign: 'center', color: 'black', fontSize: '25px' }}
                       className="venueBoxText"
-                    //     let rec = this.props.venues;
 
-                    //     rec = this.props.venues.filter(
-                    //         venue => venue['recommendations'][0].score <= 10
-                    //     );
-
-                    //     await this.setState({
-                    //         currentArtistRecommandations: rec,
-                    //         loading: true
-                    //     });
-
-                    // }
-                    // // shouldComponentUpdate() {
-                    // //     if (this.state.loading)
-                    // //         return this.props.isSearchBarOpen;
-                    // //     return true;
-
-                    // // }
-
-                    // render() {
-                    //     console.log(this.props.venues)
-                    //     return (
-                    //         <div className="home">
-                    //             <IonCardHeader className="home" mode="ios">
-                    //                 <IonButton
-                    //                     mode="ios"
-                    //                     href="/venues"
-                    //                     className="homeBtn"
-                    //                     color="rgb(153, 178, 189);"
                     >
                       {venue['name']}
-                    </IonCardTitle>
-                    <IonCardSubtitle style={{ textAlign: 'center' }}>
+                    </h4>
+                    <h4 style={{ textAlign: 'center', color: 'gray', fontSize: '14px' }}>
                       {venue['address']}
-                    </IonCardSubtitle>
+                    </h4>
                   </IonItemGroup>
                 </div>
               </IonCard>

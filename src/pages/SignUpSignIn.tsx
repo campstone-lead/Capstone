@@ -38,7 +38,7 @@ interface IMyComponentProps {
 class SignUpSignIn extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -88,8 +88,17 @@ class SignUpSignIn extends React.Component<
     return (
       <IonPage>
         <IonHeader>
-          <IonToolbar id="bar">
-            <IonTitle>Log in</IonTitle>
+          <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+            <div className="tabHeader" >
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <h3 style={{ textAlign: "center" }}>
+                Log In
+              </h3>
+            </div>
           </IonToolbar>
         </IonHeader>
 
@@ -185,7 +194,7 @@ class SignUpSignIn extends React.Component<
                 </IonCardHeader>
               </IonItem> */}
 
-              <IonCardHeader>
+              <IonCardHeader className="profile">
                 <IonButton
                   type="submit"
                   style={{ width: '270px', height: '38px' }}
@@ -198,6 +207,29 @@ class SignUpSignIn extends React.Component<
                 >
                   Login
                 </IonButton>
+
+                <GoogleLogin
+                  clientId={googleClientId}
+                  buttonText="LOGIN WITH GOOGLE"
+                  uxMode="popup"
+                  onSuccess={this.handleSuccess}
+                  redirectUri="http://localhost:8100/signup0"
+                  render={renderProps => (
+                    <IonButton
+                      routerLink="/signup0"
+                      style={{ width: '270px', margin: '10px' }}
+                      color="danger"
+                      onClick={renderProps.onClick}
+                    >
+                      <IonIcon icon={logoGoogleplus} />
+                      Continue with Google
+                  </IonButton>
+                  )}
+                  onFailure={() => {
+                    console.log('not logged in');
+                  }}
+                />
+
               </IonCardHeader>
             </form>
             <div className="profile">

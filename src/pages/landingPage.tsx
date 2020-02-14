@@ -29,14 +29,17 @@ const LandingPage: React.FC = () => {
                 <IonHeader color={'linear-gradient(to right, #000000, #434343)'} >
 
                     <IonToolbar className="tabHeader" color={'linear-gradient(to right, #000000, #434343)'}>
-                        <div className="tabHeader">
-                            <img
-                                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                                alt="logo.png"
 
-                                className="logo"
-                            />
-                            <h3 className="title" >HARMONIOUS</h3>
+                        <div className="tabHeader">
+                            <IonItem routerLink="/home">
+                                <img
+                                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                                    alt="logo.png"
+
+                                    className="logo"
+                                />
+                                <h3 className="title" >HARMONIOUS</h3>
+                            </IonItem>
                         </div>
                     </IonToolbar>
 
@@ -56,7 +59,7 @@ const LandingPage: React.FC = () => {
                     <h1 className='title' style={{ color: 'white' }}>Discover. Book .Connect.</h1>
                     <h5 style={{ "padding": "11px", color: 'white', "marginLeft": "20px" }}>HARMONIOUS streamlines the booking process between an artist and a booker. </h5>
                     <p style={{ "fontSize": "15.5px", "margin": "20px", color: 'white' }}>
-                        Bookers can quickly discover and connect with artists through our recommendation engine, finding artists by distance and artistic style. Artists can also discover venues and the bookers to connect with instead of needlessly scouring the web. LEAD's job board for musicians is a simple and effective solution towards making everyone's life easier.
+                        Bookers can quickly discover and connect with artists through our recommendation engine, finding artists by distance and artistic style. Artists can also discover venues and the bookers to connect with instead of needlessly scouring the web. HARMONIOUS's job board for musicians is a simple and effective solution towards making everyone's life easier.
                     </p>
                 </IonCard>
                 <IonItem style={{ '--background': 'none' }} className='btn1' routerLink='/login' lines='none' >

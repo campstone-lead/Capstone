@@ -136,8 +136,8 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 ) : this.props.userId ? (
                   <Redirect to="/home" />
                 ) : (
-                  <SignUpSignIn />
-                )}
+                      <SignUpSignIn />
+                    )}
               </Route>
               <Route path="/signup0" component={SignUpZero} />
               <Route path="/signup/booker/1" component={BookerSignup1} />
@@ -187,8 +187,8 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 href="/home"
                 onClick={this.onTab1Click}
               >
-                <IonIcon icon={home} />
-                <IonLabel>Home</IonLabel>
+                <IonIcon icon={home} color="black" />
+                <IonLabel color="black">Home</IonLabel>
               </IonTabButton>
 
               <IonTabButton
@@ -211,6 +211,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <IonTabButton
                 tab="tab4"
                 href="/notifications"
+
                 // style={{
                 //   '--background':
                 //     'url(https://wallpaperaccess.com/full/851202.jpg)',
@@ -218,7 +219,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
                 disabled={this.props.userId !== undefined ? false : true}
               >
                 {this.props.userId !== undefined ? (
-                  <IonIcon icon={notifications} />
+                  <IonIcon icon={notifications} color="black" />
                 ) : null}
                 <IonLabel>
                   {' '}

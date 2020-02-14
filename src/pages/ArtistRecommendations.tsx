@@ -113,15 +113,6 @@ class ArtistRecommendation extends React.Component<
               <br></br>
               <br></br>
               <div>
-                {/* <IonLabel
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: '20px',
-                  }}
-                >
-                  No venue chosen
-                </IonLabel> */}
-
                 <IonSelect
                   cancelText="Cancel"
                   okText="Save"
