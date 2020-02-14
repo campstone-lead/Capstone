@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import history from '../pages/history'
-import { auth } from './user';
+import { auth, authWithGoogle } from './user';
 
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
@@ -19,7 +19,7 @@ const BOOKER_EVENTS = 'BOOKER_EVENTS';
 const defaultBooker = {
   bookerEvents: [],
   booker: {},
-  venues: []
+  venues: [],
 };
 
 /**
@@ -105,7 +105,11 @@ export const signUpBooker = bookerInfo => async dispatch => {
       let venue = window.localStorage.getItem('venue');
       venue = JSON.parse(venue || '');
       let newVenue = venue || {};
-      newVenue = { ...newVenue, bookerId: res.data.id, imageURL: newVenue['photo'] };
+      newVenue = {
+        ...newVenue,
+        bookerId: res.data.id,
+        imageURL: newVenue['photo'],
+      };
 
       await axios({
         method: 'post',
@@ -136,6 +140,89 @@ export const signUpVenue = venueParam => async dispatch => {
   }
 };
 
+export const signUpWithGoogleBooker = bookerInfo => async dispatch => {
+  try {
+    let google = window.localStorage.getItem('google');
+    if (bookerInfo.phone) {
+      google = JSON.parse(google || '');
+      let newBooker = google || {};
+      let sendBooker = {
+        email: newBooker['email'],
+        firstName: newBooker['firstName'],
+        lastName: newBooker['lastName'],
+        googleId: newBooker['googleId'],
+        phone: bookerInfo.phone,
+      };
+      const res = await axios({
+        method: 'post',
+        baseURL: entryURL,
+        url: '/api/bookers/',
+        data: sendBooker,
+      });
+
+      let venue = window.localStorage.getItem('venue');
+      venue = JSON.parse(venue || '');
+      let newVenue = venue || {};
+      newVenue = {
+        ...newVenue,
+        bookerId: res.data.id,
+        imageURL: newVenue['photo'],
+      };
+
+      await axios({
+        method: 'post',
+        baseURL: entryURL,
+        url: '/api/venues/',
+        data: newVenue,
+      });
+      window.localStorage.removeItem('google');
+      window.localStorage.removeItem('venue');
+      dispatch(authWithGoogle(sendBooker.googleId));
+
+      // login signedupwith google user
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// export const updatedVenue = venue => async dispatch => {
+//   try {
+//     let booker = window.localStorage.getItem('booker');
+//     booker = JSON.parse(booker || '');
+//     let newBooker = booker || {};
+//     if (venue.password === undefined) {
+//       newBooker['venue'] = { ...newBooker['venue'], ...venue };
+//       window.localStorage.setItem('booker', JSON.stringify(newBooker));
+//     } else {
+//       let booker = {
+//         email: newBooker['email'],
+//         password: venue.password,
+//         firstName: newBooker['firstName'],
+//         lastName: newBooker['lastName'],
+//         phone: newBooker['phone'],
+//       };
+//       const res = await axios({
+//         method: 'post',
+//         baseURL: entryURL,
+//         url: '/api/bookers/',
+//         data: booker,
+//       });
+
+//       let v = { ...newBooker['venue'], bookerId: res.data.id };
+
+//       await axios({
+//         method: 'post',
+//         baseURL: 'entryURL',
+//         url: '/api/venues/',
+//         data: v,
+//       });
+//       window.localStorage.setItem('email', JSON.stringify(newBooker['email']));
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 //add new venue
 //add-venue-form.tsx
@@ -154,10 +241,14 @@ export const createdVenue = v => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultBooker, action) {
+export default function(state = defaultBooker, action) {
   switch (action.type) {
     case GET_BOOKER:
-      return { ...state, booker: action.booker.user, venues: action.booker.venues };
+      return {
+        ...state,
+        booker: action.booker.user,
+        venues: action.booker.venues,
+      };
     case UPDATE_BOOKER:
       window.localStorage.setItem(
         'booker',

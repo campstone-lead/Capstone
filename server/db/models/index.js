@@ -7,6 +7,7 @@ const Booker = require('./booker')
 const Venue = require('./venue')
 const Event = require('./event')
 const Recommendation = require('./recommendation')
+const Message = require('./message')
 ///ASSOCIATIONS HERE:
 
 Venue.belongsTo(Booker)//, { allowNull: true })
@@ -40,5 +41,6 @@ module.exports = {
   Venue,
   Event,
   Recommendation,
-  ArtistEvent
+  ArtistEvent,
+  Message
 }

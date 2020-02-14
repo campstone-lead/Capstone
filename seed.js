@@ -4,7 +4,7 @@ const {
   Artist,
   Booker,
   Venue,
-  User,
+  Message,
   ArtistEvent,
   Event,
 } = require('./server/db/models');
@@ -379,6 +379,18 @@ const events = [
     //basement
   },
 ];
+let messages = [
+  {
+    message: 'Hello everyone! Looking for a artist to play tonight!',
+    ownerId: 1,
+    status: 'booker'
+  },
+  {
+    message: 'Hi! Interested...',
+    ownerId: 4,
+    status: 'artist'
+  }
+]
 
 // const venueIdsForEvents = [2, 4, 7, 6, 8, 4, 1, 5, 3, 3, 1, 2, 7] OLDDDD
 
@@ -428,7 +440,9 @@ async function seed() {
     createdEvents.push(newEvent)
   }
 
-
+  for (let i = 0; i < messages.length; i++) {
+    await Message.create(messages[i])
+  }
   await ArtistEvent.create({
     artistId: createdArtists[2].id,
     eventId: createdEvents[1].id,

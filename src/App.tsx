@@ -53,6 +53,7 @@ import {
   notifications,
   UpdateArtistForm,
   UpdateBookerForm,
+  ChatBox
 } from './AppImports';
 
 
@@ -64,10 +65,12 @@ interface IMyComponentProps {
   logout: any;
   isSearchBarOpen: boolean;
   searchBarValue: (value: boolean) => void;
+  ifGoogle: boolean;
 }
 interface IMyComponentState {
   loaded: boolean;
   isSearchBarOpen: boolean;
+  ifGoogle: boolean;
 }
 class App extends React.Component<IMyComponentProps, IMyComponentState> {
   constructor(props) {
@@ -75,8 +78,10 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
     this.state = {
       isSearchBarOpen: this.props.isSearchBarOpen,
       loaded: false,
+      ifGoogle: true,
     };
     this.onTab1Click = this.onTab1Click.bind(this);
+    this.ifGoogleSignUp = this.ifGoogleSignUp.bind(this);
   }
 
   async componentDidMount() {
@@ -91,6 +96,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
     this.setState({
       isSearchBarOpen: this.props.isSearchBarOpen,
       loaded: true,
+      ifGoogle: this.props.ifGoogle,
     });
   }
 
@@ -103,6 +109,15 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
     // window.localStorage.setItem('searchbar', JSON.stringify(false));
   }
 
+  ifGoogleSignUp() {
+    if (window.localStorage.getItem('google') !== null) {
+      this.setState({
+        ifGoogle: this.props.ifGoogle,
+      });
+      return true;
+    }
+    return false;
+  }
   render() {
     return (
       <IonApp>
@@ -114,9 +129,16 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/tab3" component={Tab3} exact={true} />
               <Route path="/tab4" component={Tab4} exact={true} />
               <Route path="/notifications" component={NotificationWall} />
-
               <Route path="/profile" component={Profile} />
-              <Route path="/login" component={SignUpSignIn} />
+              <Route path="/login">
+                {this.props.ifGoogle ? (
+                  <Redirect to="/signup0" />
+                ) : this.props.userId ? (
+                  <Redirect to="/home" />
+                ) : (
+                  <SignUpSignIn />
+                )}
+              </Route>
               <Route path="/signup0" component={SignUpZero} />
               <Route path="/signup/booker/1" component={BookerSignup1} />
               <Route path="/signup/booker/2" component={BookerSignup2} />
@@ -141,6 +163,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/artists" component={AllArtistView} />
               <Route path="/artistpassword" component={ArtistPassword} />
               <Route path="/venues" component={AllVenuesView} />
+              <Route path="/messages" component={ChatBox} />
 
               <Route
                 path="/allArtists/:artistId"
@@ -245,6 +268,7 @@ const mapStateToProps = state => ({
   user: state.user,
   userId: state.user.id,
   isSearchBarOpen: state.filter.isSearchBarOpen,
+  ifGoogle: state.user.ifGoogle,
 });
 const mapDispatchToProps = dispatch => ({
   me: () => dispatch(me()),

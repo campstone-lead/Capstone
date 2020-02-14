@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonIcon, IonAvatar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonIcon, IonAvatar, IonCard } from '@ionic/react';
 import { connect } from 'react-redux'
 import { me } from '../../../store/user'
 import { gotOneEvents } from '../../../store/event'
@@ -127,83 +127,85 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                                     <img src={this.props.event['event']['imageURL']} alt='img' />
                                 </IonAvatar>
                             </div>
-
-                            <div style={{ margin: "10px" }} >
-                                <IonItem lines="inset" style={{
-                                    width: "70%", '--background':
-                                        'none'
-                                }}>
-                                    <IonIcon slot="start" color="black" icon={time} title="Date" />
-                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
-                                        <IonCardTitle color='black'>Date</IonCardTitle>
-                                        <p style={{ padding: '5px', color: 'black' }}>
-                                            {' '}{newdate}
-                                        </p>
-                                    </IonLabel>
-                                </IonItem>
-
-                                <IonItem lines="inset" routerLink={`/allVenues/${this.props.event['event'].venueId}`}
-                                    style={{
+                            <IonCard style={{ margin: "30px", '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)' }}>
+                                <div style={{ margin: "10px" }} >
+                                    <IonItem lines="inset" style={{
                                         width: "70%", '--background':
                                             'none'
-                                    }}
-                                >
-                                    <IonIcon slot="start" color="black" icon={image} title="Date" />
-                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
-                                        <IonCardTitle color='black'>Venue</IonCardTitle>
-                                        <p style={{ padding: '5px', color: 'black' }}>
-                                            {this.props.event['event'].venueName}
-                                        </p>
-                                    </IonLabel>
-                                </IonItem>
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={time} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Date</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{newdate}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+
+                                    <IonItem lines="inset" routerLink={`/allVenues/${this.props.event['event'].venueId}`}
+                                        style={{
+                                            width: "70%", '--background':
+                                                'none'
+                                        }}
+                                    >
+                                        <IonIcon slot="start" color="black" icon={image} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Venue</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {this.props.event['event'].venueName}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
 
 
 
 
-                                <IonItem lines="inset" style={{
-                                    width: "70%", '--background':
-                                        'none'
-                                }}>
-                                    <IonIcon slot="start" color="black" icon={locate} title="Date" />
-                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
-                                        <IonCardTitle color='black'>Location</IonCardTitle>
-                                        <p style={{ padding: '5px', color: 'black' }}>
-                                            {' '}{this.props.event['event'].location}
-                                        </p>
-                                    </IonLabel>
-                                </IonItem>
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none'
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={locate} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Location</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{this.props.event['event'].location}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
 
 
 
-                                <IonItem lines="inset" style={{
-                                    width: "70%", '--background':
-                                        'none'
-                                }}>
-                                    <IonIcon slot="start" color="black" icon={musicalNotes} title="Date" />
-                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
-                                        <IonCardTitle color='black'>Genres seeking</IonCardTitle>
-                                        <p style={{ padding: '5px', color: 'black' }}>
-                                            {' '}{genres}
-                                        </p>
-                                    </IonLabel>
-                                </IonItem>
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none'
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={musicalNotes} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Genres seeking</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{genres}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
 
 
 
-                                <IonItem lines="inset" style={{
-                                    width: "70%", '--background':
-                                        'none',
+                                    <IonItem lines="inset" style={{
+                                        width: "70%", '--background':
+                                            'none',
 
-                                }}>
-                                    <IonIcon slot="start" color="black" icon={create} title="Date" />
-                                    <IonLabel style={{ padding: '5px', color: 'black' }}>
-                                        <IonCardTitle color='black'>Description</IonCardTitle>
-                                        <p style={{ padding: '5px', color: 'black' }}>
-                                            {' '}{this.props.event['event'].description}
-                                        </p>
-                                    </IonLabel>
-                                </IonItem>
-                            </div>
+                                    }}>
+                                        <IonIcon slot="start" color="black" icon={create} title="Date" />
+                                        <IonLabel style={{ padding: '5px', color: 'black' }}>
+                                            <IonCardTitle color='black'>Description</IonCardTitle>
+                                            <p style={{ padding: '5px', color: 'black' }}>
+                                                {' '}{this.props.event['event'].description}
+                                            </p>
+                                        </IonLabel>
+                                    </IonItem>
+                                </div>
+                            </IonCard>
+
                         </div>
 
                         <div style={{

@@ -5,6 +5,8 @@ import {
   IonToolbar,
   IonSearchbar,
   IonContent,
+  IonItem,
+  IonIcon,
 } from '@ionic/react';
 
 import React from 'react';
@@ -17,6 +19,7 @@ import SearchBar from './Artist/Search/SearchBar';
 import ArtistRecommendations from './ArtistRecommendations';
 import VenueRecommendations from './VenueRecommendations';
 import { getState, customedFilter } from '../store/filter';
+import { mail } from 'ionicons/icons';
 
 interface IMyComponentState {
   isSearchBarOpen: boolean;
@@ -100,7 +103,6 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
   }
 
   render() {
-    console.log('hhhh');
     return (
       <IonPage >
         {this.props.user['status'] === undefined ? (
@@ -154,6 +156,13 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                     ) : (
                         ''
                       )}
+                    <IonButton routerLink='/messages' style={{
+                      '--background': 'none',
+                      '--box-shadow': 'none',
+                      '--background-activated': '#fcbcdb'
+                    }} >
+                      <IonIcon icon={mail} size="large" />
+                    </IonButton>
                   </div>
                 </IonToolbar>
               </IonHeader>

@@ -9,14 +9,14 @@ module.exports = io => {
       console.log(`Connection ${socket.id} has left the building`)
     })
 
-    socket.on('send-request', request => {
-      console.log('got the request hereee', request)
-      socket.emit('send-request', request);
+    socket.on('send-message', message => {
+      console.log('got the message on server side  hereee', message)
+      socket.broadcast.emit('send-message', message);
     });
 
     socket.on('send-response', response => {
       console.log('got the resoonse hereee', response)
-      socket.emit('send-response', response);
+      socket.broadcast.emit('send-response', response);
 
     });
 

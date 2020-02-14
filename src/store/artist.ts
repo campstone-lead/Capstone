@@ -19,7 +19,7 @@ const defaultArtist = {
   artist: {},
   booked: {},
   status: '',
-  allReq: []
+  allReq: [],
 };
 
 /**
@@ -60,8 +60,7 @@ export const sendRequest = request1 => async dispatch => {
     });
     const request = res.data;
     dispatch(bookArtist(request));
-    socket.emit('send-request', request)
-
+    socket.emit('send-request', request);
   } catch (err) {
     console.log(err);
   }
@@ -78,7 +77,7 @@ export const sendResponse = data => async dispatch => {
     dispatch(bookArtist(res.data));
     const response = res.data;
 
-    socket.emit('send-response', response)
+    socket.emit('send-response', response);
   } catch (err) {
     console.log(err);
   }
@@ -132,7 +131,10 @@ export const updatedArtist = incomingArtist => async dispatch => {
 
     if (incomingArtist.password === undefined) {
       if (currentArtist === null) {
-        window.localStorage.setItem('artistInfo', JSON.stringify(incomingArtist));
+        window.localStorage.setItem(
+          'artistInfo',
+          JSON.stringify(incomingArtist)
+        );
       } else {
         currentArtist = JSON.parse(currentArtist || '');
         let formerArtist = currentArtist || {};
@@ -144,14 +146,14 @@ export const updatedArtist = incomingArtist => async dispatch => {
     } else {
       currentArtist = JSON.parse(currentArtist || '');
       let formerArtist = currentArtist || {};
-      newArtist = { ...formerArtist, ...incomingArtist }
+      newArtist = { ...formerArtist, ...incomingArtist };
       await axios({
         method: 'post',
         baseURL: entryURL,
         url: '/api/artists/',
         data: newArtist,
       });
-      window.localStorage.setItem(
+      await window.localStorage.setItem(
         'email',
         JSON.stringify(newArtist.email)
       );
@@ -162,9 +164,48 @@ export const updatedArtist = incomingArtist => async dispatch => {
   }
 };
 
+export const signUpArtistWithGoogle = incomingArtist => async dispatch => {
+  try {
+    let currentArtist = window.localStorage.getItem('google');
+    console.log('currentArtist:', currentArtist);
+
+    let newArtist;
+
+    console.log('incomingArtist:', incomingArtist);
+    if (incomingArtist.phone === undefined) {
+      if (currentArtist === null) {
+        window.localStorage.setItem('google', JSON.stringify(incomingArtist));
+      } else {
+        currentArtist = JSON.parse(currentArtist || '');
+        let formerArtist = currentArtist || {};
+
+        newArtist = { ...formerArtist, ...incomingArtist };
+
+        window.localStorage.setItem('google', JSON.stringify(newArtist));
+      }
+    } else {
+      console.log('und:');
+      currentArtist = JSON.parse(currentArtist || '');
+      let formerArtist = currentArtist || {};
+      newArtist = { ...formerArtist, ...incomingArtist };
+      await axios({
+        method: 'post',
+        baseURL: entryURL,
+        url: '/api/artists/',
+        data: newArtist,
+      });
+      window.localStorage.setItem(
+        'googleId',
+        JSON.stringify(newArtist.googleId)
+      );
+      dispatch(updateArtist(newArtist));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
 export const editArtist = artist => async dispatch => {
   try {
-
     const newArtist = await axios({
       method: 'put',
       baseURL: entryURL,
@@ -173,7 +214,6 @@ export const editArtist = artist => async dispatch => {
     });
 
     dispatch(updateArtist(newArtist));
-
   } catch (err) {
     console.error(err);
   }
@@ -182,7 +222,7 @@ export const editArtist = artist => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultArtist, action) {
+export default function(state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
       return { ...state, allArtists: action.artists };
@@ -204,10 +244,8 @@ export default function (state = defaultArtist, action) {
       };
 
     case UPDATE_ARTIST:
-
       return { ...state, ...action.newArtistData };
     case 'GET_REQUEST':
-
       return { ...state, allReq: [...state.allReq, action.req] };
 
     default:
