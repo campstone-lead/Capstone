@@ -11,7 +11,8 @@ import {
   IonCard,
   IonTitle,
   IonItem,
-  IonIcon
+  IonIcon,
+  IonAvatar
 } from '@ionic/react';
 import {
   send
@@ -109,13 +110,15 @@ class AllMessages extends Component<IMyComponentProps, IMyComponentState>{
 
                 <IonCardHeader className="items" >
 
-                  <IonItem lines='none' style={{ '--background': 'none' }} >
-                    <img src={message['ownerImageURL']} alt={message['name']} />
-                  </IonItem>
+
+                  <img src={message['ownerImageURL']} alt={message['name']} />
+
+
+
 
                   <IonItemGroup>
-                    <h5 className="title">{message['ownerName']}</h5>
-                    <p>{message['message']}</p>
+                    <h6 className="title" style={{ fontSize: '18px' }}>{message['ownerName']}</h6>
+                    <p style={{ fontSize: '15px', color: 'black' }}>{message['message']}</p>
                     <p> {datetime}</p>
 
                   </IonItemGroup>

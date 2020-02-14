@@ -295,16 +295,30 @@ a{
    align-items: center;
 }
 .messageEntry .items img{
-
+/*
   display: block;
   position: relative;
   left:-10px;
-  max-width:80%;
-  max-height:80%;
+  max-width:25%;
+  max-height:25%;
   width: auto;
   height: auto;
+  border-radius: 50px;
 
-  margin-bottom: 10px;
+  margin-bottom: 10px; */
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 60px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 60px;
+  -moz-background-clip: padding;
+  border-radius: 60px;
+  background-clip: padding-box;
+  margin: 10px 5 0 5px;
+  float: left;
+  background-size: cover;
+  background-position: center center;
+
 }
 .allMessages{
   position: fixed;
