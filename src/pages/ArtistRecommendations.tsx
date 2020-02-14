@@ -5,6 +5,9 @@ import {
   IonCardTitle,
   IonItemGroup,
   IonButton,
+  IonSelect,
+  IonSelectOption,
+  IonLabel,
 } from '@ionic/react';
 
 import React from 'react';
@@ -40,7 +43,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,9 +65,7 @@ class ArtistRecommendation extends React.Component<
           artist => artist['recommendations'][0].score <= 5
         );
         if (rec.length === 0) {
-          rec = this.props.artists.filter(
-            (artist, index) => index < 5
-          );
+          rec = this.props.artists.filter((artist, index) => index < 5);
         }
         this.setState({
           currentBookerRecommandations: rec,
@@ -94,52 +95,78 @@ class ArtistRecommendation extends React.Component<
       artist => artist['recommendations'][0].score <= 5
     );
     if (rec.length === 0) {
-      rec = this.props.artists.filter(
-        (artist, index) => index < 5
-      );
+      rec = this.props.artists.filter((artist, index) => index < 5);
     }
     await this.setState({
       currentBookerRecommandations: rec,
     });
   };
   render() {
-    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
-          {/* <IonButton
-            mode="ios"
-            href="/artists"
-            className="homeBtn"
-            color="rgb(153, 178, 189);"
-          >
-            Artists
-          </IonButton> */}
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
-              <select onChange={this.handleChange} className="selectBtn"
-                style={{ backgroundColor: "white" }}
+              <IonCardTitle className="textBox">
+                Choose the current venue:
+              </IonCardTitle>
+              <br></br>
+              <br></br>
+              <div>
+                {/* <IonLabel
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '20px',
+                  }}
+                >
+                  No venue chosen
+                </IonLabel> */}
+
+                <IonSelect
+                  cancelText="Cancel"
+                  okText="Save"
+                  onIonChange={this.handleChange}
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '22px',
+                  }}
+                >
+                  <IonSelectOption selected hidden disabled>
+                    {' '}
+                    No venue chosen
+                  </IonSelectOption>
+                  {this.props.venues.map((venue, index) => (
+                    <IonSelectOption value={venue.id} key={index}>
+                      {venue.name}
+                    </IonSelectOption>
+                  ))}
+                </IonSelect>
+              </div>
+              {/* <select
+                onChange={this.handleChange}
+                className="selectBtn"
+                style={{ backgroundColor: 'white' }}
               >
                 {this.props.venues.map((venue, index) => (
                   <option value={venue.id} key={index}>
                     {venue.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
               <IonCardTitle className="textBox">
                 Here are some artists you might be interested in...
               </IonCardTitle>
             </div>
           ) : (
-              <IonButton
-                mode="ios"
-                href="/addvenue"
-                className="homeBtn"
-                color="rgb(153, 178, 189);"
-              >
-                Add venues
+            <IonButton
+              mode="ios"
+              href="/addvenue"
+              className="homeBtn"
+              color="rgb(153, 178, 189);"
+            >
+              Add venues
             </IonButton>
-            )}
+          )}
         </IonCardHeader>
         {
           <div className="venue">
@@ -159,7 +186,6 @@ class ArtistRecommendation extends React.Component<
                   key={index}
                   href={`/allArtists/${artist['id']}`}
                   className="profile"
-
                   mode="ios"
                 >
                   <div className="artistBox">
