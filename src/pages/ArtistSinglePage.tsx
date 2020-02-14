@@ -5,9 +5,7 @@ import {
   IonPage,
   IonButton,
   IonBackButton,
-  IonCardSubtitle,
-  IonHeader, IonToolbar, IonCardTitle,
-  IonItem
+  IonHeader, IonToolbar,
 } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux';
@@ -140,16 +138,14 @@ class ArtistSinglePage extends React.Component<
         <IonHeader mode="ios" >
           <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
             <div className="tabHeader" >
-              <IonItem routerLink="/home">
-                <img
-                  src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                  alt="logo.png"
-                  className="logo"
-                />
-              </IonItem>
-              <IonCardTitle>
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <h3 style={{ textAlign: "center" }}>
                 {this.props.artist['name']}
-              </IonCardTitle>
+              </h3>
             </div>
           </IonToolbar>
         </IonHeader>
@@ -169,6 +165,7 @@ class ArtistSinglePage extends React.Component<
             <ArtistProfileComponent
               genres={this.props.genres}
               artist={this.props.artist}
+              history={this.props['history']}
             />
             {(this.props.user['status'] !== 'artist') && this.props.events !== undefined && (
               <select onChange={this.handleChange} style={{ backgroundColor: 'white', width: '350px' }}>
@@ -192,22 +189,22 @@ class ArtistSinglePage extends React.Component<
                     this.state.localStatus !== 'booked' &&
                     this.state.localStatus !== 'declined' ? null : this.props
                       .bookingStatus !== null ? (
-                        <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                        <h5 style={{ color: 'black', fontSize: '15.5px' }}>
                           This artist is {this.state.localStatus + "  "}
 
                           at the selected venue.
-                </IonCardSubtitle>
+                </h5>
                       ) : null
                 ) : (this.props.bookingStatus !== null ||
                   this.state.bookedArtistInfo['status'] !== undefined) &&
                   this.state.localStatus === 'pending' ? (
-                    <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                    <h5 style={{ color: 'black', fontSize: '15.5px', padding: '15px' }}>
                       You have an incoming request from {this.props.artist['name']}!
-              </IonCardSubtitle>
+              </h5>
                   ) : (
-                    <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                    <h5 style={{ color: 'black', fontSize: '15.5px', padding: '15px' }}>
                       You have {this.state.localStatus + "  "} {this.props.artist['name']}!
-              </IonCardSubtitle>
+              </h5>
                   ))}
             {
 
@@ -230,9 +227,9 @@ class ArtistSinglePage extends React.Component<
                               : 'Book me'}
                       </IonButton>
                     ) : (
-                      <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                      <h5 style={{ color: 'black', fontSize: '15.5px' }}>
                         You cannot add any artists if you have no events!{' '}
-                      </IonCardSubtitle>
+                      </h5>
                     )
                 ) : (
                   <div>

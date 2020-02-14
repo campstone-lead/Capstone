@@ -122,9 +122,9 @@ class ArtistRecommendation extends React.Component<
                   </option>
                 ))}
               </select>
-              <IonCardTitle className="textBox">
+              <h3 className="textBox">
                 Here are some artists you might be interested in...
-              </IonCardTitle>
+              </h3>
             </div>
           ) : (
               <IonButton
@@ -155,22 +155,21 @@ class ArtistRecommendation extends React.Component<
                   key={index}
                   href={`/allArtists/${artist['id']}`}
                   className="profile"
-
                   mode="ios"
                 >
                   <div className="artistBox">
                     <img src={artist['imageURL']} alt="img.jpg" />
 
                     <IonItemGroup style={{ margin: '20px' }}>
-                      <IonCardTitle
-                        style={{ textAlign: 'center' }}
-                        className="artistBoxText"
-                      >
+                      <h4
+                        style={{ textAlign: 'center', color: 'black', fontSize: '18px' }}>
+
                         {artist['name']}
-                      </IonCardTitle>
-                      <IonCardSubtitle style={{ textAlign: 'center' }}>
+                      </h4>
+
+                      <h4 style={{ textAlign: 'center', color: 'gray', fontSize: '14px' }}>
                         {genres}
-                      </IonCardSubtitle>
+                      </h4>
                     </IonItemGroup>
                   </div>
                 </IonCard>

@@ -1,8 +1,6 @@
 import {
   IonCard,
   IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonItemGroup,
 } from '@ionic/react';
 
@@ -78,9 +76,9 @@ class VenueRecommendations extends React.Component<
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
-          <IonCardTitle className="textBox">
+          <h3 className="textBox">
             Check out our venues that suit you the most:
-          </IonCardTitle>
+          </h3>
         </IonCardHeader>
         <div
           style={{
@@ -104,16 +102,17 @@ class VenueRecommendations extends React.Component<
                 <div className="venueBox">
                   <img src={venue['imageURL']} alt="img.jpg" />
 
-                  <IonItemGroup style={{ margin: '20px' }}>
-                    <IonCardTitle
-                      style={{ textAlign: 'center' }}
+                  <IonItemGroup style={{ margin: '10px' }}>
+                    <h4
+                      style={{ textAlign: 'center', color: 'black', fontSize: '25px' }}
                       className="venueBoxText"
+
                     >
                       {venue['name']}
-                    </IonCardTitle>
-                    <IonCardSubtitle style={{ textAlign: 'center' }}>
+                    </h4>
+                    <h4 style={{ textAlign: 'center', color: 'gray', fontSize: '14px' }}>
                       {venue['address']}
-                    </IonCardSubtitle>
+                    </h4>
                   </IonItemGroup>
                 </div>
               </IonCard>
