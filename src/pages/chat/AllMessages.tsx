@@ -10,15 +10,17 @@ import {
   IonCardHeader,
   IonCard,
   IonTitle,
-  IonItem
+  IonItem,
+  IonIcon
 } from '@ionic/react';
 import {
   send
 } from 'ionicons/icons';
 import '../Tab1.css';
 import { me } from '../../store/user'
-import message, { fetchMessages, createMessage, postMessage } from '../../store/message'
-import { threadId } from 'worker_threads';
+import { fetchMessages, createMessage, postMessage } from '../../store/message'
+
+
 interface IMyComponentState {
   message: string,
 
@@ -75,26 +77,47 @@ class AllMessages extends Component<IMyComponentProps, IMyComponentState>{
         {
           this.props.messages.map((message, index) => {
 
+            var dateObj = new Date(message['createdAt'])
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            let day = dateObj.toLocaleTimeString('en-us', options).split(',')[0];
+            var datetime = day + ', '
+              + dateObj.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")
+
+            // console.log(dateObj.toLocaleTimeString('en-us', options).split(',')[0])
             return (
 
               <IonCard
                 key={index}
                 className="messageEntry"
-                style={{
-                  width: '90%', '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)', height: '3%',
+                style={(this.props.user['id'] === message['ownerId'] && this.props['status'] === message['ownerStatus']) ?
+                  {
+                    float: 'left',
+                    marginLeft: '12px',
+                    width: '50%',
+                    background: 'url(https://wallpaperaccess.com/full/851202.jpg)'
+                  } :
+                  {
+                    float: 'right',
+                    marginRight: '22px',
+                    width: '50%',
+                    background: 'url(https://wallpaperaccess.com/full/851202.jpg)',
 
-                }}
-                mode="ios"
+                  }
+                } mode="ios">
 
-              >
-                <IonCardHeader className="items">
+
+
+                <IonCardHeader className="items" >
 
                   <IonItem lines='none' style={{ '--background': 'none' }} >
                     <img src={message['ownerImageURL']} alt={message['name']} />
                   </IonItem>
+
                   <IonItemGroup>
-                    <IonCardTitle>{message['ownerName']}</IonCardTitle>
-                    <IonCardSubtitle>{message['message']}</IonCardSubtitle>
+                    <h5 className="title">{message['ownerName']}</h5>
+                    <p>{message['message']}</p>
+                    <p> {datetime}</p>
+
                   </IonItemGroup>
                 </IonCardHeader>
               </IonCard>

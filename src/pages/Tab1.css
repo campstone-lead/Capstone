@@ -73,7 +73,7 @@ flex-direction: column;
   max-height:80px;
   width: auto;
   height: auto;
-  border-radius: 3%;
+  border-radius: 5%;
 }
 .signUpItems{
   width:150px;
@@ -258,7 +258,7 @@ a{
   text-decoration: none;
 }
 .ion-item-border {
-  border-radius: 20px !important;
+  border-radius: 60px !important;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
@@ -267,7 +267,7 @@ a{
 .chatBox{
   /* display: flex;
   flex-direction: column; */
-  margin: 15px;
+  margin: 10px;
 
   /* overflow-y:auto; */
 
@@ -275,12 +275,6 @@ a{
 
 }
 .entry{
-  /* transform: translateY(100%);
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  position: fixed; */
   position:fixed;
   bottom:0px;
   width:90%;
@@ -303,11 +297,14 @@ a{
 .messageEntry .items img{
 
   display: block;
-  max-width:50px;
-  max-height:50px;
+  position: relative;
+  left:-10px;
+  max-width:80%;
+  max-height:80%;
   width: auto;
   height: auto;
-  border-radius: 100px;
+
+  margin-bottom: 10px;
 }
 .allMessages{
   position: fixed;
