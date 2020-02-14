@@ -107,7 +107,6 @@ class ArtistRecommendation extends React.Component<
     });
   };
   render() {
-    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">

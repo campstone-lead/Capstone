@@ -61,7 +61,6 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
             artistId: this.props.user['id'],
             sender: 'artist'
         }
-        console.log(request)
         await this.props.sendRequest(request);
     }
 
@@ -69,13 +68,11 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         let eventId = this.props.event['event']['id']
         let artistId = this.props.user['id']
         const res = { status: response, eventId, artistId }
-        console.log('making a response to booker', res)
         await this.setState({ localStatus: response, sender: 'booker' })
         await this.props.sendResponse({ status: response, eventId, artistId })
 
     }
     render() {
-        console.log(this.state)
         if (!this.props.event['event']) {
             return <IonCardTitle>Loading...</IonCardTitle>;
         } else {
