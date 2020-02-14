@@ -65,7 +65,7 @@ class NewMessageEntry extends Component<IMyComponentProps, IMyComponentState>{
   render() {
     return (
       <div className="entry">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} style={{ display: 'flex' }}>
           <IonInput
             type="text"
             name="message"
@@ -79,9 +79,9 @@ class NewMessageEntry extends Component<IMyComponentProps, IMyComponentState>{
 
           />
 
-          <IonButton size="small" type="submit">
-            <IonIcon slot="start" color="medium" icon={send} mode="ios" />
-            <IonLabel style={{ padding: '5px' }}
+          <IonButton size="default" type="submit">
+            <IonIcon slot="start" color="black" icon={send} mode="ios" />
+            <IonLabel style={{ padding: '10px', width: '100%' }}
               mode="ios"
             >
               Send
