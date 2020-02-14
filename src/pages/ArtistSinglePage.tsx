@@ -6,7 +6,8 @@ import {
   IonButton,
   IonBackButton,
   IonCardSubtitle,
-  IonHeader, IonToolbar, IonCardTitle
+  IonHeader, IonToolbar, IonCardTitle,
+  IonItem
 } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux';
@@ -139,11 +140,13 @@ class ArtistSinglePage extends React.Component<
         <IonHeader mode="ios" >
           <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
             <div className="tabHeader" >
-              <img
-                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                alt="logo.png"
-                className="logo"
-              />
+              <IonItem routerLink="/home">
+                <img
+                  src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                  alt="logo.png"
+                  className="logo"
+                />
+              </IonItem>
               <IonCardTitle>
                 {this.props.artist['name']}
               </IonCardTitle>
