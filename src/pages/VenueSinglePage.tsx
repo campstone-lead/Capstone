@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonButton, IonBackButton, IonCardTitle, IonCardSubtitle, IonItem } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
@@ -127,11 +127,13 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                 <IonHeader mode="ios">
                     <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
                         <div className="tabHeader">
-                            <img
-                                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                                alt="logo.png"
-                                className="logo"
-                            />
+                            <IonItem routerLink="/home">
+                                <img
+                                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                                    alt="logo.png"
+                                    className="logo"
+                                />
+                            </IonItem>
                             <IonCardTitle>
                                 {this.props.venue['name']}
                             </IonCardTitle>

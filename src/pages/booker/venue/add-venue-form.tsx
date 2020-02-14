@@ -100,6 +100,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
       <IonPage>
         <IonHeader >
           <IonToolbar id="bar" >
+
             <IonTitle >Create a new venue</IonTitle>
           </IonToolbar>
         </IonHeader>

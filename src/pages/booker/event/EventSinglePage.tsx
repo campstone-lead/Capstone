@@ -98,11 +98,13 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                     <IonHeader mode="ios" >
                         <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
                             <div className="tabHeader" >
-                                <img
-                                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                                    alt="logo.png"
-                                    className="logo"
-                                />
+                                <IonItem routerLink="/home">
+                                    <img
+                                        src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                                        alt="logo.png"
+                                        className="logo"
+                                    />
+                                </IonItem>
                                 <IonCardTitle>
                                     {this.props.event['event']['name']}
                                 </IonCardTitle>
