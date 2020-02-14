@@ -208,7 +208,7 @@ class SignUpSignIn extends React.Component<
                   buttonText="LOGIN WITH GOOGLE"
                   uxMode="popup"
                   onSuccess={this.handleSuccess}
-                  redirectUri="http://localhost:8100/signup0"
+                  redirectUri={prodRedirectURL}
                   render={renderProps => (
                     <IonButton
                       routerLink="/signup0"
