@@ -1,6 +1,6 @@
 import {
   IonCard,
-  IonCardSubtitle,
+
   IonCardTitle,
   IonItemGroup,
   IonContent,
@@ -57,7 +57,6 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                     'url(https://wallpaperaccess.com/full/851202.jpg)',
                   width: '250px',
                 }}
-                // style={{ width: '250px' }}
                 mode="ios"
               >
                 <div
@@ -68,30 +67,33 @@ export class AllVenuesView extends React.Component<IMyComponentProps, {}> {
                   }}
                   className="artistBox"
                 >
-                  {venue.tableName}
+                  <h5> {venue.tableName}</h5>
                   <img src={venue['imageURL']} alt="img.jpg" />
 
-                  <IonItemGroup style={{ margin: '20px' }}>
-                    <IonCardTitle
+                  <IonItemGroup style={{ margin: '10px' }}>
+                    <h3
                       style={{ textAlign: 'center' }}
-                      className="artistBoxText"
+                      className="venueBoxText"
                     >
                       {venue.tableName === 'Artist' && venue.artistName
                         ? venue.artistName
                         : venue['name']}
-                    </IonCardTitle>
-                    <IonCardSubtitle
+                    </h3>
+                    <h4
                       style={{
                         textAlign: 'center',
-                        fontWeight: 'bold',
-                        fontSize: '15px',
+                        fontSize: '16px',
+
                       }}
                     >
                       Genres:
-                    </IonCardSubtitle>
-                    <IonCardSubtitle style={{ textAlign: 'center' }}>
+                    </h4>
+                    <h4 style={{
+                      textAlign: 'center', fontSize: '14px',
+                      color: 'gray'
+                    }}>
                       {genres}
-                    </IonCardSubtitle>
+                    </h4>
                   </IonItemGroup>
                 </div>
               </IonCard>

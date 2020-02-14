@@ -88,8 +88,17 @@ class SignUpSignIn extends React.Component<
     return (
       <IonPage>
         <IonHeader>
-          <IonToolbar id="bar">
-            <IonTitle>Log in</IonTitle>
+          <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+            <div className="tabHeader" >
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <h3 style={{ textAlign: "center" }}>
+                Log In
+              </h3>
+            </div>
           </IonToolbar>
         </IonHeader>
 

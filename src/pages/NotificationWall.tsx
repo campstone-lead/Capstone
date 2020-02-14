@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonItem, IonList, IonCardHeader, IonCardTitle, IonCardSubtitle, IonIcon } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonItem, IonList, IonToolbar, IonIcon } from '@ionic/react';
 import { notificationsOutline } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
@@ -8,8 +8,7 @@ import { fetchEvents, gotOneEvents } from '../store/event'
 import { fetchOneVenue, getAllVenues } from '../store/venue';
 import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
-import { link } from 'fs';
-import { Link } from 'react-router-dom'
+
 
 interface IMyComponentProps {
   user: object,
@@ -105,9 +104,18 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
     return (
       <IonPage>
         <IonHeader mode="ios" style={{ '--background': '#f3d2d1' }}>
-          <IonCardHeader>
-            <IonCardTitle>Notifications</IonCardTitle>
-          </IonCardHeader>
+          <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+            <div className="tabHeader" >
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <h3 style={{ textAlign: "center" }}>
+                Notifications
+              </h3>
+            </div>
+          </IonToolbar>
         </IonHeader>
         <IonContent style={{ '--background': '#f3d2d1' }}>
 
@@ -126,13 +134,13 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                         href={`/allArtists/${artist.artist.artistId}`}
                       >
                         <IonIcon slot="start" color="medium" icon={notificationsOutline} />
-                        <IonCardSubtitle style={{ padding: '5px', wordWrap: ' break-word', }}
+                        <h6 style={{ padding: '5px' }}
                           color={(artist.artist.status === 'pending') ? 'black' : ''}
                         >
                           {(artist.artist.status === 'pending' && artist.artist.sender === 'artist') ? `You have a pending request from ${artist.artist.artistName} ` : (artist.artist.sender === 'booker') && `Your request to ${artist.artist.artistName} has been ${artist.artist.status === 'booked' ? 'approved' : 'declined'}`
                           }
                           {' '} for {'  '} {artist.event.name} at {'  '}{artist.event.venueName}
-                        </IonCardSubtitle>
+                        </h6>
                       </IonItem>
 
 
@@ -146,12 +154,12 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                     return (
                       <IonItem key={index} href={`/allEvents/${artist.artist.eventId}`}>
                         <IonIcon slot="start" color="medium" icon={notificationsOutline} />
-                        <IonCardSubtitle style={{ padding: '5px', wordWrap: ' break-word' }}
+                        <h6 style={{ padding: '5px' }}
                           color={(artist.artist.status === 'pending') ? 'black' : ''}>
                           {(artist.artist.status === 'pending' && artist.artist.sender === 'booker') ? `You have a pending request from  ${artist.event.bookerName}.` : (artist.artist.sender === 'artist') && `Your request to ${artist.event.bookerName} has been ${artist.artist.status === 'booked' ? 'approved' : 'declined'}`
                           }
                           {' '} for {'  '} {artist.event.name} at {'  '}{artist.event.venueName}
-                        </IonCardSubtitle>
+                        </h6>
                       </IonItem>
                     )
                 }
