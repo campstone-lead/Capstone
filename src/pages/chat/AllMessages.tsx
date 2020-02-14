@@ -18,7 +18,7 @@ import {
   send
 } from 'ionicons/icons';
 import '../Tab1.css';
-import { me } from '../../store/user'
+import user, { me } from '../../store/user'
 import { fetchMessages, createMessage, postMessage } from '../../store/message'
 
 
@@ -84,13 +84,12 @@ class AllMessages extends Component<IMyComponentProps, IMyComponentState>{
             var datetime = day + ', '
               + dateObj.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")
 
-            // console.log(dateObj.toLocaleTimeString('en-us', options).split(',')[0])
             return (
 
               <IonCard
                 key={index}
                 className="messageEntry"
-                style={(this.props.user['id'] === message['ownerId'] && this.props['status'] === message['ownerStatus']) ?
+                style={((this.props.user['status'] === message['status']) && (this.props.user['id'] === message['ownerId'])) ?
                   {
                     float: 'left',
                     marginLeft: '12px',
