@@ -8,6 +8,7 @@ import booker from './booker';
 import venue from './venue';
 import filter from './filter';
 import event from './event';
+import message from './message';
 
 const reducer = combineReducers({
   user,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   artist,
   venue,
   filter,
-  event
+  event,
+  message
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

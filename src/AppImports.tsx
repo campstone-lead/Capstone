@@ -34,6 +34,7 @@ import BookerSignup6 from './pages/booker/Signup/BookerSignup6';
 import BookerSignup7 from './pages/booker/Signup/BookerSignup7';
 import AllArtistView from './pages/AllArtistView';
 import ArtistSinglePage from './pages/ArtistSinglePage';
+import ChatBox from './pages/chat/ChatBox';
 import VenueForm from './pages/booker/venue/add-venue-form';
 import EventForm from './pages/booker/event/add-event-form';
 import EventSinglePage from './pages/booker/event/EventSinglePage';
@@ -125,5 +126,6 @@ export {
   Tab4,
   VenueSinglePage,
   searchBarValue,
-  UpdateArtistForm
+  UpdateArtistForm,
+  ChatBox
 };
