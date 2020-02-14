@@ -315,7 +315,7 @@ a{
   -moz-background-clip: padding;
   border-radius: 60px;
   background-clip: padding-box;
-  margin: 0px 5 0 5px;
+  margin: 0px 5 0 2px;
   float: left;
   left:-12px;
   background-size: cover;
@@ -325,6 +325,6 @@ a{
 .allMessages{
   position: fixed;
   overflow: scroll;
-max-height: 85%
+max-height: 82%
 
 }
