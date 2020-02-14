@@ -24,13 +24,12 @@ import SignUpZero from './SignUp0';
 import FacebookLogin from 'react-facebook-login';
 
 const prodRedirectURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/signup0/' : 'http://localhost:8100/signup0/')
-// if (process.env.NODE_ENV !== 'production') require('../store/secrets')
-
 
 interface IMyComponentState {
   email: string;
   password: string;
   isActive: boolean;
+  googleClientId: string;
 }
 interface IMyComponentProps {
   auth: any;
@@ -49,6 +48,7 @@ class SignUpSignIn extends React.Component<
       email: '',
       password: '',
       isActive: true,
+      googleClientId: (process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CLIENT_ID : googleClientId) || ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
@@ -202,7 +202,7 @@ class SignUpSignIn extends React.Component<
                 </IonButton>
 
                 <GoogleLogin
-                  clientId={googleClientId}
+                  clientId={this.state.googleClientId}
                   buttonText="LOGIN WITH GOOGLE"
                   uxMode="popup"
                   onSuccess={this.handleSuccess}
@@ -248,7 +248,7 @@ class SignUpSignIn extends React.Component<
                 Sign up
               </IonButton>
               <GoogleLogin
-                clientId={googleClientId}
+                clientId={this.state.googleClientId}
                 buttonText="LOGIN WITH GOOGLE"
                 uxMode="popup"
                 onSuccess={this.handleSuccess}
