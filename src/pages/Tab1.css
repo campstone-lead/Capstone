@@ -306,6 +306,7 @@ a{
   border-radius: 50px;
 
   margin-bottom: 10px; */
+  position: relative;
   width: 60px;
   height: 60px;
   -webkit-border-radius: 60px;
@@ -314,8 +315,9 @@ a{
   -moz-background-clip: padding;
   border-radius: 60px;
   background-clip: padding-box;
-  margin: 10px 5 0 5px;
+  margin: 0px 5 0 5px;
   float: left;
+  left:-12px;
   background-size: cover;
   background-position: center center;
 

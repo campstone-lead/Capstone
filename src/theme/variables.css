@@ -95,6 +95,5 @@ ion-list{
 /* }
 #f4f1ec */
 ion-card{
-  padding: 0px;
-
+  --ion-padding:5px;
 }

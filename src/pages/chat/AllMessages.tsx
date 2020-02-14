@@ -94,13 +94,14 @@ class AllMessages extends Component<IMyComponentProps, IMyComponentState>{
                   {
                     float: 'left',
                     marginLeft: '12px',
-                    width: '50%',
+                    width: '80%',
                     background: 'url(https://wallpaperaccess.com/full/851202.jpg)'
                   } :
                   {
                     float: 'right',
                     marginRight: '22px',
-                    width: '50%',
+                    width: '75%',
+                    height: '15%',
                     background: 'url(https://wallpaperaccess.com/full/851202.jpg)',
 
                   }
