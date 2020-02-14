@@ -118,11 +118,13 @@ class Tab1 extends React.Component<IMyComponentProps, IMyComponentState> {
                   }}
                 >
                   <div className="tabHeader">
-                    <img
-                      src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                      alt="logo.png"
-                      className="logo"
-                    />
+                    <IonItem routerLink="/home">
+                      <img
+                        src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                        alt="logo.png"
+                        className="logo"
+                      />
+                    </IonItem>
                     <IonSearchbar
                       mode="ios"
                       color="light"

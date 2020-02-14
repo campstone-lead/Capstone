@@ -3,7 +3,6 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
   IonItem,
   IonLabel,
@@ -11,10 +10,7 @@ import {
   IonCard,
   IonList,
   IonItemGroup,
-  IonCardContent,
   IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
   IonIcon,
 } from '@ionic/react';
 import {

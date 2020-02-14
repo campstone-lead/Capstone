@@ -99,8 +99,6 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
 
 
   render() {
-
-
     return (
       <IonPage>
         <IonHeader mode="ios" style={{ '--background': '#f3d2d1' }}>
@@ -111,6 +109,7 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                 alt="logo.png"
                 className="logo"
               />
+
               <h3 style={{ textAlign: "center" }}>
                 Notifications
               </h3>

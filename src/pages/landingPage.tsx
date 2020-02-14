@@ -29,14 +29,17 @@ const LandingPage: React.FC = () => {
                 <IonHeader color={'linear-gradient(to right, #000000, #434343)'} >
 
                     <IonToolbar className="tabHeader" color={'linear-gradient(to right, #000000, #434343)'}>
-                        <div className="tabHeader">
-                            <img
-                                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                                alt="logo.png"
 
-                                className="logo"
-                            />
-                            <h3 className="title" >HARMONIOUS</h3>
+                        <div className="tabHeader">
+                            <IonItem routerLink="/home">
+                                <img
+                                    src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                                    alt="logo.png"
+
+                                    className="logo"
+                                />
+                                <h3 className="title" >HARMONIOUS</h3>
+                            </IonItem>
                         </div>
                     </IonToolbar>
 
