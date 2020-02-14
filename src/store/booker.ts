@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import history from '../pages/history'
-import { auth } from './user';
+import { auth, authWithGoogle } from './user';
 axios.defaults.withCredentials = true;
 /**
  * ACTION TYPES
@@ -124,7 +124,7 @@ export const signUpVenue = venueParam => async dispatch => {
 export const signUpWithGoogleBooker = bookerInfo => async dispatch => {
   try {
     let google = window.localStorage.getItem('google');
-    if (bookerInfo.password) {
+    if (bookerInfo.phone) {
       google = JSON.parse(google || '');
       let newBooker = google || {};
       let sendBooker = {
@@ -156,8 +156,10 @@ export const signUpWithGoogleBooker = bookerInfo => async dispatch => {
         url: '/venues/',
         data: newVenue,
       });
-      window.localStorage.removeItem('booker');
+      window.localStorage.removeItem('google');
       window.localStorage.removeItem('venue');
+      dispatch(authWithGoogle(sendBooker.googleId));
+
       // login signedupwith google user
     }
   } catch (error) {

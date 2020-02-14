@@ -8,31 +8,32 @@ import {
   IonInput,
   IonButton,
   IonCard,
-  IonIcon
+  IonIcon,
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux';
-import { updatedArtist } from '../../../store/artist';
-import {
-  create
-} from 'ionicons/icons';
+import { updatedArtist, signUpArtistWithGoogle } from '../../../store/artist';
+import { create } from 'ionicons/icons';
 interface IMyComponentState {
+  isGoogleOauth: boolean;
   bio: string;
 }
 
 interface IMyComponentProps {
   putBio: (artistBio: any) => void;
   updateArtist: any;
+  signUpArtistWithGoogle: any;
 }
 
 class ArtistBioForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
+      isGoogleOauth: false,
       bio: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,18 +41,28 @@ class ArtistBioForm extends React.Component<
 
   componentDidMount() {
     let artist = window.localStorage.getItem('artistInfo');
+    let artistGoogle = window.localStorage.getItem('google');
     if (artist !== null) {
       artist = JSON.parse(artist || '');
       let newArtist = artist || {};
       this.setState({
         bio: newArtist['bio'],
       });
+    } else if (artistGoogle !== null) {
+      artistGoogle = JSON.parse(artistGoogle || '');
+      let newArtist = artistGoogle || {};
+      this.setState({
+        bio: newArtist['bio'],
+        isGoogleOauth: true,
+      });
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.updateArtist(this.state);
+    if (this.state.isGoogleOauth)
+      this.props.signUpArtistWithGoogle({ bio: this.state.bio });
+    else this.props.updateArtist({ bio: this.state.bio });
     this.setState({
       bio: '',
     });
@@ -83,7 +94,7 @@ class ArtistBioForm extends React.Component<
                 />
               </IonItem>
 
-              <div style={{ margin: "10px" }}>
+              <div style={{ margin: '10px' }}>
                 <IonItem lines="none">
                   <br></br>
 
@@ -95,11 +106,10 @@ class ArtistBioForm extends React.Component<
                     routerLink="/zipcodeform"
                   >
                     Next
-                </IonButton>
+                  </IonButton>
                 </IonItem>
               </div>
             </form>
-
           </div>
         </IonContent>
       </IonPage>
@@ -111,6 +121,8 @@ const mapDispatchToProps = dispatch => {
   return {
     //   putBio: (artistInfo) => dispatch(updatedArtist(artistInfo))
     updateArtist: artistInfo => dispatch(updatedArtist(artistInfo)),
+    signUpArtistWithGoogle: artistInfo =>
+      dispatch(signUpArtistWithGoogle(artistInfo)),
   };
 };
 

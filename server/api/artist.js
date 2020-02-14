@@ -18,7 +18,7 @@ router.get('/:id', async (req, res, next) => {
       res.sendStatus(404);
     } else {
       const artistStatus = await ArtistEvent.findAll({
-        where: { artistId: req.params.id }
+        where: { artistId: req.params.id },
       });
       res.json({ artist: data, status: artistStatus });
     }
@@ -44,26 +44,26 @@ router.get('/distance/:venueId', async (req, res, next) => {
 });
 router.post('/', async (req, res, next) => {
   try {
-    const artist = await Artist.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      name: req.body.name,
-      genres: req.body.genres,
-      bio: req.body.bio,
-      imageURL: req.body.imageURL,
-      zipCode: req.body.zipCode,
-      instagramUrl: req.body.instagramUrl,
-      spotifyUrl: req.body.spotifyUrl,
-      facebookUrl: req.body.facebookUrl,
-      type: req.body.type,
-      phone: req.body.phone,
-      email: req.body.email,
-      password: req.body.password,
-    });
+    //   const artist = await Artist.create({
+    //     firstName: req.body.firstName,
+    //     lastName: req.body.lastName,
+    //     name: req.body.name,
+    //     genres: req.body.genres,
+    //     bio: req.body.bio,
+    //     imageURL: req.body.imageURL,
+    //     zipCode: req.body.zipCode,
+    //     instagramUrl: req.body.instagramUrl,
+    //     spotifyUrl: req.body.spotifyUrl,
+    //     facebookUrl: req.body.facebookUrl,
+    //     type: req.body.type,
+    //     phone: req.body.phone,
+    //     email: req.body.email,
+    //     password: req.body.password,
+    //   });
+    const artist = await Artist.create(req.body);
     res.status(201);
     res.send(artist);
   } catch (error) {
-
     next(error);
   }
 });

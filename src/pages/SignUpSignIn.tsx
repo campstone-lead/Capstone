@@ -21,6 +21,7 @@ import { logoFacebook, logoGoogleplus } from 'ionicons/icons';
 import googleClientId from '../store/secrets';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import SignUpZero from './SignUp0';
+import FacebookLogin from 'react-facebook-login';
 
 interface IMyComponentState {
   email: string;
@@ -46,6 +47,7 @@ class SignUpSignIn extends React.Component<
       isActive: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
   }
 
   async componentDidMount() {
@@ -68,13 +70,21 @@ class SignUpSignIn extends React.Component<
     });
     console.log('isActive', this.state.isActive);
   }
+  async handleSuccess(response) {
+    await this.props.signUpWithGoogle(response);
+    if (window.localStorage.getItem('loginSuccess')) {
+      await this.setState({
+        isActive: true,
+      });
+    }
+    console.log('isActive', this.state.isActive);
+  }
   render() {
-    // async function responseGoogle ( response){
-    //   await this.props.signUpWithGoogle()
-    //   console.log(response);
-    // };
-
+    const responseFacebook = response => {
+      console.log(response);
+    };
     const { error } = this.props;
+
     return (
       <IonPage>
         <IonHeader>
@@ -163,10 +173,23 @@ class SignUpSignIn extends React.Component<
                 clientId={googleClientId}
                 buttonText="LOGIN WITH GOOGLE"
                 uxMode="popup"
-                onSuccess={this.props.signUpWithGoogle}
-                // isSignedIn
+                onSuccess={this.handleSuccess}
+                // // onRequest={this.props.signUpWithGoogle}
+
                 redirectUri="http://localhost:8100/signup0"
                 render={renderProps => (
+                  // <GoogleLogin
+                  //   clientId={googleClientId}
+                  //   buttonText="LOGIN WITH GOOGLE"
+                  //   uxMode="redirect"
+                  //   onSuccess={() => this.props.signUpWithGoogle}
+                  //   isSignedIn
+                  //   onFailure={() => {
+                  //     console.log('not logged in');
+                  //   }}
+                  //   redirectUri="http://localhost:8100/signup0"
+                  // />
+
                   <IonButton
                     routerLink="/signup0"
                     style={{ width: '270px', margin: '10px' }}
@@ -192,6 +215,27 @@ class SignUpSignIn extends React.Component<
                 <IonIcon icon={logoFacebook} />
                 Sign up with Facebook
               </IonButton>
+              {/* <IonButton
+                onClick={() => (
+                  <FacebookLogin
+                    appId="184531429467701"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    // onClick={responseFacebook}
+                    callback={responseFacebook}
+                    redirectUri="http://localhost:8100/signup0"
+                    render={renderProps => (
+                      <IonButton
+                        style={{ width: '270px', margin: '10px' }}
+                        onClick={renderProps.onClick}
+                      >
+                        <IonIcon icon={logoFacebook} />
+                        Sign up with Facebook
+                      </IonButton>
+                    )}
+                  />
+                )}
+              ></IonButton> */}
             </div>
           </IonCard>
         </IonContent>

@@ -17,7 +17,7 @@ const defaultArtist = {
   artist: {},
   booked: {},
   status: '',
-  allReq: []
+  allReq: [],
 };
 
 /**
@@ -59,8 +59,7 @@ export const sendRequest = request1 => async dispatch => {
     const request = res.data;
     dispatch(bookArtist(request));
     // console.log('about to send a request', request)
-    socket.emit('send-request', request)
-
+    socket.emit('send-request', request);
   } catch (err) {
     console.log(err);
   }
@@ -77,7 +76,7 @@ export const sendResponse = data => async dispatch => {
     dispatch(bookArtist(res.data));
     const response = res.data;
 
-    socket.emit('send-response', response)
+    socket.emit('send-response', response);
   } catch (err) {
     console.log(err);
   }
@@ -126,14 +125,17 @@ export const fetchOneArtists = id => async dispatch => {
 export const updatedArtist = incomingArtist => async dispatch => {
   try {
     let currentArtist = window.localStorage.getItem('artistInfo');
-    console.log('currentArtist:', currentArtist)
+    console.log('currentArtist:', currentArtist);
 
     let newArtist;
 
-    console.log('incomingArtist:', incomingArtist)
+    console.log('incomingArtist:', incomingArtist);
     if (incomingArtist.password === undefined) {
       if (currentArtist === null) {
-        window.localStorage.setItem('artistInfo', JSON.stringify(incomingArtist));
+        window.localStorage.setItem(
+          'artistInfo',
+          JSON.stringify(incomingArtist)
+        );
       } else {
         currentArtist = JSON.parse(currentArtist || '');
         let formerArtist = currentArtist || {};
@@ -145,7 +147,48 @@ export const updatedArtist = incomingArtist => async dispatch => {
     } else {
       currentArtist = JSON.parse(currentArtist || '');
       let formerArtist = currentArtist || {};
-      newArtist = { ...formerArtist, ...incomingArtist }
+      newArtist = { ...formerArtist, ...incomingArtist };
+      await axios({
+        method: 'post',
+        baseURL: 'http://localhost:8080/api/',
+        url: '/artists/',
+        data: newArtist,
+      });
+      await window.localStorage.setItem(
+        'email',
+        JSON.stringify(newArtist.email)
+      );
+      dispatch(updateArtist(newArtist));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const signUpArtistWithGoogle = incomingArtist => async dispatch => {
+  try {
+    let currentArtist = window.localStorage.getItem('google');
+    console.log('currentArtist:', currentArtist);
+
+    let newArtist;
+
+    console.log('incomingArtist:', incomingArtist);
+    if (incomingArtist.phone === undefined) {
+      if (currentArtist === null) {
+        window.localStorage.setItem('google', JSON.stringify(incomingArtist));
+      } else {
+        currentArtist = JSON.parse(currentArtist || '');
+        let formerArtist = currentArtist || {};
+
+        newArtist = { ...formerArtist, ...incomingArtist };
+
+        window.localStorage.setItem('google', JSON.stringify(newArtist));
+      }
+    } else {
+      console.log('und:');
+      currentArtist = JSON.parse(currentArtist || '');
+      let formerArtist = currentArtist || {};
+      newArtist = { ...formerArtist, ...incomingArtist };
       await axios({
         method: 'post',
         baseURL: 'http://localhost:8080/api/',
@@ -153,8 +196,8 @@ export const updatedArtist = incomingArtist => async dispatch => {
         data: newArtist,
       });
       window.localStorage.setItem(
-        'email',
-        JSON.stringify(newArtist.email)
+        'googleId',
+        JSON.stringify(newArtist.googleId)
       );
       dispatch(updateArtist(newArtist));
     }
@@ -166,7 +209,7 @@ export const updatedArtist = incomingArtist => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultArtist, action) {
+export default function(state = defaultArtist, action) {
   switch (action.type) {
     case GET_ARTISTS:
       return { ...state, allArtists: action.artists };
@@ -188,10 +231,8 @@ export default function (state = defaultArtist, action) {
       };
 
     case UPDATE_ARTIST:
-
       return { ...state, ...action.newArtistData };
     case 'GET_REQUEST':
-
       return { ...state, allReq: [...state.allReq, action.req] };
 
     default:
