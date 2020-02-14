@@ -106,7 +106,10 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
         </IonHeader>
 
 
-        <IonContent>
+        <IonContent style={{
+          '--background':
+            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+        }}>
           <form onSubmit={this.handleSubmit} className='updatevenue' >
 
             <IonLabel className='venuelabel'>Venue</IonLabel>
@@ -151,42 +154,49 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
               )}
             </PlacesAutocomplete>
             <IonLabel className='venuelabel'>Venue name</IonLabel>
-            <IonItem >
+            <IonItem lines="none" >
               <IonInput clearInput type="text" required
                 value={this.state.venue["name"]}
                 onIonChange={(e) => this.setState({ venue: { ...this.state.venue, name: (e.target as HTMLInputElement).value } })}
               />
             </IonItem>
             <IonLabel className='venuelabel'>Address</IonLabel>
-            <IonItem >
+            <IonItem lines="none" >
               <IonInput clearInput type="text" required
                 value={this.state.venue["address"]}
                 onIonChange={(e) => this.setState({ venue: { ...this.state.venue, address: (e.target as HTMLInputElement).value } })}
               />
             </IonItem>
             <IonLabel className='venuelabel'>Describe the venue</IonLabel>
-            <IonItem >
+            <IonItem lines="none" >
               <IonInput clearInput type="text" required
                 value={this.state.venue["description"]}
                 onIonChange={(e) => this.setState({ venue: { ...this.state.venue, description: (e.target as HTMLInputElement).value } })}
               />
             </IonItem>
             <IonLabel className='venuelabel'>Capacity</IonLabel>
-            <IonItem >
+            <IonItem lines="none" >
               <IonInput clearInput type="number" min='0' required
                 value={this.state.venue["capacity"]}
                 onIonChange={(e) => this.setState({ venue: { ...this.state.venue, capacity: (e.target as HTMLInputElement).value } })}
               />
             </IonItem>
             <IonLabel className='venuelabel'>Genres</IonLabel>
-            {genresArray.map((genre) =>
-              <IonButton key={genre} color={this.state.genreTypes[genre] ? 'primary' : 'secondary'} type="button" target={genre} onClick={this.handleClick}>{genre}</IonButton>
-            )}
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center'
+            }}>
+              {genresArray.map((genre) =>
+                <IonButton key={genre} color={this.state.genreTypes[genre] ? 'primary' : 'secondary'} type="button" target={genre} onClick={this.handleClick}>{genre}</IonButton>
+              )}
+            </div>
 
-            <IonButton color='secondary' >Upload a picture</IonButton>
-            <IonItem routerLink="/profile">
-              <IonButton type="submit">Create</IonButton>
-            </IonItem>
+
+            {/* <IonButton color='secondary' >Upload a picture</IonButton> */}
+
+            <IonButton routerLink="/profile" type="submit" >Create</IonButton>
+
           </form>
         </IonContent>
       </IonPage>)
