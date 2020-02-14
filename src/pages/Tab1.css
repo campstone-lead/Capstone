@@ -73,7 +73,7 @@ flex-direction: column;
   max-height:80px;
   width: auto;
   height: auto;
-  border-radius: 3%;
+  border-radius: 5%;
 }
 .signUpItems{
   width:150px;
@@ -258,9 +258,73 @@ a{
   text-decoration: none;
 }
 .ion-item-border {
-  border-radius: 20px !important;
+  border-radius: 60px !important;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
   padding-top: 5px;
   }
+.chatBox{
+  /* display: flex;
+  flex-direction: column; */
+  margin: 10px;
+
+  /* overflow-y:auto; */
+
+
+
+}
+.entry{
+  position:fixed;
+  bottom:0px;
+  width:90%;
+  margin-bottom: 10px;
+}
+
+.messageEntry{
+  display:flex;
+  flex-direction:column;
+  align-items: flex-start;
+  font-family: 'Raleway', sans-serif;
+  margin-bottom: 0px;
+
+}
+.messageEntry .items{
+  display:flex;
+   flex-direction:row;
+   align-items: center;
+}
+.messageEntry .items img{
+/*
+  display: block;
+  position: relative;
+  left:-10px;
+  max-width:25%;
+  max-height:25%;
+  width: auto;
+  height: auto;
+  border-radius: 50px;
+
+  margin-bottom: 10px; */
+  position: relative;
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 60px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 60px;
+  -moz-background-clip: padding;
+  border-radius: 60px;
+  background-clip: padding-box;
+  margin: 0px 5 0 5px;
+  float: left;
+  left:-12px;
+  background-size: cover;
+  background-position: center center;
+
+}
+.allMessages{
+  position: fixed;
+  overflow: scroll;
+max-height: 85%
+
+}

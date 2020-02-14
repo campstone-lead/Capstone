@@ -53,6 +53,7 @@ import {
   notifications,
   UpdateArtistForm,
   UpdateBookerForm,
+  ChatBox
 } from './AppImports';
 
 
@@ -141,6 +142,7 @@ class App extends React.Component<IMyComponentProps, IMyComponentState> {
               <Route path="/artists" component={AllArtistView} />
               <Route path="/artistpassword" component={ArtistPassword} />
               <Route path="/venues" component={AllVenuesView} />
+              <Route path="/messages" component={ChatBox} />
 
               <Route
                 path="/allArtists/:artistId"
