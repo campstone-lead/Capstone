@@ -387,18 +387,8 @@ let messages = [
   },
   {
     message: 'Hi! Interested...',
-    ownerId: 1,
+    ownerId: 4,
     status: 'artist'
-  },
-  {
-    message: 'Me too ! :D',
-    ownerId: 3,
-    status: 'artist'
-  },
-  {
-    message: 'More details coming soon guys!',
-    ownerId: 1,
-    status: 'booker'
   }
 ]
 
