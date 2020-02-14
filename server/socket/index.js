@@ -10,12 +10,10 @@ module.exports = io => {
     })
 
     socket.on('send-message', message => {
-      console.log('got the message on server side  hereee', message)
       socket.broadcast.emit('send-message', message);
     });
 
     socket.on('send-response', response => {
-      console.log('got the resoonse hereee', response)
       socket.broadcast.emit('send-response', response);
 
     });

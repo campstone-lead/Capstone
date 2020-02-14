@@ -25,7 +25,6 @@ interface IMyComponentProps{
 
   }
   render() {
-console.log('here=>',this.props.user)
   return (
 
     <IonPage>

@@ -67,7 +67,6 @@ export const authWithGoogle = googleId => async dispatch => {
 
 export const signUpWithGoogle = googleResponse => async dispatch => {
   try {
-    console.log(googleResponse);
     let newUser = googleResponse.profileObj;
     try {
       const res = await axios({
@@ -122,7 +121,6 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return {};
     case SIGN_UP_WITH_GOOGLE:
-      console.log(action.user);
       let newUser = {
         firstName: action.user.givenName,
         lastName: action.user.familyName,

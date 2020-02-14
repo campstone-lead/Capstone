@@ -78,7 +78,6 @@ export class UploadPicture extends Component<
         selectedFile: this.state.selectedFile,
       });
     // await this.props.updateArtist(this.state);
-    console.log(res.data);
   };
   async componentDidMount() {
     let artist = window.localStorage.getItem('artistInfo');

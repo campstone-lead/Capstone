@@ -117,7 +117,6 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
       url: `/upload`,
       data: formData
     })
-    console.log(res.data)
 
   }
   handleFormChange = (e) => {

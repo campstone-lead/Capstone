@@ -51,7 +51,6 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         let eventId = this.state.currentEvent
         let artistId = this.props.user['id']
         const res = { status: response, eventId, artistId }
-        console.log('making a response to booker', res)
         await this.props.sendResponse({ status: response, eventId, artistId })
         await this.setState({ localStatus: response, sender: 'booker' })
     }
@@ -60,7 +59,6 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         if (this.props.attendedEvents !== null) {
 
             let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(event => event.eventId === Number(this.state.currentEvent))
-            console.log(getArtistStatusforCurrentVenue)
             if (getArtistStatusforCurrentVenue.length !== 0) {
                 await this.setState({
                     localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
@@ -73,7 +71,6 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                     sender: ''
                 })
             }
-            console.log('heeere->>>>', this.state)
         }
     };
 
@@ -84,7 +81,6 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
             artistId: this.props.user['id'],
             sender: 'artist'
         }
-        console.log(request)
         await this.props.sendRequest(request);
     }
 

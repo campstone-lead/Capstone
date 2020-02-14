@@ -72,7 +72,6 @@ class SignUpSignIn extends React.Component<
       email: '',
       password: '',
     });
-    console.log('isActive', this.state.isActive);
   }
   async handleSuccess(response) {
     await this.props.signUpWithGoogle(response);
@@ -81,7 +80,6 @@ class SignUpSignIn extends React.Component<
         isActive: true,
       });
     }
-    console.log('isActive', this.state.isActive);
   }
   render() {
     const responseFacebook = response => {

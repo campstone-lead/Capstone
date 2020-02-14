@@ -116,7 +116,6 @@ const createApp = () => {
       } else if (err) {
         return res.status(500).json(err);
       }
-      console.log(req.file);
       return res.status(200).send(req.file);
     });
   });

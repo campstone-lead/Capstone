@@ -167,11 +167,9 @@ export const updatedArtist = incomingArtist => async dispatch => {
 export const signUpArtistWithGoogle = incomingArtist => async dispatch => {
   try {
     let currentArtist = window.localStorage.getItem('google');
-    console.log('currentArtist:', currentArtist);
 
     let newArtist;
 
-    console.log('incomingArtist:', incomingArtist);
     if (incomingArtist.phone === undefined) {
       if (currentArtist === null) {
         window.localStorage.setItem('google', JSON.stringify(incomingArtist));
@@ -184,7 +182,6 @@ export const signUpArtistWithGoogle = incomingArtist => async dispatch => {
         window.localStorage.setItem('google', JSON.stringify(newArtist));
       }
     } else {
-      console.log('und:');
       currentArtist = JSON.parse(currentArtist || '');
       let formerArtist = currentArtist || {};
       newArtist = { ...formerArtist, ...incomingArtist };

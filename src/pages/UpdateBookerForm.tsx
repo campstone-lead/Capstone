@@ -78,7 +78,6 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
             url: `/upload`,
             data: formData
         })
-        console.log(res.data)
     }
 
     async componentDidMount() {
