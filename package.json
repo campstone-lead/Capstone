@@ -68,7 +68,7 @@
     "typescript": "3.7.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start & node server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "script/deploy",

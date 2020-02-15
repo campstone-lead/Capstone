@@ -73,7 +73,6 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
             name
           }
         })
-        console.log('Success grabbing adress!')
       })
       .catch(error => console.error('Error', error));
   };

@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.capstone",
-  "appName": "Capstone",
+  "appId": "io.ionic.harmonious",
+  "appName": "Harmonious",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",

@@ -134,7 +134,6 @@ class ArtistSinglePage extends React.Component<
   }
 
   render() {
-    console.log(this.props['location']['state']);
     return (
       <IonPage>
         <IonHeader mode="ios">
