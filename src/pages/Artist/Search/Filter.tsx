@@ -5,19 +5,13 @@ import {
   IonTitle,
   IonHeader,
   IonIcon,
-  // IonFab,
-  // IonFabButton,
   IonItem,
   IonChip,
   IonLabel,
-  // IonList,
   IonCheckbox,
   IonSelect,
   IonSelectOption,
-  // IonTextarea,
   IonBackButton,
-  IonCard,
-  // IonAlert,
 } from '@ionic/react';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -47,7 +41,7 @@ interface IMyComponentState {
 export class Filter extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -107,64 +101,43 @@ export class Filter extends React.Component<
   }
   render() {
     return (
-      <IonPage >
-        <IonContent style={{
-          display: 'flex',
-          '--background':
-            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
-        }}>
+      <IonPage>
+        <IonContent style={{ display: 'flex' }}>
           <IonBackButton
             defaultHref="/home/"
             mode="ios"
             text=" Apply filters "
             color="dark"
             className="backBtn"
-            style={{
-              '--background': 'none',
-
-            }}
           />
           <IonHeader
             style={{
               marginLeft: '0px',
               marginTop: '50px',
-
+              marginBottom: '80px',
             }}
           >
-            <h2
+            <IonTitle
               style={{
-                marginLeft: '25px',
+                marginLeft: '0px',
                 fontSize: '30px',
               }}
             >
               Filters
-            </h2>
+            </IonTitle>
           </IonHeader>
-
-
-          <IonCard style={{
-            '--background':
-              'url(https://wallpaperaccess.com/full/851202.jpg)',
-            padding: '10px'
-          }}>
-            <IonItem style={{
-              '--background':
-                'none',
-            }} color='#383544' lines="none">
-              <h3
+          <IonContent>
+            <IonItem>
+              <IonLabel
                 style={{
-                  fontSize: '18px',
-
+                  fontWeight: 'bold',
+                  fontSize: '20px',
                 }}
               >
-                {(this.props.chosen.length === 0) ? 'No filters added yet....' : 'All filters'}
-              </h3>
+                All filters
+              </IonLabel>
             </IonItem>
-
-            <IonItem style={{
-              '--background':
-                'none',
-            }} color='#383544' lines="none">
+            <IonItem>
               <div>
                 {this.props.chosen.map((item, indx) => (
                   <IonChip key={indx} title={item} onClick={this.deleteOnClick}>
@@ -174,35 +147,19 @@ export class Filter extends React.Component<
                 ))}
               </div>
             </IonItem>
-
-          </IonCard>
-
-          <IonCard style={{
-            '--background':
-              'url(https://wallpaperaccess.com/full/851202.jpg)',
-            padding: '10px'
-          }}>
-            <IonItem style={{
-              '--background':
-                'none',
-            }} lines="none"
-              color='#383544'
-            >
-              <h3
+            <IonItem>
+              <IonLabel
                 style={{
-
-                  fontSize: '22px',
+                  fontWeight: 'bold',
+                  fontSize: '20px',
                 }}
               >
                 Main category
-              </h3>
-            </IonItem >
+              </IonLabel>
+            </IonItem>
             <div>
               {this.props.allSingle.map((filter, indx) => (
-                <IonItem color='#383544' key={indx} style={{
-                  '--background':
-                    'none',
-                }}>
+                <IonItem key={indx}>
                   <IonLabel>{filter.value}</IonLabel>
                   <IonCheckbox
                     value={filter.value}
@@ -212,18 +169,11 @@ export class Filter extends React.Component<
                       this.props.allSingle.some(i => i.isChecked)
                     }
                     checked={filter.isChecked}
-                    style={{
-                      '--background':
-                        '#d7c1de',
-                    }}
                   />
                 </IonItem>
               ))}
             </div>
-            <IonItem style={{
-              '--background':
-                'none',
-            }} lines="none">
+            <IonItem>
               <IonLabel
                 style={{
                   fontWeight: 'bold',
@@ -238,30 +188,21 @@ export class Filter extends React.Component<
                 cancelText="Cancel"
                 okText="Save"
                 onIonChange={this.genresOnClick}
-                style={{
-                  '--background':
-                    'none',
-                }}
               >
                 {this.props.genres.map((genre, indx) => (
                   <IonSelectOption
                     key={indx}
                     value={genre.value}
                     selected={genre.isChecked}
-                    style={{
-                      '--background':
-                        'none',
-                    }}
                   >
                     {genre.value}
                   </IonSelectOption>
                 ))}
               </IonSelect>
             </IonItem>
-          </IonCard>
-
+          </IonContent>
         </IonContent>
-      </IonPage >
+      </IonPage>
     );
   }
 }

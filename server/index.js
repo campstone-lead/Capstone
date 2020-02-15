@@ -58,31 +58,6 @@ const createApp = () => {
 
   app.use(cors(config));
 
-  // const allowedOrigins = [
-  //   'capacitor://localhost',
-  //   'ionic://localhost',
-  //   'http://localhost',
-  //   'http://localhost:8080',
-  //   'http://localhost:8100',
-  //   'https://accounts.google.com',
-  //   'https://accounts.google.com/signin/oauth/'
-  // ];
-
-  // // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-  // const corsOptions = {
-  //   origin: (origin, callback) => {
-  //     if (allowedOrigins.includes(origin) || !origin) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('Origin not allowed by CORS'));
-  //     }
-  //   },
-
-  //   credentials: true,
-  // };
-
-  // app.use(cors(corsOptions));
-
   // session middleware with passport
   app.use(
     session({
