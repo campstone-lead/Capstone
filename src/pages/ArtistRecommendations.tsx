@@ -68,11 +68,13 @@ class ArtistRecommendation extends React.Component<
           rec = this.props.artists.filter((artist, index) => index < 5);
         }
         this.setState({
+          currentVenue: 1,
           currentBookerRecommandations: rec,
         });
       } else {
         await this.props.fetchArtists();
         this.setState({
+          currentVenue: 1,
           currentBookerRecommandations: this.props.artists,
         });
       }
@@ -117,15 +119,8 @@ class ArtistRecommendation extends React.Component<
                   cancelText="Cancel"
                   okText="Save"
                   onIonChange={this.handleChange}
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: '22px',
-                  }}
+                  placeholder="Choose a venue"
                 >
-                  <IonSelectOption selected hidden disabled>
-                    {' '}
-                    No venue chosen
-                  </IonSelectOption>
                   {this.props.venues.map((venue, index) => (
                     <IonSelectOption value={venue.id} key={index}>
                       {venue.name}
@@ -133,17 +128,6 @@ class ArtistRecommendation extends React.Component<
                   ))}
                 </IonSelect>
               </div>
-              {/* <select
-                onChange={this.handleChange}
-                className="selectBtn"
-                style={{ backgroundColor: 'white' }}
-              >
-                {this.props.venues.map((venue, index) => (
-                  <option value={venue.id} key={index}>
-                    {venue.name}
-                  </option>
-                ))}
-              </select> */}
               <IonCardTitle className="textBox">
                 Here are some artists you might be interested in...
               </IonCardTitle>
