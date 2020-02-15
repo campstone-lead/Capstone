@@ -5,6 +5,9 @@ import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonTo
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add } from 'ionicons/icons';
 import { signUpVenue } from '../../../store/booker'
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 axios.defaults.withCredentials = true;
 interface IMyComponentProps {
   booker: object;
@@ -51,7 +54,7 @@ class BookerSignup3 extends React.Component<
     formData.append("file", this.state.selectedFile);
     const res = await axios({
       method: "post",
-      baseURL: "http://localhost:8080/",
+      baseURL: entryURL,
       url: `/upload`,
       data: formData
     })

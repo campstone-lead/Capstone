@@ -70,7 +70,6 @@ class VenueGenres extends React.Component<
     const obj = this.state.genreTypes;
     const keys = Object.keys(obj);
     const filtered = keys.filter(key => obj[key]);
-    console.log(filtered);
     this.props.signUpVenue({
       genres: filtered,
     });

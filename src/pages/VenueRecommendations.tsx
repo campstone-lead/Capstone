@@ -72,7 +72,6 @@ class VenueRecommendations extends React.Component<
   }
 
   render() {
-    console.log('here it is venues', this.props.venues)
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">

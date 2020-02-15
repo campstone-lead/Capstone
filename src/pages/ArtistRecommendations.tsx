@@ -5,6 +5,9 @@ import {
   IonCardTitle,
   IonItemGroup,
   IonButton,
+  IonSelect,
+  IonSelectOption,
+  IonLabel,
 } from '@ionic/react';
 
 import React from 'react';
@@ -40,7 +43,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  > {
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,16 +65,16 @@ class ArtistRecommendation extends React.Component<
           artist => artist['recommendations'][0].score <= 5
         );
         if (rec.length === 0) {
-          rec = this.props.artists.filter(
-            (artist, index) => index < 5
-          );
+          rec = this.props.artists.filter((artist, index) => index < 5);
         }
         this.setState({
+          currentVenue: 1,
           currentBookerRecommandations: rec,
         });
       } else {
         await this.props.fetchArtists();
         this.setState({
+          currentVenue: 1,
           currentBookerRecommandations: this.props.artists,
         });
       }
@@ -90,52 +93,55 @@ class ArtistRecommendation extends React.Component<
   handleChange = async e => {
     await this.setState({ currentVenue: Number(e.target.value) });
     await this.props.getRecommendedArtists(this.state.currentVenue);
-    let rec = this.props.artists.filter(artist => {
-      if (artist['recommendations']) {
-        return artist['recommendations'][0].score <= 5
-      }
-      return false;
-    }
+    let rec = this.props.artists.filter(
+      artist => artist['recommendations'][0].score <= 5
     );
     if (rec.length === 0) {
-      rec = this.props.artists.filter(
-        (artist, index) => index < 5
-      );
+      rec = this.props.artists.filter((artist, index) => index < 5);
     }
     await this.setState({
       currentBookerRecommandations: rec,
     });
   };
   render() {
-    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios">
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
-              <select onChange={this.handleChange} className="selectBtn"
-                style={{ backgroundColor: "white" }}
-              >
-                {this.props.venues.map((venue, index) => (
-                  <option value={venue.id} key={index}>
-                    {venue.name}
-                  </option>
-                ))}
-              </select>
-              <h3 className="textBox">
+              <IonCardTitle className="textBox">
+                Choose the current venue:
+              </IonCardTitle>
+              <br></br>
+              <br></br>
+              <div>
+                <IonSelect
+                  cancelText="Cancel"
+                  okText="Save"
+                  onIonChange={this.handleChange}
+                  placeholder="Choose a venue"
+                >
+                  {this.props.venues.map((venue, index) => (
+                    <IonSelectOption value={venue.id} key={index}>
+                      {venue.name}
+                    </IonSelectOption>
+                  ))}
+                </IonSelect>
+              </div>
+              <IonCardTitle className="textBox">
                 Here are some artists you might be interested in...
-              </h3>
+              </IonCardTitle>
             </div>
           ) : (
-              <IonButton
-                mode="ios"
-                href="/addvenue"
-                className="homeBtn"
-                color="rgb(153, 178, 189);"
-              >
-                Add venues
+            <IonButton
+              mode="ios"
+              href="/addvenue"
+              className="homeBtn"
+              color="rgb(153, 178, 189);"
+            >
+              Add venues
             </IonButton>
-            )}
+          )}
         </IonCardHeader>
         {
           <div className="venue">
@@ -161,15 +167,15 @@ class ArtistRecommendation extends React.Component<
                     <img src={artist['imageURL']} alt="img.jpg" />
 
                     <IonItemGroup style={{ margin: '20px' }}>
-                      <h4
-                        style={{ textAlign: 'center', color: 'black', fontSize: '18px' }}>
-
+                      <IonCardTitle
+                        style={{ textAlign: 'center' }}
+                        className="artistBoxText"
+                      >
                         {artist['name']}
-                      </h4>
-
-                      <h4 style={{ textAlign: 'center', color: 'gray', fontSize: '14px' }}>
+                      </IonCardTitle>
+                      <IonCardSubtitle style={{ textAlign: 'center' }}>
                         {genres}
-                      </h4>
+                      </IonCardSubtitle>
                     </IonItemGroup>
                   </div>
                 </IonCard>

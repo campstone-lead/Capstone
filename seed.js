@@ -462,22 +462,6 @@ async function seed() {
   })
 }
 
-
-
-
-// const seed = () =>
-//   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-//     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
-//       Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-//         Promise.all(events.map(event => Event.create(event))).then(() =>
-//           Promise.all(
-//             artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1))
-//           )
-//         )
-//       )
-//     )
-//   );
-
 const main = () => {
   console.log('Syncing db...');
   db.sync({ force: true })

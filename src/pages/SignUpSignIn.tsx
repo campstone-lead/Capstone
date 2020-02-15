@@ -18,15 +18,29 @@ import { Redirect } from 'react-router-dom';
 import { auth, me, signUpWithGoogle } from '../store/user';
 import { connect } from 'react-redux';
 import { logoFacebook, logoGoogleplus } from 'ionicons/icons';
-import googleClientId from '../store/secrets';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import SignUpZero from './SignUp0';
 import FacebookLogin from 'react-facebook-login';
+// let googleClientId;
+// async function getImport(){
+//   if (process.env.NODE_ENV !== 'production') {
+//     try {
+//       let data = await import('../store/secrets')
+//       googleClientId = data.default
+//       console.log('googleClientId:', googleClientId)
+//     } catch (error) {
+//       console.error(error)
+//     }
+//     // console.log('googleClientId:', googleClientId)
+//   }
+// }
+const prodRedirectURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/signup0/' : 'http://localhost:8100/signup0/')
 
 interface IMyComponentState {
   email: string;
   password: string;
   isActive: boolean;
+  googleClientId: string;
 }
 interface IMyComponentProps {
   auth: any;
@@ -41,18 +55,25 @@ class SignUpSignIn extends React.Component<
   > {
   constructor(props) {
     super(props);
+    // getImport()
     this.state = {
       email: '',
       password: '',
       isActive: true,
+      googleClientId: '306818867974-6ea8pgimounfq83vidnlafnmb1trj1ug.apps.googleusercontent.com'
+      // googleClientId: (process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CLIENT_ID : googleClientId) || ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
   }
 
   async componentDidMount() {
+
     window.localStorage.clear();
     window.sessionStorage.clear();
+    // this.setState({
+    //   googleClientId: (process.env.NODE_ENV === 'production' ? process.env.GOOGLE_CLIENT_ID : googleClientId) || ''
+    // })
     await this.props.me();
   }
   async handleSubmit(event) {
@@ -68,7 +89,6 @@ class SignUpSignIn extends React.Component<
       email: '',
       password: '',
     });
-    console.log('isActive', this.state.isActive);
   }
   async handleSuccess(response) {
     await this.props.signUpWithGoogle(response);
@@ -77,7 +97,6 @@ class SignUpSignIn extends React.Component<
         isActive: true,
       });
     }
-    console.log('isActive', this.state.isActive);
   }
   render() {
     const responseFacebook = response => {
@@ -209,11 +228,11 @@ class SignUpSignIn extends React.Component<
                 </IonButton>
 
                 <GoogleLogin
-                  clientId={googleClientId}
+                  clientId={this.state.googleClientId}
                   buttonText="LOGIN WITH GOOGLE"
                   uxMode="popup"
                   onSuccess={this.handleSuccess}
-                  redirectUri="http://localhost:8100/signup0"
+                  redirectUri={prodRedirectURL}
                   render={renderProps => (
                     <IonButton
                       routerLink="/signup0"
@@ -255,11 +274,11 @@ class SignUpSignIn extends React.Component<
                 Sign up
               </IonButton>
               <GoogleLogin
-                clientId={googleClientId}
+                clientId={this.state.googleClientId}
                 buttonText="LOGIN WITH GOOGLE"
                 uxMode="popup"
                 onSuccess={this.handleSuccess}
-                redirectUri="http://localhost:8100/signup0"
+                redirectUri={prodRedirectURL}
                 render={renderProps => (
                   <IonButton
                     routerLink="/signup0"
@@ -294,7 +313,7 @@ class SignUpSignIn extends React.Component<
                     fields="name,email,picture"
                     // onClick={responseFacebook}
                     callback={responseFacebook}
-                    redirectUri="http://localhost:8100/signup0"
+                    redirectUri={prodRedirectURL}
                     render={renderProps => (
                       <IonButton
                         style={{ width: '270px', margin: '10px' }}

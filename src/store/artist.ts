@@ -1,5 +1,8 @@
 import axios from 'axios';
 import socket from '../socket';
+
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 /**
  * ACTION TYPES
  */
@@ -38,7 +41,7 @@ export const createConnection = (artistId, venueId) => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/',
+      baseURL: entryURL,
       url: '/api/events/connection',
       data: { artistId, venueId },
     });
@@ -51,8 +54,8 @@ export const sendRequest = request1 => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/events/connection/`,
+      baseURL: entryURL,
+      url: `/api/events/connection/`,
       data: request1,
     });
     const request = res.data;
@@ -66,8 +69,8 @@ export const sendResponse = data => async dispatch => {
   try {
     const res = await axios({
       method: 'put',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/events/connection/update`,
+      baseURL: entryURL,
+      url: `/api/events/connection/update`,
       data: data,
     });
 
@@ -83,8 +86,8 @@ export const getRecommendedArtists = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/artists/distance/${id}`,
+      baseURL: entryURL,
+      url: `/api/artists/distance/${id}`,
     });
 
     dispatch(getArtists(res.data));
@@ -97,8 +100,8 @@ export const fetchArtists = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/artists',
+      baseURL: entryURL,
+      url: '/api/artists',
     });
 
     dispatch(getArtists(res.data || defaultArtist));
@@ -111,8 +114,8 @@ export const fetchOneArtists = id => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/api/',
-      url: `/artists/${id}`,
+      baseURL: entryURL,
+      url: `/api/artists/${id}`,
     });
 
     dispatch(getOneArtist(res.data || defaultArtist));
@@ -146,8 +149,8 @@ export const updatedArtist = incomingArtist => async dispatch => {
       newArtist = { ...formerArtist, ...incomingArtist };
       await axios({
         method: 'post',
-        baseURL: 'http://localhost:8080/api/',
-        url: '/artists/',
+        baseURL: entryURL,
+        url: '/api/artists/',
         data: newArtist,
       });
       await window.localStorage.setItem(
@@ -164,11 +167,9 @@ export const updatedArtist = incomingArtist => async dispatch => {
 export const signUpArtistWithGoogle = incomingArtist => async dispatch => {
   try {
     let currentArtist = window.localStorage.getItem('google');
-    console.log('currentArtist:', currentArtist);
 
     let newArtist;
 
-    console.log('incomingArtist:', incomingArtist);
     if (incomingArtist.phone === undefined) {
       if (currentArtist === null) {
         window.localStorage.setItem('google', JSON.stringify(incomingArtist));
@@ -181,14 +182,13 @@ export const signUpArtistWithGoogle = incomingArtist => async dispatch => {
         window.localStorage.setItem('google', JSON.stringify(newArtist));
       }
     } else {
-      console.log('und:');
       currentArtist = JSON.parse(currentArtist || '');
       let formerArtist = currentArtist || {};
       newArtist = { ...formerArtist, ...incomingArtist };
       await axios({
         method: 'post',
-        baseURL: 'http://localhost:8080/api/',
-        url: '/artists/',
+        baseURL: entryURL,
+        url: '/api/artists/',
         data: newArtist,
       });
       window.localStorage.setItem(
@@ -205,9 +205,9 @@ export const editArtist = artist => async dispatch => {
   try {
     const newArtist = await axios({
       method: 'put',
-      baseURL: 'http://localhost:8080/api/',
-      url: '/artists/',
-      data: artist,
+      baseURL: entryURL,
+      url: '/api/artists/',
+      data: artist
     });
 
     dispatch(updateArtist(newArtist));
