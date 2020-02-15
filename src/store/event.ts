@@ -32,12 +32,17 @@ const createEvent = event => ({ type: CREATE_EVENT, event })
 /**
  * THUNK CREATORS
  */
-export const gotOneEvents = (id) => async dispatch => {
+export const gotOneEvents = (id, userId, userStatus) => async dispatch => {
   try {
+
     const res = await axios({
       method: "get",
       baseURL: entryURL,
-      url: `/api/events/${id}`
+      url: `/api/events/${id}`,
+      data: {
+        id: userId,
+        status: userStatus
+      }
     })
 
     dispatch(oneEvent(res.data || defaultState.currentEvent))

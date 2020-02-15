@@ -43,7 +43,7 @@ interface IMyComponentProps {
 class ArtistRecommendation extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +106,11 @@ class ArtistRecommendation extends React.Component<
   render() {
     return (
       <div className="home">
-        <IonCardHeader className="home" mode="ios">
+        <IonCardHeader className="home" mode="ios" style={{
+          '--background':
+            'none',
+
+        }}>
           {this.props.venues !== undefined && this.props.venues.length > 0 ? (
             <div className="mainBoxSelect">
               <IonCardTitle className="textBox">
@@ -133,15 +137,15 @@ class ArtistRecommendation extends React.Component<
               </IonCardTitle>
             </div>
           ) : (
-            <IonButton
-              mode="ios"
-              href="/addvenue"
-              className="homeBtn"
-              color="rgb(153, 178, 189);"
-            >
-              Add venues
+              <IonButton
+                mode="ios"
+                href="/addvenue"
+                className="homeBtn"
+                color="rgb(153, 178, 189);"
+              >
+                Add venues
             </IonButton>
-          )}
+            )}
         </IonCardHeader>
         {
           <div className="venue">

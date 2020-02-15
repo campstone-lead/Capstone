@@ -211,7 +211,7 @@ const artists = [
 const lianaVenues = [
   {
     name: 'The Bowery Ballroom',
-    genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
+    genres: ['indie', 'electronic', 'rock', 'metal', 'country', 'hipHop', 'pop'],
     address: '6 Delancey St, New York, NY 10002',
     description: 'hip concert venue for hip people',
     imageURL:

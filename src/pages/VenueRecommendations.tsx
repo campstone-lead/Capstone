@@ -74,7 +74,11 @@ class VenueRecommendations extends React.Component<
   render() {
     return (
       <div className="home">
-        <IonCardHeader className="home" mode="ios">
+        <IonCardHeader className="home" mode="ios" style={{
+          '--background':
+            'none',
+
+        }}>
           <h3 className="textBox">
             Check out our venues that suit you the most:
           </h3>

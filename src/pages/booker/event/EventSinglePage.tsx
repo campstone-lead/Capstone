@@ -272,7 +272,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     me: () => dispatch(me()),
-    gotOneEvents: (id) => dispatch(gotOneEvents(id)),
+    gotOneEvents: (id, userId, userStaus) => dispatch(gotOneEvents(id, userId, userStaus)),
     sendRequest: (request) => dispatch(sendRequest(request)),
     sendResponse: (data) => dispatch(sendResponse(data)),
 })
