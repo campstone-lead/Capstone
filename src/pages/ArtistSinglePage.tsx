@@ -50,7 +50,7 @@ interface IMyComponentState {
 class ArtistSinglePage extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -191,94 +191,94 @@ class ArtistSinglePage extends React.Component<
               )}
             {this.props.user['status'] !== 'artist' &&
               (this.state.sender === 'booker' ||
-              this.state.sender.length === 0 ? (
-                (this.props.bookingStatus === null ||
-                  this.state.bookedArtistInfo['status'] === undefined) &&
-                this.state.localStatus !== 'pending' &&
-                this.state.localStatus !== 'booked' &&
-                this.state.localStatus !== 'declined' ? null : this.props
-                    .bookingStatus !== null ? (
-                  <h5 style={{ color: 'black', fontSize: '15.5px' }}>
-                    This artist is {this.state.localStatus + '  '}
-                    at the selected venue.
+                this.state.sender.length === 0 ? (
+                  (this.props.bookingStatus === null ||
+                    this.state.bookedArtistInfo['status'] === undefined) &&
+                    this.state.localStatus !== 'pending' &&
+                    this.state.localStatus !== 'booked' &&
+                    this.state.localStatus !== 'declined' ? null : this.props
+                      .bookingStatus !== null ? (
+                        <h5 style={{ color: 'black', fontSize: '15.5px' }}>
+                          This artist is {this.state.localStatus + '  '}
+                          at the selected venue.
                   </h5>
-                ) : null
-              ) : (this.props.bookingStatus !== null ||
+                      ) : null
+                ) : (this.props.bookingStatus !== null ||
                   this.state.bookedArtistInfo['status'] !== undefined) &&
-                this.state.localStatus === 'pending' ? (
-                <h5
-                  style={{
-                    color: 'black',
-                    fontSize: '15.5px',
-                    padding: '15px',
-                  }}
-                >
-                  You have an incoming request from {this.props.artist['name']}!
+                  this.state.localStatus === 'pending' ? (
+                    <h5
+                      style={{
+                        color: 'black',
+                        fontSize: '15.5px',
+                        padding: '15px',
+                      }}
+                    >
+                      You have an incoming request from {this.props.artist['name']}!
                 </h5>
-              ) : (
-                <h5
-                  style={{
-                    color: 'black',
-                    fontSize: '15.5px',
-                    padding: '15px',
-                  }}
-                >
-                  You have {this.state.localStatus + '  '}{' '}
-                  {this.props.artist['name']}!
+                  ) : (
+                    <h5
+                      style={{
+                        color: 'black',
+                        fontSize: '15.5px',
+                        padding: '15px',
+                      }}
+                    >
+                      You have {this.state.localStatus + '  '}{' '}
+                      {this.props.artist['name']}!
                 </h5>
-              ))}
+                  ))}
             {this.props.user['status'] !== 'artist' &&
               (this.state.sender === 'booker' ||
-              this.state.sender.length === 0 ? (
-                this.props.events !== undefined &&
-                this.props.events.length !== 0 ? (
-                  <IonButton
-                    onClick={async () => await this.handleClick()}
-                    disabled={
-                      this.state.localStatus.length === 0 ? false : true
-                    }
-                  >
-                    {(this.props.bookingStatus === null ||
-                      this.state.bookedArtistInfo['status'] === undefined) &&
-                    this.state.localStatus === 'pending'
-                      ? 'Pending request sent'
-                      : this.state.localStatus === 'booked'
-                      ? 'Booked'
-                      : this.state.localStatus === 'declined'
-                      ? 'declined'
-                      : 'Book me'}
-                  </IonButton>
+                this.state.sender.length === 0 ? (
+                  this.props.events !== undefined &&
+                    this.props.events.length !== 0 ? (
+                      <IonButton
+                        onClick={async () => await this.handleClick()}
+                        disabled={
+                          this.state.localStatus.length === 0 ? false : true
+                        }
+                      >
+                        {(this.props.bookingStatus === null ||
+                          this.state.bookedArtistInfo['status'] === undefined) &&
+                          this.state.localStatus === 'pending'
+                          ? 'Pending request sent'
+                          : this.state.localStatus === 'booked'
+                            ? 'Booked'
+                            : this.state.localStatus === 'declined'
+                              ? 'declined'
+                              : 'Book me'}
+                      </IonButton>
+                    ) : (
+                      <h5 style={{ color: 'black', fontSize: '15.5px' }}>
+                        You cannot add any artists if you have no events!{' '}
+                      </h5>
+                    )
                 ) : (
-                  <h5 style={{ color: 'black', fontSize: '15.5px' }}>
-                    You cannot add any artists if you have no events!{' '}
-                  </h5>
-                )
-              ) : (
-                <div>
-                  <IonButton
-                    disabled={
-                      this.state.localStatus === 'declined' ||
-                      this.state.localStatus === 'booked'
-                        ? true
-                        : false
-                    }
-                    onClick={() => this.handleClickRespond('booked')}
-                  >
-                    Accept
+                  <div>
+                    <IonButton
+                      disabled={
+                        this.state.localStatus === 'declined' ||
+                          this.state.localStatus === 'booked'
+                          ? true
+                          : false
+                      }
+                      onClick={() => this.handleClickRespond('booked')}
+                    >
+                      Accept
                   </IonButton>
-                  <IonButton
-                    disabled={
-                      this.state.localStatus === 'declined' ||
-                      this.state.localStatus === 'booked'
-                        ? true
-                        : false
-                    }
-                    onClick={() => this.handleClickRespond('declined')}
-                  >
-                    Decline
+                    <IonButton
+                      disabled={
+                        this.state.localStatus === 'declined' ||
+                          this.state.localStatus === 'booked'
+                          ? true
+                          : false
+                      }
+                      onClick={() => this.handleClickRespond('declined')}
+                    >
+                      Decline
                   </IonButton>
-                </div>
-              ))}
+                  </div>
+                ))}
 
             <br></br>
             <br></br>
@@ -301,7 +301,7 @@ const mapDispatchToProps = dispatch => ({
   fetchOneArtists: id => dispatch(fetchOneArtists(id)),
   bookArtist: info => dispatch(bookArtist(info)),
   getBookerEvents: id => dispatch(getBookerEvents(id)),
-  gotOneEvents: id => dispatch(gotOneEvents(id)),
+  gotOneEvents: (id, userId, userStaus) => dispatch(gotOneEvents(id, userId, userStaus)),
   sendRequest: request => dispatch(sendRequest(request)),
   sendResponse: data => dispatch(sendResponse(data)),
 });

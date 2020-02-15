@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonItem, IonList, IonToolbar, IonIcon } from '@ionic/react';
-import { notificationsOutline } from 'ionicons/icons'
+import { notificationsOutline, notifications, notificationsOff } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
@@ -41,7 +41,7 @@ interface IMyComponentState {
   currentEvent: any,
   bookingInfo: any,
   bookerEvents: any,
-  artistRequests: any
+  artistRequests: any,
 }
 
 class NotificationWall extends React.Component<IMyComponentProps, IMyComponentState> {
@@ -53,11 +53,14 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
       currentEvent: '',
       bookingInfo: {},
       bookerEvents: [],
-      artistRequests: []
+      artistRequests: [],
     }
   }
 
+  onClickHandler = async (artistId) => {
 
+    await this.props.sendResponse({ notificationStatus: true, artistId });
+  }
   async componentDidMount() {
     await this.props.me();
     await this.props.fetchEvents();
@@ -67,7 +70,7 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
       await this.props.bookerVenues.forEach(venues => {
         bEvents = this.props.events.filter(event => event.venueId === venues.id)
         bEvents.forEach(async (bookerEvent) => {
-          await this.props.gotOneEvents(bookerEvent['id'])
+          await this.props.gotOneEvents(bookerEvent['id'], this.props.user['id'], this.props.user['status'])
           await this.setState({ bookerEvents: [...this.state.bookerEvents, this.props.selectedEvent] })
           await this.props.selectedEvent['artists'].forEach((artist) => {
             this.setState({ artistRequests: [...this.state.artistRequests, { artist, event: this.props.selectedEvent.event }] })
@@ -99,6 +102,7 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
 
 
   render() {
+    console.log(this.state.artistRequests)
     return (
       <IonPage>
         <IonHeader mode="ios" style={{ '--background': '#f3d2d1' }}>
@@ -131,6 +135,7 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                       <IonItem
                         key={index}
                         href={`/allArtists/${artist.artist.artistId}`}
+                        onClick={() => this.onClickHandler(artist.artistId)}
                       >
                         <IonIcon slot="start" color="medium" icon={notificationsOutline} />
                         <h6 style={{ padding: '5px' }}
@@ -151,8 +156,8 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
                   if (((artist.artist.status === 'pending' && artist.artist.sender === 'booker') || (artist.artist.status === 'booked' && artist.artist.sender === 'artist') ||
                     (artist.artist.status === 'declined' && artist.artist.sender === 'artist')) && artist.artist.artistId === this.props.user['id'])
                     return (
-                      <IonItem key={index} href={`/allEvents/${artist.artist.eventId}`}>
-                        <IonIcon slot="start" color="medium" icon={notificationsOutline} />
+                      <IonItem key={index} href={`/allEvents/${artist.artist.eventId}`} onClick={() => this.onClickHandler(artist.artistId)}>
+                        <IonIcon slot="start" color={(artist.artist.notificationStatus === false) ? 'black' : 'medium'} icon={(artist.artist.notificationStatus === false) ? notificationsOutline : notifications} />
                         <h6 style={{ padding: '5px' }}
                           color={(artist.artist.status === 'pending') ? 'black' : ''}>
                           {(artist.artist.status === 'pending' && artist.artist.sender === 'booker') ? `You have a pending request from  ${artist.event.bookerName}.` : (artist.artist.sender === 'artist') && `Your request to ${artist.event.bookerName} has been ${artist.artist.status === 'booked' ? 'approved' : 'declined'}`
@@ -195,7 +200,7 @@ const mapDispatchToProps = (dispatch) => ({
   getBookerEvents: (id) => dispatch(getBookerEvents(id)),
   sendRequest: (request) => dispatch(sendRequest(request)),
   sendResponse: (data) => dispatch(sendResponse(data)),
-  gotOneEvents: (id) => dispatch(gotOneEvents(id)),
+  gotOneEvents: (id, userId, userStaus) => dispatch(gotOneEvents(id, userId, userStaus)),
   fetchOneArtists: (id) => dispatch(fetchOneArtists(id)),
   fetchEvents: () => dispatch(fetchEvents()),
   getAllVenues: () => dispatch(getAllVenues())

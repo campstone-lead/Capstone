@@ -31,7 +31,30 @@ router.get("/:id", async (req, res, next) => {
     } else {
       const artistsIds = await ArtistEvent.findAll(
         { where: { eventId: data.id } })
-      res.json({ artists: artistsIds, event: data })
+      const userStatus = req.body.status;
+      const userId = req.body.id;
+      let activeNotfications = 0;
+      console.log('user status is here', userStatus)
+      if (userStatus !== undefined) {
+        if (userStatus === 'booker') {
+
+          if (data['bookerId'] === Number(userId)) {
+            if (artistsIds.length !== 0) {
+              console.log('booker here', req.body)
+              artistsIds.forEach((artist) => {
+                if (artist['status'] === 'pending' && artist['sender'] === 'artist') {
+
+                  if (artist['notificationStatus'] === false)
+                    console.log('HERE ', activeNotfications)
+                  activeNotfications++;
+                }
+              })
+            }
+          }
+        }
+      }
+
+      res.json({ artists: artistsIds, event: data, activeNotfications: activeNotfications })
     }
   } catch (error) {
     next(error)
