@@ -83,7 +83,6 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
     });
 
     var imageURL = image.webPath;
-    // Can be set to the src of an image now
     await this.setState({
       artist: { ...this.state.artist, imageURL: imageURL || '', }
 
@@ -110,7 +109,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
   }
   onClickHandler = async (e) => {
     e.preventDefault()
-    console.log(this.state.selectedFile)
+
     let file = this.state.selectedFile;
     var metadata = { contentType: 'image/jpeg' };
     try {

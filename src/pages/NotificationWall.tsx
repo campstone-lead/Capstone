@@ -102,7 +102,7 @@ class NotificationWall extends React.Component<IMyComponentProps, IMyComponentSt
 
 
   render() {
-    console.log(this.state.artistRequests)
+
     return (
       <IonPage>
         <IonHeader mode="ios" style={{ '--background': '#f3d2d1' }}>
