@@ -1,7 +1,11 @@
 import axios from 'axios';
 import history from '../pages/history';
 import { logoWindows } from 'ionicons/icons';
-// axios.defaults.withCredentials = true;
+
+axios.defaults.withCredentials = true;
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
+
 /**
  * ACTION TYPES
  */
@@ -34,7 +38,7 @@ export const auth = (email, password) => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/',
+      baseURL: entryURL,
       url: '/auth/login/',
       data: { email, password },
     });
@@ -49,7 +53,7 @@ export const authWithGoogle = googleId => async dispatch => {
   try {
     const res = await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/',
+      baseURL: entryURL,
       url: '/auth/login/',
       data: { googleId },
     });
@@ -63,12 +67,11 @@ export const authWithGoogle = googleId => async dispatch => {
 
 export const signUpWithGoogle = googleResponse => async dispatch => {
   try {
-    console.log(googleResponse);
     let newUser = googleResponse.profileObj;
     try {
       const res = await axios({
         method: 'post',
-        baseURL: 'http://localhost:8080/',
+        baseURL: entryURL,
         url: '/auth/login/',
         data: { email: newUser.email, googleId: newUser.googleId },
       });
@@ -85,8 +88,8 @@ export const me = () => async dispatch => {
   try {
     const res = await axios({
       method: 'get',
-      baseURL: 'http://localhost:8080/auth/',
-      url: '/me/',
+      baseURL: entryURL,
+      url: '/auth/me/',
     });
 
     dispatch(getUser(res.data || defaultUser));
@@ -98,7 +101,7 @@ export const logout = () => async dispatch => {
   try {
     await axios({
       method: 'post',
-      baseURL: 'http://localhost:8080/',
+      baseURL: entryURL,
       url: '/auth/logout/',
     });
     window.localStorage.clear();
@@ -118,7 +121,6 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return {};
     case SIGN_UP_WITH_GOOGLE:
-      console.log(action.user);
       let newUser = {
         firstName: action.user.givenName,
         lastName: action.user.familyName,

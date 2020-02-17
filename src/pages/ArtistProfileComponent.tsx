@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   IonItem,
-  IonLabel,
   IonList,
   IonCardContent,
   IonCardSubtitle,
   IonTabBar,
   IonTabButton,
   IonIcon,
+  IonCard,
+  IonLabel,
 } from '@ionic/react';
 import {
   logoInstagram,
@@ -23,6 +24,7 @@ import './Tab1.css';
 interface IMyComponentProps {
   genres: Array<string>;
   artist: object;
+  history: object;
 }
 interface IMyComponentState {
   status: any;
@@ -46,52 +48,60 @@ class ArtistProfileComponent extends React.Component<
         <img
           src={this.props.artist['imageURL']}
           alt={this.props.artist['firstName']}
-          className="profileImage"
-        />
+          className="profilIMG"
 
-        <IonCardContent
-          style={{
-            '--background':
-              'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
-          }}
-        >
-          <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+        />
+        <IonCardContent>
+          <h4 style={{ color: 'black', fontSize: '15.5px' }}>
             {this.props.artist['bio']}
-          </IonCardSubtitle>
-          <br></br>
-          <IonList lines="inset" className="ion-item-border ">
+          </h4>
+        </IonCardContent>
+
+        <IonCard style={{
+          '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)',
+          float: 'center',
+          width: '80%'
+        }} >
+          <IonList lines="inset" style={{ '--background': 'none' }} >
             <IonItem>
-              <IonIcon slot="start" color="medium" icon={musicalNotes} />
-              <IonLabel style={{ padding: '5px' }}>
+              <IonIcon slot="start" color="black" icon={musicalNotes} />
+              <h6 style={{ padding: '5px' }}>
                 {' '}
                 {this.props.artist['type']}{' '}
-              </IonLabel>
+              </h6>
             </IonItem>
 
-            <IonItem>
-              <IonIcon slot="start" color="medium" icon={microphone} />
-              <IonLabel style={{ padding: '5px' }}>
+            <IonItem lines={(this.props.history['location'].pathname === '/profile') ? 'inset' : 'none'}>
+              <IonIcon slot="start" color="black" icon={microphone} />
+              <h6 style={{ padding: '5px' }}>
                 {' '}
                 My genres are: {genres}{' '}
-              </IonLabel>
+              </h6>
             </IonItem>
+            {
+              (this.props.history['location'].pathname === '/profile') &&
+              (
+                <div>
+                  <IonItem>
+                    <IonIcon slot="start" color="black" icon={mailOpen} />
+                    <h6 style={{ padding: '5px' }}>
+                      {this.props.artist['email']}{' '}
+                    </h6>
+                  </IonItem>
+                  <IonItem lines="none">
+                    <IonIcon slot="start" color="black" icon={call} />
+                    <h6 style={{ padding: '5px' }}>
+                      {' '}
+                      {this.props.artist['phone']}{' '}
+                    </h6>
+                  </IonItem>
+                </div>
+              )
+            }
 
-            <IonItem>
-              <IonIcon slot="start" color="medium" icon={mailOpen} />
-              <IonLabel style={{ padding: '5px' }}>
-                {this.props.artist['email']}{' '}
-              </IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonIcon slot="start" color="medium" icon={call} />
-              <IonLabel style={{ padding: '5px' }}>
-                {' '}
-                {this.props.artist['phone']}{' '}
-              </IonLabel>
-            </IonItem>
           </IonList>
           <div className="profileTab">
-            <IonTabBar slot="bottom" color="none">
+            <IonTabBar slot="bottom" color="none"  >
               <IonTabButton
                 tab="tab2"
                 onClick={() =>
@@ -103,7 +113,7 @@ class ArtistProfileComponent extends React.Component<
                 }
                 color="none"
               >
-                <IonItem color="none">
+                <IonItem color="none" >
                   <IonIcon icon={logoInstagram} />
                 </IonItem>
                 <IonLabel>Instagram</IonLabel>
@@ -144,7 +154,7 @@ class ArtistProfileComponent extends React.Component<
               </IonTabButton>
             </IonTabBar>
           </div>
-        </IonCardContent>
+        </IonCard>
       </>
     );
   }

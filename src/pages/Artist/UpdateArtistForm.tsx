@@ -12,6 +12,8 @@ import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
 import { headset, mailOpen, call, book, home, logoInstagram, logoFacebook, musicalNote, person, add, camera } from 'ionicons/icons';
 
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 axios.defaults.withCredentials = true;
 const { Camera } = Plugins;
 
@@ -111,11 +113,10 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
     formData.append("file", this.state.selectedFile);
     const res = await axios({
       method: "post",
-      baseURL: "http://localhost:8080/",
+      baseURL: entryURL,
       url: `/upload`,
       data: formData
     })
-    console.log(res.data)
 
   }
   handleFormChange = (e) => {
@@ -149,12 +150,15 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
           </div>
 
           < div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
-            <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+            <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" style={{ backgroundColor: 'white', borderRadius: '25px' }} />
           </div>
 
           <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center" }}>
-            <IonButton onClick={this.onClickHandler}>
-              <IonIcon icon={add}></IonIcon>
+            <IonButton onClick={this.onClickHandler} disabled={
+
+              (this.state.selectedFile === null) ? true : false
+            }>
+              <IonIcon color="black" icon={add}></IonIcon>
               <IonLabel>Upload picture</IonLabel>
             </IonButton>
 
@@ -169,16 +173,17 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
           <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "column", alignContent: "center" }}>
 
 
-            <form onSubmit={this.handleSubmit} >
+            <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }} >
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={person} />
+                <IonIcon mode="ios" slot="start" color="black" icon={person} />
                 <IonInput clearInput type="text"
                   placeholder="First Name"
                   name="firstName"
                   value={this.state.artist["firstName"]}
                   style={{ width: "250px" }}
                   onIonChange={(e) => this.handleFormChange(e)}
+
                 />
 
                 <IonInput clearInput type="text"
@@ -191,7 +196,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
               </IonItem>
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
+                <IonIcon mode="ios" slot="start" color="black" icon={headset} />
                 <IonInput clearInput type="text"
                   name="name"
                   placeholder="Artist Name"
@@ -202,7 +207,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
               </IonItem>
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={mailOpen} />
+                <IonIcon mode="ios" slot="start" color="black" icon={mailOpen} />
                 <IonInput clearInput type="text"
                   name="email"
                   placeholder="email@email.com"
@@ -214,7 +219,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
 
               {/* <IonLabel className='venuelabel'>Genres</IonLabel>
                   <IonItem lines="inset" style={{ '--background': 'none' }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
+                    <IonIcon mode="ios" slot="start" color="black" icon={headset} />
                     <IonInput clearInput type="text"
                       name={genres}
                       value={this.state.artist[genres]}
@@ -224,7 +229,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                   </IonItem> */}
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={call} />
+                <IonIcon mode="ios" slot="start" color="black" icon={call} />
                 <IonInput clearInput type="text"
                   name="phone"
                   placeholder="Phone"
@@ -235,7 +240,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
               </IonItem>
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={home} />
+                <IonIcon mode="ios" slot="start" color="black" icon={home} />
                 <IonInput clearInput type="text"
                   name="zipCode"
                   placeholder="Zip Code"
@@ -247,7 +252,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
 
               {/* <IonLabel className='venuelabel'>Type</IonLabel>
                   <IonItem lines="inset" style={{ '--background': 'none' }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
+                    <IonIcon mode="ios" slot="start" color="black" icon={headset} />
                     <IonInput clearInput type="text"
                       name={type}
                       value={this.state.artist[type]}
@@ -257,7 +262,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                   </IonItem> */}
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={book} />
+                <IonIcon mode="ios" slot="start" color="black" icon={book} />
                 <IonInput clearInput type="text"
                   name="bio"
                   placeholder="Bio"
@@ -269,7 +274,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
 
               {/* <IonLabel className='venuelabel'>ImageURL</IonLabel>
                   <IonItem lines="inset" style={{ '--background': 'none' }}>
-                    <IonIcon mode="ios" slot="start" color="medium" icon={headset} />
+                    <IonIcon mode="ios" slot="start" color="black" icon={headset} />
                     <IonInput clearInput type="text"
                       name="imageURL"
                       value={this.state.artist["imageURL"]}
@@ -279,7 +284,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                   </IonItem> */}
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={logoInstagram} />
+                <IonIcon mode="ios" slot="start" color="black" icon={logoInstagram} />
                 <IonInput clearInput type="text"
                   name="instagramUrl"
                   placeholder="Instagram Url"
@@ -290,7 +295,7 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
               </IonItem>
 
               <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={musicalNote} />
+                <IonIcon mode="ios" slot="start" color="black" icon={musicalNote} />
                 <IonInput clearInput type="text"
                   name="spotifyUrl"
                   placeholder="Spotify Url"
@@ -300,8 +305,8 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                 />
               </IonItem>
 
-              <IonItem lines="inset" style={{ '--background': 'none' }}>
-                <IonIcon mode="ios" slot="start" color="medium" icon={logoFacebook} />
+              <IonItem lines="inset" style={{ '--background': 'none', marginBottom: '20px' }}>
+                <IonIcon mode="ios" slot="start" color="black" icon={logoFacebook} />
                 <IonInput clearInput type="text"
                   name="facebookUrl"
                   placeholder="Facebook Url"
@@ -311,14 +316,20 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
                 />
               </IonItem>
 
-              <IonItem routerLink="/profile" lines="none">
-                <IonButton
-                  type="submit"
-                  size="default"
-                  disabled={!(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.artist["zipCode"]))}
+
+              <IonButton
+                routerLink="/profile"
+                type="submit"
+                size="default"
+                disabled={!(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.artist["zipCode"]))}
                 //  || !(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/.test(this.state.artist["email"]))}
-                >create</IonButton>
-              </IonItem>
+                style={{
+                  marginBottom: '20px',
+                  width: '100px',
+                  float: 'center'
+                }}
+              >Update</IonButton>
+
             </form>
           </div>
         </IonContent>

@@ -2,6 +2,8 @@ import axios from 'axios'
 // import history from '../pages/history'
 axios.defaults.withCredentials = true;
 
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 
 /**
  * ACTION TYPES
@@ -30,12 +32,17 @@ const createEvent = event => ({ type: CREATE_EVENT, event })
 /**
  * THUNK CREATORS
  */
-export const gotOneEvents = (id) => async dispatch => {
+export const gotOneEvents = (id, userId, userStatus) => async dispatch => {
   try {
+
     const res = await axios({
       method: "get",
-      baseURL: "http://localhost:8080/api/",
-      url: `/events/${id}`
+      baseURL: entryURL,
+      url: `/api/events/${id}`,
+      data: {
+        id: userId,
+        status: userStatus
+      }
     })
 
     dispatch(oneEvent(res.data || defaultState.currentEvent))
@@ -47,8 +54,8 @@ export const fetchEvents = () => async dispatch => {
   try {
     const res = await axios({
       method: "get",
-      baseURL: "http://localhost:8080/api/",
-      url: "/events/"
+      baseURL: entryURL,
+      url: "/api/events/"
     })
 
     dispatch(getEvents(res.data || defaultState.allEvents))
@@ -66,8 +73,8 @@ export const createdEvent = (sentEvent) => async dispatch => {
     // }
     await axios({
       method: "post",
-      baseURL: "http://localhost:8080/api/",
-      url: `/events/`,
+      baseURL: entryURL,
+      url: `/api/events/`,
       data: sentEvent
     })
     dispatch(createEvent(sentEvent.event))

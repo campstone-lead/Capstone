@@ -5,9 +5,11 @@ import {
   IonPage,
   IonButton,
   IonBackButton,
-  IonCardSubtitle,
-  IonHeader, IonToolbar, IonCardTitle,
-  IonItem
+  IonHeader,
+  IonToolbar,
+  IonLabel,
+  IonSelectOption,
+  IonSelect,
 } from '@ionic/react';
 import './Tab1.css';
 import { connect } from 'react-redux';
@@ -40,7 +42,7 @@ interface IMyComponentProps {
 }
 interface IMyComponentState {
   status: any;
-  currentEvent: any;
+  currentEvent: number;
   bookedArtistInfo: object;
   localStatus: string;
   sender: string;
@@ -54,7 +56,7 @@ class ArtistSinglePage extends React.Component<
     super(props);
     this.state = {
       status: null,
-      currentEvent: '',
+      currentEvent: 1,
       bookedArtistInfo: {},
       localStatus: '',
       sender: '',
@@ -62,7 +64,7 @@ class ArtistSinglePage extends React.Component<
     };
   }
   handleChange = async e => {
-    await this.setState({ currentEvent: e.target.value });
+    await this.setState({ currentEvent: Number(e.target.value) });
 
     if (this.props.bookingStatus !== null) {
       let getArtistStatusforCurrentVenue = this.props.bookingStatus.filter(
@@ -110,9 +112,7 @@ class ArtistSinglePage extends React.Component<
     const bookerId = this.props.user['id'];
     await this.props.getBookerEvents(bookerId);
     if (this.props.events.length !== 0) {
-
       await this.setState({ currentEvent: this.props.events[0].id });
-
     }
     await this.props.events.forEach(async el => {
       await this.props.gotOneEvents(el.id);
@@ -144,27 +144,27 @@ class ArtistSinglePage extends React.Component<
       )
     }
     return (
-      <IonPage >
-        <IonHeader mode="ios" >
-          <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
-            <div className="tabHeader" >
-              <IonItem routerLink="/home">
-                <img
-                  src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
-                  alt="logo.png"
-                  className="logo"
-                />
-              </IonItem>
-              <IonCardTitle>
+      <IonPage>
+        <IonHeader mode="ios">
+          <IonToolbar mode="ios" style={{ '--background': '#fcbcdb' }}>
+            <div className="tabHeader">
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <h3 style={{ textAlign: 'center' }}>
                 {this.props.artist['name']}
-              </IonCardTitle>
+              </h3>
             </div>
           </IonToolbar>
         </IonHeader>
-        <IonContent style={{
-          '--background':
-            'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
-        }} >
+        <IonContent
+          style={{
+            '--background':
+              'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
+          }}
+        >
           <IonBackButton
             defaultHref="/home/"
             mode="ios"
@@ -173,25 +173,32 @@ class ArtistSinglePage extends React.Component<
             className="backBtn"
           />
 
-          <div className="profile" style={{ marginTop: "50px" }}>
+          <div className="profile" style={{ marginTop: '50px' }}>
             <ArtistProfileComponent
               genres={this.props.genres}
               artist={this.props.artist}
+              history={this.props['history']}
             />
-            {(this.props.user['status'] !== 'artist') && this.props.events !== undefined && (
-              <select onChange={this.handleChange} style={{ backgroundColor: 'white', width: '350px' }}>
-                {this.props.events &&
-                  this.props.events.length !== 0 &&
-                  this.props.events.map((event, index) => (
-                    <option value={event.id} key={index}>
-                      {event.name} - {event.venueName}
-                    </option>
-                  ))}
-              </select>
-            )}
-            {
 
-              (this.props.user['status'] !== 'artist') &&
+            {this.props.user['status'] !== 'artist' &&
+              this.props.events !== undefined && (
+                <IonSelect
+                  cancelText="Cancel"
+                  okText="Save"
+                  mode="ios"
+                  onIonChange={this.handleChange}
+                  placeholder="Choose an event"
+                >
+                  {this.props.events &&
+                    this.props.events.length !== 0 &&
+                    this.props.events.map((event, index) => (
+                      <IonSelectOption value={event.id} key={index}>
+                        {event.name} - {event.venueName}
+                      </IonSelectOption>
+                    ))}
+                </IonSelect>
+              )}
+            {this.props.user['status'] !== 'artist' &&
               (this.state.sender === 'booker' ||
                 this.state.sender.length === 0 ? (
                   (this.props.bookingStatus === null ||
@@ -200,32 +207,45 @@ class ArtistSinglePage extends React.Component<
                     this.state.localStatus !== 'booked' &&
                     this.state.localStatus !== 'declined' ? null : this.props
                       .bookingStatus !== null ? (
-                        <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                          This artist is {this.state.localStatus + "  "}
-
+                        <h5 style={{ color: 'black', fontSize: '15.5px' }}>
+                          This artist is {this.state.localStatus + '  '}
                           at the selected venue.
-                </IonCardSubtitle>
+                  </h5>
                       ) : null
                 ) : (this.props.bookingStatus !== null ||
                   this.state.bookedArtistInfo['status'] !== undefined) &&
                   this.state.localStatus === 'pending' ? (
-                    <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                    <h5
+                      style={{
+                        color: 'black',
+                        fontSize: '15.5px',
+                        padding: '15px',
+                      }}
+                    >
                       You have an incoming request from {this.props.artist['name']}!
-              </IonCardSubtitle>
+                </h5>
                   ) : (
-                    <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
-                      You have {this.state.localStatus + "  "} {this.props.artist['name']}!
-              </IonCardSubtitle>
+                    <h5
+                      style={{
+                        color: 'black',
+                        fontSize: '15.5px',
+                        padding: '15px',
+                      }}
+                    >
+                      You have {this.state.localStatus + '  '}{' '}
+                      {this.props.artist['name']}!
+                </h5>
                   ))}
-            {
-
-              (this.props.user['status'] !== 'artist') && (this.state.sender === 'booker' ||
+            {this.props.user['status'] !== 'artist' &&
+              (this.state.sender === 'booker' ||
                 this.state.sender.length === 0 ? (
                   this.props.events !== undefined &&
                     this.props.events.length !== 0 ? (
                       <IonButton
                         onClick={async () => await this.handleClick()}
-                        disabled={this.state.localStatus.length === 0 ? false : true}
+                        disabled={
+                          this.state.localStatus.length === 0 ? false : true
+                        }
                       >
                         {(this.props.bookingStatus === null ||
                           this.state.bookedArtistInfo['status'] === undefined) &&
@@ -238,9 +258,9 @@ class ArtistSinglePage extends React.Component<
                               : 'Book me'}
                       </IonButton>
                     ) : (
-                      <IonCardSubtitle style={{ color: 'black', fontSize: '15.5px' }}>
+                      <h5 style={{ color: 'black', fontSize: '15.5px' }}>
                         You cannot add any artists if you have no events!{' '}
-                      </IonCardSubtitle>
+                      </h5>
                     )
                 ) : (
                   <div>
@@ -254,7 +274,7 @@ class ArtistSinglePage extends React.Component<
                       onClick={() => this.handleClickRespond('booked')}
                     >
                       Accept
-                </IonButton>
+                  </IonButton>
                     <IonButton
                       disabled={
                         this.state.localStatus === 'declined' ||
@@ -265,7 +285,7 @@ class ArtistSinglePage extends React.Component<
                       onClick={() => this.handleClickRespond('declined')}
                     >
                       Decline
-                </IonButton>
+                  </IonButton>
                   </div>
                 ))}
 
@@ -290,7 +310,7 @@ const mapDispatchToProps = dispatch => ({
   fetchOneArtists: id => dispatch(fetchOneArtists(id)),
   bookArtist: info => dispatch(bookArtist(info)),
   getBookerEvents: id => dispatch(getBookerEvents(id)),
-  gotOneEvents: id => dispatch(gotOneEvents(id)),
+  gotOneEvents: (id, userId, userStaus) => dispatch(gotOneEvents(id, userId, userStaus)),
   sendRequest: request => dispatch(sendRequest(request)),
   sendResponse: data => dispatch(sendResponse(data)),
 });

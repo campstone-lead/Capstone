@@ -4,7 +4,8 @@ const db = require('../db');
 
 const fetch = require('node-fetch');
 // const googleMapsApiKey = require('../../../secrets');
-require('../../../secrets');
+
+if (process.env.NODE_ENV !== 'production') require('../../../secrets');
 
 const Artist = db.define('artist', {
   tableName: {

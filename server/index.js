@@ -15,6 +15,9 @@ const cors = require('cors');
 var multer = require('multer');
 module.exports = app;
 
+const corsPath = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8100')
+
+
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
 if (process.env.NODE_ENV === 'test') {
@@ -49,36 +52,11 @@ const createApp = () => {
   // compression middleware
   app.use(compression());
   const config = {
-    origin: ['http://localhost:8100', 'https://accounts.google.com'],
+    origin: [corsPath, 'https://accounts.google.com'],
     credentials: true,
   };
 
   app.use(cors(config));
-
-  // const allowedOrigins = [
-  //   'capacitor://localhost',
-  //   'ionic://localhost',
-  //   'http://localhost',
-  //   'http://localhost:8080',
-  //   'http://localhost:8100',
-  //   'https://accounts.google.com',
-  //   'https://accounts.google.com/signin/oauth/'
-  // ];
-
-  // // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-  // const corsOptions = {
-  //   origin: (origin, callback) => {
-  //     if (allowedOrigins.includes(origin) || !origin) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('Origin not allowed by CORS'));
-  //     }
-  //   },
-
-  //   credentials: true,
-  // };
-
-  // app.use(cors(corsOptions));
 
   // session middleware with passport
   app.use(
@@ -113,14 +91,14 @@ const createApp = () => {
       } else if (err) {
         return res.status(500).json(err);
       }
-      console.log(req.file);
       return res.status(200).send(req.file);
     });
   });
+
+  const entryPath = (process.env.NODE_ENV === 'development' ? 'public' : 'build')
+
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')));
-  //FOR DEPLOYMENT
-  // app.use(express.static(path.join(__dirname, '..', 'build')))
+  app.use(express.static(path.join(__dirname, '..', entryPath)))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -135,9 +113,7 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'));
-    //FOR DEPLOYMENT
-    // res.sendFile(path.join(__dirname, '..', 'build/index.html'))
+    res.sendFile(path.join(__dirname, '..', entryPath, '/index.html'))
   });
 
   // error handling endware

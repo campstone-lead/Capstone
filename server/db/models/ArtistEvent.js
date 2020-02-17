@@ -23,6 +23,10 @@ const ArtistEvent = db.define('ArtistEvent', {
   },
   artistName: {
     type: Sequelize.STRING
+  },
+  notificationStatus: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 

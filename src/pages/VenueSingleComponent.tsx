@@ -32,33 +32,32 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
     }
     return (
       <>
-        <img src={this.props.venue['imageURL']} alt="img.jpg" />
+        <img src={this.props.venue['imageURL']} className="venueImg" alt="img.jpg" />
 
         <IonCardContent>
-          <IonCardSubtitle style={{ "color": "black", "fontSize": "15.5px" }}>{this.props.venue['description']}</IonCardSubtitle>
+          <h4 style={{ "color": "black", "fontSize": "15.5px", }}>{this.props.venue['description']}</h4>
         </IonCardContent>
-
         <br></br>
-        <div className="ion-item-border " >
-          <IonItem style={{ '--background': 'none' }}>
+        <IonCard style={{ '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)' }} >
+          <IonItem style={{ '--background': 'none' }} >
             <IonIcon slot="start" color="black" icon={home} />
-            <IonLabel style={{ "padding": "5px" }}>  {this.props.venue['address']} </IonLabel>
+            <h6 style={{ "padding": "5px" }}>  {this.props.venue['address']} </h6>
           </IonItem>
 
           <IonItem style={{ '--background': 'none' }}>
             <IonIcon slot="start" color="black" icon={musicalNote} />
-            <IonLabel style={{ "padding": "5px" }}> {genres} </IonLabel>
+            <h6 style={{ "padding": "5px" }}> {genres} </h6>
           </IonItem>
 
           <IonItem style={{ '--background': 'none' }}>
             <IonIcon slot="start" color="black" icon={body} />
-            <IonLabel style={{ "padding": "5px" }}> Max Capacity: {this.props.venue['capacity']} </IonLabel>
+            <h6 style={{ "padding": "5px" }}> {this.props.venue['capacity']} </h6>
           </IonItem>
-        </div>
+        </IonCard>
         {this.props.booker['user'] ?
-          <IonCardTitle>Booker: {this.props.booker["user"]["firstName"]}{' '}{this.props.booker["user"]["lastName"]}</IonCardTitle> : null}
+          <h3>Booker: {this.props.booker["user"]["firstName"]}{' '}{this.props.booker["user"]["lastName"]}</h3> : null}
         <div style={{ "display": "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <h1>Upcoming Events:</h1>
+          <h2>Upcoming Events:</h2>
           {this.props.isOwner && (
             <IonButton routerLink={`/addevent/${this.props.venue["id"]}`}>
               <IonIcon icon={add} />
@@ -89,18 +88,18 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
             >
               <div className="eventBox" >
                 <IonItemGroup style={{ margin: '20px' }}>
-                  <IonCardTitle
-                    style={{ textAlign: 'center' }}
+                  <h4
+                    style={{ textAlign: 'center', color: 'black' }}
                     className="eventBox"
                   >
                     {event['name']}
-                  </IonCardTitle>
-                  <IonCardSubtitle
+                  </h4>
+                  <p
                     style={{ textAlign: 'center' }}
                   >
                     {event['description']}
-                  </IonCardSubtitle>
-                  <IonCardSubtitle
+                  </p>
+                  <p
                     style={{ textAlign: 'center' }}
                   >
                     {
@@ -108,7 +107,7 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
                       newdate
 
                     }
-                  </IonCardSubtitle>
+                  </p>
                 </IonItemGroup>
               </div>
             </IonCard>
@@ -121,10 +120,6 @@ class VenueSingleComponent extends React.Component<IMyComponentProps, IMyCompone
     )
   }
 }
-
-// {this.props.events ? this.props.events.filter(event) => event["venueId"] === this.props.venue["id"]
-// }
-
 
 export default VenueSingleComponent;
 

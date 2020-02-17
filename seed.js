@@ -211,7 +211,7 @@ const artists = [
 const lianaVenues = [
   {
     name: 'The Bowery Ballroom',
-    genres: ['pop', 'electronic', 'rock', 'metal', 'country', 'hipHop'],
+    genres: ['indie', 'electronic', 'rock', 'metal', 'country', 'hipHop', 'pop'],
     address: '6 Delancey St, New York, NY 10002',
     description: 'hip concert venue for hip people',
     imageURL:
@@ -461,22 +461,6 @@ async function seed() {
     sender: 'artist',
   })
 }
-
-
-
-
-// const seed = () =>
-//   Promise.all(bookers.map(booker => Booker.create(booker))).then(() =>
-//     Promise.all(artists.map(artist => Artist.create(artist))).then(() =>
-//       Promise.all(venues.map(venue => Venue.create(venue))).then(() =>
-//         Promise.all(events.map(event => Event.create(event))).then(() =>
-//           Promise.all(
-//             artistEvent.map(artistEvent1 => ArtistEvent.create(artistEvent1))
-//           )
-//         )
-//       )
-//     )
-//   );
 
 const main = () => {
   console.log('Syncing db...');

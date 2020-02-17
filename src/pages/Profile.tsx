@@ -3,7 +3,6 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
   IonItem,
   IonLabel,
@@ -11,10 +10,7 @@ import {
   IonCard,
   IonList,
   IonItemGroup,
-  IonCardContent,
   IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
   IonIcon,
 } from '@ionic/react';
 import {
@@ -48,8 +44,17 @@ class Profile extends React.Component<IMyComponentProps, {}> {
     return (
       <IonPage>
         <IonHeader>
-          <IonToolbar id="bar">
-            <IonTitle>{this.props.user["name"]}</IonTitle>
+          <IonToolbar mode="ios" style={{ '--background': "#fcbcdb" }}>
+            <div className="tabHeader" >
+              <img
+                src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png"
+                alt="logo.png"
+                className="logo"
+              />
+              <h3 style={{ textAlign: "center" }}>
+                {this.props.user['name']}
+              </h3>
+            </div>
           </IonToolbar>
         </IonHeader>
         <IonContent style={{
@@ -61,6 +66,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
               <ArtistProfileComponent
                 genres={this.props.genres}
                 artist={this.props.user}
+                history={this.props['history']}
               />
               <IonButton routerLink="/artists/update">Update profile</IonButton>
             </div>
@@ -72,12 +78,16 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                   className="bookerImage"
                 />
                 <IonCardHeader style={{ '--background': 'none' }}>
-                  <IonCardTitle >
+                  <h1 style={{ color: 'black', }}>
                     {this.props.user['firstName']} {this.props.user['lastName']}
-                  </IonCardTitle>
+                  </h1>
                 </IonCardHeader>
-                <IonCardContent >
-                  <IonList lines="inset" className="ion-item-border ">
+                <IonCard style={{
+                  '--background': 'url(https://wallpaperaccess.com/full/851202.jpg)',
+                  float: 'center',
+                  width: '80%'
+                }} >
+                  <IonList lines="inset">
                     <IonItem >
                       <IonIcon slot="start" color="medium" icon={mailOpen} />
                       <IonLabel style={{ padding: '5px' }}>
@@ -93,9 +103,26 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                       </IonLabel>
                     </IonItem>
                   </IonList>
-                </IonCardContent>
-                <IonButton routerLink={`/bookers/update`}>Update profile</IonButton>
-                <br></br>
+                </IonCard>
+                <IonButton size='default' routerLink={`/bookers/update`}>Update profile</IonButton>
+                <div style={{ display: 'flex' }}>
+                  <IonButton
+
+                    href="/addvenue"
+                    size='default'
+                  >
+                    Add a venue
+                  </IonButton>
+
+                  <IonButton
+                    size='default'
+                    href="/addevent"
+
+                  >
+                    Create an event
+                  </IonButton>
+                </div>
+
                 {this.props.venues &&
                   this.props.venues.length > 0 ? (
                     <div>
@@ -118,8 +145,12 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                               <img src={venue['imageURL']} alt={venue['name']} />
                             </IonItemGroup>
                             <IonItemGroup>
-                              <IonCardTitle>{venue['name']}</IonCardTitle>
-                              <IonCardSubtitle>{venue['address']}</IonCardSubtitle>
+                              <h4
+                                style={{ textAlign: 'center', color: 'black', fontSize: '20px' }}
+                                className="venueBoxText"
+
+                              >{venue['name']}</h4>
+                              <h4 style={{ textAlign: 'center', color: 'gray', fontSize: '14px' }}>{venue['address']}</h4>
                             </IonItemGroup>
                           </IonCardHeader>
                         </IonCard>
@@ -132,23 +163,7 @@ class Profile extends React.Component<IMyComponentProps, {}> {
                   </IonCardHeader>
                     </div>
                   )}
-                <IonButton
-                  mode="ios"
-                  href="/addvenue"
-                  className="homeBtn"
 
-                >
-                  Add a venue
-                  </IonButton>
-
-                <IonButton
-                  mode="ios"
-                  href="/addevent"
-                  className="homeBtn"
-
-                >
-                  Create an event
-                  </IonButton>
               </div>
             )}
         </IonContent>
