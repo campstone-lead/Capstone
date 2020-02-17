@@ -26,6 +26,7 @@ import { connect } from 'react-redux';
 import { getOneBooker } from '../store/booker';
 import { me } from '../store/user';
 import ArtistProfileComponent from './ArtistProfileComponent';
+import Loading from './loading'
 interface IMyComponentProps {
   user: object;
   genres: Array<string>;

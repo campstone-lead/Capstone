@@ -14,6 +14,7 @@ import { me } from '../store/user';
 import { fetchArtists } from '../store/artist';
 import { connect } from 'react-redux';
 import './Tab1.css';
+import Loading from './loading'
 
 interface IMyComponentProps {
   artists: object;
@@ -26,8 +27,14 @@ class AllArtistView extends React.Component<IMyComponentProps, {}> {
   }
 
   render() {
-    if (!Array.isArray(this.props.artists))
-      return <IonCardTitle>Loading...</IonCardTitle>;
+    if (!Array.isArray(this.props.artists)) {
+      return (
+        <div className="home">
+          <Loading />
+        </div>
+      )
+    }
+
     return (
       <IonPage>
         {

@@ -19,6 +19,7 @@ import {
   sendRequest,
   sendResponse,
 } from '../store/artist';
+import Loading from './loading'
 import { getBookerEvents } from '../store/booker';
 import history from './history';
 import ArtistProfileComponent from './ArtistProfileComponent';
@@ -135,6 +136,13 @@ class ArtistSinglePage extends React.Component<
 
   render() {
     console.log(this.props['location']['state'])
+    if (!this.props.artist) {
+      return (
+        <div className="home">
+          <Loading />
+        </div>
+      )
+    }
     return (
       <IonPage >
         <IonHeader mode="ios" >

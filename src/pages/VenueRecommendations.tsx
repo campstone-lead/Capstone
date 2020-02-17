@@ -10,6 +10,7 @@ import React from 'react';
 import { me } from '../store/user';
 import { getRecommendedVenues } from '../store/venue';
 import { connect } from 'react-redux';
+import Loading from './loading'
 import './Tab1.css';
 
 interface IMyComponentState {
@@ -74,6 +75,14 @@ class VenueRecommendations extends React.Component<
   }
 
   render() {
+    if (this.state.currentArtistRecommandations.length === 0) {
+      return (
+        <div className="home">
+          <Loading />
+
+        </div>
+      )
+    }
     console.log('here it is venues', this.props.venues)
     return (
       <div className="home">

@@ -7,6 +7,7 @@ import { gotOneEvents } from '../store/event'
 import { fetchOneVenue } from '../store/venue';
 import { sendRequest, sendResponse, fetchOneArtists } from '../store/artist';
 import { getOneBooker, getBookerEvents } from '../store/booker'
+import Loading from './loading'
 
 import VenueSingleComponent from './VenueSingleComponent'
 
@@ -119,7 +120,7 @@ class VenueSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
         let filteredEvents = new Array(0)
 
         if (!Array.isArray(this.props.events))
-            return <IonCardTitle>Loading...</IonCardTitle>;
+            return <Loading />;
         if (this.props.events !== undefined)
             filteredEvents = this.props.events.filter(event => event["venueId"] === this.props.venue['id'])
         return (
