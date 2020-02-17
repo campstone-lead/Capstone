@@ -60,7 +60,7 @@ const config = {
 const cors = require('cors');
 app.use(cors(config));
 
-//not working but can be modified for other purposes!
+//not working for uploading pictures but can be modified for other API purposes!
 app.post('/upload', async (req, res) => {
   (async () => {
     try {
