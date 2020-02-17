@@ -9,8 +9,7 @@ import { me } from '../../../store/user';
 import { getOneBooker } from '../../../store/booker';
 import { createdEvent } from '../../../store/event'
 import { time, headset, create } from 'ionicons/icons';
-import { firebase_storage_api } from '../../../store/secrets'
-import firebase from '../../config'
+import {firebase, firebase_storage_api} from '../../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;

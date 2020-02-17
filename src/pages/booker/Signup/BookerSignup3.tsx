@@ -5,8 +5,7 @@ import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonTo
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add } from 'ionicons/icons';
 import { signUpVenue } from '../../../store/booker'
-import { firebase_storage_api } from '../../../store/secrets'
-import firebase from '../../config'
+import {firebase, firebase_storage_api} from '../../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;

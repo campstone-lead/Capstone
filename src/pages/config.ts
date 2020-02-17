@@ -1,5 +1,6 @@
 import firebase from 'firebase'
-import { firebase_storage_api } from '../store/secrets'
+// import { firebase_storage_api } from '../store/secrets'
+const firebase_storage_api = "capstone-266820.appspot.com"
 var firebaseConfig = {
   apiKey: process.env.FIREBASE_apiKey,
   authDomain: process.env.FIREBASE_authDomain,
@@ -11,4 +12,4 @@ var firebaseConfig = {
   measurementId: process.env.FIREBASE_measurementId
 };
 firebase.initializeApp(firebaseConfig);
-export default firebase
+export  {firebase,firebase_storage_api}

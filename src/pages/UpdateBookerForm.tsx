@@ -15,8 +15,8 @@ import {
     add,
     camera
 } from 'ionicons/icons';
-import { firebase_storage_api } from '../store/secrets'
-import firebase from './config'
+
+import {firebase,firebase_storage_api} from './config'
 
 
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
