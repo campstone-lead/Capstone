@@ -58,7 +58,7 @@ class NewMessageEntry extends Component<IMyComponentProps, IMyComponentState>{
       status: this.props.user['status'],
     })
     var myDiv = document.getElementsByClassName("items");
-    await myDiv[myDiv.length - 1].scrollIntoView()
+    // await myDiv[myDiv.length - 1].scrollIntoView()
     await this.setState({ message: '' })
   }
 
