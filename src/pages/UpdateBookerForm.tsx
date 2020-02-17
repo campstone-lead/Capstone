@@ -15,6 +15,9 @@ import {
     add,
     camera
 } from 'ionicons/icons';
+import { firebase_storage_api } from '../store/secrets'
+import firebase from './config'
+
 
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
@@ -29,7 +32,8 @@ interface IMyComponentState {
     phone: string;
     password: string;
     imageURL: string;
-    selectedFile: any
+    selectedFile: any;
+    uploader: any
 
 }
 
@@ -50,7 +54,8 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
             firstName: '',
             lastName: '',
             phone: '',
-            password: ''
+            password: '',
+            uploader: 0
 
         }
         defineCustomElements(window);
@@ -62,22 +67,30 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
         await this.setState({
             selectedFile: event.target.files[0],
         })
-
-        await this.setState({ imageURL: this.state.selectedFile.name })
+        let file = this.state.selectedFile
+        const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
+        await this.setState({ imageURL })
         let obj = this.state
         window.localStorage.setItem('booker', JSON.stringify(obj))
     }
 
     onClickHandler = async (e) => {
-        e.preventDefault() // <-- missing this
-        const formData = new FormData();
-        formData.append("file", this.state.selectedFile);
-        const res = await axios({
-            method: "post",
-            baseURL: entryURL,
-            url: `/upload`,
-            data: formData
-        })
+
+        console.log(this.state.selectedFile)
+        let file = this.state.selectedFile;
+        var metadata = { contentType: 'image/jpeg' };
+        try {
+            var storageRef = firebase.storage().ref(`email-${this.props.user['email']}-status${this.props.user['status']}/` + file.name)
+            let task = storageRef.put(file, metadata);
+
+            const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
+            this.setState({ imageURL })
+
+        } catch (error) {
+            console.log(error)
+            console.log(error.message)
+        }
+
     }
 
     async componentDidMount() {
@@ -129,18 +142,10 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
     handleSubmit(event) {
         event.preventDefault()
         this.props.editBooker(this.state);
-
-        // this.setState({
-        //     email: this.state.email,
-        //     imageURL: this.state.imageURL,
-        //     firstName: this.state.firstName,
-        //     lastName: this.state.lastName,
-        //     phone: this.state.phone,
-        //     password: this.state.password
-        // })
     }
 
     render() {
+        console.log(process.env)
         return (
             <IonPage>
                 <IonHeader >
@@ -243,13 +248,13 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
                                     }
                                 />
                                 <div style={{ margin: "10px" }}>
-                                    <IonItem lines="none" style={{ '--background': 'none' }}>
+                                    <IonItem lines="none" routerLink='/profile' style={{ '--background': 'none' }}>
 
                                         <IonButton
                                             type="submit"
                                             disabled={(this.state.password.length === 0) ? true : false}
                                             size="default"
-                                            routerLink='/profile'
+
                                         >Done</IonButton>
                                     </IonItem>
                                 </div>

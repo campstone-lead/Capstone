@@ -17,7 +17,8 @@ import { connect } from 'react-redux';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add, camera } from 'ionicons/icons';
 import axios from 'axios';
-
+import { firebase_storage_api } from '../../../store/secrets'
+import firebase from '../../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;
@@ -38,7 +39,7 @@ interface IMyComponentState {
 export class UploadPicture extends Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -51,30 +52,43 @@ export class UploadPicture extends Component<
 
   onChangeHandler = async event => {
     event.persist();
+    let artist = window.localStorage.getItem('artistInfo');
+    artist = JSON.parse(artist || '')
+    let newArtist = artist || {}
     await this.setState({
       selectedFile: event.target.files[0],
     });
-
-    await this.setState({ imageURL: this.state.selectedFile.name });
+    let file = this.state.selectedFile
+    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${newArtist['email']}-statusartist%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
+    await this.setState({ imageURL: imageURL });
   };
   onClickHandler = async e => {
     e.preventDefault(); // <-- missing this
-    const formData = new FormData();
-    formData.append('file', this.state.selectedFile);
-    const res = await axios({
-      method: "post",
-      baseURL: entryURL,
-      url: `/upload`,
-      data: formData,
-    });
+    let artist = window.localStorage.getItem('artistInfo');
+    artist = JSON.parse(artist || '')
+    let newArtist = artist || {}
+    let file = this.state.selectedFile;
+    var metadata = { contentType: 'image/jpeg' };
+    try {
+      var storageRef = firebase.storage().ref(`email-${newArtist['email']}-statusartist/` + file.name)
+      let task = storageRef.put(file, metadata);
+
+    } catch (error) {
+      console.log(error)
+      console.log(error.message)
+    }
+
+
+    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${newArtist['email']}-statusartist%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
+
     if (this.state.isGoogleOauth)
       await this.props.signUpArtistWithGoogle({
-        imageURL: this.state.imageURL,
+        imageURL: imageURL,
         selectedFile: this.state.selectedFile,
       });
     else
       await this.props.updateArtist({
-        imageURL: this.state.imageURL,
+        imageURL: imageURL,
         selectedFile: this.state.selectedFile,
       });
     // await this.props.updateArtist(this.state);
