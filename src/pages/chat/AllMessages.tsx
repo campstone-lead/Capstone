@@ -1,24 +1,14 @@
 import React, { Component, RefObject } from 'react';
 import { connect } from 'react-redux';
 import socket from '../../socket'
-import ScrollToBottom from 'react-scroll-to-bottom';
 import {
-  IonVirtualScroll,
-  IonCardSubtitle,
-  IonCardTitle,
   IonItemGroup,
   IonCardHeader,
   IonCard,
   IonTitle,
-  IonItem,
-  IonIcon,
-  IonAvatar
 } from '@ionic/react';
-import {
-  send
-} from 'ionicons/icons';
 import '../Tab1.css';
-import user, { me } from '../../store/user'
+import { me } from '../../store/user'
 import { fetchMessages, createMessage, postMessage } from '../../store/message'
 
 

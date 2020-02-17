@@ -53,6 +53,9 @@ export class UploadPicture extends Component<
   onChangeHandler = async event => {
     event.persist();
     let artist = window.localStorage.getItem('artistInfo');
+    if (artist === null) {
+      artist = window.localStorage.getItem('google')
+    }
     artist = JSON.parse(artist || '')
     let newArtist = artist || {}
     await this.setState({
@@ -64,7 +67,12 @@ export class UploadPicture extends Component<
   };
   onClickHandler = async e => {
     e.preventDefault(); // <-- missing this
+
+
     let artist = window.localStorage.getItem('artistInfo');
+    if (artist === null) {
+      artist = window.localStorage.getItem('google')
+    }
     artist = JSON.parse(artist || '')
     let newArtist = artist || {}
     let file = this.state.selectedFile;

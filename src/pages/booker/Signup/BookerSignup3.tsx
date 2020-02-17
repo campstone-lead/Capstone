@@ -44,6 +44,9 @@ class BookerSignup3 extends React.Component<
       selectedFile: event.target.files[0],
     })
     let artist = window.localStorage.getItem('booker');
+    if (artist === null) {
+      artist = window.localStorage.getItem('google')
+    }
     artist = JSON.parse(artist || '')
     let newArtist = artist || {}
     let file = this.state.selectedFile;
@@ -54,6 +57,9 @@ class BookerSignup3 extends React.Component<
   onClickHandler = async (e) => {
     e.preventDefault(); // <-- missing this
     let artist = window.localStorage.getItem('booker');
+    if (artist === null) {
+      artist = window.localStorage.getItem('google')
+    }
     artist = JSON.parse(artist || '')
     let newArtist = artist || {}
     let file = this.state.selectedFile;
