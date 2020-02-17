@@ -2,6 +2,8 @@ import axios from 'axios'
 import socket from '../socket';
 axios.defaults.withCredentials = true;
 
+const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+
 /**
  * ACTION TYPES
  */
@@ -29,8 +31,8 @@ export const fetchMessages = () => async dispatch => {
   try {
     const res = await axios({
       method: "get",
-      baseURL: "http://localhost:8080/api/",
-      url: "/messages/"
+      baseURL: entryURL,
+      url: "/api/messages/"
     })
 
     dispatch(getMessages(res.data || defaultState))
@@ -43,8 +45,8 @@ export const createMessage = (message) => async dispatch => {
   try {
     const res = await axios({
       method: "post",
-      baseURL: "http://localhost:8080/api/",
-      url: `/messages/`,
+      baseURL: entryURL,
+      url: `/api/messages/`,
       data: message
     })
     dispatch(postMessage(res.data))
