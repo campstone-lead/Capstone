@@ -1,6 +1,5 @@
 import axios from 'axios';
 import history from '../pages/history';
-import { logoWindows } from 'ionicons/icons';
 
 axios.defaults.withCredentials = true;
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
@@ -114,7 +113,7 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return { ...action.user, isActive: true };

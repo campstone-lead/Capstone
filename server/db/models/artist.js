@@ -57,7 +57,7 @@ const Artist = db.define('artist', {
     type: Sequelize.TEXT,
   },
   imageURL: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true,

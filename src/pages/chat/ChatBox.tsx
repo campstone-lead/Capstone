@@ -2,20 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-  IonInput,
-  IonButton,
-  IonIcon,
-  IonLabel,
-  IonItem,
   IonPage,
   IonTitle,
   IonHeader,
   IonToolbar,
   IonContent
 } from '@ionic/react';
-import {
-  send
-} from 'ionicons/icons';
+
 import { me } from '../../store/user'
 import '../Tab1.css';
 import AllMessages from './AllMessages'

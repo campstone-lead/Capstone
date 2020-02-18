@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonCardTitle, IonIcon, IonAvatar, IonCard } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButton, IonBackButton, IonIcon, IonAvatar, IonCard } from '@ionic/react';
 import { connect } from 'react-redux'
 import { me } from '../../../store/user'
 import { gotOneEvents } from '../../../store/event'
@@ -68,7 +68,6 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
     handleClickRespond = async (response) => {
         let eventId = this.props.event['event']['id']
         let artistId = this.props.user['id']
-        const res = { status: response, eventId, artistId }
         await this.setState({ localStatus: response, sender: 'booker' })
         await this.props.sendResponse({ status: response, eventId, artistId })
 

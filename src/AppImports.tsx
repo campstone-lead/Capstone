@@ -44,7 +44,7 @@ import SearchBar from './pages/Artist/Search/SearchBar';
 import { connect } from 'react-redux';
 import NotificationWall from './pages/NotificationWall';
 import UpdateArtistForm from './pages/Artist/UpdateArtistForm';
-import UpdateBookerForm from './pages/UpdateBookerForm';
+import UpdateBookerForm from './pages/booker/UpdateBookerForm';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 import { me, logout } from './store/user';

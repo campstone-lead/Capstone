@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonItem, IonList, IonToolbar, IonIcon } from '@ionic/react';
-import { notificationsOutline, notifications, notificationsOff } from 'ionicons/icons'
+import { notificationsOutline, notifications } from 'ionicons/icons'
 import './Tab1.css';
 import { connect } from 'react-redux'
 import { me } from '../store/user'
