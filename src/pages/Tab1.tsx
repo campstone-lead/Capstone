@@ -21,6 +21,7 @@ import VenueRecommendations from './VenueRecommendations';
 import { getState, customedFilter } from '../store/filter';
 import { mail } from 'ionicons/icons';
 
+
 interface IMyComponentState {
   isSearchBarOpen: boolean;
   searchWord: string;

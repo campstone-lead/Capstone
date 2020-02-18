@@ -10,19 +10,21 @@ import {
   IonLabel,
 } from '@ionic/react';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { auth, me } from '../store/user';
 import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';
 import { getRecommendedVenues } from '../store/venue';
 import { getOneBooker } from '../store/booker';
 import { getRecommendedArtists, fetchArtists } from '../store/artist';
+import Loading from './loading'
 import './Tab1.css';
 
 interface IMyComponentState {
   isSearchBarOpen: boolean;
   currentVenue: number;
   currentBookerRecommandations: Array<object>;
+  loading: true
 }
 interface IMyComponentProps {
   auth: any;
@@ -50,9 +52,11 @@ class ArtistRecommendation extends React.Component<
       isSearchBarOpen: this.props.isSearchBarOpen,
       currentVenue: 1,
       currentBookerRecommandations: [],
+      loading: true
     };
   }
   async componentDidMount() {
+
     await this.props.me();
     if (this.props.user['id'] !== undefined) {
       const id = this.props.user['id'];
@@ -104,6 +108,16 @@ class ArtistRecommendation extends React.Component<
     });
   };
   render() {
+    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
+
+    if (this.state.currentBookerRecommandations.length === 0) {
+      return (
+        <div className="home">
+          <Loading />
+
+        </div>
+      )
+    }
     return (
       <div className="home">
         <IonCardHeader className="home" mode="ios" style={{

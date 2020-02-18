@@ -3,6 +3,7 @@ import { IonContent, IonHeader, IonPage, IonToolbar, IonItem, IonLabel, IonButto
 import { connect } from 'react-redux'
 import { me } from '../../../store/user'
 import { gotOneEvents } from '../../../store/event'
+import Loading from '../../loading'
 import { sendRequest, sendResponse } from '../../../store/artist';
 import {
     image,
@@ -74,7 +75,7 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
     }
     render() {
         if (!this.props.event['event']) {
-            return <IonCardTitle>Loading...</IonCardTitle>;
+            return <Loading />
         } else {
             let genres = ''
             this.props.event['event'].genres.forEach((el, index) => {
@@ -114,7 +115,7 @@ class EventSinglePage extends React.Component<IMyComponentProps, IMyComponentSta
                         '--background':
                             'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
                     }}> <IonBackButton
-                            defaultHref="/home/"
+                            defaultHref={`/allVenues/${this.props.event['event'].venueId}`}
                             mode="ios"
                             text=" Back "
                             color="dark"

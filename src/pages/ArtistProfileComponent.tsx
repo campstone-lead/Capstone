@@ -19,6 +19,7 @@ import {
   microphone,
   musicalNotes,
 } from 'ionicons/icons';
+// import Loading from './loading'
 import './Tab1.css';
 interface IMyComponentProps {
   genres: Array<string>;
@@ -31,7 +32,7 @@ interface IMyComponentState {
 class ArtistProfileComponent extends React.Component<
   IMyComponentProps,
   IMyComponentState
-  >{
+  > {
   render() {
     let genres = '';
     if (this.props.genres) {
@@ -41,6 +42,7 @@ class ArtistProfileComponent extends React.Component<
         } else genres += el;
       });
     }
+
     return (
       <>
         <img
