@@ -1,22 +1,26 @@
 import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonLabel, IonButton, IonAvatar
 } from '@ionic/react';
 import React from 'react';
 import '../../Tab1.css';
 import { connect } from 'react-redux'
 import { createdVenue } from '../../../store/booker'
+import { firebase } from '../../config'
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete'
 
+
 interface IMyComponentState {
   venue: object,
   genreTypes: object,
-  fullAddress: string
+  fullAddress: string,
+  selectedFile: any
 }
 interface IMyComponentProps {
-  createVenue: (venue: object) => void
+  createVenue: (venue: object) => void,
+  user: any
 }
 
 class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>  {
@@ -28,7 +32,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
         longitude: 0,
         name: '',
         address: '',
-        imageUrl: '',
+        imageURL: 'https://www.ggcatering.com/images/venues/default_venue_2.jpg',
         description: '',
         capacity: '',
         genres: []
@@ -45,7 +49,8 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
         house: false,
         techno: false,
       },
-      fullAddress: ''
+      fullAddress: '',
+      selectedFile: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this)
@@ -89,9 +94,59 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
 
   async handleSubmit(event) {
     event.preventDefault();
+    let venue = window.localStorage.getItem('venue')
+    if (venue)
+      venue = JSON.parse(venue || '');
+    let imageURL = venue || {}
     const filtered = Object.keys(this.state.genreTypes).filter((key) => this.state.genreTypes[key])
-    await this.setState({ venue: { ...this.state.venue, genres: filtered } })
+    await this.setState({ venue: { ...this.state.venue, genres: filtered, imageURL: imageURL['imageURL'] } })
+    console.log(this.state, 'here-<')
     await this.props.createVenue(this.state.venue)
+    window.localStorage.clear()
+  }
+
+
+
+
+  onChangeHandler = async  e => {
+    e.persist()
+    await this.setState({
+      selectedFile: e.target.files[0]
+
+    })
+    let file = this.state.selectedFile;
+    let img = document.getElementsByTagName('img')[0];
+    img.src = URL.createObjectURL(file)
+  }
+  onClickHandler = async (e) => {
+    e.preventDefault()
+
+    let file = this.state.selectedFile;
+    var metadata = { contentType: 'image/jpeg' };
+    try {
+      var storageRef = firebase.storage().ref(`email-${this.props.user['email']}-status${this.props.user['status']}/` + file.name)
+      let task = storageRef.put(file, metadata);
+      task.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          console.log('Photo uploaded')
+        },
+        (err) => {
+          console.log(err)
+        },
+        () => {
+          task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+            await this.setState({ venue: { ...this.state.venue, imageURL: downloadURL } })
+            window.localStorage.setItem('venue', JSON.stringify({ imageURL: downloadURL }))
+            console.log('heeere', this.state)
+
+          })
+        }
+      )
+    } catch (error) {
+      console.log(error)
+      console.log(error.message)
+    }
+
   }
   render() {
     let genresArray = Object.keys(this.state.genreTypes)
@@ -109,10 +164,28 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
           '--background':
             'url(https://media.idownloadblog.com/wp-content/uploads/2015/06/iTunes-El-Capitan-Wallaper-iPad-Blank-By-Jason-Zigrino.png)',
         }}>
+
+
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-around", margin: "20px", alignContent: "center", flexDirection: 'row' }}>
+              <IonAvatar style={{ width: '170px', height: '170px', borderRadius: "50px" }}>
+                <img src={this.state.venue['imageURL']} alt='img' />
+              </IonAvatar>
+
+            </div>
+
+
+
+          </div>
+
           <form onSubmit={this.handleSubmit} className='updatevenue' >
 
             <IonLabel className='venuelabel'>Venue</IonLabel>
+            < div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
 
+              <input type='file' name='file' onChange={this.onChangeHandler} placeholder="Choose picture" />
+              <IonButton type="button" onClick={this.onClickHandler} size="default" >Upload a picture</IonButton>
+            </div>
             <PlacesAutocomplete
               value={this.state.fullAddress}
               onChange={this.handleChange}
@@ -192,19 +265,21 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
             </div>
 
 
-            {/* <IonButton color='secondary' >Upload a picture</IonButton> */}
 
-            <IonButton routerLink="/profile" type="submit" >Create</IonButton>
+
+            <IonButton routerLink='/profile' type="submit" >Create</IonButton>
 
           </form>
         </IonContent>
       </IonPage>)
   }
 }
-
+const mapStateToProps = (state) => ({
+  user: state.user,
+})
 const mapDispatchToProps = dispatch => {
   return {
     createVenue: (venue) => dispatch(createdVenue(venue))
   }
 }
-export default connect(null, mapDispatchToProps)(AddVenueForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AddVenueForm);

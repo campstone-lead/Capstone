@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add, camera } from 'ionicons/icons';
 import axios from 'axios';
-import {firebase, firebase_storage_api} from '../../config'
+import { firebase, firebase_storage_api } from '../../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;
@@ -51,18 +51,12 @@ export class UploadPicture extends Component<
 
   onChangeHandler = async event => {
     event.persist();
-    let artist = window.localStorage.getItem('artistInfo');
-    if (artist === null) {
-      artist = window.localStorage.getItem('google')
-    }
-    artist = JSON.parse(artist || '')
-    let newArtist = artist || {}
     await this.setState({
       selectedFile: event.target.files[0],
     });
     let file = this.state.selectedFile
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${newArtist['email']}-statusartist%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-    await this.setState({ imageURL: imageURL });
+    let img = document.getElementsByTagName('img')[0];
+    img.src = URL.createObjectURL(file)
   };
   onClickHandler = async e => {
     e.preventDefault(); // <-- missing this
@@ -79,26 +73,38 @@ export class UploadPicture extends Component<
     try {
       var storageRef = firebase.storage().ref(`email-${newArtist['email']}-statusartist/` + file.name)
       let task = storageRef.put(file, metadata);
+      task.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          console.log('Photo uploaded')
+        },
+        (err) => {
+          console.log(err)
+        },
+        () => {
+          task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+
+            await this.setState({ imageURL: downloadURL })
+
+            if (this.state.isGoogleOauth)
+              await this.props.signUpArtistWithGoogle({
+                imageURL: downloadURL,
+                selectedFile: this.state.selectedFile,
+              });
+            else
+              await this.props.updateArtist({
+                imageURL: downloadURL,
+                selectedFile: this.state.selectedFile,
+              });
+
+          })
+        }
+      )
 
     } catch (error) {
       console.log(error)
       console.log(error.message)
     }
 
-
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${newArtist['email']}-statusartist%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-
-    if (this.state.isGoogleOauth)
-      await this.props.signUpArtistWithGoogle({
-        imageURL: imageURL,
-        selectedFile: this.state.selectedFile,
-      });
-    else
-      await this.props.updateArtist({
-        imageURL: imageURL,
-        selectedFile: this.state.selectedFile,
-      });
-    // await this.props.updateArtist(this.state);
   };
   async componentDidMount() {
     let artist = window.localStorage.getItem('artistInfo');
@@ -175,7 +181,7 @@ export class UploadPicture extends Component<
             <IonAvatar
               style={{ width: '370px', height: '370px', borderRadius: '50px' }}
             >
-              <img src={imageURL} alt="img" />
+              <img src={imageURL} id='img' alt="img" />
             </IonAvatar>
           </div>
 

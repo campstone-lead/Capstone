@@ -5,7 +5,7 @@ import { IonContent, IonIcon, IonLabel, IonCardHeader, IonPage, IonAvatar, IonTo
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add } from 'ionicons/icons';
 import { signUpVenue } from '../../../store/booker'
-import {firebase, firebase_storage_api} from '../../config'
+import { firebase, firebase_storage_api } from '../../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;
@@ -42,16 +42,9 @@ class BookerSignup3 extends React.Component<
     await this.setState({
       selectedFile: event.target.files[0],
     })
-    let artist = window.localStorage.getItem('booker');
-    if (artist === null) {
-      artist = window.localStorage.getItem('google')
-    }
-    artist = JSON.parse(artist || '')
-    let newArtist = artist || {}
     let file = this.state.selectedFile;
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${newArtist['email']}-statusbooker%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-
-    await this.setState({ photo: imageURL })
+    let img = document.getElementsByTagName('img')[0];
+    img.src = URL.createObjectURL(file)
   }
   onClickHandler = async (e) => {
     e.preventDefault(); // <-- missing this
@@ -66,6 +59,21 @@ class BookerSignup3 extends React.Component<
     try {
       var storageRef = firebase.storage().ref(`email-${newArtist['email']}-statusbooker/` + file.name)
       let task = storageRef.put(file, metadata);
+      task.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          console.log('Photo uploaded')
+        },
+        (err) => {
+          console.log(err)
+        },
+        () => {
+          task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+            await this.setState({ photo: downloadURL })
+            await this.props.signUpVenue(this.state)
+          })
+        }
+      )
+
 
     } catch (error) {
       console.log(error)
@@ -73,10 +81,6 @@ class BookerSignup3 extends React.Component<
     }
 
 
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${newArtist['email']}-statusbooker%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-
-    await this.setState({ photo: imageURL })
-    await this.props.signUpVenue(this.state)
 
   }
   componentDidMount() {

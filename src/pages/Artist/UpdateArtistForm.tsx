@@ -11,7 +11,7 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
 import { headset, mailOpen, call, book, home, logoInstagram, logoFacebook, musicalNote, person, add, camera } from 'ionicons/icons';
-import {firebase, firebase_storage_api} from '../config'
+import { firebase, firebase_storage_api } from '../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;
@@ -101,10 +101,8 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
       selectedFile: event.target.files[0],
     })
     let file = this.state.selectedFile;
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-    await this.setState({ artist: { ...this.state.artist, imageURL: imageURL } })
-    let obj = this.state.artist
-    window.localStorage.setItem('artist', JSON.stringify(obj))
+    let img = document.getElementsByTagName('img')[0];
+    img.src = URL.createObjectURL(file)
   }
   onClickHandler = async (e) => {
     e.preventDefault()
@@ -114,14 +112,27 @@ class UpdateArtistForm extends React.Component<IMyComponentProps, IMyComponentSt
     try {
       var storageRef = firebase.storage().ref(`email-${this.props.user['email']}-status${this.props.user['status']}/` + file.name)
       let task = storageRef.put(file, metadata);
+      task.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          console.log('Photo uploaded')
+        },
+        (err) => {
+          console.log(err)
+        },
+        () => {
+          task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+            await this.setState({ artist: { ...this.state.artist, imageURL: downloadURL } })
+          })
+        }
+      )
 
-      const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-      await this.setState({ artist: { ...this.state.artist, imageURL: imageURL } })
+
+
     } catch (error) {
       console.log(error)
       console.log(error.message)
     }
-
+    window.localStorage.setItem('artist', JSON.stringify(this.state))
   }
   handleFormChange = (e) => {
     this.setState({
