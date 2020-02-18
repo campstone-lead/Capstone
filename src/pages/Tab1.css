@@ -276,9 +276,13 @@ a{
 }
 .entry{
   position:fixed;
-  bottom:0px;
   width:90%;
-  margin-bottom: 10px;
+  /* bottom:0px;
+  width:90%;
+  margin-bottom: 10px; */
+  bottom:8%;
+-webkit-bottom:0%;
+  overflow-y: scroll;
 }
 
 .messageEntry{
@@ -329,9 +333,10 @@ height: auto;
 
 }
 .allMessages{
+
   position: fixed;
   overflow: scroll;
-max-height: 82%
+max-height: 80%
 
 }
 .venueImg{

@@ -1,24 +1,14 @@
 import React, { Component, RefObject } from 'react';
 import { connect } from 'react-redux';
 import socket from '../../socket'
-import ScrollToBottom from 'react-scroll-to-bottom';
 import {
-  IonVirtualScroll,
-  IonCardSubtitle,
-  IonCardTitle,
   IonItemGroup,
   IonCardHeader,
   IonCard,
   IonTitle,
-  IonItem,
-  IonIcon,
-  IonAvatar
 } from '@ionic/react';
-import {
-  send
-} from 'ionicons/icons';
 import '../Tab1.css';
-import user, { me } from '../../store/user'
+import { me } from '../../store/user'
 import { fetchMessages, createMessage, postMessage } from '../../store/message'
 
 
@@ -51,22 +41,22 @@ class AllMessages extends Component<IMyComponentProps, IMyComponentState>{
     await this.props.me();
     await this.props.fetchMessages()
 
-    if (this.cardRef.current) {
-      let last = this.cardRef.current.getElementsByClassName('items')[this.cardRef.current.getElementsByClassName('items').length - 1]
-      last.scrollTop = last.offsetHeight;
-    }
+    // if (this.cardRef.current) {
+    //   let last = this.cardRef.current.getElementsByClassName('items')[this.cardRef.current.getElementsByClassName('items').length - 1]
+    //   last.scrollTop = last.offsetHeight;
+    // }
     socket.on('send-message', (message) => {
 
 
       this.props.postMessage(message)
     })
   }
-  async componentDidUpdate() {
-    if (this.cardRef.current) {
-      await this.cardRef.current.getElementsByClassName('items')[this.cardRef.current.getElementsByClassName('items').length - 1].scrollIntoView();
-    }
+  // async componentDidUpdate() {
+  //   if (this.cardRef.current) {
+  //     await this.cardRef.current.getElementsByClassName('items')[this.cardRef.current.getElementsByClassName('items').length - 1].scrollIntoView();
+  //   }
 
-  }
+  // }
   render() {
 
     if (this.props.messages.length === 0) return <IonTitle>Loading</IonTitle>

@@ -9,7 +9,7 @@ import { me } from '../../../store/user';
 import { getOneBooker } from '../../../store/booker';
 import { createdEvent } from '../../../store/event'
 import { time, headset, create } from 'ionicons/icons';
-
+import {firebase, firebase_storage_api} from '../../config'
 const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
 
 axios.defaults.withCredentials = true;
@@ -95,8 +95,9 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
       selectedFile: e.target.files[0]
 
     })
-
-    await this.setState({ photo: this.state.selectedFile.name })
+    let file = this.state.selectedFile;
+    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
+    await this.setState({ photo: imageURL })
     let event = {
       imageUrl: this.state.photo
     }
@@ -104,15 +105,19 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
   }
   onClickHandler = async (e) => {
     e.preventDefault()
-    const formData = new FormData();
 
-    formData.append("file", this.state.selectedFile);
-    await axios({
-      method: "post",
-      baseURL: entryURL,
-      url: `/upload`,
-      data: formData
-    })
+    let file = this.state.selectedFile;
+    var metadata = { contentType: 'image/jpeg' };
+    try {
+      var storageRef = firebase.storage().ref(`email-${this.props.user['email']}-status${this.props.user['status']}/` + file.name)
+      let task = storageRef.put(file, metadata);
+
+      const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
+      await this.setState({ photo: imageURL })
+    } catch (error) {
+      console.log(error)
+      console.log(error.message)
+    }
 
 
   }

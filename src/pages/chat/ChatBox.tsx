@@ -45,7 +45,7 @@ class ChatBox extends Component<IMyComponentProps, IMyComponentState>{
     return (
       <IonPage>
         <IonHeader>
-          <IonToolbar id="bar">
+          <IonToolbar>
             <IonTitle>ChatBox</IonTitle>
           </IonToolbar>
         </IonHeader>
