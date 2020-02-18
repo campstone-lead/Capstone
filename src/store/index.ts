@@ -19,8 +19,9 @@ const reducer = combineReducers({
   event,
   message
 });
+//createLogger({ collapsed: true }) -> add this to see the logge in the console!
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  applyMiddleware(thunkMiddleware)
 );
 const store = createStore(reducer, middleware);
 

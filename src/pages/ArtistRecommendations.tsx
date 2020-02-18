@@ -107,8 +107,6 @@ class ArtistRecommendation extends React.Component<
     });
   };
   render() {
-    console.log(this.state.currentBookerRecommandations, this.state.currentVenue);
-
     if (this.state.currentBookerRecommandations.length === 0) {
       return (
         <div className="home">
