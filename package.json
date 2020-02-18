@@ -70,7 +70,8 @@
   "scripts": {
     "start": "react-scripts start & node server",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test-front": "react-scripts test",
+    "test-back": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register",
     "deploy": "script/deploy",
     "eject": "react-scripts eject",
     "start-dev": "NODE_ENV='development' ionic serve & NODE_ENV='development' npm run start-server",
@@ -92,7 +93,10 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "1.4.0"
+    "@babel/polyfill": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "@capacitor/cli": "1.4.0",
+    "supertest": "^4.0.2"
   },
   "description": "An Ionic project"
 }

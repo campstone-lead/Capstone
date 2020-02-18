@@ -16,7 +16,6 @@ test('renders without crashing', () => {
       <App />
     </Provider>
   );
-  // console.log(window.localStorage.getItem('error'))
   expect(baseElement).toBeDefined();
 });
 

@@ -1,70 +1,66 @@
 /* global describe beforeEach it */
 
-const {expect} = require('chai')
+const { expect } = require('chai')
 
 const db = require('../db')
 const app = require('../index')
-const {Product, User, Recipe, RecipeProduct} = require('../db/models')
+const { Booker, Artist, Venue, Event, Recommendation, ArtistEvent, Message } = require('../db/models')
 const agent = require('supertest')(app)
 describe('User routes', () => {
   beforeEach(() => {
-    return db.sync({force: true})
+    return db.sync({ force: true })
   })
 
-  describe('Product Routes', () => {
-    const products = [
+  describe('Booker Routes', () => {
+    const bookers = [
       {
         id: 1,
-        name: 'Tomato',
-        price: 1.89,
-        weight: '0.5oz',
-        imgSrc:
-          'https://www.myemarket.in/image/cache/data/Vegetables/10000200_16-fresho-tomato-hybrid-600x600.jpg',
-        category: 'Vegetable',
-        stockQuantity: 150
+        firstName: 'Liana',
+        lastName: 'Chan',
+        email: 'liana.andreea97@yahoo.com',
+        password: '123',
+        phone: '(929)-308-8477',
       },
       {
         id: 2,
-        name: 'Mango',
-        price: 2.99,
-        weight: '0.5oz',
-        imgSrc:
-          'https://www.myemarket.in/image/cache/data/Vegetables/MUSHRUMS-600x600.jpg',
-        category: 'Fruit',
-        stockQuantity: 200
-      }
-    ]
+        firstName: 'Ariana',
+        lastName: 'Hwang',
+        email: 'ariana@email.com',
+        password: '123',
+        phone: '(111)-323-9021',
+      },
+    ];
 
     beforeEach(async () => {
-      await Product.bulkCreate(products)
+      await Booker.bulkCreate(bookers)
     })
 
-    it('GET /api/products', async () => {
-      const res = await agent.get('/api/products/').expect(200)
+    it('GET /api/bookers', async () => {
+      const res = await agent.get('/api/bookers/').expect(200)
 
       expect(res.body).to.be.an('array')
       expect(res.body).to.have.length(2)
-      expect(res.body[0].name).to.be.equal('Tomato')
+      expect(res.body[0].firstName).to.be.equal('Liana')
     })
-    it('GET /api/products/:id', async () => {
-      const res = await agent.get('/api/products/2').expect(200)
+    it('GET /api/bookers/:id', async () => {
+      const res = await agent.get('/api/bookers/2').expect(200)
 
       expect(res.body).to.be.an('object')
-      expect(res.body.name).to.be.equal('Mango')
+      expect(res.body.user.lastName).to.be.equal('Hwang')
     })
-    it('PUT /api/delete/:id', async () => {
+    xit('PUT /api/delete/:id', async () => {
       await agent.delete('/api/products/2').expect(200)
       const allProducts = await agent.get('/api/products')
       expect(allProducts.body).to.have.length(1)
     })
-    it('CATEGORY /api/category', async () => {
+    xit('CATEGORY /api/category', async () => {
       const response = await agent.get('/api/products/filter/Fruit')
       expect(response.body).to.be.an('array')
       expect(response.body[0].name).to.be.equal('Mango')
     })
   })
 
-  describe('User Routes', () => {
+  xdescribe('User Routes', () => {
     const users = [
       {
         firstName: 'Liana',
@@ -111,7 +107,7 @@ describe('User routes', () => {
     })
   })
 
-  describe('Recepies routes', () => {
+  xdescribe('Recepies routes', () => {
     const recipies = [
       {
         id: 1,
