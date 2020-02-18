@@ -11,8 +11,7 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
 import { headset, mailOpen, call, book, home, logoInstagram, logoFacebook, musicalNote, person, add, camera } from 'ionicons/icons';
-import { firebase, firebase_storage_api } from '../config'
-const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+import { firebase } from '../config'
 
 axios.defaults.withCredentials = true;
 const { Camera } = Plugins;

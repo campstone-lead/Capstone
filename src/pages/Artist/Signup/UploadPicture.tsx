@@ -17,8 +17,8 @@ import { connect } from 'react-redux';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { add, camera } from 'ionicons/icons';
 import axios from 'axios';
-import { firebase, firebase_storage_api } from '../../config'
-const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+import { firebase } from '../../config'
+
 
 axios.defaults.withCredentials = true;
 const { Camera } = Plugins;

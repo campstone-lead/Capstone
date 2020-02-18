@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonAvatar, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
-import './Tab1.css';
+import '../Tab1.css';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { connect } from 'react-redux'
-import { editBooker } from '../store/booker'
+import { editBooker } from '../../store/booker'
 import axios from 'axios'
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { me } from '../store/user'
+import { me } from '../../store/user'
 import {
     call,
     mailOpen,
@@ -17,10 +17,7 @@ import {
     camera
 } from 'ionicons/icons';
 
-import { firebase, firebase_storage_api } from './config'
-
-
-const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+import { firebase } from '../config'
 
 
 axios.defaults.withCredentials = true;
@@ -74,8 +71,6 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
     }
 
     onClickHandler = async (e) => {
-
-        console.log(this.state.selectedFile)
         let file = this.state.selectedFile;
         var metadata = { contentType: 'image/jpeg' };
         try {
@@ -158,7 +153,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
     }
 
     render() {
-        console.log(process.env)
+
         return (
             <IonPage>
                 <IonHeader >

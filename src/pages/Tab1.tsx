@@ -25,8 +25,7 @@ import { mail } from 'ionicons/icons';
 interface IMyComponentState {
   isSearchBarOpen: boolean;
   searchWord: string;
-  // currentVenue: number;
-  // currentBookerRecommandations: Array<object>;
+
 }
 interface IMyComponentProps {
   auth: any;

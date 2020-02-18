@@ -120,7 +120,6 @@ export const signUpBooker = bookerInfo => async dispatch => {
       window.localStorage.removeItem('booker');
       window.localStorage.removeItem('venue');
       dispatch(auth(sendBooker.email, sendBooker.password));
-      // dispatch(signUpBooker())}
     }
   } catch (error) {
     console.error(error);
@@ -185,47 +184,6 @@ export const signUpWithGoogleBooker = bookerInfo => async dispatch => {
     console.error(error);
   }
 };
-
-// export const updatedVenue = venue => async dispatch => {
-//   try {
-//     let booker = window.localStorage.getItem('booker');
-//     booker = JSON.parse(booker || '');
-//     let newBooker = booker || {};
-//     if (venue.password === undefined) {
-//       newBooker['venue'] = { ...newBooker['venue'], ...venue };
-//       window.localStorage.setItem('booker', JSON.stringify(newBooker));
-//     } else {
-//       let booker = {
-//         email: newBooker['email'],
-//         password: venue.password,
-//         firstName: newBooker['firstName'],
-//         lastName: newBooker['lastName'],
-//         phone: newBooker['phone'],
-//       };
-//       const res = await axios({
-//         method: 'post',
-//         baseURL: entryURL,
-//         url: '/api/bookers/',
-//         data: booker,
-//       });
-
-//       let v = { ...newBooker['venue'], bookerId: res.data.id };
-
-//       await axios({
-//         method: 'post',
-//         baseURL: 'entryURL',
-//         url: '/api/venues/',
-//         data: v,
-//       });
-//       window.localStorage.setItem('email', JSON.stringify(newBooker['email']));
-//     }
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
-//add new venue
-//add-venue-form.tsx
 export const createdVenue = v => async dispatch => {
   try {
     await axios({
@@ -238,10 +196,8 @@ export const createdVenue = v => async dispatch => {
     console.error(err);
   }
 };
-/**
- * REDUCER
- */
-export default function(state = defaultBooker, action) {
+
+export default function (state = defaultBooker, action) {
   switch (action.type) {
     case GET_BOOKER:
       return {

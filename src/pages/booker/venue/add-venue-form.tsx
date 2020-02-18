@@ -100,7 +100,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
     let imageURL = venue || {}
     const filtered = Object.keys(this.state.genreTypes).filter((key) => this.state.genreTypes[key])
     await this.setState({ venue: { ...this.state.venue, genres: filtered, imageURL: imageURL['imageURL'] } })
-    console.log(this.state, 'here-<')
+
     await this.props.createVenue(this.state.venue)
     window.localStorage.clear()
   }
@@ -137,7 +137,7 @@ class AddVenueForm extends React.Component<IMyComponentProps, IMyComponentState>
           task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
             await this.setState({ venue: { ...this.state.venue, imageURL: downloadURL } })
             window.localStorage.setItem('venue', JSON.stringify({ imageURL: downloadURL }))
-            console.log('heeere', this.state)
+
 
           })
         }

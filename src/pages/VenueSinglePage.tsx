@@ -6,7 +6,6 @@ import {
     IonToolbar,
     IonButton,
     IonBackButton,
-    IonCardTitle,
     IonItem,
     IonSelectOption,
     IonSelect,
@@ -63,7 +62,6 @@ class VenueSinglePage extends React.Component<
     handleClickRespond = async response => {
         let eventId = this.state.currentEvent;
         let artistId = this.props.user['id'];
-        const res = { status: response, eventId, artistId };
         await this.props.sendResponse({ status: response, eventId, artistId });
         await this.setState({ localStatus: response, sender: 'booker' });
     };
@@ -121,44 +119,6 @@ class VenueSinglePage extends React.Component<
             }
         }
     }
-    //   };
-
-    //   handleClick = async () => {
-    //     this.setState({ localStatus: 'pending' });
-    //     let request = {
-    //       eventId: Number(this.state.currentEvent),
-    //       artistId: this.props.user['id'],
-    //       sender: 'artist',
-    //     };
-    //     console.log(request);
-    //     await this.props.sendRequest(request);
-    //   };
-
-    //   async componentDidMount() {
-    //     const id = this.props['match']['params']['venueId'];
-    //     await this.props.me();
-    //     await this.props.fetchOneArtists(this.props.user['id']);
-    //     await this.props.fetchOneVenue(id);
-    //     const bookerId = this.props.venue['bookerId'];
-    //     await this.props.getOneBooker(bookerId);
-    //     await this.props.getBookerEvents(bookerId);
-
-    //     if (this.props.events && this.props.events.length !== 0)
-    //       this.setState({ currentEvent: this.props.events[0].id });
-
-    //     if (this.props.attendedEvents !== null) {
-    //       let getArtistStatusforCurrentVenue = this.props.attendedEvents.filter(
-    //         event => event.eventId === this.state.currentEvent
-    //       );
-    //       if (getArtistStatusforCurrentVenue.length !== 0) {
-    //         await this.setState({
-    //           localStatus: getArtistStatusforCurrentVenue[0]['status'] || '',
-    //           sender: getArtistStatusforCurrentVenue[0]['sender'] || '',
-    //         });
-    //       }
-    //     }
-    //   }
-
     render() {
         let filteredEvents = new Array(0);
 

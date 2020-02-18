@@ -7,10 +7,9 @@ import {
   IonButton,
   IonSelect,
   IonSelectOption,
-  IonLabel,
 } from '@ionic/react';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { auth, me } from '../store/user';
 import { searchBarValue } from '../store/filter';
 import { connect } from 'react-redux';

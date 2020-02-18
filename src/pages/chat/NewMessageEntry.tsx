@@ -5,8 +5,7 @@ import {
   IonInput,
   IonButton,
   IonIcon,
-  IonLabel,
-  IonItem
+  IonLabel
 } from '@ionic/react';
 import {
   send
@@ -57,8 +56,7 @@ class NewMessageEntry extends Component<IMyComponentProps, IMyComponentState>{
       ownerId: this.props.user['id'],
       status: this.props.user['status'],
     })
-    var myDiv = document.getElementsByClassName("items");
-    // await myDiv[myDiv.length - 1].scrollIntoView()
+
     await this.setState({ message: '' })
   }
 

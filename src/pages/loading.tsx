@@ -3,7 +3,7 @@ import { Audio } from 'svg-loaders-react'
 
 const Loading: React.FC = () => {
 
-    const timer = setTimeout(() => {
+    setTimeout(() => {
         console.log('This will run after 3 seconds')
     }, 5000)
     return (

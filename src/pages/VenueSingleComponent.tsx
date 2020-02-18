@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonItem, IonItemGroup, IonLabel, IonCardContent, IonCardTitle, IonCardSubtitle, IonCard, IonIcon, IonButton } from '@ionic/react';
+import { IonItem, IonItemGroup, IonCardContent, IonCard, IonIcon, IonButton } from '@ionic/react';
 import { home, body, musicalNote, add } from 'ionicons/icons'
 import './Tab1.css';
 
