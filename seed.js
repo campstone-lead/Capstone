@@ -291,29 +291,29 @@ const events = [
     name: 'Friday Night Rock',
     description: 'Friday Night Rock needs two rock bands.',
     date: new Date('May 11, 2020 22:30:00 UTC'),
-    //boweryball
     // venueId: 2,
+    // bowery ball
   },
   {
     name: 'Boss Lady',
     description: 'In need of a indie rock band!!! ',
     date: new Date('April 21, 2020 20:30:00 UTC'),
     // venueId: 4,
-    //petes candy
+    // petes candy
   },
   {
     name: 'Saturday Late Night Party',
     description: "Looking for at least two DJs.",
     date: new Date('May 03, 2020 22:30:00 UTC'),
     // venueId: 7,
-    //mercury
+    // mercury
   },
   {
     name: "Jazzy Valentine's Day Ball",
     description: 'The Valentines Ball needs three experienced jazz musicians',
     date: new Date('February 14, 2020 22:30:00 UTC'),
     // venueId: 6
-    //blue note
+    // blue note
   },
   {
     name: 'Dance Dungeon',
@@ -341,7 +341,7 @@ const events = [
     description: 'Grace Hopper is having a graduation after-party for its 1911 cohort. We are looking for an exciting pop artist to perform for our students and families :)',
     date: new Date('March 3, 2020 22:30:00 UTC'),
     // venueId: 5
-    //GH
+    // GH
   },
   {
     name: 'Studio 54 Night Magic',
@@ -355,28 +355,28 @@ const events = [
     description: 'Seeking rock and hip hop artists with a strong following to play at our hall',
     date: new Date('February 14, 2020 22:30:00 UTC'),
     // venueId: 3
-    //elsewhere
+    // elsewhere
   },
   {
     name: 'Mixmag NYC Launch Party',
     description: 'Looking for Techno, electronic, and house djs to help us celebrate the launch of MixMag',
     date: new Date('February 17, 2020 22:30:00 UTC'),
     // venueId: 1
-    //mood ring
+    // mood ring
   },
   {
     name: 'Open Mic Saturdays',
     description: 'Welcoming musicians of every level to perform on a busy night. Must be rock, indie, country, metal',
     date: new Date('May 11, 2020 22:30:00 UTC'),
     // venueId: 2,
-    //pets candhy
+    // pets candy
   },
   {
     name: 'WARPER',
     description: 'Need a headliner for a minimal techno party series',
     date: new Date('May 11, 2020 22:30:00 UTC'),
     // venueId: 7,
-    //basement
+    // basement
   },
 ];
 let messages = [
@@ -392,22 +392,12 @@ let messages = [
   }
 ]
 
-// const venueIdsForEvents = [2, 4, 7, 6, 8, 4, 1, 5, 3, 3, 1, 2, 7] OLDDDD
-
-// name: 'Grace Hopper',         1 6
-// name: 'The Bowery Ballroom',  2 1
-// name: 'Elsewhere',            3 2
-// name: 'Basement NY',          4 3
-// name: 'Mood Ring',            5 4
-// name: 'The Mercury Lounge',   6 7
-// name: 'Blue Note Jazz Club',  7 8
-// name: 'Petes Candy Store',    8 5
-
-// const venueIdsForEvents = [1, 3, 8, 7, 5, 3, 6, 4, 2, 2, 6, 1, 8]
 const venueIdsForEvents = [1, 5, 7, 8, 3, 7, 4, 6, 2, 2, 4, 5, 3]
 
 
 async function seed() {
+  await db.sync({ force: true })
+
   let createdBookers = []
   let newBooker;
   for (let i = 0; i < bookers.length; i++) {
@@ -434,7 +424,7 @@ async function seed() {
   }
   let createdEvents = []
   let newEvent;
-  for (let i = 0; i < artists.length; i++) {
+  for (let i = 0; i < events.length; i++) {
     newEvent = await Event.create(events[i])
     await newEvent.update({ venueId: createdVenues[venueIdsForEvents[i] - 1].id })
     createdEvents.push(newEvent)
@@ -478,4 +468,10 @@ const main = () => {
       return null;
     });
 };
-main();
+
+
+if (module === require.main) {
+  main();
+}
+
+module.exports = main
