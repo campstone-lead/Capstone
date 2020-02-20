@@ -16,46 +16,83 @@ travis.........
 Check out how our app looks like below:
 
 - Home page of a guest user:
-  ![IMG_9376](https://user-images.githubusercontent.com/43704877/74783280-58a2c380-5273-11ea-9cd5-930502c90d0c.PNG)
+  ![Home_guest](https://user-images.githubusercontent.com/43704877/74783280-58a2c380-5273-11ea-9cd5-930502c90d0c.PNG)
 
 - Login and sign up page:
-  ![IMG_9377](https://user-images.githubusercontent.com/43704877/74783310-67897600-5273-11ea-8897-f2c090491027.PNG)
+  ![Login_sign_up](https://user-images.githubusercontent.com/43704877/74783310-67897600-5273-11ea-8897-f2c090491027.PNG)
 
 - Initial sign up page (booker and artist have different sign up processes):
-  ![IMG_9378](https://user-images.githubusercontent.com/43704877/74783451-b8996a00-5273-11ea-9578-8b218b9cd399.PNG)
+  ![sign_up](https://user-images.githubusercontent.com/43704877/74783451-b8996a00-5273-11ea-9578-8b218b9cd399.PNG)
 
 - Home page for a booker with recommended artists (same for artist):
-  ![IMG_9379](https://user-images.githubusercontent.com/43704877/74783572-f72f2480-5273-11ea-8734-8b17c42ccb12.PNG)
+  ![Home_user](https://user-images.githubusercontent.com/43704877/74783572-f72f2480-5273-11ea-8734-8b17c42ccb12.PNG)
 
 - Profile page for a booker:
-  ![IMG_9380](https://user-images.githubusercontent.com/43704877/74783678-2c3b7700-5274-11ea-9d93-3262d86e9f44.PNG)
+  ![Profile](https://user-images.githubusercontent.com/43704877/74783678-2c3b7700-5274-11ea-9d93-3262d86e9f44.PNG)
 
 - Global chat page:
-  ![IMG_9381](https://user-images.githubusercontent.com/43704877/74783753-568d3480-5274-11ea-9b54-f637b354e2ef.PNG)
+  ![Chat](https://user-images.githubusercontent.com/43704877/74783753-568d3480-5274-11ea-9b54-f637b354e2ef.PNG)
 
 - Filter page:
-  ![IMG_9388](https://user-images.githubusercontent.com/43704877/74783791-6c025e80-5274-11ea-8e93-322108f96feb.PNG)
-  ![IMG_9389](https://user-images.githubusercontent.com/43704877/74783826-82a8b580-5274-11ea-958e-246fe3b53613.PNG)
+  ![Filter](https://user-images.githubusercontent.com/43704877/74783791-6c025e80-5274-11ea-8e93-322108f96feb.PNG)
+  ![Filter](https://user-images.githubusercontent.com/43704877/74783826-82a8b580-5274-11ea-958e-246fe3b53613.PNG)
 
 - Search page with chosen filters:
-  ![IMG_9390](https://user-images.githubusercontent.com/43704877/74783837-9227fe80-5274-11ea-81c7-7311dc88e7da.PNG)
+  ![Search](https://user-images.githubusercontent.com/43704877/74783837-9227fe80-5274-11ea-81c7-7311dc88e7da.PNG)
 
 - Create a new venue page:
-  ![IMG_9391](https://user-images.githubusercontent.com/43704877/74783866-a7049200-5274-11ea-9247-ec90d6adfecb.PNG)
+  ![Create a new venue page](https://user-images.githubusercontent.com/43704877/74783866-a7049200-5274-11ea-9247-ec90d6adfecb.PNG)
 
 - Update booker profile page:
-  ![IMG_9392](https://user-images.githubusercontent.com/43704877/74783925-c69bba80-5274-11ea-9982-519cceb40523.PNG)
+  ![Update_booker_profile](https://user-images.githubusercontent.com/43704877/74783925-c69bba80-5274-11ea-9982-519cceb40523.PNG)
 
 - Notifications page:
-  ![IMG_9394](https://user-images.githubusercontent.com/43704877/74783972-de733e80-5274-11ea-8341-5e9c0b686ab5.PNG)
+  ![Notifications](https://user-images.githubusercontent.com/43704877/74783972-de733e80-5274-11ea-8341-5e9c0b686ab5.PNG)
+
+## Wireframes
+
+- Booker sign up wireframe:
+  ![booker_sign_up](https://user-images.githubusercontent.com/43704877/74785582-9d7d2900-5278-11ea-8c3a-4f800b19de56.png)
+
+- Artist sign up wireframe:
+  ![artist_sign_up](https://user-images.githubusercontent.com/43704877/74785798-2b591400-5279-11ea-8bbf-bb54ef2474f4.png)
+
+- Artist wireframe:
+  ![artist](https://user-images.githubusercontent.com/43704877/74785942-8d197e00-5279-11ea-810a-d4fe6ec0bda6.png)
+
+- Booker wirefrimes:
+  ![booker_home](https://user-images.githubusercontent.com/43704877/74786146-f8635000-5279-11ea-8bb7-7e38a138db7d.png)
+  ![add_venue](https://user-images.githubusercontent.com/43704877/74786166-03b67b80-527a-11ea-817e-75142e9ae43a.png)
+  ![booker_profile](https://user-images.githubusercontent.com/43704877/74786170-05803f00-527a-11ea-9807-a82f851dd864.png)
+
+## Schema
 
 ## Tech-stack
 
-Built with: \*
-HTML:
-<a href="http://en.wikipedia.org/wiki/Petersen_graph">Petersen Graph</a>
+Built with:
 
-## Getting started
+- TypeScript (front-end)
+- Ionic-React
+- Redux
+- Capacitor
+- Java Script (back-end)
+- PostgresQL
+- Sequelize
+- Node.js
+- Express
+- Google API
+- Socket io
+- Firebase
+
+## Features
+
+We implemented:
+
+1. Realtime chat
+2. Realtime notifications
+3. Storing all images in the cloud
+4. Filter and search feature
+5. Recommendations for bookers and artists
 
 ## Setup
 
