@@ -3,7 +3,6 @@ import {
   IonItem,
   IonList,
   IonCardContent,
-  IonCardSubtitle,
   IonTabBar,
   IonTabButton,
   IonIcon,

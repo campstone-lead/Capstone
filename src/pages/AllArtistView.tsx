@@ -37,26 +37,6 @@ class AllArtistView extends React.Component<IMyComponentProps, {}> {
 
     return (
       <IonPage>
-        {
-          //Do we need it here? a searchbar?
-          //probably will go under a searchbar from tab1
-          //bc we'll be using filters
-          /* <IonHeader mode="ios"  >
-          <IonToolbar mode="ios" >
-            <div className="tabHeader">
-              <img src="https://www.freepnglogos.com/uploads/music-logo-black-and-white-png-21.png" alt="logo.png" className="logo" />
-              <IonSearchbar
-                mode="ios"
-                className="searchBar"
-                animated
-                showCancelButton="focus"
-                cancelButtonText='x'
-              >
-              </IonSearchbar>
-            </div>
-          </IonToolbar>
-        </IonHeader> */
-        }
         <IonContent>
           <div className="home">
             <IonCardHeader className="home" mode="ios">
@@ -71,8 +51,6 @@ class AllArtistView extends React.Component<IMyComponentProps, {}> {
                 Here is a list with all artist registered on our platform
               </IonCardTitle>
             </IonCardHeader>
-
-            {/* this is where artists go */}
             {this.props.artists.map((artist, index) => {
               let genres = '';
               artist['genres'].forEach((el, index) => {

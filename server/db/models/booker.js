@@ -18,7 +18,7 @@ const Booker = db.define('booker', {
     }
   },
   imageURL: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     // validate:{
     //   isUrl:true
     // },

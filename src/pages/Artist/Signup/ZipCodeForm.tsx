@@ -6,7 +6,6 @@ import {
   IonToolbar,
   IonItem,
   IonInput,
-  IonLabel,
   IonButton,
   IonIcon,
   IonCardHeader,
@@ -30,7 +29,7 @@ interface IMyComponentProps {
 class ZipCodeForm extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {

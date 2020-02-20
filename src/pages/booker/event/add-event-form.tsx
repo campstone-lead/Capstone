@@ -9,8 +9,8 @@ import { me } from '../../../store/user';
 import { getOneBooker } from '../../../store/booker';
 import { createdEvent } from '../../../store/event'
 import { time, headset, create } from 'ionicons/icons';
-import {firebase, firebase_storage_api} from '../../config'
-const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+import { firebase } from '../../config'
+
 
 axios.defaults.withCredentials = true;
 interface IMyComponentState {
@@ -18,7 +18,6 @@ interface IMyComponentState {
   selectedFile: any;
   currentVenue: number,
   photo: string
-  // defaultedVenue: number
 
 }
 interface IMyComponentProps {
@@ -96,12 +95,8 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
 
     })
     let file = this.state.selectedFile;
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-    await this.setState({ photo: imageURL })
-    let event = {
-      imageUrl: this.state.photo
-    }
-    window.localStorage.setItem('event', JSON.stringify(event))
+    let img = document.getElementsByTagName('img')[0];
+    img.src = URL.createObjectURL(file)
   }
   onClickHandler = async (e) => {
     e.preventDefault()
@@ -111,15 +106,26 @@ class AddEventForm extends React.Component<IMyComponentProps, IMyComponentState>
     try {
       var storageRef = firebase.storage().ref(`email-${this.props.user['email']}-status${this.props.user['status']}/` + file.name)
       let task = storageRef.put(file, metadata);
+      task.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          console.log('Photo uploaded')
+        },
+        (err) => {
+          console.log(err)
+        },
+        () => {
+          task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+            await this.setState({ photo: downloadURL })
 
-      const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-      await this.setState({ photo: imageURL })
+          })
+        }
+      )
     } catch (error) {
       console.log(error)
       console.log(error.message)
     }
 
-
+    window.localStorage.setItem('event', JSON.stringify(this.state))
   }
   render() {
     return (

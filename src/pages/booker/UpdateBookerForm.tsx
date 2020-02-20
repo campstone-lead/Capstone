@@ -1,12 +1,13 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonAvatar, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonInput, IonButton, IonIcon } from '@ionic/react';
-import './Tab1.css';
+import '../Tab1.css';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { connect } from 'react-redux'
-import { editBooker } from '../store/booker'
+import { editBooker } from '../../store/booker'
 import axios from 'axios'
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { me } from '../store/user'
+import { me } from '../../store/user'
 import {
     call,
     mailOpen,
@@ -16,10 +17,7 @@ import {
     camera
 } from 'ionicons/icons';
 
-import {firebase,firebase_storage_api} from './config'
-
-
-const entryURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/' : 'http://localhost:8080/')
+import { firebase } from '../config'
 
 
 axios.defaults.withCredentials = true;
@@ -55,7 +53,7 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
             lastName: '',
             phone: '',
             password: '',
-            uploader: 0
+            uploader: 0,
 
         }
         defineCustomElements(window);
@@ -67,30 +65,39 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
         await this.setState({
             selectedFile: event.target.files[0],
         })
-        let file = this.state.selectedFile
-        const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-        await this.setState({ imageURL })
-        let obj = this.state
-        window.localStorage.setItem('booker', JSON.stringify(obj))
+        let file = this.state.selectedFile;
+        let img = document.getElementsByTagName('img')[0];
+        img.src = URL.createObjectURL(file)
     }
 
     onClickHandler = async (e) => {
-
-        console.log(this.state.selectedFile)
         let file = this.state.selectedFile;
         var metadata = { contentType: 'image/jpeg' };
         try {
             var storageRef = firebase.storage().ref(`email-${this.props.user['email']}-status${this.props.user['status']}/` + file.name)
-            let task = storageRef.put(file, metadata);
+            let task = storageRef.put(file, metadata)
+            task.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                (snapshot) => {
+                    console.log('Photo uploaded')
+                },
+                (err) => {
+                    console.log(err)
+                },
+                () => {
+                    task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+                        await this.setState({ imageURL: downloadURL })
+                    })
+                }
+            )
 
-            const imageURL = `https://firebasestorage.googleapis.com/v0/b/${firebase_storage_api}/o/email-${this.props.user['email']}-status${this.props.user['status']}%2F${file.name}?alt=media&token=${process.env.FIREBASE_IMAGE_TOKEN}`
-            this.setState({ imageURL })
+
 
         } catch (error) {
             console.log(error)
             console.log(error.message)
         }
 
+        window.localStorage.setItem('booker', JSON.stringify(this.state))
     }
 
     async componentDidMount() {
@@ -142,10 +149,11 @@ class UpdateBookerForm extends React.Component<IMyComponentProps, IMyComponentSt
     handleSubmit(event) {
         event.preventDefault()
         this.props.editBooker(this.state);
+        window.localStorage.clear();
     }
 
     render() {
-        console.log(process.env)
+
         return (
             <IonPage>
                 <IonHeader >

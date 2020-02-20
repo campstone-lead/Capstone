@@ -14,26 +14,12 @@ import {
   IonCardHeader,
 } from '@ionic/react';
 import './Tab1.css';
-import { Redirect } from 'react-router-dom';
 import { auth, me, signUpWithGoogle } from '../store/user';
 import { connect } from 'react-redux';
-import { logoFacebook, logoGoogleplus } from 'ionicons/icons';
-import GoogleLogin, { GoogleLogout } from 'react-google-login';
-import SignUpZero from './SignUp0';
-import FacebookLogin from 'react-facebook-login';
-// let googleClientId;
-// async function getImport(){
-//   if (process.env.NODE_ENV !== 'production') {
-//     try {
-//       let data = await import('../store/secrets')
-//       googleClientId = data.default
-//       console.log('googleClientId:', googleClientId)
-//     } catch (error) {
-//       console.error(error)
-//     }
-//     // console.log('googleClientId:', googleClientId)
-//   }
-// }
+import { logoGoogleplus } from 'ionicons/icons';
+import GoogleLogin from 'react-google-login';
+
+
 const prodRedirectURL = (process.env.NODE_ENV === 'production' ? 'https://harmonious-capstone.herokuapp.com/signup0/' : 'http://localhost:8100/signup0/')
 
 interface IMyComponentState {
@@ -99,9 +85,7 @@ class SignUpSignIn extends React.Component<
     }
   }
   render() {
-    const responseFacebook = response => {
-      console.log(response);
-    };
+
     const { error } = this.props;
 
     return (
@@ -193,26 +177,6 @@ class SignUpSignIn extends React.Component<
                 <IonCardHeader> {error.response.data} </IonCardHeader>
               )}
 
-              {/* <br></br>
-              <IonItem
-                lines="none"
-                routerLink={this.state.isActive ? '/profile' : undefined}
-              >
-                <IonCardHeader>
-                  <IonButton
-                    type="submit"
-                    style={{ width: '270px', height: '38px' }}
-                    disabled={
-                      this.state.email.length === 0 ||
-                      this.state.password.length === 0
-                    }
-                    color="tertiary"
-                  >
-                    Login
-                  </IonButton>
-                </IonCardHeader>
-              </IonItem> */}
-
               <IonCardHeader className="profile">
                 <IonButton
                   type="submit"
@@ -245,7 +209,7 @@ class SignUpSignIn extends React.Component<
                   </IonButton>
                   )}
                   onFailure={() => {
-                    console.log('not logged in');
+
                   }}
                 />
 
@@ -291,41 +255,9 @@ class SignUpSignIn extends React.Component<
                   </IonButton>
                 )}
                 onFailure={() => {
-                  console.log('not logged in');
+
                 }}
               />
-              {/* <IonButton
-                style={{
-                  width: '270px',
-                  margin: '10px',
-                  '--backrground': '#3171e0',
-                }}
-                color="secondary"
-              >
-                <IonIcon icon={logoFacebook} />
-                Sign up with Facebook
-              </IonButton> */}
-              {/* <IonButton
-                onClick={() => (
-                  <FacebookLogin
-                    appId="184531429467701"
-                    autoLoad={true}
-                    fields="name,email,picture"
-                    // onClick={responseFacebook}
-                    callback={responseFacebook}
-                    redirectUri={prodRedirectURL}
-                    render={renderProps => (
-                      <IonButton
-                        style={{ width: '270px', margin: '10px' }}
-                        onClick={renderProps.onClick}
-                      >
-                        <IonIcon icon={logoFacebook} />
-                        Sign up with Facebook
-                      </IonButton>
-                    )}
-                  />
-                )}
-              ></IonButton> */}
             </div>
           </IonCard>
         </IonContent>

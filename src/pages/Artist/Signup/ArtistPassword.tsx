@@ -23,7 +23,6 @@ interface IMyComponentState {
 }
 
 interface IMyComponentProps {
-  // putType: (artistType: any) => void,
   updateArtist: any;
   auth: any;
   signUpArtistWithGoogle: any;
@@ -33,7 +32,7 @@ interface IMyComponentProps {
 class ArtistPassword extends React.Component<
   IMyComponentProps,
   IMyComponentState
-> {
+  > {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,7 +104,7 @@ class ArtistPassword extends React.Component<
                       type="submit"
                       disabled={
                         this.state.password.length === 0 &&
-                        this.state.phone.length === 0
+                          this.state.phone.length === 0
                           ? true
                           : false
                       }
@@ -119,56 +118,52 @@ class ArtistPassword extends React.Component<
               </form>
             </div>
           ) : (
-            <div className="welcome-card">
-              <form onSubmit={this.handleSubmit}>
-                <IonTitle>Let's add a password...</IonTitle>
+              <div className="welcome-card">
+                <form onSubmit={this.handleSubmit}>
+                  <IonTitle>Let's add a password...</IonTitle>
 
-                <IonItem lines="inset">
-                  <IonIcon slot="start" color="medium" icon={lock} />
-                  <IonInput
-                    type="password"
-                    placeholder="Password"
-                    required
-                    value={this.state.password}
-                    onIonChange={e =>
-                      this.setState({
-                        password: (e.target as HTMLInputElement).value,
-                      })
-                    }
-                  />
-                </IonItem>
-
-                <div style={{ margin: '10px' }}>
-                  <IonItem lines="none">
-                    <br></br>
-
-                    <IonButton
-                      type="submit"
-                      disabled={
-                        this.state.password.length === 0 &&
-                        this.state.phone.length === 0
-                          ? true
-                          : false
+                  <IonItem lines="inset">
+                    <IonIcon slot="start" color="medium" icon={lock} />
+                    <IonInput
+                      type="password"
+                      placeholder="Password"
+                      required
+                      value={this.state.password}
+                      onIonChange={e =>
+                        this.setState({
+                          password: (e.target as HTMLInputElement).value,
+                        })
                       }
-                      routerLink="/home"
-                      size="default"
-                    >
-                      Done
-                    </IonButton>
+                    />
                   </IonItem>
-                </div>
-              </form>
-            </div>
-          )}
+
+                  <div style={{ margin: '10px' }}>
+                    <IonItem lines="none">
+                      <br></br>
+
+                      <IonButton
+                        type="submit"
+                        disabled={
+                          this.state.password.length === 0 &&
+                            this.state.phone.length === 0
+                            ? true
+                            : false
+                        }
+                        routerLink="/home"
+                        size="default"
+                      >
+                        Done
+                    </IonButton>
+                    </IonItem>
+                  </div>
+                </form>
+              </div>
+            )}
         </IonContent>
       </IonPage>
     );
   }
 }
-
-// const mapStateToProps = (state) => ({
-//   email: state.artist.email
-// })
 
 const mapDispatchToProps = dispatch => ({
   updateArtist: artistInfo => dispatch(updatedArtist(artistInfo)),

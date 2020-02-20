@@ -7,7 +7,6 @@ import {
   IonBackButton,
   IonHeader,
   IonToolbar,
-  IonLabel,
   IonSelectOption,
   IonSelect,
 } from '@ionic/react';
@@ -135,7 +134,7 @@ class ArtistSinglePage extends React.Component<
   }
 
   render() {
-    console.log(this.props['location']['state'])
+
     if (!this.props.artist) {
       return (
         <div className="home">

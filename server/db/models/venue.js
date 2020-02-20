@@ -37,7 +37,7 @@ const Venue = db.define('venue', {
     type: Sequelize.ARRAY(Sequelize.STRING),
   },
   imageURL: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     defaultValue:
       'https://www.ggcatering.com/images/venues/default_venue_2.jpg',
   },

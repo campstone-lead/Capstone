@@ -1,13 +1,11 @@
 import {
   IonCard,
-
   IonCardTitle,
   IonItemGroup,
   IonContent,
 } from '@ionic/react';
 
 import React from 'react';
-// import { me } from '../../../store/user';
 import { customedFilter } from '../../../store/filter';
 import { connect } from 'react-redux';
 import '../../Tab1.css';

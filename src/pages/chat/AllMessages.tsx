@@ -40,23 +40,11 @@ class AllMessages extends Component<IMyComponentProps, IMyComponentState>{
   async componentDidMount() {
     await this.props.me();
     await this.props.fetchMessages()
-
-    // if (this.cardRef.current) {
-    //   let last = this.cardRef.current.getElementsByClassName('items')[this.cardRef.current.getElementsByClassName('items').length - 1]
-    //   last.scrollTop = last.offsetHeight;
-    // }
     socket.on('send-message', (message) => {
-
-
       this.props.postMessage(message)
     })
   }
-  // async componentDidUpdate() {
-  //   if (this.cardRef.current) {
-  //     await this.cardRef.current.getElementsByClassName('items')[this.cardRef.current.getElementsByClassName('items').length - 1].scrollIntoView();
-  //   }
 
-  // }
   render() {
 
     if (this.props.messages.length === 0) return <IonTitle>Loading</IonTitle>

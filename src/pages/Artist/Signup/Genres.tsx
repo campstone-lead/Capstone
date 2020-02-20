@@ -59,17 +59,6 @@ class Genres extends React.Component<IMyComponentProps, IMyComponentState> {
   }
 
   componentDidMount() {
-    // let artist=window.localStorage.getItem('artistInfo')
-    // if(artist!==null){
-    // artist=JSON.parse(artist||'');
-    // let newArtist=artist||{};
-    // if(newArtist["genres"] !== undefined){
-    //   this.setState({
-    //     genres:newArtist['genres']
-    //   })
-    //   }
-    // }
-
     let artistGoogle = window.localStorage.getItem('google');
     if (artistGoogle !== null) {
       this.setState({
@@ -236,7 +225,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // putGenre: (genre) => dispatch(putGenre(genre)),
     updateArtist: artistInfo => dispatch(updatedArtist(artistInfo)),
     signUpArtistWithGoogle: artistInfo =>
       dispatch(signUpArtistWithGoogle(artistInfo)),
