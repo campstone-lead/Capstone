@@ -74,7 +74,8 @@
     "deploy": "script/deploy",
     "eject": "react-scripts eject",
     "start-dev": "NODE_ENV='development' ionic serve & NODE_ENV='development' npm run start-server",
-    "start-server": "nodemon server -e html,js --ignore public --ignore src"
+    "start-server": "nodemon server -e html,js --ignore public --ignore src",
+    "seed": "node seed.js"
   },
   "eslintConfig": {
     "extends": "react-app"
