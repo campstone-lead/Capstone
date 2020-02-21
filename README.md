@@ -11,19 +11,17 @@ We decided to create this app because we understand a frustration for musician's
 
 Check out how our app looks like below:
 
- Home - Login - Signup
+Home - Login - Signup
 <img width="1232" alt="Screen Shot 2020-02-20 at 6 11 11 PM" src="https://user-images.githubusercontent.com/55503788/74988736-a1da4b00-540c-11ea-8f4a-a59a53e82215.png">
 
- Home(Recommended artists) - Filter - Filtered results
+Home(Recommended artists) - Filter - Filtered results
 <img width="1232" alt="Screen Shot 2020-02-20 at 6 11 15 PM" src="https://user-images.githubusercontent.com/55503788/74988767-c1717380-540c-11ea-951f-e54af8e6524d.png">
 
- User Profile - Notification wall - Update Profile
+User Profile - Notification wall - Update Profile
 <img width="1232" alt="Screen Shot 2020-02-20 at 6 11 22 PM" src="https://user-images.githubusercontent.com/55503788/74988784-ccc49f00-540c-11ea-955e-401af13d2b56.png">
 
- Chat Box
+Chat Box
 <img width="1232" alt="Screen Shot 2020-02-20 at 6 11 18 PM" src="https://user-images.githubusercontent.com/55503788/74988792-d3531680-540c-11ea-8979-2c1920baf88d.png">
-
-
 
 ## Wireframes
 
@@ -38,10 +36,11 @@ Check out how our app looks like below:
 
 - Booker wirefrimes:
   ![booker_home](https://user-images.githubusercontent.com/43704877/74786146-f8635000-5279-11ea-8bb7-7e38a138db7d.png)
- <img width="1232" alt="Screen Shot 2020-02-20 at 6 19 22 PM" src="https://user-images.githubusercontent.com/55503788/74989121-90de0980-540d-11ea-8de3-03a53edd3d61.png">
-
+  <img width="1232" alt="Screen Shot 2020-02-20 at 6 19 22 PM" src="https://user-images.githubusercontent.com/55503788/74989121-90de0980-540d-11ea-8de3-03a53edd3d61.png">
 
 ## Schema
+
+![LEAD Capstone Schema Diagram](https://user-images.githubusercontent.com/43704877/75004013-d0215000-5437-11ea-8116-640f79d3a0dc.png)
 
 ## Tech-stack
 
