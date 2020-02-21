@@ -40,7 +40,7 @@ Chat Box
 
 ## Schema
 
-[LEAD Capstone Schema Diagram](https://github.com/campstone-lead/Capstone/files/4234211/LEAD.Capstone.Schema.Diagram.pdf)
+![LEAD Capstone Schema Diagram](https://github.com/campstone-lead/Capstone/files/4234211/LEAD.Capstone.Schema.Diagram.pdf)
 
 <!-- <img width="1232" alt="LEAD Capstone Schema Diagram" src="https://github.com/campstone-lead/Capstone/files/4234211/LEAD.Capstone.Schema.Diagram.pdf"> -->
 
