@@ -7,47 +7,23 @@
 
 We decided to create this app because we understand a frustration for musician's at finding a suitable place to play. Our app also helps venues find suitible artists to play at their events. We have our recommendations for both users (bookers and artists) showing the best match, based on their location and preferable genres. If you are interested in someone particular or a specific place, you can also search for them.
 
-## Build status
-
-travis.........
-
 ## Screenshots
 
 Check out how our app looks like below:
 
-- Home page of a guest user:
-  ![Home_guest](https://user-images.githubusercontent.com/43704877/74783280-58a2c380-5273-11ea-9cd5-930502c90d0c.PNG)
+ Home - Login - Signup
+<img width="1232" alt="Screen Shot 2020-02-20 at 6 11 11 PM" src="https://user-images.githubusercontent.com/55503788/74988736-a1da4b00-540c-11ea-8f4a-a59a53e82215.png">
 
-- Login and sign up page:
-  ![Login_sign_up](https://user-images.githubusercontent.com/43704877/74783310-67897600-5273-11ea-8897-f2c090491027.PNG)
+ Home(Recommended artists) - Filter - Filtered results
+<img width="1232" alt="Screen Shot 2020-02-20 at 6 11 15 PM" src="https://user-images.githubusercontent.com/55503788/74988767-c1717380-540c-11ea-951f-e54af8e6524d.png">
 
-- Initial sign up page (booker and artist have different sign up processes):
-  ![sign_up](https://user-images.githubusercontent.com/43704877/74783451-b8996a00-5273-11ea-9578-8b218b9cd399.PNG)
+ User Profile - Notification wall - Update Profile
+<img width="1232" alt="Screen Shot 2020-02-20 at 6 11 22 PM" src="https://user-images.githubusercontent.com/55503788/74988784-ccc49f00-540c-11ea-955e-401af13d2b56.png">
 
-- Home page for a booker with recommended artists (same for artist):
-  ![Home_user](https://user-images.githubusercontent.com/43704877/74783572-f72f2480-5273-11ea-8734-8b17c42ccb12.PNG)
+ Chat Box
+<img width="1232" alt="Screen Shot 2020-02-20 at 6 11 18 PM" src="https://user-images.githubusercontent.com/55503788/74988792-d3531680-540c-11ea-8979-2c1920baf88d.png">
 
-- Profile page for a booker:
-  ![Profile](https://user-images.githubusercontent.com/43704877/74783678-2c3b7700-5274-11ea-9d93-3262d86e9f44.PNG)
 
-- Global chat page:
-  ![Chat](https://user-images.githubusercontent.com/43704877/74783753-568d3480-5274-11ea-9b54-f637b354e2ef.PNG)
-
-- Filter page:
-  ![Filter](https://user-images.githubusercontent.com/43704877/74783791-6c025e80-5274-11ea-8e93-322108f96feb.PNG)
-  ![Filter](https://user-images.githubusercontent.com/43704877/74783826-82a8b580-5274-11ea-958e-246fe3b53613.PNG)
-
-- Search page with chosen filters:
-  ![Search](https://user-images.githubusercontent.com/43704877/74783837-9227fe80-5274-11ea-81c7-7311dc88e7da.PNG)
-
-- Create a new venue page:
-  ![Create a new venue page](https://user-images.githubusercontent.com/43704877/74783866-a7049200-5274-11ea-9247-ec90d6adfecb.PNG)
-
-- Update booker profile page:
-  ![Update_booker_profile](https://user-images.githubusercontent.com/43704877/74783925-c69bba80-5274-11ea-9982-519cceb40523.PNG)
-
-- Notifications page:
-  ![Notifications](https://user-images.githubusercontent.com/43704877/74783972-de733e80-5274-11ea-8341-5e9c0b686ab5.PNG)
 
 ## Wireframes
 
@@ -62,8 +38,8 @@ Check out how our app looks like below:
 
 - Booker wirefrimes:
   ![booker_home](https://user-images.githubusercontent.com/43704877/74786146-f8635000-5279-11ea-8bb7-7e38a138db7d.png)
-  ![add_venue](https://user-images.githubusercontent.com/43704877/74786166-03b67b80-527a-11ea-817e-75142e9ae43a.png)
-  ![booker_profile](https://user-images.githubusercontent.com/43704877/74786170-05803f00-527a-11ea-9807-a82f851dd864.png)
+ <img width="1232" alt="Screen Shot 2020-02-20 at 6 19 22 PM" src="https://user-images.githubusercontent.com/55503788/74989121-90de0980-540d-11ea-8de3-03a53edd3d61.png">
+
 
 ## Schema
 
@@ -130,7 +106,7 @@ Now that you've got the code, follow these steps:
 createdb capstone
 ```
 
-4. Check out the starting seed file in `seed.js` - you can run it by executing `npm run seed`
+4. Check out the starting seed file in `seed.js` - you can run it by executing `node seed.js`
 5. Create a file called `secrets.js` in the project root
 
 - This file is listed in `.gitignore`, and will _only_ be required
